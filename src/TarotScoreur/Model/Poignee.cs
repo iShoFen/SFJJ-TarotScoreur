@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum Role
+    public enum Poignee
     {
-        Taker,
-        Opponent,
-        King
+        None,
+        Simple,
+        Double,
+        Triple
     }
 }

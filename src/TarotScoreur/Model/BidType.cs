@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class BidType
+    public enum BidType
     {
+        Petite,
+        Garde,
+        GardeSansLeChien,
+        GardeContreLeChien
     }
 }
