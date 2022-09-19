@@ -8,17 +8,27 @@ namespace Model
 {
     public class Player
     {
-        public long id { get; private set; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string NickName { get; private set; }
+        public long Id { get; }
+        public string FirstName { get; protected set; }
+        public string LastName { get; protected set; }
+        public string NickName { get; protected set; }
+        public string Avatar { get; protected set; }
 
-        public Player(long id, string firstName, string lastName, string nickName)
+        public Player(string firstName, string lastName, string nickName, string avatar)
         {
-            this.id = id;
             FirstName = firstName;
             LastName = lastName;
             NickName = nickName;
+            Avatar = avatar;
+        }
+
+        public Player(long id, string firstName, string lastName, string nickName, string avatar)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            NickName = nickName;
+            Avatar = avatar;
         }
     }
 }
