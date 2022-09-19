@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace UT_Model
 {
@@ -12,7 +13,7 @@ namespace UT_Model
         [Fact]
         public void TestConstructor()
         {
-            Player player = new Player(1, "Jordan", "Artzet", "Firologia");
+            Player player = new (1, "Jordan", "Artzet", "Firologia");
             Assert.NotNull(player);
             Assert.Equal(1,player.id);
             Assert.Equal("Jordan", player.FirstName);
