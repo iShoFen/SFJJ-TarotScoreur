@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public class Game
+    public partial class Game
     {
         /// <summary>
         /// The id of the game in the database
@@ -12,7 +12,7 @@ namespace Model
         /// <summary>
         /// The name of the game
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
         
         /// <summary>
         /// The start date of the game
@@ -33,9 +33,16 @@ namespace Model
         }
         private DateTime? _endDate;
 
-        // Waiting for GetScore method from IRules
-        //public IEnumerable<IReadOnlyDictionary<Player, int>> Scores;
-        // { get {  } }
+        // TODO: Add IRules implementation
+        // public IRules Rules { get; }
+
+         // TODO: Add the the IRules implementation
+        /*public IEnumerable<IReadOnlyDictionary<Player, int>> Scores;
+         { get
+             {
+                 
+             } 
+         }*/
         
         /// <summary>
         /// The list of Hands played in the game
@@ -76,6 +83,42 @@ namespace Model
         /// <param name="name"> The name of the game </param>
         /// <param name="startDate"> The start date of the game </param>
         /// <param name="players"> The list of players in the game </param>
-        public Game(string name, DateTime startDate, IEnumerable<Player> players) : this(0, name, startDate, null, players, new List<Hand>()) { }
+        public Game(string name, DateTime startDate) : this(0, name, startDate, null, new List<Player>(), new List<Hand>()) { }
+
+        /// <summary>
+        /// Adds a player to the game
+        /// </summary>
+        /// <param name="player"> The player to add </param>
+        public void AddPlayer(Player player)
+        {
+            _players.Add(player);
+        }
+        
+        /// <summary>
+        /// Removes a player from the game
+        /// </summary>
+        /// <param name="player"> The player to remove </param>
+        public void RemovePlayer(Player player)
+        {
+            _players.Remove(player);
+        }
+        
+        /// <summary>
+        /// Adds a hand to the game
+        /// </summary>
+        /// <param name="hand"> The hand to add </param>
+        public void AddHand(Hand hand)
+        {
+            _hands.Add(hand);
+        }
+        
+        /// <summary>
+        /// Checks if the game is valid (all information are filled and correct)
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
