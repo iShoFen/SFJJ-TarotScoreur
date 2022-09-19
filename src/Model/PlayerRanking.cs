@@ -1,23 +1,37 @@
 namespace Model;
 
-public class PlayerRanking : Ranking<Player>
+public class PlayerRanking : Ranking<PlayerData, Player>
 {
-    public PlayerRanking(string name, GameType gameType, IEnumerable<Player> data) : base(name, gameType, data)
+    public PlayerRanking(string name, GameType gameType, params PlayerData[] data) : base(name, gameType, data)
     {
-    }
-
-    public override IEnumerable<Player> SortByAscendingScore()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<Player> SortByDescendingScore()
-    {
-        throw new NotImplementedException();
     }
 
     public override IEnumerable<Player> SortByAscendingDate()
     {
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Player> SortByAscendingDateRange(DateTime startDate, DateTime endDate)
+    {
+        //TODO
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Player> SortByAscendingLoss()
+    {
+        //TODO
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Player> SortByAscendingScore()
+    {
+        //TODO
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Player> SortByAscendingWin()
+    {
+        //TODO
         throw new NotImplementedException();
     }
 
@@ -26,18 +40,27 @@ public class PlayerRanking : Ranking<Player>
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Player> SortByDateRange(DateTime startDate, DateTime endDate)
+    public override IEnumerable<Player> SortByDescendingDateRange(DateTime startDate, DateTime endDate)
     {
+        //TODO
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Player> SortByWin()
+    public override IEnumerable<Player> SortByDescendingLoss()
     {
+        //TODO
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Player> SortByLoss()
+    public override IEnumerable<Player> SortByDescendingScore()
     {
+        //TODO
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Player> SortByDescendingWin()
+    {
+        //TODO
         throw new NotImplementedException();
     }
 }
