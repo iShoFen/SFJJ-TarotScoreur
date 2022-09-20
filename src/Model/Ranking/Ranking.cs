@@ -1,4 +1,4 @@
-namespace Model;
+namespace Model.Ranking;
 
 /// <summary>
 /// Generic Ranking class with 2 template type

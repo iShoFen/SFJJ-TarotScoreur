@@ -1,4 +1,4 @@
-namespace Model;
+namespace Model.Ranking;
 
 public class PlayerRanking : Ranking<PlayerData, Player>
 {
