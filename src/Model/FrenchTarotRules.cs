@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model.enums;
 
 namespace Model
 {
@@ -77,10 +78,6 @@ namespace Model
 
             var neededScore = 56;
             var score = hand.TakerScore;
-            
-            if (hand.Petit) neededScore -= 5;
-            if (hand.Excuse) neededScore -= 5;
-            if (hand.TwentyOne) neededScore -= 5;
 
             if (score > neededScore)
             {
