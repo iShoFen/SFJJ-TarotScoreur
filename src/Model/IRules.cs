@@ -8,11 +8,20 @@ namespace Model
 {
     public interface IRules
     {
-        public int MinNbPlayers { get; }
-        public int MaxNbPlayers { get; }
-        public int MinNbPlayersForKing { get; }
-        public int MaxNbKing { get; }
-        public string Name { get; }
+        /// <summary>
+        /// Minimun of players needed to play a game with these rules
+        /// </summary>
+        int MinNbPlayers { get; }
+        /// <summary>
+        /// Maximum number of player to play a game with these rules
+        /// </summary>
+        int MaxNbPlayers { get; }
+        int MinNbPlayersForKing { get; }
+        int MaxNbKing { get; }
+        /// <summary>
+        /// Name of these rules
+        /// </summary>
+        string Name { get; }
 
         /// <summary>
         /// Vérifie que la partie est valide

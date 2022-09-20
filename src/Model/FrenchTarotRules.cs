@@ -8,19 +8,28 @@ namespace Model
 {
     public class FrenchTarotRules : IRules
     {
-        public int MinNbPlayers => throw new NotImplementedException();
+        public int MinNbPlayers { get; } = 3;
 
-        public int MaxNbPlayers => throw new NotImplementedException();
+        public int MaxNbPlayers { get; }= 5;
 
-        public int MinNbPlayersForKing => throw new NotImplementedException();
+        public int MinNbPlayersForKing { get; } = 5;
 
-        public int MaxNbKing => throw new NotImplementedException();
+        public int MaxNbKing { get; } = 1;
 
-        public string Name => throw new NotImplementedException();
-
+        public String Name => GetType().Name;
+        
         private readonly Dictionary<int, int> _oudlersPoints = new Dictionary<int, int>();
         //private Dictionary<Bidding, int> _biddingPrice;
-        //private Dictionary<Bidding, int> _bidTypePrice;
+        //private Dictionary<Bidding, int> _multiplicators = new Dictionary<Bidding, int>()
+        //{
+        //
+        //  [Bidding.Petite] = 1,
+        //  [Bidding.Pousse] = 1,
+        //  [Bidding.Garde] = 2,
+        //  [Bidding.GardeSans] = 4,
+        //  [Bidding.GardeContre] = 6,
+        // 
+        //};
         private readonly Dictionary<Poignee, int> _primesPoignee = new Dictionary<Poignee, int>();
         // private Dictionary<Chelem, int> _primesChelem;
         private List<Player> _playerList;
@@ -39,12 +48,6 @@ namespace Model
             // _biddingPrice.Add(Bidding.Garde, 25);
             // _biddingPrice.Add(Bidding.GardeSansLeChien, 25);
             // _biddingPrice.Add(Bidding.GardeContreLeChien, 25);
-
-            // Multiplicator for each BidType
-            // _bidTypePrice.Add(BidType.Petite, 1);
-            // _bidTypePrice.Add(BidType.Garde, 2);
-            // _bidTypePrice.Add(BidType.GardeSansLeChien, 4);
-            // _bidTypePrice.Add(BidType.GardeContreLeChien, 6);
 
             _primesPoignee.Add(Poignee.Simple, 20);
             _primesPoignee.Add(Poignee.Double, 30);
@@ -72,20 +75,62 @@ namespace Model
                 throw new ArgumentException("Manche invalide");
             }
 
-            int score = 0;
+            var neededScore = 56;
+            var score = hand.TakerScore;
             
-            
+            if (hand.Petit) neededScore -= 5;
+            if (hand.Excuse) neededScore -= 5;
+            if (hand.TwentyOne) neededScore -= 5;
+
+            if (score > neededScore)
+            {
+                score -= neededScore;
+            }
+
+
             return score;
         }
 
         public Validity IsGameValid(Game game)
         {
-            throw new NotImplementedException();
+            if (game.Players.Count < MinNbPlayers) return Validity.EnoughPlayers;
+            if (game.Players.Count > MaxNbPlayers) return Validity.EnoughPlayers;
+            return Validity.Valid;
         }
 
         public Validity IsHandValid(Hand hand)
         {
             throw new NotImplementedException();
         }
+
+        public virtual bool Equals(IRules other)
+        {
+            return other.GetType().Equals(GetType());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(ReferenceEquals(obj, null)) return false;
+
+            if(ReferenceEquals(this, obj)) return true;
+
+            if(GetType() != obj.GetType()) return false;
+
+            return Equals(obj as FrenchTarotRules);
+        }
+        
+        /// <summary>
+        /// Only the name need to be different for rules
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+
+        {
+
+            return GetType().Name.GetHashCode();
+
+        }
+        
+        
     }
 }

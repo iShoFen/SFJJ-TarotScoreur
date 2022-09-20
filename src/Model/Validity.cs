@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum Validity
+    public enum Validity : byte
     {
-        Unknown,
-        Valid,
-        NotEnoughPlayers,
-        EnoughPlayers,
-        NoTaker,
-        PlayerShallHaveBidding,
-        TakerShallHaveAScore
+        Unknown,                //0000
+        Valid,                  //0001
+        NotEnoughPlayers,       //0010
+        EnoughPlayers,          //0011
+        NoTaker,                //0100
+        TooManyPlayers,         //0101
+        PlayerShallHaveBidding, 
+        TakerShallHaveAScore    
     }
 }

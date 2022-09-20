@@ -9,6 +9,9 @@ namespace Model
 {
     public class RulesFactory
     {
+        /// <summary>
+        /// Dictionnary of different rules in the game Tarot
+        /// </summary>
         public ReadOnlyDictionary<string, IRules> Rules { get; private set; }
 
     }
