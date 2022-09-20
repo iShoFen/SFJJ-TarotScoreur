@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public partial class Game
+    public class Game : IEquatable<Game>
     {
         /// <summary>
         /// The id of the game in the database
@@ -76,49 +76,28 @@ namespace Model
             _hands.UnionWith(hands);
             Hands = new ReadOnlyCollection<Hand>(_hands.ToList());
         }
-        
-        /// <summary>
-        /// Constructor used to create a new game
-        /// </summary>
-        /// <param name="name"> The name of the game </param>
-        /// <param name="startDate"> The start date of the game </param>
-        /// <param name="players"> The list of players in the game </param>
-        public Game(string name, DateTime startDate) : this(0, name, startDate, null, new List<Player>(), new List<Hand>()) { }
 
-        /// <summary>
-        /// Adds a player to the game
-        /// </summary>
-        /// <param name="player"> The player to add </param>
-        public void AddPlayer(Player player)
+        public bool Equals(Game? other)
         {
-            _players.Add(player);
+            return Name.Equals(other?.Name) && StartDate.Equals(other?.StartDate) && EndDate.Equals(other?.EndDate);
         }
-        
-        /// <summary>
-        /// Removes a player from the game
-        /// </summary>
-        /// <param name="player"> The player to remove </param>
-        public void RemovePlayer(Player player)
+
+        public override bool Equals(object? obj)
         {
-            _players.Remove(player);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals(obj as Game);
         }
-        
-        /// <summary>
-        /// Adds a hand to the game
-        /// </summary>
-        /// <param name="hand"> The hand to add </param>
-        public void AddHand(Hand hand)
+
+        public override int GetHashCode()
         {
-            _hands.Add(hand);
+            return Name.GetHashCode() + StartDate.GetHashCode() + EndDate.GetHashCode();
         }
-        
-        /// <summary>
-        /// Checks if the game is valid (all information are filled and correct)
-        /// </summary>
-        /// <returns></returns>
-        public bool IsValid()
+
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return $"({Id}) {Name} {StartDate} {EndDate}";
         }
     }
 }
