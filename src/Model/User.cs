@@ -3,7 +3,7 @@ namespace Model;
 /// <summary>
 /// a User of the application
 /// </summary>
-public class User : Player
+public class User : Player, IEquatable<User>
 {
     /// <summary>
     /// email address of the User
@@ -48,5 +48,26 @@ public class User : Player
         Password = password;
     }
 
-    //TODO Hashcode and Equals and Equals by IEquatable
+    public bool Equals(User? other)
+    {
+        return base.Equals(other) && Email.Equals(other.Email) && Password.Equals(other.Password);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals(obj as User);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode() + Email.GetHashCode() + Password.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()}: {Email}";
+    }
 }
