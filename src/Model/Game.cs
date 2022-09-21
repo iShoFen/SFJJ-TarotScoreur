@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Game
+    public class Game : IEquatable<Game>
     {
         public long Id { get; private set; }
         public string Name { get; private set; }
@@ -23,6 +23,29 @@ namespace Model
             EndDate = endDate;
             Players = players;
             Hands = hands;
+        }
+
+        public bool Equals(Game? other)
+        {
+            return Name.Equals(other?.Name) && StartDate.Equals(other?.StartDate) && EndDate.Equals(other?.EndDate);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals(obj as Game);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() + StartDate.GetHashCode() + EndDate.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"({Id}) {Name} {StartDate} {EndDate}";
         }
     }
 }
