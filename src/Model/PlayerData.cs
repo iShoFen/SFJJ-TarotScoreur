@@ -9,8 +9,8 @@ public class PlayerData : IEquatable<PlayerData>
      */
     public Player Player { get; internal set; }
 
-    public ReadOnlyCollection<Game> Games { get; private set; }
-    private readonly HashSet<Game> _games = new();
+    public ReadOnlyCollection<Gaming.Game> Games { get; private set; }
+    private readonly HashSet<Gaming.Game> _games = new();
 
     public int WinCount { get; internal set; }
 
@@ -23,10 +23,10 @@ public class PlayerData : IEquatable<PlayerData>
         Player = player;
         WinCount = winCount;
         LossCount = lossCount;
-        Games = new ReadOnlyCollection<Game>(_games.ToList());
+        Games = new ReadOnlyCollection<Gaming.Game>(_games.ToList());
     }
 
-    public PlayerData AddGame(Game game)
+    public PlayerData AddGame(Gaming.Game game)
     {
         if(game == null)
         {

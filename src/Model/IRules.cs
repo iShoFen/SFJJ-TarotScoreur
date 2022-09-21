@@ -28,19 +28,19 @@ namespace Model
         /// </summary>
         /// <param name="game">Partie qui est vérifiée</param>
         /// <returns></returns>
-        public Validity IsGameValid(Game game);
+        public Validity IsGameValid(Gaming.Game game);
         /// <summary>
         /// Vérifie que la manche est valide
         /// </summary>
         /// <param name="hand">Manche qui est vérifiée</param>
         /// <returns></returns>
-        public Validity IsHandValid(Hand hand);
+        public Validity IsHandValid(Gaming.Hand hand);
         /// <summary>
         /// Calculer et récupérer le score d'une manche
         /// </summary>
         /// <param name="hand">Manche sur laquelle le score est calculé</param>
         /// <returns></returns>
-        public int GetHandScore(Hand hand);
+        public IReadOnlyDictionary<Player, int> GetHandScore(Gaming.Hand hand);
 
         
 

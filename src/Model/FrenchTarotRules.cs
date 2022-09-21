@@ -65,9 +65,9 @@ namespace Model
 
         }
         
-        public int GetHandScore(Hand hand)
+        public IReadOnlyDictionary<Player, int> GetHandScore(Gaming.Hand hand)
         {
-            if (_playerList == null ||_playerList.Count < MinNbPlayers)
+            /*if (_playerList == null ||_playerList.Count < MinNbPlayers)
             {
                 throw new Exception("Nombre de joueurs invalide");
             }
@@ -82,20 +82,20 @@ namespace Model
             if (score > neededScore)
             {
                 score -= neededScore;
-            }
+            }*/
 
 
-            return score;
+            return new Dictionary<Player, int>();
         }
 
-        public Validity IsGameValid(Game game)
+        public Validity IsGameValid(Gaming.Game game)
         {
             if (game.Players.Count < MinNbPlayers) return Validity.EnoughPlayers;
             if (game.Players.Count > MaxNbPlayers) return Validity.EnoughPlayers;
             return Validity.Valid;
         }
 
-        public Validity IsHandValid(Hand hand)
+        public Validity IsHandValid(Gaming.Hand hand)
         {
             throw new NotImplementedException();
         }

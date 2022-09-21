@@ -1,18 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Model
+namespace Model.Gaming
 {
-    public class Game : IEquatable<Game>
+    /// <summary>
+    /// Stores the information about a Game, including the players, all the hands played and the rules
+    /// </summary>
+    public partial class Game
     {
         /// <summary>
-        /// The id of the game in the database
+        /// The unique identifier for the game.
         /// </summary>
         public long Id { get; }
         
         /// <summary>
         /// The name of the game
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         
         /// <summary>
         /// The start date of the game
@@ -25,24 +28,15 @@ namespace Model
         /// <exception cref="ArgumentException"></exception>
         public DateTime? EndDate { 
             get => _endDate;
-            internal set
+            init
             {
                 if (value < StartDate) throw new ArgumentException("End date cannot be before start date");
-                if (_endDate != null) _endDate = value;
+                _endDate = value ?? DateTime.Now;
             }
         }
-        private DateTime? _endDate;
+        private readonly  DateTime? _endDate;
 
-        // TODO: Add IRules implementation
-        // public IRules Rules { get; }
-
-         // TODO: Add the the IRules implementation
-        /*public IEnumerable<IReadOnlyDictionary<Player, int>> Scores;
-         { get
-             {
-                 
-             } 
-         }*/
+        public IRules Rules { get; }
         
         /// <summary>
         /// The list of Hands played in the game
@@ -76,28 +70,25 @@ namespace Model
             _hands.UnionWith(hands);
             Hands = new ReadOnlyCollection<Hand>(_hands.ToList());
         }
+        
+        public IEnumerable<IReadOnlyDictionary<Player, int>> GetScores() => Hands.Select(hand => Rules.GetHandScore(hand)).ToList();
+
 
         public bool Equals(Game? other)
         {
-            return Name.Equals(other?.Name) && StartDate.Equals(other?.StartDate) && EndDate.Equals(other?.EndDate);
+            if (other is null) return false;
+            if (other.Id == Id) return true;
+            return other.Id == 0 && Game.FullComparer.Equals(this, other);
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals(obj as Game);
+            return obj.GetType() == GetType() && Equals(obj as Game);
         }
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode() + StartDate.GetHashCode() + EndDate.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return $"({Id}) {Name} {StartDate} {EndDate}";
-        }
+        public override int GetHashCode() => Id.GetHashCode();
+        public override string ToString() => $"({Id}) {Name} {StartDate} {EndDate}";
     }
 }
