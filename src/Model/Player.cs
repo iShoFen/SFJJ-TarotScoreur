@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
     /// <summary>
     /// a Player of the Tarot game
     /// </summary>
-    public class Player : IEquatable<Player>
+    public partial class Player : IEquatable<Player>
     {
         /// <summary>
         /// id of this Player
@@ -21,52 +15,40 @@ namespace Model
         /// </summary>
         public string FirstName
         {
-            get => firstName;
-            protected set
-            {
-                firstName = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _firstName;
+            protected set => _firstName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string firstName;
+        private string _firstName;
 
         /// <summary>
         /// last name of this Player
         /// </summary>
         public string LastName
         {
-            get => lastName;
-            protected set
-            {
-                lastName = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _lastName;
+            protected set => _lastName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string lastName;
+        private string _lastName;
 
         /// <summary>
         /// nickname of this Player
         /// </summary>
         public string NickName
         {
-            get => nickName;
-            protected set
-            {
-                nickName = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _nickName;
+            protected set => _nickName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string nickName;
+        private string _nickName;
 
         /// <summary>
         /// file name of the avatar of this Player
         /// </summary>
         public string Avatar
         {
-            get => avatar;
-            protected set
-            {
-                avatar = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _avatar;
+            protected set => _avatar = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string avatar;
+        private string _avatar;
 
         /// <summary>
         /// constructor
@@ -106,21 +88,21 @@ namespace Model
 
         public bool Equals(Player? other)
         {
-            return FirstName.Equals(other?.FirstName) && LastName.Equals(other?.LastName) && NickName.Equals(other?.NickName);
+            if (other is null) return false;
+            if (Id != 0) return Id == other.Id;
+            return other.Id == 0 && FullComparer.Equals(this, other);
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals(obj as Player);
-            
+            return obj.GetType() == GetType() && Equals(obj as Player);
         }
 
         public override int GetHashCode()
         {
-            return FirstName.GetHashCode() + LastName.GetHashCode() + NickName.GetHashCode();
+            return HashCode.Combine(FirstName, LastName, NickName);
         }
 
         public override string ToString()

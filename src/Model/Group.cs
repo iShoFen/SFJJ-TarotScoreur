@@ -7,13 +7,13 @@ public class Group
     /// <summary>
     /// name of the Group
     /// </summary>
-    public string Name { get; private set; }
+    public string Name { get; }
 
     /// <summary>
     /// Players of the Group
     /// </summary>
     public ReadOnlyCollection<Player> Players { get; }
-    private readonly HashSet<Player> _players = new();
+    private readonly List<Player> _players = new();
 
     /// <summary>
     /// constructor
@@ -22,7 +22,7 @@ public class Group
     public Group(string name)
     {
         Name = name;
-        Players = new ReadOnlyCollection<Player>(_players.ToList());
+        Players = new ReadOnlyCollection<Player>(_players);
     }
 
     /// <summary>

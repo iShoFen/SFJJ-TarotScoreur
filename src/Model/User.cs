@@ -8,12 +8,12 @@ public class User : Player, IEquatable<User>
     /// <summary>
     /// email address of the User
     /// </summary>
-    public string Email { get; protected set; }
+    public string Email { get; }
 
     /// <summary>
     /// password of the User
     /// </summary>
-    public string Password { get; protected set; }
+    public string Password { get; }
 
     /// <summary>
     /// constructor
@@ -57,8 +57,7 @@ public class User : Player, IEquatable<User>
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals(obj as User);
+        return obj.GetType() == GetType() && Equals(obj as User);
     }
 
     public override int GetHashCode()

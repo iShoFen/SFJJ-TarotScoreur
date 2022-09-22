@@ -10,12 +10,12 @@ public abstract class Ranking<T, U>
     /// <summary>
     /// name of this Ranking
     /// </summary>
-    public string Name { get; protected set; }
+    public string Name { get; }
 
     /// <summary>
     /// game type of this GameType
     /// </summary>
-    public GameType GameType { get; protected set; }
+    public GameType GameType { get; }
 
     /// <summary>
     /// set of datas to apply the ranking
