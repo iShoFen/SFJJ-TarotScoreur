@@ -1,61 +1,63 @@
+using Model.games;
+
 namespace Model.Ranking;
 
-public class GameRanking : Ranking<Gaming.Game, Gaming.Game>
+public class GameRanking : Ranking<Game, Game>
 {
-    public GameRanking(string name, GameType gameType, params Gaming.Game[] data) : base(name, gameType, data)
+    public GameRanking(string name, GameType gameType, params Game[] data) : base(name, gameType, data)
     {
     }
 
-    public override IEnumerable<Gaming.Game> SortByAscendingDate()
-    {
-        //TODO
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<Gaming.Game> SortByAscendingDateRange(DateTime startDate, DateTime endDate)
+    public override IEnumerable<Game> SortByAscendingDate()
     {
         //TODO
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Gaming.Game> SortByAscendingLoss()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<Gaming.Game> SortByAscendingScore()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<Gaming.Game> SortByAscendingWin()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override IEnumerable<Gaming.Game> SortByDescendingDate()
+    public override IEnumerable<Game> SortByAscendingDateRange(DateTime startDate, DateTime endDate)
     {
         //TODO
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Gaming.Game> SortByDescendingDateRange(DateTime startDate, DateTime endDate)
+    public override IEnumerable<Game> SortByAscendingLoss()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Game> SortByAscendingScore()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Game> SortByAscendingWin()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Game> SortByDescendingDate()
     {
         //TODO
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Gaming.Game> SortByDescendingLoss()
+    public override IEnumerable<Game> SortByDescendingDateRange(DateTime startDate, DateTime endDate)
+    {
+        //TODO
+        throw new NotImplementedException();
+    }
+
+    public override IEnumerable<Game> SortByDescendingLoss()
     {
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Gaming.Game> SortByDescendingScore()
+    public override IEnumerable<Game> SortByDescendingScore()
     {
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<Gaming.Game> SortByDescendingWin()
+    public override IEnumerable<Game> SortByDescendingWin()
     {
         throw new NotImplementedException();
     }

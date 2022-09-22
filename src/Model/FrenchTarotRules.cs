@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.enums;
+﻿using Model.enums;
+using Model.games;
 
 namespace Model
 {
@@ -65,7 +61,7 @@ namespace Model
 
         }
         
-        public IReadOnlyDictionary<Player, int> GetHandScore(Gaming.Hand hand)
+        public IReadOnlyDictionary<Player, int> GetHandScore(Hand hand)
         {
             /*if (_playerList == null ||_playerList.Count < MinNbPlayers)
             {
@@ -88,14 +84,14 @@ namespace Model
             return new Dictionary<Player, int>();
         }
 
-        public Validity IsGameValid(Gaming.Game game)
+        public Validity IsGameValid(Game game)
         {
             if (game.Players.Count < MinNbPlayers) return Validity.EnoughPlayers;
             if (game.Players.Count > MaxNbPlayers) return Validity.EnoughPlayers;
             return Validity.Valid;
         }
 
-        public Validity IsHandValid(Gaming.Hand hand)
+        public Validity IsHandValid(Hand hand)
         {
             throw new NotImplementedException();
         }

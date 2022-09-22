@@ -1,8 +1,8 @@
-﻿namespace Model.Gaming;
+﻿namespace Model.games;
 
 public partial class Hand
 {
-    private class FullEqComparer : EqualityComparer<Hand>
+    private sealed class FullEqComparer : EqualityComparer<Hand>
     {
         /// <summary>
         /// Compares all the properties of the two hands and returns true if they are equal.
@@ -17,6 +17,7 @@ public partial class Hand
                 y is not null &&
                 x.Id == y.Id &&
                 x.HandNumber == y.HandNumber &&
+                x._rules.Equals(y._rules) &&
                 x.Date == y.Date &&
                 x.Excuse == y.Excuse &&
                 x.TwentyOne == y.TwentyOne &&
@@ -34,9 +35,9 @@ public partial class Hand
         /// <returns> The hash code of the hand </returns>
         public override int GetHashCode(Hand obj) => 
             HashCode.Combine(obj.Id, obj.HandNumber, obj.Date, obj.Excuse, obj.TwentyOne, obj.Petit, obj.Chelem, obj.TakerScore) 
+            ^ obj._rules.GetHashCode()
             ^ obj.Biddings.Keys.Aggregate(0, (current, key) => current ^ key.GetHashCode()) 
             ^ obj.Biddings.Values.Aggregate(0, (current, value) => current ^ value.GetHashCode());
-        
     }
           
     /// <summary>

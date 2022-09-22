@@ -1,8 +1,8 @@
-﻿namespace Model.Gaming;
+﻿namespace Model.games;
 
 public partial class Game
 {
-    private class FullEqComparer : EqualityComparer<Game>
+    private sealed class FullEqComparer : EqualityComparer<Game>
     {
         /// <summary>
         /// Compares all the properties of the two games and returns true if they are equal.
