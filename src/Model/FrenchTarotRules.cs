@@ -90,14 +90,37 @@ namespace Model
 
         public Validity IsGameValid(Game game)
         {
-            if (game.Players.Count < MinNbPlayers) return Validity.EnoughPlayers;
+            if (game.Players.Count < MinNbPlayers) return Validity.NotEnoughPlayers;
             if (game.Players.Count > MaxNbPlayers) return Validity.EnoughPlayers;
             return Validity.Valid;
         }
 
         public Validity IsHandValid(Hand hand)
         {
-            throw new NotImplementedException();
+            Validity valid;
+            List<Bidding> biddings = hand.Biddings.Select(bidding => bidding.Value.Item1).ToList();
+            valid = IsPlayersBiddingValid(biddings);
+            //If validity isn't valid
+            if (!valid.Equals(Validity.Valid)) return valid;
+            
+            return valid;
+        }
+
+        private Validity IsPlayersBiddingValid(IEnumerable<Bidding> iBiddings)
+        {
+            int nbKing = 0, nbTaker=0;
+            var biddings = iBiddings.ToList();
+            
+            foreach (var bidding in biddings)
+            {
+                if (bidding.Equals(Bidding.King)) ++nbKing;
+                if((bidding & Bidding.Prise) == Bidding.Prise) ++nbTaker;
+                if (bidding.Equals(Bidding.Unknown)) return Validity.PlayerShallHaveBidding;
+            }
+
+            if (nbKing > MaxNbKing || (biddings.Count() < 5 && nbKing > 0)) return Validity.TooManyKing;
+            if (nbTaker == 0) return Validity.NoTaker;
+            return Validity.Valid;
         }
 
         public virtual bool Equals(IRules other)

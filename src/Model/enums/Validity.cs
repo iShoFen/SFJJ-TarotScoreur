@@ -14,7 +14,8 @@ namespace Model
         EnoughPlayers,          //0011
         NoTaker,                //0100
         TooManyPlayers,         //0101
-        PlayerShallHaveBidding, 
-        TakerShallHaveAScore    
+        TooManyKing,            //0110
+        PlayerShallHaveBidding, //0111
+        TakerShallHaveAScore    //1000
     }
 }
