@@ -3,7 +3,7 @@ namespace Model;
 /// <summary>
 /// a User of the application
 /// </summary>
-public class User : Player, IEquatable<User>
+public partial class User : Player, IEquatable<User>
 {
     /// <summary>
     /// email address of the User
@@ -32,7 +32,7 @@ public class User : Player, IEquatable<User>
     }
 
     /// <summary>
-    /// 
+    /// constructor
     /// </summary>
     /// <param name="id">id of this Player</param>
     /// <param name="firstName">first name of this Player</param>
@@ -50,7 +50,9 @@ public class User : Player, IEquatable<User>
 
     public bool Equals(User? other)
     {
-        return base.Equals(other) && Email.Equals(other.Email) && Password.Equals(other.Password);
+        if (other is null) return false;
+        if (Id != 0) return Id == other.Id;
+        return other.Id == 0 && PlayerFullComparer.Equals(this, other);
     }
 
     public override bool Equals(object? obj)
@@ -60,13 +62,7 @@ public class User : Player, IEquatable<User>
         return obj.GetType() == GetType() && Equals(obj as User);
     }
 
-    public override int GetHashCode()
-    {
-        return base.GetHashCode() + Email.GetHashCode() + Password.GetHashCode();
-    }
+    public override int GetHashCode() => Id == 0 ? UserEqualityComparer.GetHashCode() : Id.GetHashCode();
 
-    public override string ToString()
-    {
-        return $"{base.ToString()}: {Email}";
-    }
+    public override string ToString() => $"{base.ToString()}: {Email}";
 }
