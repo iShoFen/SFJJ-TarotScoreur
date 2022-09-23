@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model.games;
 
 namespace Model
 {
@@ -40,7 +41,7 @@ namespace Model
         /// </summary>
         /// <param name="hand">Manche sur laquelle le score est calculé</param>
         /// <returns></returns>
-        public int GetHandScore(Hand hand);
+        public IReadOnlyDictionary<Player, int> GetHandScore(Hand hand);
 
         
 

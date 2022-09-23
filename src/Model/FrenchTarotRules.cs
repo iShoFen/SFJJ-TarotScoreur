@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model.enums;
+﻿using Model.enums;
+using Model.games;
 
 namespace Model
 {
@@ -65,9 +61,9 @@ namespace Model
 
         }
         
-        public int GetHandScore(Hand hand)
+        public IReadOnlyDictionary<Player, int> GetHandScore(Hand hand)
         {
-            if (_playerList == null ||_playerList.Count < MinNbPlayers)
+            /*if (_playerList == null ||_playerList.Count < MinNbPlayers)
             {
                 throw new Exception("Nombre de joueurs invalide");
             }
@@ -82,10 +78,10 @@ namespace Model
             if (score > neededScore)
             {
                 score -= neededScore;
-            }
+            }*/
 
 
-            return score;
+            return new Dictionary<Player, int>();
         }
 
         public Validity IsGameValid(Game game)
