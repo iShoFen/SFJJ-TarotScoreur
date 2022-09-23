@@ -18,53 +18,43 @@ namespace Model
         public int MaxNbKing { get; } = 1;
 
         public String Name => GetType().Name;
+
+        private readonly Dictionary<int, int> _oudlersPoints = new Dictionary<int, int>()
+        {
+            [0] = 56,
+            [1] = 51,
+            [2] = 41,
+            [3] = 36
+
+        };
+        private Dictionary<Bidding, int> _biddingPrice;
+        private Dictionary<Bidding, int> _multiplicators = new Dictionary<Bidding, int>()
+        {
         
-        private readonly Dictionary<int, int> _oudlersPoints = new Dictionary<int, int>();
-        //private Dictionary<Bidding, int> _biddingPrice;
-        //private Dictionary<Bidding, int> _multiplicators = new Dictionary<Bidding, int>()
-        //{
-        //
-        //  [Bidding.Petite] = 1,
-        //  [Bidding.Pousse] = 1,
-        //  [Bidding.Garde] = 2,
-        //  [Bidding.GardeSans] = 4,
-        //  [Bidding.GardeContre] = 6,
-        // 
-        //};
-        private readonly Dictionary<Poignee, int> _primesPoignee = new Dictionary<Poignee, int>();
-        // private Dictionary<Chelem, int> _primesChelem;
+          [Bidding.Petite] = 1,
+          [Bidding.Garde] = 2,
+          [Bidding.GardeSansLeChien] = 4,
+          [Bidding.GardeContreLeChien] = 6,
+         
+        };
+
+        private readonly Dictionary<Poignee, int> _primesPoignee = new Dictionary<Poignee, int>()
+        {
+            [Poignee.Simple] = 20,
+            [Poignee.Double] = 30,
+            [Poignee.Triple] = 40    
+        };
+
+        private Dictionary<Chelem, int> _primesChelem = new Dictionary<Chelem, int>()
+        {
+            [Chelem.Unknown] = 0,
+            [Chelem.Success] = 200,
+            [Chelem.AnnouncedSuccess] = 400,
+            [Chelem.AnnouncedFail] = -200
+        };
         private List<Player> _playerList;
         private int _primeAuBout;
 
-        public FrenchTarotRules()
-        {
-            //Number of points for each oudler
-            _oudlersPoints.Add(0, 56);
-            _oudlersPoints.Add(1, 51);
-            _oudlersPoints.Add(2, 41);
-            _oudlersPoints.Add(3, 36);
-
-            // Number of points for each Bidding
-            // _biddingPrice.Add(Bidding.Petite, 25);
-            // _biddingPrice.Add(Bidding.Garde, 25);
-            // _biddingPrice.Add(Bidding.GardeSansLeChien, 25);
-            // _biddingPrice.Add(Bidding.GardeContreLeChien, 25);
-
-            _primesPoignee.Add(Poignee.Simple, 20);
-            _primesPoignee.Add(Poignee.Double, 30);
-            _primesPoignee.Add(Poignee.Triple, 40);
-
-            // Number of points for each Chelem
-            // _primesChelem.Add(Chelem.Unknown,0);
-            // _primesChelem.Add(Chelem.NotAnnouncedSuccess, 200);
-            // _primesChelem.Add(Chelem.AnnouncedSuccess, 400);
-            // _primesChelem.Add(Chelem.AnnouncedFail, -200);
-            
-
-
-
-        }
-        
         public int GetHandScore(Hand hand)
         {
             if (_playerList == null ||_playerList.Count < MinNbPlayers)
@@ -91,8 +81,7 @@ namespace Model
         public Validity IsGameValid(Game game)
         {
             if (game.Players.Count < MinNbPlayers) return Validity.NotEnoughPlayers;
-            if (game.Players.Count > MaxNbPlayers) return Validity.EnoughPlayers;
-            return Validity.Valid;
+            return game.Players.Count >= MaxNbPlayers ? Validity.EnoughPlayers : Validity.Valid;
         }
 
         public Validity IsHandValid(Hand hand)

@@ -64,13 +64,14 @@ namespace Model
         /// <param name="twentyOne"> Indicates if the taker as the twenty one oudler </param>
         /// <param name="excuse"> Indicates if the taker as the excuse oudler </param>
         /// <param name="biddings"> Players bidding details </param>
-        public Hand(int handNumber, DateTime date, int takerScore, bool? twentyOne, bool? excuse, IEnumerable<KeyValuePair<Player, (Bidding, Poignee)>> biddings)
+        public Hand(int handNumber, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, IEnumerable<KeyValuePair<Player, (Bidding, Poignee)>> biddings)
         {
             HandNumber = handNumber;
             Date = date;
             TakerScore = takerScore;
             TwentyOne = twentyOne;
             Excuse = excuse;
+            Petit = petit;
             _biddings = biddings.ToDictionary(x => x.Key, x => x.Value);
             Biddings = new ReadOnlyDictionary<Player, (Bidding, Poignee)>(_biddings);
         }
@@ -80,7 +81,7 @@ namespace Model
         /// </summary>
         /// <param name="number"> The number of the hand </param>
         /// <param name="date"> The date of the hand </param>
-        public Hand(int number, DateTime date) : this(number, date, 0, null, null, new Dictionary<Player, (Bidding, Poignee)>()) { }
+        public Hand(int number, DateTime date) : this(number, date, 0, null, null,PetitResult.Unknown, new Dictionary<Player, (Bidding, Poignee)>()) { }
         
         /// <summary>
         /// Add a bidding to the hand
