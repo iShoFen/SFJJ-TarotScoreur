@@ -2,7 +2,7 @@
 
 public partial class Game
 {
-    private sealed class FullEqComparer : EqualityComparer<Game>
+    private sealed class FullEqComparer : IEqualityComparer<Game>
     {
         /// <summary>
         /// Compares all the properties of the two games and returns true if they are equal.
@@ -10,7 +10,7 @@ public partial class Game
         /// <param name="x"> The first game to compare </param>
         /// <param name="y"> The second game to compare </param>
         /// <returns> True if the games are equal, false otherwise </returns>
-        public override bool Equals(Game? x, Game? y)
+        public bool Equals(Game? x, Game? y)
         { 
             return
                 x is not null &&
@@ -28,7 +28,7 @@ public partial class Game
         /// </summary>
         /// <param name="obj"> The hand to get the hash code of </param>
         /// <returns> The hash code of the hand </returns>
-        public override int GetHashCode(Game obj) => 
+        public int GetHashCode(Game obj) => 
             HashCode.Combine(obj.Id, obj.Name, obj.Rules, obj.StartDate, obj.EndDate) 
             ^ obj.Players.Aggregate(0, (current, key) => current ^ key.GetHashCode());
     }
@@ -36,5 +36,5 @@ public partial class Game
     /// <summary>
     /// The full Hand equality comparer : all the properties are compared.
     /// </summary>
-    public static EqualityComparer<Game> FullComparer { get; } = new FullEqComparer();
+    public static IEqualityComparer<Game> FullComparer { get; } = new FullEqComparer();
 }

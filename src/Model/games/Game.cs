@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using Model.enums;
 
 namespace Model.games;
 
 /// <summary>
 /// Stores the information about a Game, including the players, all the hands played and the rules
 /// </summary>
-public partial class Game
+public partial class Game : IEquatable<Game>
 {
     /// <summary>
     /// The unique identifier for the game.
