@@ -3,17 +3,17 @@ using Model.enums;
 
 namespace Model.data;
 
-public class PersistanceManager
+public class DataManager
 {
     private ILoad iLoad;
     private ISave iSave;
     
     /// <summary>
-    /// Constructor for the PersistanceManager
+    /// Constructor for the DataManager
     /// </summary>
     /// <param name="iLoad">Interface to load data</param>
     /// <param name="iSave">Interface to save data</param>
-    public PersistanceManager(ILoad iLoad , ISave iSave)
+    public DataManager(ILoad iLoad , ISave iSave)
     {
         this.iLoad = iLoad;
         this.iSave = iSave;
