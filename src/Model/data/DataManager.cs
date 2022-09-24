@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Model.enums;
 
 namespace Model.data;
@@ -29,35 +30,35 @@ public class PersistanceManager
     /// Method to load all players
     /// </summary>
     /// <returns>List of players</returns>
-    public List<Player> LoadAllPlayer() => iLoad.LoadAllPlayer();
+    public ReadOnlyCollection<Player> LoadAllPlayer() => iLoad.LoadAllPlayer();
     
     /// <summary>
     /// Method to load a player by group
     /// </summary>
     /// <param name="group">Group to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayersByGroup(Group group) => iLoad.LoadPlayersByGroup(group);
+    public ReadOnlyCollection<Player> LoadPlayersByGroup(Group group) => iLoad.LoadPlayersByGroup(group);
     
     /// <summary>
     /// Method to load a player by firstname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayerByFirstName(string firstName) => iLoad.LoadPlayerByFirstName(firstName);
+    public ReadOnlyCollection<Player> LoadPlayerByFirstName(string firstName) => iLoad.LoadPlayerByFirstName(firstName);
     
     /// <summary>
     /// Method to load a player by lastname
     /// </summary>
     /// <param name="lastName">Lastname to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayerByLastName(string lastName) => iLoad.LoadPlayerByLastName(lastName);
+    public ReadOnlyCollection<Player> LoadPlayerByLastName(string lastName) => iLoad.LoadPlayerByLastName(lastName);
     
     /// <summary>
     /// Method to load a player by nickname
     /// </summary>
     /// <param name="nickName">Nickname to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayerByNickName(string nickName) => iLoad.LoadPlayerByNickName(nickName);
+    public ReadOnlyCollection<Player> LoadPlayerByNickName(string nickName) => iLoad.LoadPlayerByNickName(nickName);
     
     /// <summary>
     /// Method to load a player by firstname and lastname
@@ -65,7 +66,7 @@ public class PersistanceManager
     /// <param name="firstName">Firstname to search</param>
     /// <param name="lastName">Lastname to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName) => iLoad.LoadPlayerByFirstNameAndLastName(firstName, lastName);
+    public ReadOnlyCollection<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName) => iLoad.LoadPlayerByFirstNameAndLastName(firstName, lastName);
     
     /// <summary>
     /// Method to load a player by firtsname and nickname
@@ -73,7 +74,7 @@ public class PersistanceManager
     /// <param name="firstName">Firstname to search</param>
     /// <param name="nickname">Nickname to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickName) => iLoad.LoadPlayerByFirstNameAndNickname(firstName, nickName);
+    public ReadOnlyCollection<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickName) => iLoad.LoadPlayerByFirstNameAndNickname(firstName, nickName);
     
     /// <summary>
     /// Method to load a player by lastname and nickname
@@ -81,7 +82,7 @@ public class PersistanceManager
     /// <param name="lastName">Lastname to search</param>
     /// <param name="nickname">Nickname to search</param>
     /// <returns>List of players</returns>
-    public List<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickName) => iLoad.LoadPlayerByLastNameAndNickname(lastName, nickName);
+    public ReadOnlyCollection<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickName) => iLoad.LoadPlayerByLastNameAndNickname(lastName, nickName);
     /*========== End Players ==========*/
     
     
@@ -104,14 +105,14 @@ public class PersistanceManager
     /// </summary>
     /// <param name="startDate">Start date of games</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByStartDate(DateTime startDate) => iLoad.LoadGameByStartDate(startDate);
+    public ReadOnlyCollection<Game> LoadGameByStartDate(DateTime startDate) => iLoad.LoadGameByStartDate(startDate);
     
     /// <summary>
     /// Method to load games by end date
     /// </summary>
     /// <param name="endDate">End date of games</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByEndDate(DateTime endDate) => iLoad.LoadGameByEndDate(endDate);
+    public ReadOnlyCollection<Game> LoadGameByEndDate(DateTime endDate) => iLoad.LoadGameByEndDate(endDate);
     
     /// <summary>
     /// Method to load games by an interval of dates
@@ -119,7 +120,7 @@ public class PersistanceManager
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate) => iLoad.LoadGameByDateInterval(startDate, endDate);
+    public ReadOnlyCollection<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate) => iLoad.LoadGameByDateInterval(startDate, endDate);
     
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -128,7 +129,7 @@ public class PersistanceManager
     /// <param name="endDate">End date of the interval</param>
     /// <param name="group">Group to search</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate, Group group) => iLoad.LoadGameByDateAndGroupInterval(startDate, endDate, group);
+    public ReadOnlyCollection<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate, Group group) => iLoad.LoadGameByDateAndGroupInterval(startDate, endDate, group);
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -137,27 +138,27 @@ public class PersistanceManager
     /// <param name="endDate">End date of the interval</param>
     /// <param name="player">Player to search</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate, Player player) => iLoad.LoadGameByDateAndPlayerInterval(startDate, endDate, player);
+    public ReadOnlyCollection<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate, Player player) => iLoad.LoadGameByDateAndPlayerInterval(startDate, endDate, player);
     
     /// <summary>
     /// Method to load games by player
     /// </summary>
     /// <param name="player">Player to search</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByPlayer(Player player) => iLoad.LoadGameByPlayer(player);
+    public ReadOnlyCollection<Game> LoadGameByPlayer(Player player) => iLoad.LoadGameByPlayer(player);
     
     /// <summary>
     /// Method to load games by a group
     /// </summary>
     /// <param name="group">Group to search</param>
     /// <returns>List of games</returns>
-    public List<Game> LoadGameByGroup(Group group) => iLoad.LoadGameByGroup(group);
+    public ReadOnlyCollection<Game> LoadGameByGroup(Group group) => iLoad.LoadGameByGroup(group);
     
     /// <summary>
     /// Method to load all games
     /// </summary>
     /// <returns>List of games</returns>
-    public List<Game> LoadAllGames() => iLoad.LoadAllGames();
+    public ReadOnlyCollection<Game> LoadAllGames() => iLoad.LoadAllGames();
     /*========== End Games ==========*/
     
     
@@ -179,14 +180,14 @@ public class PersistanceManager
     /// Method to load all groups
     /// </summary>
     /// <returns>List of groups</returns>
-    public List<Group> LoadAllGroups() => iLoad.LoadAllGroups();
+    public ReadOnlyCollection<Group> LoadAllGroups() => iLoad.LoadAllGroups();
     
     /// <summary>
     /// Method to load a group by player
     /// </summary>
     /// <param name="player">Player to search</param>
     /// <returns>List of groups</returns>
-    public List<Group> LoadGroupsByPlayer(Player player) => iLoad.LoadGroupsByPlayer(player);
+    public ReadOnlyCollection<Group> LoadGroupsByPlayer(Player player) => iLoad.LoadGroupsByPlayer(player);
     /*========== End Groups ==========*/
     
     
@@ -202,6 +203,6 @@ public class PersistanceManager
     /// Method to load all rules
     /// </summary>
     /// <returns>List of rules</returns>
-    public List<IRules> LoadAllRules() =>iLoad.LoadAllRules();
+    public ReadOnlyCollection<IRules> LoadAllRules() =>iLoad.LoadAllRules();
     /*========== End Rules ==========*/
 }
