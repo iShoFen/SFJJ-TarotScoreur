@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Model.games;
 
@@ -10,17 +11,39 @@ public partial class Game : IEquatable<Game>
     /// <summary>
     /// The unique identifier for the game.
     /// </summary>
-    public long Id { get; }
-        
+    public ulong Id { get; }
+
     /// <summary>
     /// The name of the game
     /// </summary>
-    public string Name { get; }
-        
+    public string Name
+    {
+        get => _name;
+        private init => _name = string.IsNullOrWhiteSpace(value) 
+            ? throw new ArgumentException("Game name cannot be null or empty") 
+            : value;
+    }
+    private readonly string _name;
+
+    public IRules Rules
+    {
+        get => _rules;
+        private init => _rules = value ?? throw new ArgumentNullException(nameof(value), "Game rules cannot be null");
+    }
+    private readonly IRules _rules;
+
+
     /// <summary>
     /// The start date of the game
     /// </summary>
-    public DateTime StartDate { get; }
+    public DateTime StartDate
+    {
+        get => _startDate;
+        private init => _startDate = value == default
+            ? throw new ArgumentException("Game start date cannot be the default value")
+            : value;
+    }
+    private readonly DateTime _startDate;
         
     /// <summary>
     /// The end date of the game
@@ -28,16 +51,12 @@ public partial class Game : IEquatable<Game>
     /// <exception cref="ArgumentException"></exception>
     public DateTime? EndDate { 
         get => _endDate;
-        init
-        {
-            if (value < StartDate) throw new ArgumentException("End date cannot be before start date");
-            _endDate = value ?? DateTime.Now;
-        }
+        private init => _endDate = value < StartDate
+            ? throw new ArgumentException("Game end date cannot be before the start date")
+            : value;
     }
     private readonly  DateTime? _endDate;
-
-    public IRules Rules { get; }
-        
+    
     /// <summary>
     /// The list of Hands played in the game
     /// </summary>
@@ -49,18 +68,20 @@ public partial class Game : IEquatable<Game>
     /// </summary>
     public ReadOnlyCollection<Player> Players { get; }
     private readonly List<Player> _players = new();
-        
+
     /// <summary>
     /// Full constructor used to create a new game from existing data
     /// </summary>
     /// <param name="id"> The id of the game in the database </param>
     /// <param name="name"> The name of the game </param>
+    /// <param name="rules"> The rules of the game </param>
     /// <param name="startDate"> The start date of the game </param>
     /// <param name="endDate"> The end date of the game </param>
-    public Game(long id, string name, DateTime startDate, DateTime? endDate)
+    public Game(ulong id, string name, IRules rules, DateTime startDate, DateTime? endDate)
     {
         Id = id;
         Name = name;
+        Rules = rules;
         StartDate = startDate;
         EndDate = endDate;
         Players = new ReadOnlyCollection<Player>(_players);
@@ -71,8 +92,9 @@ public partial class Game : IEquatable<Game>
     /// Constructor used to create a new game
     /// </summary>
     /// <param name="name"> The name of the game </param>
+    /// <param name="rules"> The rules of the game </param>
     /// <param name="startDate"> The start date of the game </param>
-    public Game(string name, DateTime startDate) : this(0, name, startDate, null) { }
+    public Game(string name, IRules rules, DateTime startDate) : this(0L, name, rules, startDate, null) { }
 
     /// <summary>
     /// Add a player to the game
@@ -92,7 +114,11 @@ public partial class Game : IEquatable<Game>
     /// </summary>
     /// <param name="players"> The players to add </param>
     /// <returns> true if all players were added, false if at least one player was already in the game </returns>
-    public bool AddPlayers(params Player[] players) => players.All(AddPlayer);
+    public bool AddPlayers(params Player[] players)
+    {
+        var canAllBeAdded = players.Any(player => _players.Contains(player));
+        return !canAllBeAdded && players.All(AddPlayer);
+    }
     
     /// <summary>
     /// Add a hand to the game
@@ -100,13 +126,23 @@ public partial class Game : IEquatable<Game>
     /// <param name="hand"> The hand to add </param>
     /// <returns> true if the hand was added, false if the hand was already in the game </returns>
     public bool AddHand(Hand hand) => !_hands.ContainsKey(hand.HandNumber) && _hands.TryAdd(hand.HandNumber, hand);
-    
+
     /// <summary>
     /// Add multiple hands to the game
     /// </summary>
     /// <param name="hands"> The hands to add </param>
     /// <returns> true if all hands were added, false if at least one hand was already in the game </returns>
-    public bool AddHands(params Hand[] hands) =>  hands.All(AddHand);
+    public bool AddHands(params Hand[] hands)
+    {
+        var canAllBeAdded = hands.Any(hand => _hands.ContainsKey(hand.HandNumber));
+        return !canAllBeAdded && hands.All(AddHand);
+    }
+
+    /// <summary>
+    /// Check if the game is valid
+    /// </summary>
+    /// <returns> true if the game is valid, false otherwise </returns>
+    public Validity IsValid() => Rules.IsGameValid(this);
     
     /// <summary>
     /// Get the score of all the hands played in the game
