@@ -5,10 +5,15 @@ namespace Model
 {
     public partial class Hand
     {
+        public ulong Id { get; }
         /// <summary>
         /// The number of the hand
         /// </summary>
         public int HandNumber { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IRules _rules;
         
         /// <summary>
         /// The date of the hand
@@ -58,21 +63,27 @@ namespace Model
         /// <summary>
         /// Full constructor used to create a new game from existing data
         /// </summary>
+        /// <param name="id">The unique identifier for the hand</param>
         /// <param name="handNumber"> The number of the hand </param>
+        /// <param name="rules"> The Rules of the game applied to this hand </param>
         /// <param name="date"> The date of the hand </param>
         /// <param name="takerScore"> The score of the taker </param>
         /// <param name="twentyOne"> Indicates if the taker as the twenty one oudler </param>
         /// <param name="excuse"> Indicates if the taker as the excuse oudler </param>
+        /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
         /// <param name="biddings"> Players bidding details </param>
-        public Hand(int handNumber, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, IEnumerable<KeyValuePair<Player, (Bidding, Poignee)>> biddings)
+        public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
         {
+            Id = id;
             HandNumber = handNumber;
+            _rules = rules;
             Date = date;
             TakerScore = takerScore;
             TwentyOne = twentyOne;
             Excuse = excuse;
             Petit = petit;
-            _biddings = biddings.ToDictionary(x => x.Key, x => x.Value);
+            Chelem = chelem;
+            _biddings = biddings.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Biddings = new ReadOnlyDictionary<Player, (Bidding, Poignee)>(_biddings);
         }
         
@@ -80,9 +91,9 @@ namespace Model
         /// Constructor used to create a new hand
         /// </summary>
         /// <param name="number"> The number of the hand </param>
+        /// <param name="rules"> The Rules of the game applied to this hand </param>
         /// <param name="date"> The date of the hand </param>
-        public Hand(int number, DateTime date) : this(number, date, 0, null, null,PetitResult.Unknown, new Dictionary<Player, (Bidding, Poignee)>()) { }
-        
+        public Hand(int number, IRules rules, DateTime date) : this(0, number, rules, date, 0, null, null, PetitResult.Unknown, Chelem.Unknown) { }
         /// <summary>
         /// Add a bidding to the hand
         /// </summary>
@@ -107,8 +118,14 @@ namespace Model
         /// <returns> True if the hand is valid, false otherwise </returns>
         public bool IsValid()
         {
-            throw new NotImplementedException();
+            _rules.IsHandValid(this, out var valid);
+            return valid;
         }
-        
+
+        public IReadOnlyDictionary<Player, int> getScores()
+        {
+            return _rules.GetHandScore(this);
+        }
+
     }
 }

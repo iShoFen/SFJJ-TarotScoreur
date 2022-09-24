@@ -19,7 +19,7 @@ namespace Model
 
         public String Name => GetType().Name;
 
-        private readonly Dictionary<int, int> _oudlersPoints = new Dictionary<int, int>()
+        private readonly Dictionary<int, int> _oudlersPoints = new()
         {
             [0] = 56,
             [1] = 51,
@@ -27,8 +27,8 @@ namespace Model
             [3] = 36
 
         };
-        private Dictionary<Bidding, int> _biddingPrice;
-        private Dictionary<Bidding, int> _multiplicators = new Dictionary<Bidding, int>()
+        //private Dictionary<Bidding, int> _biddingPrice;
+        private Dictionary<Bidding, int> _multiplicators = new()
         {
         
           [Bidding.Petite] = 1,
@@ -38,45 +38,101 @@ namespace Model
          
         };
 
-        private readonly Dictionary<Poignee, int> _primesPoignee = new Dictionary<Poignee, int>()
+        private readonly Dictionary<Poignee, int> _primesPoignee = new()
         {
+            [Poignee.None] = 0,
             [Poignee.Simple] = 20,
             [Poignee.Double] = 30,
             [Poignee.Triple] = 40    
         };
 
-        private Dictionary<Chelem, int> _primesChelem = new Dictionary<Chelem, int>()
+        private Dictionary<Chelem, int> _primesChelem = new()
         {
             [Chelem.Unknown] = 0,
             [Chelem.Success] = 200,
             [Chelem.AnnouncedSuccess] = 400,
             [Chelem.AnnouncedFail] = -200
         };
-        private List<Player> _playerList;
-        private int _primeAuBout;
+        private int _primeAuBout = 10;
 
-        public int GetHandScore(Hand hand)
+        public IReadOnlyDictionary<Player,int> GetHandScore(Hand hand)
         {
-            if (_playerList == null ||_playerList.Count < MinNbPlayers)
+            var neededScore = GetOudlersPoints(GetNumberOfOudlers(hand));
+            var takerScore = hand.TakerScore;
+            
+            var score = GetTruePointOfTaker(takerScore,neededScore);
+            if(hand.Petit == PetitResult.AuBout) score += _primeAuBout;
+            score = score * GetMultiplicator(hand.Biddings.Select(bidding => bidding.Value.Item1).ToList());
+            if (score < 0) score -= GetPrimePoignee((hand.Biddings.Select(bidding => bidding.Value.Item2).ToList()));
+            else score += GetPrimePoignee((hand.Biddings.Select(bidding => bidding.Value.Item2).ToList()));
+            score += GetPrimeChelem(hand.Chelem);
+            return GetAllPlayersScore(hand, score);
+        }
+
+        private IReadOnlyDictionary<Player, int> GetAllPlayersScore(Hand hand, int takerScore)
+        {
+            var scores = new Dictionary<Player, int>();
+            foreach (var player in hand.Biddings)
             {
-                throw new Exception("Nombre de joueurs invalide");
-            }
-            if(hand == null)
-            {
-                throw new ArgumentException("Manche invalide");
-            }
-
-            var neededScore = 56;
-            var score = hand.TakerScore;
-
-            if (score > neededScore)
-            {
-                score -= neededScore;
+                if ((player.Value.Item1 & Bidding.Prise) == Bidding.Prise)
+                {
+                    scores.Add(player.Key, hand.Biddings.Count == 5? takerScore * 2 : takerScore * hand.Biddings.Count-1);
+                }
+                else if (player.Value.Item1 == Bidding.King)
+                {
+                    scores.Add(player.Key, takerScore);
+                }
+                else scores.Add(player.Key, -takerScore);
             }
 
+            return scores;
+        }
+        /// <summary>
+        /// Return the number of oudlers in the hand
+        /// <param name="hand">Hand which is use</param>
+        /// </summary>
+        /// <returns>Number of oudlers</returns>
+        private int GetNumberOfOudlers(Hand hand)
+        {
+            var nbOudlers = 0;
+            if(hand.TwentyOne == true) ++nbOudlers;
+            if(hand.Excuse == true) ++nbOudlers;
+            if(hand.Petit == PetitResult.Owned) ++nbOudlers;
+            
+            return nbOudlers;
+        }
+        /// <summary>
+        /// Return the number of points needed to win the hand
+        /// </summary>
+        /// <param name="nbOudlers">Number of oudlers</param>
+        /// <returns>Needed point to win</returns>
+        private int GetOudlersPoints(int nbOudlers)
+        {
+            return _oudlersPoints[nbOudlers];
+        }
 
+        private int GetTruePointOfTaker(int takerScore, int neededScore)
+        {
+            var score = 0;
+            if (takerScore >= neededScore) score = 25 + (takerScore - neededScore);
+            else score = -25 - (neededScore - takerScore);
             return score;
         }
+        
+        private int GetMultiplicator(IEnumerable<Bidding> biddings)
+        {
+            var multiplicator = 0;
+            foreach (var bidding in biddings.Where(bidding => (bidding & Bidding.Prise) == Bidding.Prise))
+            {
+                multiplicator = _multiplicators[bidding];
+            }
+
+            return multiplicator;
+        }
+        
+        private int GetPrimePoignee(IEnumerable<Poignee> poignees) => poignees.Sum(poignee => _primesPoignee[poignee]);
+
+        private int GetPrimeChelem(Chelem chelem) => _primesChelem[chelem];
 
         public Validity IsGameValid(Game game)
         {
@@ -84,14 +140,13 @@ namespace Model
             return game.Players.Count >= MaxNbPlayers ? Validity.EnoughPlayers : Validity.Valid;
         }
 
-        public Validity IsHandValid(Hand hand)
+        public Validity IsHandValid(Hand hand, out bool isValid)
         {
             Validity valid;
-            List<Bidding> biddings = hand.Biddings.Select(bidding => bidding.Value.Item1).ToList();
+            isValid = false;
+            var biddings = hand.Biddings.Select(bidding => bidding.Value.Item1).ToList();
             valid = IsPlayersBiddingValid(biddings);
-            //If validity isn't valid
-            if (!valid.Equals(Validity.Valid)) return valid;
-            
+            if (valid == Validity.Valid) isValid = true;
             return valid;
         }
 
@@ -102,9 +157,9 @@ namespace Model
             
             foreach (var bidding in biddings)
             {
-                if (bidding.Equals(Bidding.King)) ++nbKing;
+                if (bidding == Bidding.King) ++nbKing;
                 if((bidding & Bidding.Prise) == Bidding.Prise) ++nbTaker;
-                if (bidding.Equals(Bidding.Unknown)) return Validity.PlayerShallHaveBidding;
+                if (bidding == Bidding.Unknown) return Validity.PlayerShallHaveBidding;
             }
 
             if (nbKing > MaxNbKing || (biddings.Count() < 5 && nbKing > 0)) return Validity.TooManyKing;
@@ -112,20 +167,18 @@ namespace Model
             return Validity.Valid;
         }
 
-        public virtual bool Equals(IRules other)
+        public virtual bool Equals(IRules? other)
         {
-            return other.GetType().Equals(GetType());
+            return other != null && other.GetType().Equals(GetType());
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if(ReferenceEquals(obj, null)) return false;
 
             if(ReferenceEquals(this, obj)) return true;
 
-            if(GetType() != obj.GetType()) return false;
-
-            return Equals(obj as FrenchTarotRules);
+            return GetType() == obj.GetType() && Equals(obj as FrenchTarotRules);
         }
         
         /// <summary>

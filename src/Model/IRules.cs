@@ -34,13 +34,13 @@ namespace Model
         /// </summary>
         /// <param name="hand">Manche qui est vérifiée</param>
         /// <returns></returns>
-        public Validity IsHandValid(Hand hand);
+        public Validity IsHandValid(Hand hand, out bool isValid);
         /// <summary>
         /// Calculer et récupérer le score d'une manche
         /// </summary>
         /// <param name="hand">Manche sur laquelle le score est calculé</param>
         /// <returns></returns>
-        public int GetHandScore(Hand hand);
+        public IReadOnlyDictionary<Player,int> GetHandScore(Hand hand);
 
         
 
