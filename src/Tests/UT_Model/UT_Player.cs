@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UT_Model
 {
-    public class UtPlayer
+    public class UT_Player
     {
         //[Fact]
         //public void TestConstructor()
