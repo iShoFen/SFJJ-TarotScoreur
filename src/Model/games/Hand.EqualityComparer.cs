@@ -1,4 +1,6 @@
-﻿namespace Model.games;
+﻿using Model.enums;
+
+namespace Model.games;
 
 public partial class Hand
 {
@@ -22,8 +24,8 @@ public partial class Hand
             if (x.TwentyOne != y.TwentyOne) return false;
             if (x.Petit != y.Petit) return false;
             if (x.Chelem != y.Chelem) return false;
-            if (x.Biddings.Keys.SequenceEqual(y.Biddings.Keys)) return false;
-            if (x.Biddings.Values.SequenceEqual(y.Biddings.Values)) return false;
+            if (!x.Biddings.Keys.SequenceEqual(y.Biddings.Keys)) return false;
+            if (!x.Biddings.Values.SequenceEqual(y.Biddings.Values)) return false;
 
             return true;
         }
@@ -33,12 +35,9 @@ public partial class Hand
         /// </summary>
         /// <param name="obj"> The hand to get the hash code of </param>
         /// <returns> The hash code of the hand </returns>
-        public int GetHashCode(Hand obj) => 
-            HashCode.Combine(obj.HandNumber, obj.Date, obj.Rules, obj.Excuse, obj.TwentyOne, obj.Petit, obj.Chelem, obj.TakerScore) 
-            ^ obj.Biddings.Keys.Aggregate(0, (current, key) => current ^ key.GetHashCode()) 
-            ^ obj.Biddings.Values.Aggregate(0, (current, value) => current ^ value.GetHashCode());
+        public int GetHashCode(Hand obj) => obj.HandNumber % 31;
     }
-          
+
     /// <summary>
     /// The full Hand equality comparer : all the properties are compared.
     /// </summary>

@@ -29,11 +29,7 @@ public partial class Game
         /// </summary>
         /// <param name="obj"> The hand to get the hash code of </param>
         /// <returns> The hash code of the hand </returns>
-        public int GetHashCode(Game obj) => 
-            HashCode.Combine(obj.Name, obj.Rules, obj.StartDate, obj.EndDate) 
-            ^ obj.Players.Aggregate(0, (current, key) => current ^ key.GetHashCode())
-            ^ obj.Hands.Keys.Aggregate(0, (current, key) => current ^ key.GetHashCode())
-            ^ obj.Hands.Values.Aggregate(0, (current, key) => current ^ key.GetHashCode());
+        public int GetHashCode(Game obj) => obj.Name.GetHashCode() % 31;
     }
           
     /// <summary>

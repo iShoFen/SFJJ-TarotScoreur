@@ -160,7 +160,7 @@ public partial class Game : IEquatable<Game>
     }
 
     /// <summary>
-    /// Checks if this Game is equal to another object
+    /// Check if this Game is equal to another object
     /// </summary>
     /// <param name="obj"> The object to compare to </param>
     /// <returns> True if the object is equal to this Game, false otherwise </returns>
@@ -171,11 +171,15 @@ public partial class Game : IEquatable<Game>
         return obj.GetType() == GetType() && Equals(obj as Game);
     }
 
-    public override int GetHashCode() => Id == 0 ? FullComparer.GetHashCode(this) : Id.GetHashCode();
+    /// <summary>
+    /// Get the hash code of the Game
+    /// </summary>
+    /// <returns> The hash code of the Game </returns>
+    public override int GetHashCode() => Id == 0 ? FullComparer.GetHashCode(this) : Id.GetHashCode() % 31;
     
     /// <summary>
     /// Get a string representation of the game
     /// </summary>
     /// <returns> A string representation of the game </returns>
-    public override string ToString() => $"({Id}) {Name} {StartDate} {EndDate}";
+    public override string ToString() => $"({Id}) {Name} {StartDate:dd/MM/yyyy} {EndDate:dd/MM/yyyy}";
 }

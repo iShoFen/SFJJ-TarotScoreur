@@ -161,7 +161,7 @@ public partial class Hand : IEquatable<Hand>
     /// Get the hash code of the Hand
     /// </summary>
     /// <returns> The hash code of the Hand </returns>
-    public override int GetHashCode() => Id == 0 ? FullComparer.GetHashCode(this) : Id.GetHashCode();
+    public override int GetHashCode() => Id == 0 ? FullComparer.GetHashCode(this) : Id.GetHashCode() % 31;
 
     /// <summary>
     /// Get a string representation of the Hand

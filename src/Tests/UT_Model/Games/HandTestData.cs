@@ -249,40 +249,92 @@ public static class HandTestData
             true,
             new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
-            new Hand(45L, 25, new FrenchTarotRules(), DateTime.MaxValue, 25, null, null, PetitResult.Unknown,
-                    Chelem.Unknown)
+            new Hand(45L, 25, new FrenchTarotRules(), DateTime.MaxValue, 25, null, null, PetitResult.Unknown, Chelem.Unknown)
+        };
+        yield return new object[]
+        {
+            true,
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.MaxValue, 45, false, false, PetitResult.Lost, Chelem.Announced,
+                KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 0, true, true, PetitResult.Owned, Chelem.Fail,
+                KeyValuePair.Create(new Player("Samuel", "Sirven", "Sam", "  "), (Bidding.Petite, Poignee.Simple)))
+        };
+        yield return new object[]
+        {
+            true,
+            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost,
+                Chelem.Announced),
+            new Hand(32L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+        };
+        yield return new object[]
+        {
+            true,
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost,
+                Chelem.Announced),
+            new Hand(0L, 32, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+        };
+        yield return new object[]
+        {
+            false,
+            new Hand(2L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost,
+                Chelem.Announced),
+            new Hand(32L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+        };
+
+        yield return new object[]
+        {
+            false,
+            new Hand(0L, 2, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost,
+                Chelem.Announced),
+            new Hand(0L, 32, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+        };
+    }
+    
+    public static IEnumerable<object?[]> Data_TestEquals()
+    {
+        yield return new object[]
+        {
+            true,
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost,
+                Chelem.Announced),
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             true,
             new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
-                KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None)))
+            new Hand(45L, 25, new FrenchTarotRules(), DateTime.MaxValue, 25, null, null, PetitResult.Unknown, Chelem.Unknown)
+        };
+        yield return new object?[]
+        {
+            false,
+            new Hand(1, new FrenchTarotRules(), DateTime.Now),
+            null,
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 0, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(45L, 0, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 0, false, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 0, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, true, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, true, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
@@ -318,24 +370,5 @@ public static class HandTestData
             new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Samuel", "Sirven", "Sam", ""), (Bidding.Unknown, Poignee.None)))
         };
-    }
-    
-    public static IEnumerable<object?[]> Data_TestEquals()
-    {
-        yield return new object?[]
-        {
-            false,
-            new Hand(1, new FrenchTarotRules(), DateTime.Now),
-            null,
-        };
-        foreach (var data in Data_TestHashCode())
-        {
-            yield return new[]
-            {
-                data[0],
-                data[1],
-                data[2]
-            };
-        }
     }
 }

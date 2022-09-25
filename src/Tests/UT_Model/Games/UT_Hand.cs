@@ -82,20 +82,26 @@ public class UT_Hand
 
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestHashCode), MemberType = typeof(HandTestData))]
-    public void TestHashCode(bool expResult, Hand game1, Hand game2) =>
-        Assert.Equal(expResult, game1.GetHashCode() == game2.GetHashCode());
+    public void TestHashCode(bool expResult, Hand hand1, Hand hand2)
+    {
+        var testHashCode1 = hand1.GetHashCode();
+        var testHashCode2 = hand2.GetHashCode();
+        Assert.Equal(expResult, hand1.GetHashCode() == hand2.GetHashCode());
+    }
 
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestEquals), MemberType = typeof(HandTestData))]
-    public void TestEquals(bool expResult, Hand game, object? game2) =>
-        Assert.Equal(expResult, game.Equals(game2));
+    public void TestEquals(bool expResult, Hand hand1, object? hand2) =>
+        Assert.Equal(expResult, hand1.Equals(hand2));
 
     [Fact]
     public void TestEquals_Null_Type_Ref()
     {
         Hand hand = new(1, new FrenchTarotRules(), DateTime.Now);
-        Assert.False(hand.Equals(new object()));
-        Assert.False(hand.Equals(null));
+        Assert.False(Hand.FullComparer.Equals(hand, null));
+        Assert.False(Hand.FullComparer.Equals(null, hand));
+        Assert.False(hand!.Equals(null));
+        Assert.False(hand!.Equals(new object()));
         Assert.True(hand!.Equals(hand as object));
     }
 }
