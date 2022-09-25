@@ -1,15 +1,14 @@
-using System.Diagnostics;
 using Model;
 using Model.games;
 using Xunit;
 
-namespace UT_Model;
+namespace UT_Model.Games;
 
 public class UT_Game
 {
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestFullConstructor), MemberType = typeof(GameTestData))]
-    public void TestFullConstructor(bool isValid, ulong expId, string expName, IRules expRules, DateTime expStartDate, DateTime? expEndDate)
+    public void TestFullConstructor(bool isValid, ulong expId, string expName, IRules? expRules, DateTime expStartDate, DateTime? expEndDate)
     {
         if (isValid)
         {
@@ -36,6 +35,7 @@ public class UT_Game
         IRules expRules = new FrenchTarotRules();
         var expStartDate = DateTime.Now;
         Game game = new (expName, expRules, expStartDate);
+        
         Assert.Equal(expId, game.Id);
         Assert.Equal(expName, game.Name);
         Assert.Equal(expRules, game.Rules);
@@ -75,9 +75,9 @@ public class UT_Game
     
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestAddHands), MemberType = typeof(GameTestData))]
-    public void TestAddHands(bool expResult, IEnumerable<KeyValuePair<int, Hand>> exHands, Game game, IEnumerable<Hand> hands)
+    public void TestAddHands(bool expResult, IEnumerable<KeyValuePair<int, Hand>> exHands, Game game, params Hand[] hands)
     {
-        Assert.Equal(expResult, game.AddHands(hands.ToArray()));
+        Assert.Equal(expResult, game.AddHands(hands));
         foreach (var exHand in exHands)
         {
             Assert.Equal(exHand.Key, exHand.Value.HandNumber);
@@ -98,7 +98,7 @@ public class UT_Game
     [Fact]
     public void TestEquals_Null_Ref()
     {
-        var game = new Game("Test", new FrenchTarotRules(), DateTime.Now);
+        Game game = new("Test", new FrenchTarotRules(), DateTime.Now);
         Assert.False(game.Equals(null));
         Assert.True(game!.Equals(game as object));
     }

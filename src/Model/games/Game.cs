@@ -20,7 +20,7 @@ public partial class Game : IEquatable<Game>
     {
         get => _name;
         private init => _name = string.IsNullOrWhiteSpace(value) 
-            ? throw new ArgumentException("Game name cannot be null or empty") 
+            ? throw new ArgumentException("Game name cannot be null or empty", nameof(value))
             : value;
     }
     private readonly string _name;
@@ -40,7 +40,7 @@ public partial class Game : IEquatable<Game>
     {
         get => _startDate;
         private init => _startDate = value == default
-            ? throw new ArgumentException("Game start date cannot be the default value")
+            ? throw new ArgumentException("Game start date cannot be the default value", nameof(value))
             : value;
     }
     private readonly DateTime _startDate;
@@ -52,7 +52,7 @@ public partial class Game : IEquatable<Game>
     public DateTime? EndDate { 
         get => _endDate;
         private init => _endDate = value < StartDate
-            ? throw new ArgumentException("Game end date cannot be before the start date")
+            ? throw new ArgumentException("Game end date cannot be before the start date", nameof(value))
             : value;
     }
     private readonly  DateTime? _endDate;
@@ -125,18 +125,15 @@ public partial class Game : IEquatable<Game>
     /// </summary>
     /// <param name="hand"> The hand to add </param>
     /// <returns> true if the hand was added, false if the hand was already in the game </returns>
-    public bool AddHand(Hand hand) => !_hands.ContainsKey(hand.HandNumber) && _hands.TryAdd(hand.HandNumber, hand);
+    public bool AddHand(Hand hand) => _hands.TryAdd(hand.HandNumber, hand);
 
     /// <summary>
     /// Add multiple hands to the game
     /// </summary>
     /// <param name="hands"> The hands to add </param>
     /// <returns> true if all hands were added, false if at least one hand was already in the game </returns>
-    public bool AddHands(params Hand[] hands)
-    {
-        var canAllBeAdded = hands.Any(hand => _hands.ContainsKey(hand.HandNumber));
-        return !canAllBeAdded && hands.All(AddHand);
-    }
+    public bool AddHands(params Hand[] hands) => hands.All(hand => !_hands.ContainsKey(hand.HandNumber)) && hands.All(AddHand);
+    
 
     /// <summary>
     /// Check if the game is valid

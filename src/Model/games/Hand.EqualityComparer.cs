@@ -5,7 +5,7 @@ public partial class Hand
     private sealed class FullEqComparer : IEqualityComparer<Hand>
     {
         /// <summary>
-        /// Compares all the properties of the two hands and returns true if they are equal.
+        /// Compares all the properties of the two hands except the Id and returns true if they are equal.
         /// </summary>
         /// <param name="x"> The first hand to compare </param>
         /// <param name="y"> The second hand to compare </param>
@@ -15,9 +15,8 @@ public partial class Hand
             return
                 x is not null &&
                 y is not null &&
-                x.Id == y.Id &&
                 x.HandNumber == y.HandNumber &&
-                x._rules.Equals(y._rules) &&
+                x.Rules.Equals(y.Rules) &&
                 x.Date == y.Date &&
                 x.Excuse == y.Excuse &&
                 x.TwentyOne == y.TwentyOne &&
@@ -34,8 +33,7 @@ public partial class Hand
         /// <param name="obj"> The hand to get the hash code of </param>
         /// <returns> The hash code of the hand </returns>
         public int GetHashCode(Hand obj) => 
-            HashCode.Combine(obj.Id, obj.HandNumber, obj.Date, obj.Excuse, obj.TwentyOne, obj.Petit, obj.Chelem, obj.TakerScore) 
-            ^ obj._rules.GetHashCode()
+            HashCode.Combine(obj.HandNumber, obj.Date, obj.Rules, obj.Excuse, obj.TwentyOne, obj.Petit, obj.Chelem, obj.TakerScore) 
             ^ obj.Biddings.Keys.Aggregate(0, (current, key) => current ^ key.GetHashCode()) 
             ^ obj.Biddings.Values.Aggregate(0, (current, value) => current ^ value.GetHashCode());
     }

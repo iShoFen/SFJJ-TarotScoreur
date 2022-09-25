@@ -31,7 +31,8 @@ public partial class Game
         public int GetHashCode(Game obj) => 
             HashCode.Combine(obj.Name, obj.Rules, obj.StartDate, obj.EndDate) 
             ^ obj.Players.Aggregate(0, (current, key) => current ^ key.GetHashCode())
-            ^ obj.Hands.Aggregate(0, (current, key) => current ^ key.Value.GetHashCode());
+            ^ obj.Hands.Keys.Aggregate(0, (current, key) => current ^ key.GetHashCode())
+            ^ obj.Hands.Values.Aggregate(0, (current, key) => current ^ key.GetHashCode());
     }
           
     /// <summary>
