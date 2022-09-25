@@ -1,6 +1,4 @@
-﻿using Model.enums;
-
-namespace Model.games;
+﻿namespace Model.games;
 
 public partial class Hand
 {

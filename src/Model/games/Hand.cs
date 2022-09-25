@@ -82,6 +82,7 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="twentyOne"> Indicates if the taker as the twenty one oudler </param>
     /// <param name="excuse"> Indicates if the taker as the excuse oudler </param>
     /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
+    /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
     public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
     {

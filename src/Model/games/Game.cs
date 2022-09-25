@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Model.games;
 
@@ -114,11 +113,9 @@ public partial class Game : IEquatable<Game>
     /// </summary>
     /// <param name="players"> The players to add </param>
     /// <returns> true if all players were added, false if at least one player was already in the game </returns>
-    public bool AddPlayers(params Player[] players)
-    {
-        var canAllBeAdded = players.Any(player => _players.Contains(player));
-        return !canAllBeAdded && players.All(AddPlayer);
-    }
+    public bool AddPlayers(params Player[] players) =>
+        players.All(player => !_players.Contains(player)) && players.All(AddPlayer);
+    
     
     /// <summary>
     /// Add a hand to the game
