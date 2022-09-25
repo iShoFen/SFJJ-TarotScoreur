@@ -1,28 +1,10 @@
 ﻿using Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace UT_Model
 {
     public class UT_Player
     {
-        //[Fact]
-        //public void TestConstructor()
-        //{
-        //    Player player = new Player(1, "Jordan", "Artzet", "Firologia", "avatar.png");
-        //    Assert.NotNull(player);
-        //    Assert.Equal(1, player.Id);
-        //    Assert.Equal("Jordan", player.FirstName);
-        //    Assert.Equal("Artzet", player.LastName);
-        //    Assert.Equal("Firologia", player.NickName);
-        //    Assert.Equal("avatar.png", player.Avatar);
-        //}
-
-
         [Theory]
         [InlineData(true, 0, "Florent", "Marques", "Flo", "monAvatar", 0, "Florent", "Marques", "Flo", "monAvatar")]
         [InlineData(true, 0, "Florent", "Marques", "    ", "monAvatar", 0, "Florent", "Marques", "", "monAvatar")]
@@ -94,7 +76,7 @@ namespace UT_Model
         [Fact]
         public void TestEqualsNullRef()
         {
-            Player player = new Player(0, "Florent", "MARQUES", "Flo", "avatar");
+            Player player = new(0, "Florent", "MARQUES", "Flo", "avatar");
             Assert.False(player.Equals(null));
         }
 
@@ -103,6 +85,13 @@ namespace UT_Model
         public void TestEqualsWithPlayer(bool expectedResult, Player player1, Player player2)
         {
             Assert.Equal(expectedResult, player1.Equals(player2));
+        }
+
+        [Theory]
+        [MemberData(nameof(PlayerTestData.Data_TestFullComparer), MemberType = typeof(PlayerTestData))]
+        public void TestEqualsFullComparer(bool expectedResult, Player player1, Player player2)
+        {
+            Assert.Equal(expectedResult, Player.PlayerFullComparer.Equals(player1, player2));
         }
     }
 }

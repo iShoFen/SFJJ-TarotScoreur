@@ -2,7 +2,7 @@
 
 namespace UT_Model;
 
-public class PlayerTestData
+class PlayerTestData
 {
     public static IEnumerable<object[]> Data_TestHashCode()
     {
@@ -202,6 +202,41 @@ public class PlayerTestData
             true,
             new Player(4, "Florent", "MARQUES", "Flo", "avatar"),
             new Player(4, "Samuel", "Sirven", "Sam", "avatar")
+        };
+    }
+
+    public static IEnumerable<object?[]> Data_TestFullComparer()
+    {
+        Player p = new Player(4, "Florent", "MARQUES", "Flo", "avatar");
+        yield return new object?[]
+        {
+            true,
+            p,
+            p
+        };
+        yield return new object?[]
+        {
+            false,
+            null,
+            p
+        };
+        yield return new object?[]
+        {
+            false,
+            p,
+            null
+        };
+        yield return new object?[]
+        {
+            false,
+            new Player(4, "Florent", "MARQUES", "Flo", "avatar"),
+            new User( "Florent", "MARQUES", "Flo", "avatar", "email", "password")
+        };
+        yield return new object?[]
+        {
+            true,
+            new Player(4, "Florent", "MARQUES", "Flo", "avatar"),
+            new Player(4, "Florent", "MARQUES", "Flo", "avatar")
         };
     }
 }
