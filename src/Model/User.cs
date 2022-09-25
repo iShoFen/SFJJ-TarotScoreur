@@ -41,7 +41,7 @@ public partial class User : Player, IEquatable<User>
     /// <param name="avatar">file name of the avatar of this Player</param>
     /// <param name="email">email of this Player</param>
     /// <param name="password">password of this Player</param>
-    public User(long id, string firstName, string lastName, string nickName, string avatar, string email,
+    public User(ulong id, string firstName, string lastName, string nickName, string avatar, string email,
         string password) : base(id, firstName, lastName, nickName, avatar)
     {
         Email = email;

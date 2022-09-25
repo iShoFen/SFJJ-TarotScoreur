@@ -8,7 +8,7 @@
         /// <summary>
         /// id of this Player
         /// </summary>
-        public long Id { get; }
+        public ulong Id { get; }
 
         /// <summary>
         /// first name of this Player
@@ -62,18 +62,8 @@
         /// <param name="nickName">nickname of this Player</param>
         /// <param name="avatar">file name of the avatar of this Player</param>
         public Player(string firstName, string lastName, string nickName, string avatar)
+            : this(0, firstName, lastName, nickName, avatar)
         {
-            if ((string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) &&
-                string.IsNullOrWhiteSpace(nickName))
-            {
-                throw new ArgumentException(
-                    "A player must have a first name and a last name if he do not have a nickname");
-            }
-
-            FirstName = firstName;
-            LastName = lastName;
-            NickName = nickName;
-            Avatar = avatar;
         }
 
         /// <summary>
@@ -84,10 +74,20 @@
         /// <param name="lastName">last name of this Player</param>
         /// <param name="nickName">nickname of this Player</param>
         /// <param name="avatar">file name of the avatar of this Player</param>
-        public Player(long id, string firstName, string lastName, string nickName, string avatar)
-            : this(firstName, lastName, nickName, avatar)
+        public Player(ulong id, string firstName, string lastName, string nickName, string avatar)
         {
+            if ((string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) &&
+                string.IsNullOrWhiteSpace(nickName))
+            {
+                throw new ArgumentException("A player must have a first name and a last name if he do not have a nickname");
+            }
+
             Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            NickName = nickName;
+            Avatar = avatar;
+
         }
 
         public bool Equals(Player? other)
