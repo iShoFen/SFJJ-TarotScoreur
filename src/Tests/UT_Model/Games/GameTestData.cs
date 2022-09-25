@@ -390,60 +390,60 @@ public static class GameTestData
         yield return new object[]
         {
             true,
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null),
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null)
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null),
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null)
         };
         yield return new object[]
         {
             true,
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null),
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null),
             new Game(45L, "bad", new FrenchTarotRules(), DateTime.Now, DateTime.MaxValue)
         };
         yield return new object[]
         {
             true,
-            CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null, 
+            CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022"), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
-            CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null, 
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+            CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022"), 1, null, null, PetitResult.Unknown, Chelem.Unknown)})
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)})
         };
         yield return new object[]
         {
             false,
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.MaxValue),
-            new Game(0L, "bad", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.MaxValue)
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue),
+            new Game(0L, "bad", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue)
         };
         yield return new object[]
         {
             false,
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.MaxValue),
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue),
             new Game(0L, "good", new FrenchTarotRules(), DateTime.Now, DateTime.MaxValue)
         };
         yield return new object[]
         {
             false,
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.MaxValue),
-            new Game(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.Parse("12/24/2022", CultureInfo.InvariantCulture))
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue),
+            new Game(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.Parse("12/24/2022", CultureInfo.InvariantCulture))
         };
         yield return new object[]
         {
             false,
-            CreateGameWithPlayersAndHands(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null, 
+            CreateGameWithPlayersAndHands(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022"), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
             CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null, 
                 Array.Empty<Player>(), 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022"), 1, null, null, PetitResult.Unknown, Chelem.Unknown)})
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)})
         };
         yield return new object[]
         {
             false,
-            CreateGameWithPlayersAndHands(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null, 
+            CreateGameWithPlayersAndHands(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022"), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
-            CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null, 
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+            CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
                 Array.Empty<Hand>())
         };
@@ -454,7 +454,7 @@ public static class GameTestData
         yield return new object?[]
         {
             false,
-            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), null),
+            new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null),
             null,
         };
         foreach (var data in Data_TestHashCode())

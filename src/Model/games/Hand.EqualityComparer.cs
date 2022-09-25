@@ -11,20 +11,21 @@ public partial class Hand
         /// <param name="y"> The second hand to compare </param>
         /// <returns> True if the hands are equal, false otherwise </returns>
         public bool Equals(Hand? x, Hand? y)
-        { 
-            return
-                x is not null &&
-                y is not null &&
-                x.HandNumber == y.HandNumber &&
-                x.Rules.Equals(y.Rules) &&
-                x.Date == y.Date &&
-                x.Excuse == y.Excuse &&
-                x.TwentyOne == y.TwentyOne &&
-                x.Petit == y.Petit &&
-                x.Chelem == y.Chelem &&
-                x.TakerScore == y.TakerScore &&
-                x.Biddings.Keys.SequenceEqual(y.Biddings.Keys) &&
-                x.Biddings.Values.SequenceEqual(y.Biddings.Values);
+        {
+            if (x is null) return false;
+            if (y is null) return false;
+            if (x.HandNumber != y.HandNumber) return false;
+            if (!Equals(x.Rules, y.Rules)) return false;
+            if (x.Date != y.Date) return false;
+            if (x.TakerScore != y.TakerScore) return false;
+            if (x.Excuse != y.Excuse) return false;
+            if (x.TwentyOne != y.TwentyOne) return false;
+            if (x.Petit != y.Petit) return false;
+            if (x.Chelem != y.Chelem) return false;
+            if (x.Biddings.Keys.SequenceEqual(y.Biddings.Keys)) return false;
+            if (x.Biddings.Values.SequenceEqual(y.Biddings.Values)) return false;
+
+            return true;
         }
 
         /// <summary>

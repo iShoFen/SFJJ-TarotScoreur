@@ -1,10 +1,11 @@
+using System.Globalization;
 using Model;
 using Model.enums;
 using Model.games;
 
 namespace UT_Model.Games;
 
-public class HandTestData
+public static class HandTestData
 {
     public static IEnumerable<object?[]> Data_TestFullConstructor()
     {
@@ -269,7 +270,7 @@ public class HandTestData
         {
             false,
             new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022"), 45, false, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {

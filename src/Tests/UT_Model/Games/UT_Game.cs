@@ -23,7 +23,7 @@ public class UT_Game
         }
         else
         {
-            Assert.ThrowsAny<ArgumentException>(() => new Game(expId, expName, expRules, expStartDate, expEndDate));
+            Assert.ThrowsAny<ArgumentException>(() => new Game(expId, expName, expRules!, expStartDate, expEndDate));
         }
     }
     
@@ -96,10 +96,13 @@ public class UT_Game
         Assert.Equal(expResult, game.Equals(game2));
 
     [Fact]
-    public void TestEquals_Null_Ref()
+    public void TestEquals_Null_Type_Ref()
     {
         Game game = new("Test", new FrenchTarotRules(), DateTime.Now);
-        Assert.False(game.Equals(null));
+        Assert.False(Game.FullComparer.Equals(game, null));
+        Assert.False(Game.FullComparer.Equals(null, game));
+        Assert.False(game!.Equals(null));
+        Assert.False(game!.Equals(new object()));
         Assert.True(game!.Equals(game as object));
     }
 }

@@ -91,9 +91,10 @@ public class UT_Hand
         Assert.Equal(expResult, game.Equals(game2));
 
     [Fact]
-    public void TestEquals_Null_Ref()
+    public void TestEquals_Null_Type_Ref()
     {
         Hand hand = new(1, new FrenchTarotRules(), DateTime.Now);
+        Assert.False(hand.Equals(new object()));
         Assert.False(hand.Equals(null));
         Assert.True(hand!.Equals(hand as object));
     }
