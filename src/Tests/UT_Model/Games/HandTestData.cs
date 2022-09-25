@@ -306,6 +306,14 @@ public static class HandTestData
                 KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
             new Hand(45L, 25, new FrenchTarotRules(), DateTime.MaxValue, 25, null, null, PetitResult.Unknown, Chelem.Unknown)
         };
+        yield return new object[]
+        {
+            true,
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.MaxValue, 45, false, false, PetitResult.Lost, Chelem.Announced,
+                KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.MaxValue, 45, false, false, PetitResult.Lost, Chelem.Announced,
+                KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None)))
+        };
         yield return new object?[]
         {
             false,
@@ -327,47 +335,47 @@ public static class HandTestData
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 0, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 0, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, true, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, true, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, true, PetitResult.Lost, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, true, PetitResult.Lost, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Owned, Chelem.Announced)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Owned, Chelem.Announced)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Fail)
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced),
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Fail)
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.GardeContreLeChien, Poignee.Double)))
         };
         yield return new object[]
         {
             false,
-            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
+            new Hand(45L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))),
-            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Now, 45, false, false, PetitResult.Lost, Chelem.Announced,
+            new Hand(0L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 45, false, false, PetitResult.Lost, Chelem.Announced,
                 KeyValuePair.Create(new Player("Samuel", "Sirven", "Sam", ""), (Bidding.Unknown, Poignee.None)))
         };
     }

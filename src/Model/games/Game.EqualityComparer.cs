@@ -12,16 +12,15 @@ public partial class Game
         /// <returns> True if the games are equal, false otherwise </returns>
         public bool Equals(Game? x, Game? y)
         {
-            if (x is null) return false;
-            if (y is  null) return false;
-            if (x.Name != y.Name) return false;
-            if (!Equals(x.Rules, y.Rules)) return false;
-            if (x.StartDate != y.StartDate) return false;
-            if (x.EndDate != y.EndDate) return false;
-            if (!x.Players.SequenceEqual(y.Players)) return false;
-            if (!x.Hands.SequenceEqual(y.Hands)) return false;
-
-            return true;
+            return 
+                x is not null &&
+                y is not null &&
+                x.Name == y.Name &&
+                Equals(x.Rules, y.Rules) &&
+                x.StartDate == y.StartDate &&
+                x.EndDate == y.EndDate &&
+                x.Players.SequenceEqual(y.Players) &&
+                x.Hands.SequenceEqual(y.Hands);
         }
 
         /// <summary>
