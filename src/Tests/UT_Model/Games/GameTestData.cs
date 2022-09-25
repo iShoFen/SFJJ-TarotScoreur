@@ -1,3 +1,4 @@
+using System.Globalization;
 using Model;
 using Model.enums;
 using Model.games;
@@ -424,7 +425,7 @@ public static class GameTestData
         {
             false,
             new Game(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.MaxValue),
-            new Game(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.Parse("24/12/2022"))
+            new Game(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.Parse("12/24/2022", CultureInfo.InvariantCulture))
         };
         yield return new object[]
         {
