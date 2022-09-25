@@ -57,6 +57,7 @@ namespace Model
 
         public IReadOnlyDictionary<Player,int> GetHandScore(Hand hand)
         {
+            if (IsHandValid(hand, out _) != Validity.Valid) throw new ArgumentException("Hand is not valid");
             var neededScore = GetOudlersPoints(GetNumberOfOudlers(hand));
             var takerScore = hand.TakerScore;
             
@@ -82,7 +83,7 @@ namespace Model
                 {
                     scores.Add(player.Key, takerScore);
                 }
-                else scores.Add(player.Key, -takerScore);
+                else scores.Add(player.Key, hand.Petit == PetitResult.LostAuBout? -takerScore + _primeAuBout : -takerScore);
             }
 
             return scores;
@@ -118,7 +119,11 @@ namespace Model
             else score = -25 - (neededScore - takerScore);
             return score;
         }
-        
+        /// <summary>
+        /// Return the multiplicator of the taker bidding
+        /// </summary>
+        /// <param name="biddings"> List of biddings in the hand</param>
+        /// <returns></returns>
         private int GetMultiplicator(IEnumerable<Bidding> biddings)
         {
             var multiplicator = 0;
@@ -139,17 +144,43 @@ namespace Model
             if (game.Players.Count < MinNbPlayers) return Validity.NotEnoughPlayers;
             return game.Players.Count >= MaxNbPlayers ? Validity.EnoughPlayers : Validity.Valid;
         }
-
+        /// <summary>
+        /// Verify if the hand is valid
+        /// </summary>
+        /// <param name="hand">The hand which is verify</param>
+        /// <param name="isValid"> True if the hand is valid else false</param>
+        /// <returns> Validity.Valid if the hand is valid </returns>
         public Validity IsHandValid(Hand hand, out bool isValid)
         {
             Validity valid;
             isValid = false;
             var biddings = hand.Biddings.Select(bidding => bidding.Value.Item1).ToList();
+
+            valid = IsTakerScoreValid(hand.TakerScore);
+            if (valid != Validity.Valid) return valid;
+            
             valid = IsPlayersBiddingValid(biddings);
-            if (valid == Validity.Valid) isValid = true;
+            if (valid != Validity.Valid) return valid;
+            
+            valid = IsChelemValid(hand);
+            if (valid != Validity.Valid) return valid;
+            
+            isValid = true;
             return valid;
         }
-
+        /// <summary>
+        /// Verify if the taker score is valid
+        /// </summary>
+        /// <param name="takerScore"> The taker score </param>
+        /// <returns> Validity.Valid if the taker score is valid
+        /// Validity.TakerNegativeScore if the taker score is negative
+        /// Validity.TakerTooMany point if the taker score is grower than 91 </returns>
+        private Validity IsTakerScoreValid(int takerScore)
+        {
+            if (takerScore < 0) return Validity.TakerNegativeScore;
+            return takerScore > 91 ? Validity.TakerTooManyPoints : Validity.Valid;
+        }
+        
         private Validity IsPlayersBiddingValid(IEnumerable<Bidding> iBiddings)
         {
             int nbKing = 0, nbTaker=0;
@@ -164,6 +195,13 @@ namespace Model
 
             if (nbKing > MaxNbKing || (biddings.Count() < 5 && nbKing > 0)) return Validity.TooManyKing;
             if (nbTaker == 0) return Validity.NoTaker;
+            return Validity.Valid;
+        }
+
+        private Validity IsChelemValid(Hand hand)
+        {
+            if (hand.Chelem is Chelem.Success or Chelem.AnnouncedSuccess &&
+                hand.TakerScore != 91) return Validity.InvalidChelem;
             return Validity.Valid;
         }
 

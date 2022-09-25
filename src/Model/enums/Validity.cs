@@ -12,10 +12,13 @@ namespace Model
         Valid,                  //0001
         NotEnoughPlayers,       //0010
         EnoughPlayers,          //0011
-        NoTaker,                //0100
-        TooManyPlayers,         //0101
+        TooManyPlayers,         //0100
+        NoTaker,                //0101
         TooManyKing,            //0110
-        PlayerShallHaveBidding, //0111
-        TakerShallHaveAScore    //1000
+        InvalidChelem,          //0111
+        PlayerShallHaveBidding, //1000
+        TakerShallHaveAScore,   //1001
+        TakerNegativeScore,     //1010
+        TakerTooManyPoints      //1011
     }
 }

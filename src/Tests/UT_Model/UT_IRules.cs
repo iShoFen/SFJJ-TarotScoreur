@@ -138,8 +138,8 @@ public class UT_IRules
             false,
             new Hand
             (
-                2L,
-                2,
+                3L,
+                3,
                 new FrenchTarotRules(),
                 DateTime.Now,
                 40,
@@ -170,8 +170,8 @@ public class UT_IRules
             false,
             new Hand
             (
-                2L,
-                2,
+                4L,
+                4,
                 new FrenchTarotRules(),
                 DateTime.Now,
                 40,
@@ -201,8 +201,8 @@ public class UT_IRules
             true,
             new Hand
             (
-                2L,
-                2,
+                5L,
+                5,
                 new FrenchTarotRules(),
                 DateTime.Now,
                 40,
@@ -225,6 +225,102 @@ public class UT_IRules
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
                     (Bidding.Opponent, Poignee.None))
+            )
+        };
+        //This hand isn't valid because the Chelem cannot be success if the taker don't have 91 points
+        yield return new object[]
+        {
+            false,
+            new Hand
+            (
+                6L,
+                6,
+                new FrenchTarotRules(),
+                DateTime.Now,
+                88,
+                true,
+                true,
+                PetitResult.Owned,
+                Chelem.Success,
+                KeyValuePair.Create(
+                    new Player(1, "toto", "tata0", "toto", ""),
+                    (Bidding.Petite, Poignee.Simple)),
+                KeyValuePair.Create(
+                    new Player(2, "tata", "tata", "tata", ""),
+                    (Bidding.Unknown, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(3, "tutu", "tutu", "tutu", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(4, "titi", "titi", "titi", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(5, "tete", "tete", "tete", "tete"),
+                    (Bidding.King, Poignee.None))
+            )
+        };
+        //This hand isn't valid because the taker have a score grower than 91 points
+        yield return new object[]
+        {
+            false,
+            new Hand
+            (
+                7L,
+                7,
+                new FrenchTarotRules(),
+                DateTime.Now,
+                96,
+                true,
+                true,
+                PetitResult.Owned,
+                Chelem.Unknown,
+                KeyValuePair.Create(
+                    new Player(1, "toto", "tata0", "toto", ""),
+                    (Bidding.Petite, Poignee.Simple)),
+                KeyValuePair.Create(
+                    new Player(2, "tata", "tata", "tata", ""),
+                    (Bidding.Unknown, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(3, "tutu", "tutu", "tutu", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(4, "titi", "titi", "titi", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(5, "tete", "tete", "tete", "tete"),
+                    (Bidding.King, Poignee.None))
+            )
+        };
+        //This hand isn't valid because the taker have a negative score
+        yield return new object[]
+        {
+            false,
+            new Hand
+            (
+                8L,
+                8,
+                new FrenchTarotRules(),
+                DateTime.Now,
+                -42,
+                true,
+                true,
+                PetitResult.Owned,
+                Chelem.Unknown,
+                KeyValuePair.Create(
+                    new Player(1, "toto", "tata0", "toto", ""),
+                    (Bidding.Petite, Poignee.Simple)),
+                KeyValuePair.Create(
+                    new Player(2, "tata", "tata", "tata", ""),
+                    (Bidding.Unknown, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(3, "tutu", "tutu", "tutu", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(4, "titi", "titi", "titi", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(5, "tete", "tete", "tete", "tete"),
+                    (Bidding.King, Poignee.None))
             )
         };
     }
