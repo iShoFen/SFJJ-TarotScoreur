@@ -158,8 +158,8 @@ public partial class Game : IEquatable<Game>
     public bool Equals(Game? other)
     {
         if (other is null) return false;
-        if (other.Id == Id) return true;
-        return (Id == 0 || other.Id == 0) && FullComparer.Equals(this, other);
+        if (Id == 0 || other.Id == 0) return FullComparer.Equals(this, other);
+        return Id == other.Id;
     }
 
     /// <summary>

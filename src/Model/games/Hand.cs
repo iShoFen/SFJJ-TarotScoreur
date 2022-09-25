@@ -11,7 +11,7 @@ public partial class Hand : IEquatable<Hand>
     /// <summary>
     /// The unique identifier for the hand
     /// </summary>
-    public long Id { get; }
+    public ulong Id { get; }
         
     /// <summary>
     /// The number of the hand
@@ -73,7 +73,7 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="excuse"> Indicates if the taker as the excuse oudler </param>
     /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
-    public Hand(long id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
+    public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
     {
         Id = id;
         HandNumber = handNumber;
@@ -83,6 +83,7 @@ public partial class Hand : IEquatable<Hand>
         TwentyOne = twentyOne;
         Excuse = excuse;
         Petit = petit;
+        Chelem = chelem;
         _biddings = biddings.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         Biddings = new ReadOnlyDictionary<Player, (Bidding, Poignee)>(_biddings);
     }
@@ -93,7 +94,7 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="number"> The number of the hand </param>
     /// <param name="rules"> The Rules of the game applied to this hand </param>
     /// <param name="date"> The date of the hand </param>
-    public Hand(int number, IRules rules, DateTime date) : this(0, number, rules, date, 0, null, null, PetitResult.Unknown) { }
+    public Hand(int number, IRules rules, DateTime date) : this(0L, number, rules, date, 0, null, null, PetitResult.Unknown, Chelem.Unknown) { }
         
     /// <summary>
     /// Add a bidding to the hand

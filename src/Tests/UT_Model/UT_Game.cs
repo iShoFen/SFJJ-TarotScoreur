@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Model;
 using Model.games;
 using Xunit;
@@ -6,8 +7,6 @@ namespace UT_Model;
 
 public class UT_Game
 {
-    
-    
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestFullConstructor), MemberType = typeof(GameTestData))]
     public void TestFullConstructor(bool isValid, ulong expId, string expName, IRules expRules, DateTime expStartDate, DateTime? expEndDate)
@@ -62,12 +61,16 @@ public class UT_Game
         Assert.Equal(exPlayers, game.Players);
     }
     
-    /*[Theory]
+    [Theory]
     [MemberData(nameof(GameTestData.Data_TestAddHand), MemberType = typeof(GameTestData))]
     public void TestAddHand(bool expResult, IEnumerable<KeyValuePair<int, Hand>> exHands, Game game, Hand hand)
     {
         Assert.Equal(expResult, game.AddHand(hand));
-        Assert.Equal(exHands, game.Hands);
+        foreach (var exHand in exHands)
+        {
+            Assert.Equal(exHand.Key, exHand.Value.HandNumber);
+            Assert.Equal(exHand.Value, game.Hands[exHand.Key]);
+        }
     }
     
     [Theory]
@@ -75,6 +78,28 @@ public class UT_Game
     public void TestAddHands(bool expResult, IEnumerable<KeyValuePair<int, Hand>> exHands, Game game, IEnumerable<Hand> hands)
     {
         Assert.Equal(expResult, game.AddHands(hands.ToArray()));
-        Assert.Equal(exHands, game.Hands);
-    }*/
+        foreach (var exHand in exHands)
+        {
+            Assert.Equal(exHand.Key, exHand.Value.HandNumber);
+            Assert.Equal(exHand.Value, game.Hands[exHand.Key]);
+        }
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestHashCode), MemberType = typeof(GameTestData))]
+    public void TestHashCode(bool expResult, Game game1, Game game2) =>
+        Assert.Equal(expResult, game1.GetHashCode() == game2.GetHashCode());
+
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestEquals), MemberType = typeof(GameTestData))]
+    public void TestEquals(bool expResult, Game game, object? game2) =>
+        Assert.Equal(expResult, game.Equals(game2));
+
+    [Fact]
+    public void TestEquals_Null_Ref()
+    {
+        var game = new Game("Test", new FrenchTarotRules(), DateTime.Now);
+        Assert.False(game.Equals(null));
+        Assert.True(game!.Equals(game as object));
+    }
 }
