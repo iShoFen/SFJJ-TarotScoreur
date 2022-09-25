@@ -507,3 +507,5 @@ Temporary Items
 
 
 src/.idea/
+
+*.lutconfig

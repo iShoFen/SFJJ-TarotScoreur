@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using System.Diagnostics;
+
+namespace Model
 {
     public partial class Player
     {
@@ -16,7 +18,10 @@
                 if (x is null) return false;
                 if (y is null) return false;
                 if (x.GetType() != y.GetType()) return false;
-                return x._firstName == y._firstName && x._lastName == y._lastName && x._nickName == y._nickName && x._avatar == y._avatar && x.Id == y.Id;
+                return x.FirstName == y.FirstName
+                    && x.LastName == y.LastName
+                    && x.NickName == y.NickName
+                    && x.Avatar == y.Avatar;
             }
 
             /// <summary>
@@ -24,10 +29,7 @@
             /// </summary>
             /// <param name="obj">Player to get the hash code</param>
             /// <returns>hash code of the Player</returns>
-            public int GetHashCode(Player obj)
-            {
-                return HashCode.Combine(obj._firstName, obj._lastName, obj._nickName, obj._avatar, obj.Id);
-            }
+            public int GetHashCode(Player obj) => obj.FirstName.GetHashCode();
         }
 
         /// <summary>

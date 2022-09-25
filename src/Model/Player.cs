@@ -93,8 +93,8 @@
         public bool Equals(Player? other)
         {
             if (other is null) return false;
-            if (Id != 0) return Id == other.Id;
-            return other.Id == 0 && PlayerFullComparer.Equals(this, other);
+            if (Id == 0 || other.Id == 0) return PlayerFullComparer.Equals(this, other);
+            return Id == other.Id;
         }
 
         public override bool Equals(object? obj)
@@ -104,7 +104,7 @@
             return obj.GetType() == GetType() && Equals(obj as Player);
         }
 
-        public override int GetHashCode() => Id == 0 ? PlayerFullComparer.GetHashCode() : Id.GetHashCode();
+        public override int GetHashCode() => Id == 0 ? PlayerFullComparer.GetHashCode(this) : Id.GetHashCode();
 
         public override string ToString() => $"({Id}) {FirstName} {LastName} \"{NickName}\"";
     }

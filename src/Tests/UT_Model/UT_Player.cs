@@ -25,6 +25,7 @@ namespace UT_Model
 
         [Theory]
         [InlineData(true, 0, "Florent", "Marques", "Flo", "monAvatar", 0, "Florent", "Marques", "Flo", "monAvatar")]
+        [InlineData(true, 0, "Florent", "Marques", "    ", "monAvatar", 0, "Florent", "Marques", "", "monAvatar")]
         [InlineData(true, 1, "     ", "Marques", "Flo", "monAvatar", 1, "", "Marques", "Flo", "monAvatar")]
         [InlineData(true, 2, "     ", "     ", "Flo", "monAvatar", 2, "", "", "Flo", "monAvatar")]
         [InlineData(false, 1, "     ", "     ", "   ", "monAvatar", 1, "", "", "", "monAvatar")]
@@ -74,6 +75,34 @@ namespace UT_Model
             Assert.Equal(lastName, player.LastName);
             Assert.Equal(nickname, player.NickName);
             Assert.Equal(avatar, player.Avatar);
+        }
+
+        [Theory]
+        [MemberData(nameof(PlayerTestData.Data_TestEquals), MemberType = typeof(PlayerTestData))]
+        public void TestEquals(bool isEquals, Player player1, object? player2)
+        {
+            Assert.Equal(isEquals, player1.Equals(player2));
+        }
+
+        [Theory]
+        [MemberData(nameof(PlayerTestData.Data_TestHashCode), MemberType = typeof(PlayerTestData))]
+        public void TestHashCode(bool expectedResult, Player player1, Player player2)
+        {
+            Assert.Equal(expectedResult, player1.GetHashCode() == player2.GetHashCode());
+        }
+
+        [Fact]
+        public void TestEqualsNullRef()
+        {
+            Player player = new Player(0, "Florent", "MARQUES", "Flo", "avatar");
+            Assert.False(player.Equals(null));
+        }
+
+        [Theory]
+        [MemberData(nameof(PlayerTestData.Data_TestEqualsWithPlayer), MemberType = typeof(PlayerTestData))]
+        public void TestEqualsWithPlayer(bool expectedResult, Player player1, Player player2)
+        {
+            Assert.Equal(expectedResult, player1.Equals(player2));
         }
     }
 }

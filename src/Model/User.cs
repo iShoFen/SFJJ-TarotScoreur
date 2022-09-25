@@ -51,8 +51,8 @@ public partial class User : Player, IEquatable<User>
     public bool Equals(User? other)
     {
         if (other is null) return false;
-        if (Id != 0) return Id == other.Id;
-        return other.Id == 0 && PlayerFullComparer.Equals(this, other);
+        if (Id == 0 || other.Id == 0) return PlayerFullComparer.Equals(this, other);
+        return Id == other.Id;
     }
 
     public override bool Equals(object? obj)
@@ -62,7 +62,7 @@ public partial class User : Player, IEquatable<User>
         return obj.GetType() == GetType() && Equals(obj as User);
     }
 
-    public override int GetHashCode() => Id == 0 ? UserEqualityComparer.GetHashCode() : Id.GetHashCode();
+    public override int GetHashCode() => Id == 0 ? UserEqualityComparer.GetHashCode(this) : Id.GetHashCode();
 
     public override string ToString() => $"{base.ToString()}: {Email}";
 }
