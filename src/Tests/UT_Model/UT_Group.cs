@@ -68,4 +68,44 @@ public class UT_Group
         group.ClearPlayers();
         Assert.Empty(group.Players);
     }
+
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestEquals), MemberType = typeof(GroupTestData))]
+    public void TestEquals(bool isEquals, Group group1, object? group2)
+    {
+        Assert.Equal(isEquals, group1.Equals(group2));
+    }
+    
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestEqualsWithGroup), MemberType = typeof(GroupTestData))]
+    public void TestEqualsWithGroup(bool isEquals, Group group1, Group? group2)
+    {
+        Assert.Equal(isEquals, Group.GroupFullComparer.Equals(group1,group2));
+    }
+    
+    
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestHashCode), MemberType = typeof(GroupTestData))]
+    public void TestHashCode(bool expectedResult, Group group1, Group group2)
+    {
+        Assert.Equal(expectedResult, group1.GetHashCode() == group2.GetHashCode());
+    }
+
+    [Fact]
+    public void TestEqualsNullRef()
+    {
+        Group group = new Group(4, "partie1",
+            new("Florent", "Marques", "Flo", "avatar"),
+            new("Samuel", "Sirven", "Sam", "avatar"),
+            new("Jordan", "Artzet", "Jo", "avatar")
+        );
+        Assert.False(group.Equals(null));
+    }
+    
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestFullComparer), MemberType = typeof(GroupTestData))]
+    public void TestEqualsFullComparer(bool expectedResult, Group group1, Group group2)
+    {
+        Assert.Equal(expectedResult, Group.GroupFullComparer.Equals(group1, group2));
+    }
 }

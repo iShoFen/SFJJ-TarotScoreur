@@ -2,7 +2,7 @@
 
 namespace UT_Model;
 
-class PlayerTestData
+internal static class PlayerTestData
 {
     public static IEnumerable<object[]> Data_TestHashCode()
     {
