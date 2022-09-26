@@ -78,7 +78,7 @@ namespace Model
             {
                 if ((player.Value.Item1 & Bidding.Prise) == Bidding.Prise)
                 {
-                    scores.Add(player.Key, hand.Biddings.Count == 5? takerScore * 2 : takerScore * hand.Biddings.Count-1);
+                    scores.Add(player.Key, hand.Biddings.Count == 5? takerScore * 2 : takerScore * (hand.Biddings.Count-1));
                 }
                 else if (player.Value.Item1 == Bidding.King)
                 {

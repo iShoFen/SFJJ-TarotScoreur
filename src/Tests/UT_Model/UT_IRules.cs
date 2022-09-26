@@ -662,6 +662,42 @@ public class UT_IRules
             )
 
         };
+        yield return new object[]
+        {
+            true,
+            new Dictionary<Player,int>
+            {
+                [new Player(1, "toto", "tata", "toto", "")] = -111,
+                [new Player(2, "tata", "tata", "tata", "")] = 37,
+                [new Player(3, "tutu", "tutu", "tutu", "")] = 37,
+                [new Player(4, "titi", "titi", "titi", "")] = 37,
+
+            },
+            new Hand
+            (
+                9L,
+                9,
+                new FrenchTarotRules(),
+                DateTime.Now,
+                54,
+                false,
+                false,
+                PetitResult.LostAuBout,
+                Chelem.Unknown,
+                KeyValuePair.Create(
+                    new Player(1, "toto", "tata", "toto", ""),
+                    (Bidding.Petite, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(2, "tata", "tata", "tata", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(3, "tutu", "tutu", "tutu", ""),
+                    (Bidding.Opponent, Poignee.None)),
+                KeyValuePair.Create(
+                    new Player(4, "titi", "titi", "titi", ""),
+                    (Bidding.Opponent, Poignee.None))
+            )
+        };
     }
 
     public static IEnumerable<object?[]> Data_AddRulesTestEquals()
@@ -690,6 +726,12 @@ public class UT_IRules
             false,
             a,
             null
+        };
+        yield return new object?[]
+        {
+            false,
+            a,
+            (IRules) null!
         };
     }
     
@@ -740,5 +782,12 @@ public class UT_IRules
     public void Test_Equals(bool expectedResult, IRules a, IRules b)
     {
         Assert.Equal(expectedResult,a.Equals(b));
+    }
+
+    [Fact]
+    public void Test_EqualsOtherType()
+    {
+        Assert.False(new FrenchTarotRules().Equals(null));
+        Assert.False(new FrenchTarotRules().Equals(new RulesTest()));
     }
 }
