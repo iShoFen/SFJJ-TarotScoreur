@@ -1,6 +1,6 @@
 namespace Model.data;
 
-public interface ISave
+public interface ISaver
 {
     /// <summary>
     /// Method to save a player

@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
-using Model.enums;
 
 namespace Model.data;
 
-public interface ILoad
+public interface ILoader
 {
     /*========== Games ==========*/
     /// <summary>
@@ -85,7 +84,7 @@ public interface ILoad
     ReadOnlyCollection<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname);
     
     /// <summary>
-    /// Method to load a player by firtsname and nickname
+    /// Method to load a player by firstName and nickname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
     /// <param name="nickname">Nickname to search</param>
@@ -103,9 +102,9 @@ public interface ILoad
     /// <summary>
     /// Method to load a player by nickname
     /// </summary>
-    /// <param name="nickName">Nickname to search</param>
+    /// <param name="nickname">Nickname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByNickName(string nickName);
+    ReadOnlyCollection<Player> LoadPlayerByNickname(string nickname);
     
     /// <summary>
     /// Method to load a player by lastname
