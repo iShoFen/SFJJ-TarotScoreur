@@ -13,7 +13,7 @@ steps:
       - name: docs
         path: /docs
     commands:
-      - cd src/
+      - cd Sources/
       - dotnet restore TarotScoreur.sln
       - dotnet build TarotScoreur.sln -c Release --no-restore
       - dotnet publish TarotScoreur.sln -c Release --no-restore -o CI_PROJECT_DIR/build/release
@@ -21,7 +21,7 @@ steps:
   - name: tests
     image: mcr.microsoft.com/dotnet/sdk:6.0
     commands:
-      - cd src/
+      - cd Sources/
       - dotnet restore TarotScoreur.sln
       - dotnet test TarotScoreur.sln --no-restore
     depends_on: [build]
