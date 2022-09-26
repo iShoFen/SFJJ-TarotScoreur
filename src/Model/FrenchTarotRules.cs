@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Model
 
         public int MaxNbKing { get; } = 1;
 
-        public String Name => GetType().Name;
+        public string Name => GetType().Name;
 
         private readonly Dictionary<int, int> _oudlersPoints = new()
         {
@@ -46,14 +47,14 @@ namespace Model
             [Poignee.Triple] = 40    
         };
 
-        private Dictionary<Chelem, int> _primesChelem = new()
+        private readonly Dictionary<Chelem, int> _primesChelem = new()
         {
             [Chelem.Unknown] = 0,
             [Chelem.Success] = 200,
             [Chelem.AnnouncedSuccess] = 400,
             [Chelem.AnnouncedFail] = -200
         };
-        private int _primeAuBout = 10;
+        private readonly int _primeAuBout = 10;
 
         public IReadOnlyDictionary<Player,int> GetHandScore(Hand hand)
         {
@@ -62,8 +63,8 @@ namespace Model
             var takerScore = hand.TakerScore;
             
             var score = GetTruePointOfTaker(takerScore,neededScore);
-            if(hand.Petit == PetitResult.AuBout) score += _primeAuBout;
-            score = score * GetMultiplicator(hand.Biddings.Select(bidding => bidding.Value.Item1).ToList());
+            score += GetPrimeAuBout(hand.Petit);
+            score *= GetMultiplicator(hand.Biddings.Select(bidding => bidding.Value.Item1).ToList());
             if (score < 0) score -= GetPrimePoignee((hand.Biddings.Select(bidding => bidding.Value.Item2).ToList()));
             else score += GetPrimePoignee((hand.Biddings.Select(bidding => bidding.Value.Item2).ToList()));
             score += GetPrimeChelem(hand.Chelem);
@@ -83,11 +84,19 @@ namespace Model
                 {
                     scores.Add(player.Key, takerScore);
                 }
-                else scores.Add(player.Key, hand.Petit == PetitResult.LostAuBout? -takerScore + _primeAuBout : -takerScore);
+                else scores.Add(player.Key, -takerScore);
             }
 
             return scores;
         }
+
+        private int GetPrimeAuBout(PetitResult petitResult)
+        {
+            if(petitResult == PetitResult.AuBoutOwned) return _primeAuBout;
+            else if(petitResult == PetitResult.LostAuBout) return -_primeAuBout;
+            else return 0;
+        }
+        
         /// <summary>
         /// Return the number of oudlers in the hand
         /// <param name="hand">Hand which is use</param>
@@ -98,8 +107,7 @@ namespace Model
             var nbOudlers = 0;
             if(hand.TwentyOne == true) ++nbOudlers;
             if(hand.Excuse == true) ++nbOudlers;
-            if(hand.Petit == PetitResult.Owned) ++nbOudlers;
-            
+            if((hand.Petit & PetitResult.Owned) == PetitResult.Owned) ++nbOudlers;
             return nbOudlers;
         }
         /// <summary>
@@ -207,7 +215,7 @@ namespace Model
 
         public virtual bool Equals(IRules? other)
         {
-            return other != null && other.GetType().Equals(GetType());
+            return other != null && other.GetType() == GetType();
         }
 
         public override bool Equals(object? obj)
