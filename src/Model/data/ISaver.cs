@@ -1,3 +1,5 @@
+using Model.games;
+
 namespace Model.data;
 
 public interface ISaver
