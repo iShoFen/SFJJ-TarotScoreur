@@ -11,22 +11,32 @@ public partial class Hand : IEquatable<Hand>
     /// <summary>
     /// The unique identifier for the hand
     /// </summary>
-    public long Id { get; }
+    public ulong Id { get; }
         
     /// <summary>
     /// The number of the hand
     /// </summary>
     public int HandNumber { get; }
-    
+
     /// <summary>
     /// The Rules of the game applied to this hand
     /// </summary>
+    public IRules Rules
+    {
+        get => _rules;
+        init => _rules = value ?? throw new ArgumentNullException(nameof(value), "Rules cannot be null");
+    }
     private readonly IRules _rules;
-        
+
     /// <summary>
     /// The date of the hand
     /// </summary>
-    public DateTime Date { get; }
+    public DateTime Date
+    {
+        get => _date;
+        private init => _date = value == default ? throw new ArgumentException("Date cannot be default", nameof(value)) : value;
+    }
+    private readonly DateTime _date;
 
     /// <summary>
     /// The score of the taker
@@ -57,7 +67,7 @@ public partial class Hand : IEquatable<Hand>
     /// Players bidding details
     /// </summary>
     public ReadOnlyDictionary<Player, (Bidding,Poignee)> Biddings { get; }
-    private readonly Dictionary<Player, (Bidding, Poignee)> _biddings;
+    private readonly Dictionary<Player, (Bidding, Poignee)> _biddings = new();
 
     public IReadOnlyDictionary<Player, int> Scores => _rules.GetHandScore(this);
 
@@ -72,18 +82,20 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="twentyOne"> Indicates if the taker as the twenty one oudler </param>
     /// <param name="excuse"> Indicates if the taker as the excuse oudler </param>
     /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
+    /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
-    public Hand(long id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
+    public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
     {
         Id = id;
         HandNumber = handNumber;
-        _rules = rules;
+        Rules = rules;
         Date = date;
         TakerScore = takerScore;
         TwentyOne = twentyOne;
         Excuse = excuse;
         Petit = petit;
-        _biddings = biddings.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        Chelem = chelem;
+        AddBiddings(biddings);
         Biddings = new ReadOnlyDictionary<Player, (Bidding, Poignee)>(_biddings);
     }
         
@@ -93,7 +105,7 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="number"> The number of the hand </param>
     /// <param name="rules"> The Rules of the game applied to this hand </param>
     /// <param name="date"> The date of the hand </param>
-    public Hand(int number, IRules rules, DateTime date) : this(0, number, rules, date, 0, null, null, PetitResult.Unknown) { }
+    public Hand(int number, IRules rules, DateTime date) : this(0L, number, rules, date, 0, null, null, PetitResult.Unknown, Chelem.Unknown) { }
         
     /// <summary>
     /// Add a bidding to the hand
@@ -103,17 +115,16 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="poignee"> The poignee </param>
     /// <returns> true if the bidding was added, false if the player already bid </returns>
     public bool AddBidding(Player player, Bidding bidding, Poignee poignee) => _biddings.TryAdd(player, (bidding, poignee));
-    
+
     /// <summary>
     /// Add multiple biddings to the hand
     /// </summary>
     /// <param name="biddings"> The biddings to add </param>
     /// <returns> true if all the biddings were added, false if at least one player already bid </returns>
-    public bool AddBiddings(params KeyValuePair<Player,(Bidding, Poignee)>[] biddings) =>
-        biddings.Aggregate(true, (current, bidding) => current && AddBidding(bidding.Key, bidding.Value.Item1, bidding.Value.Item2));
-    
-    
-        
+    public bool AddBiddings(params KeyValuePair<Player, (Bidding, Poignee)>[] biddings) => 
+        biddings.All(b => !_biddings.ContainsKey(b.Key))  
+        && biddings.All(b => AddBidding(b.Key, b.Value.Item1, b.Value.Item2));
+
     /// <summary>
     /// Check if the hand is valid (all information are filled and correct) 
     /// </summary>
@@ -131,8 +142,8 @@ public partial class Hand : IEquatable<Hand>
     public bool Equals(Hand? other)
     {
         if (other is null) return false;
-        if (other.Id == Id) return true;
-        return (Id == 0 || other.Id == 0) && FullComparer.Equals(this, other);
+        if (Id == 0 || other.Id == 0) return FullComparer.Equals(this, other);
+        return Id == other.Id;
     }
 
     /// <summary>
@@ -151,7 +162,7 @@ public partial class Hand : IEquatable<Hand>
     /// Get the hash code of the Hand
     /// </summary>
     /// <returns> The hash code of the Hand </returns>
-    public override int GetHashCode() => Id == 0 ? FullComparer.GetHashCode(this) : Id.GetHashCode();
+    public override int GetHashCode() => Id == 0 ? FullComparer.GetHashCode(this) : Id.GetHashCode() % 31;
 
     /// <summary>
     /// Get a string representation of the Hand
