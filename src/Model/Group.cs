@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace Model;
 
-public class Group
+public partial class Group : IEquatable<Group>
 {
     /// <summary>
     /// id of the Group
@@ -92,5 +92,25 @@ public class Group
     public void ClearPlayers()
     {
         _players.Clear();
+    }
+
+    public bool Equals(Group? other)
+    {
+        if (other is null) return false;
+        if (Id == 0 || other.Id == 0) return GroupFullComparer.Equals(this, other);
+        return Id == other.Id;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (GetType() != obj.GetType()) return false;
+        return Equals(obj as Group);
+    }
+
+    public override int GetHashCode()
+    {
+        return Id == 0 ? GroupFullComparer.GetHashCode(this) : Id.GetHashCode();
     }
 }
