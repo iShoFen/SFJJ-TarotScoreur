@@ -1,72 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
     /// <summary>
     /// a Player of the Tarot game
     /// </summary>
-    public class Player : IEquatable<Player>
+    public partial class Player : IEquatable<Player>
     {
         /// <summary>
         /// id of this Player
         /// </summary>
-        public long Id { get; private set; }
+        public ulong Id { get; }
 
         /// <summary>
         /// first name of this Player
         /// </summary>
         public string FirstName
         {
-            get => firstName;
-            protected set
-            {
-                firstName = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _firstName;
+            private init => _firstName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string firstName;
+
+        private readonly string _firstName = null!;
 
         /// <summary>
         /// last name of this Player
         /// </summary>
         public string LastName
         {
-            get => lastName;
-            protected set
-            {
-                lastName = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _lastName;
+            private init => _lastName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string lastName;
+
+        private readonly string _lastName = null!;
 
         /// <summary>
         /// nickname of this Player
         /// </summary>
         public string NickName
         {
-            get => nickName;
-            protected set
-            {
-                nickName = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _nickName;
+            private init => _nickName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string nickName;
+
+        private readonly string _nickName = null!;
 
         /// <summary>
         /// file name of the avatar of this Player
         /// </summary>
         public string Avatar
         {
-            get => avatar;
-            protected set
-            {
-                avatar = string.IsNullOrWhiteSpace(value) ? "" : value;
-            }
+            get => _avatar;
+            private init => _avatar = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
-        private string avatar;
+
+        private readonly string _avatar = null!;
 
         /// <summary>
         /// constructor
@@ -76,18 +62,8 @@ namespace Model
         /// <param name="nickName">nickname of this Player</param>
         /// <param name="avatar">file name of the avatar of this Player</param>
         public Player(string firstName, string lastName, string nickName, string avatar)
+            : this(0, firstName, lastName, nickName, avatar)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            NickName = nickName;
-            Avatar = avatar;
-
-            if (string.IsNullOrWhiteSpace(FirstName)
-                && string.IsNullOrWhiteSpace(LastName)
-                && string.IsNullOrWhiteSpace(NickName))
-            {
-                throw new ArgumentException("A Player must have at least one first name or last name or nick name");
-            }
         }
 
         /// <summary>
@@ -98,34 +74,38 @@ namespace Model
         /// <param name="lastName">last name of this Player</param>
         /// <param name="nickName">nickname of this Player</param>
         /// <param name="avatar">file name of the avatar of this Player</param>
-        public Player(long id, string firstName, string lastName, string nickName, string avatar)
-            : this(firstName, lastName, nickName, avatar)
+        public Player(ulong id, string firstName, string lastName, string nickName, string avatar)
         {
+            if ((string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) &&
+                string.IsNullOrWhiteSpace(nickName))
+            {
+                throw new ArgumentException(
+                    "A player must have a first name and a last name if he do not have a nickname");
+            }
+
             Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            NickName = nickName;
+            Avatar = avatar;
         }
 
         public bool Equals(Player? other)
         {
-            return FirstName.Equals(other?.FirstName) && LastName.Equals(other?.LastName) && NickName.Equals(other?.NickName);
+            if (other is null) return false;
+            if (Id == 0 || other.Id == 0) return PlayerFullComparer.Equals(this, other);
+            return Id == other.Id;
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals(obj as Player);
-            
+            return obj.GetType() == GetType() && Equals(obj as Player);
         }
 
-        public override int GetHashCode()
-        {
-            return FirstName.GetHashCode() + LastName.GetHashCode() + NickName.GetHashCode();
-        }
+        public override int GetHashCode() => Id == 0 ? PlayerFullComparer.GetHashCode(this) : Id.GetHashCode();
 
-        public override string ToString()
-        {
-            return $"({Id}) {FirstName} {LastName} \"{NickName}\"";
-        }
+        public override string ToString() => $"({Id}) {FirstName} {LastName} \"{NickName}\"";
     }
 }

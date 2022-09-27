@@ -505,3 +505,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+
+src/.idea/
+
+*.lutconfig
