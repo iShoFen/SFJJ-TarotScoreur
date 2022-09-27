@@ -1,4 +1,5 @@
 using Model;
+using Model.games;
 
 namespace UT_Model;
 

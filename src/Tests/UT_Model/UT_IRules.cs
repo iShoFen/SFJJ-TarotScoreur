@@ -2,6 +2,7 @@
 using Xunit;
 using Model;
 using Model.enums;
+using Model.games;
 
 namespace UT_Model;
 
@@ -13,57 +14,41 @@ public class UT_IRules
         yield return new object[]
         {
             Validity.Valid,
-            new Game
-            (1,
-                "Game1",
+            CreateGameWithPlayers
+            ("Game1",
+                new FrenchTarotRules(),
                 DateTime.Now,
-                null,
-                new Player[]
-                {
-                    new Player(1, "toto", "tata0", "toto", ""),
-                    new Player(2, "tata", "tata", "tata", ""),
-                    new Player(3, "tutu", "tutu", "tutu", "")
-                },
-                new List<Hand>()
-            ),
-            new FrenchTarotRules(),
+                new Player(1, "toto", "tata0", "toto", ""),
+                new Player(2, "tata", "tata", "tata", ""),
+                new Player(3, "tutu", "tutu", "tutu", "")
+            )
         };
         yield return new object[]
         {
             Validity.EnoughPlayers,
-            new Game
-            (2,
+            CreateGameWithPlayers
+            (
                 "Game2",
+                new FrenchTarotRules(),
                 DateTime.Now,
-                null,
-                new Player[]
-                {
-                    new Player(1, "toto", "tata0", "toto", ""),
+                new Player(1, "toto", "tata0", "toto", ""),
                     new Player(2, "tata", "tata", "tata", ""),
                     new Player(3, "tutu", "tutu", "tutu", ""),
                     new Player(4,"titi","titi","titi",""),
                     new Player(5,"tete","tete","tete","tete")
-                },
-                new List<Hand>()
-            ),
-            new FrenchTarotRules()
+            )
         };
         yield return new object[]
         {
             Validity.NotEnoughPlayers,
-            new Game
-            (3,
-                "Game3",
+            CreateGameWithPlayers
+            (
+                "Game2",
+                new FrenchTarotRules(),
                 DateTime.Now,
-                null,
-                new Player[]
-                {
-                    new Player(1, "toto", "tata0", "toto", ""),
-                    new Player(2, "tata", "tata", "tata", "")
-                },
-                new List<Hand>()
-            ),
-            new FrenchTarotRules()
+                new Player(1, "toto", "tata0", "toto", ""),
+                new Player(2, "tata", "tata", "tata", "")
+            )
         };
     }
 
@@ -72,6 +57,7 @@ public class UT_IRules
         yield return new object[]
         {
             true,
+            Validity.Valid,
             new Hand
                 (
                     1L,
@@ -104,6 +90,7 @@ public class UT_IRules
         yield return new object[]
         {
             false,
+            Validity.PlayerShallHaveBidding,
             new Hand
             (
                 2L,
@@ -136,6 +123,7 @@ public class UT_IRules
         yield return new object[]
         {
             false,
+            Validity.TooManyKing,
             new Hand
             (
                 3L,
@@ -168,6 +156,7 @@ public class UT_IRules
         yield return new object[]
         {
             false,
+            Validity.NoTaker,
             new Hand
             (
                 4L,
@@ -199,6 +188,7 @@ public class UT_IRules
         yield return new object[]
         {
             true,
+            Validity.Valid,
             new Hand
             (
                 5L,
@@ -231,6 +221,7 @@ public class UT_IRules
         yield return new object[]
         {
             false,
+            Validity.InvalidChelem,
             new Hand
             (
                 6L,
@@ -247,7 +238,7 @@ public class UT_IRules
                     (Bidding.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Unknown, Poignee.None)),
+                    (Bidding.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
                     (Bidding.Opponent, Poignee.None)),
@@ -263,6 +254,7 @@ public class UT_IRules
         yield return new object[]
         {
             false,
+            Validity.TakerTooManyPoints,
             new Hand
             (
                 7L,
@@ -295,6 +287,7 @@ public class UT_IRules
         yield return new object[]
         {
             false,
+            Validity.TakerNegativeScore,
             new Hand
             (
                 8L,
@@ -738,19 +731,20 @@ public class UT_IRules
     [Theory]
     [MemberData(nameof(Data_AddGamesWithFrenchTarotRules))]
     public void Test_IsGameValid(Validity expectedResult,
-        Game game,
-        IRules rule)
+        Game game)
     {
-        var result = rule.IsGameValid(game);
+        var result = game.IsValid();
         Assert.Equal(expectedResult,result);
     }
     
     [Theory]
     [MemberData(nameof(Data_addHandsToTestValidity))]
     public void Test_IsHandValid(bool expectedResult,
+        Validity expectedValidity,
         Hand hand)
     {
-        var result = hand.IsValid();
+        var result = hand.IsValid(out var validity);
+        Assert.Equal(expectedValidity, validity);
         Assert.Equal(expectedResult,result);
     }
     
@@ -761,12 +755,12 @@ public class UT_IRules
     {
         if (valid)
         {
-            var result = hand.getScores();
+            var result = hand.Scores;
             Assert.Equal(expectedScores.Values,result.Values);
         }
         else
         {
-            Assert.Throws<ArgumentException>(() => hand.getScores());
+            Assert.Throws<ArgumentException>(() => hand.Scores);
         }
 
     }
@@ -789,5 +783,12 @@ public class UT_IRules
     {
         Assert.False(new FrenchTarotRules().Equals(null));
         Assert.False(new FrenchTarotRules().Equals(new RulesTest()));
+    }
+    
+    private static Game CreateGameWithPlayers(string name, IRules rules, DateTime date, params Player[] players)
+    {
+        var game = new Game(name, rules, date);
+        game.AddPlayers(players);
+        return game;
     }
 }

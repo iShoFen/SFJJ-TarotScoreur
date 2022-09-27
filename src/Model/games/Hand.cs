@@ -129,9 +129,10 @@ public partial class Hand : IEquatable<Hand>
     /// Check if the hand is valid (all information are filled and correct) 
     /// </summary>
     /// <returns> True if the hand is valid, false otherwise </returns>
-    public bool IsValid()
+    public bool IsValid(out Validity validity)
     {
-        throw new NotImplementedException();
+        validity = Rules.IsHandValid(this, out var isValid);
+        return isValid;
     }
 
     /// <summary>
