@@ -7,14 +7,14 @@ public class PlayerData : IEquatable<PlayerData>
     /**
      * References the player who owns the data
      */
-    public Player Player { get; internal set; }
+    public Player Player { get; }
 
-    public ReadOnlyCollection<Game> Games { get; private set; }
-    private readonly HashSet<Game> _games = new();
+    public ReadOnlyCollection<Game> Games { get; }
+    private readonly List<Game> _games = new();
 
-    public int WinCount { get; internal set; }
+    public int WinCount { get; }
 
-    public int LossCount { get; internal set; }
+    public int LossCount { get; }
 
     public int GameCount => _games.Count;
 
@@ -23,14 +23,14 @@ public class PlayerData : IEquatable<PlayerData>
         Player = player;
         WinCount = winCount;
         LossCount = lossCount;
-        Games = new ReadOnlyCollection<Game>(_games.ToList());
+        Games = new ReadOnlyCollection<Game>(_games);
     }
 
-    public PlayerData AddGame(Game game)
+    public PlayerData AddGame(Game? game)
     {
-        if(game == null)
+        if (game is null)
         {
-            throw new ArgumentNullException("Game is null");
+            throw new ArgumentNullException(nameof(game), "Game is null");
         }
         _games.Add(game);
         return this;
@@ -38,7 +38,7 @@ public class PlayerData : IEquatable<PlayerData>
 
     public bool Equals(PlayerData? other)
     {
-        return Player.Equals(other.Player);
+        return Player.Equals(other?.Player);
     }
 
     public override bool Equals(object? obj)

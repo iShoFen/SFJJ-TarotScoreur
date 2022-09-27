@@ -19,7 +19,7 @@
             private init => _firstName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
 
-        private readonly string _firstName;
+        private readonly string _firstName = null!;
 
         /// <summary>
         /// last name of this Player
@@ -30,7 +30,7 @@
             private init => _lastName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
 
-        private readonly string _lastName;
+        private readonly string _lastName = null!;
 
         /// <summary>
         /// nickname of this Player
@@ -41,7 +41,7 @@
             private init => _nickName = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
 
-        private readonly string _nickName;
+        private readonly string _nickName = null!;
 
         /// <summary>
         /// file name of the avatar of this Player
@@ -52,7 +52,7 @@
             private init => _avatar = string.IsNullOrWhiteSpace(value) ? "" : value;
         }
 
-        private readonly string _avatar;
+        private readonly string _avatar = null!;
 
         /// <summary>
         /// constructor

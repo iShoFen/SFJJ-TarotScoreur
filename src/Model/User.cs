@@ -14,7 +14,7 @@ public partial class User : Player, IEquatable<User>
         private init => _email = string.IsNullOrWhiteSpace(value) ? "" : value;
     }
 
-    private readonly string _email;
+    private readonly string _email = null!;
 
     /// <summary>
     /// password of the User
@@ -25,7 +25,7 @@ public partial class User : Player, IEquatable<User>
         private init => _password = string.IsNullOrWhiteSpace(value) ? "" : value;
     }
 
-    private readonly string _password;
+    private readonly string _password = null!;
 
     /// <summary>
     /// constructor
