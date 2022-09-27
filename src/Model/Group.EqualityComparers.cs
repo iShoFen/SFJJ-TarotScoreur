@@ -6,9 +6,9 @@ public partial class Group
     {
         public bool Equals(Group? x, Group? y)
         {
-            if (ReferenceEquals(x, y)) return true;
             if (x is null) return false;
             if (y is null) return false;
+            if (ReferenceEquals(x, y)) return true;
             if (x.GetType() != y.GetType()) return false;
             return x.Name == y.Name
                    && x.Players.SequenceEqual(y.Players);

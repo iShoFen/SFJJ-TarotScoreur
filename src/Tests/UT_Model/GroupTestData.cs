@@ -551,5 +551,11 @@ internal static class GroupTestData
             g,
             null
         };
+        yield return new object?[]
+        {
+            false,
+            null,
+            null
+        };
     }
 }
