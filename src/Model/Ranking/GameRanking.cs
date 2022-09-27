@@ -1,3 +1,5 @@
+using Model.games;
+
 namespace Model.Ranking;
 
 public class GameRanking : Ranking<Game>
