@@ -8,12 +8,24 @@ public partial class User : Player, IEquatable<User>
     /// <summary>
     /// email address of the User
     /// </summary>
-    public string Email { get; }
+    public string Email
+    {
+        get => _email;
+        private init => _email = string.IsNullOrWhiteSpace(value) ? "" : value;
+    }
+
+    private readonly string _email;
 
     /// <summary>
     /// password of the User
     /// </summary>
-    public string Password { get; }
+    public string Password
+    {
+        get => _password;
+        private init => _password = string.IsNullOrWhiteSpace(value) ? "" : value;
+    }
+
+    private readonly string _password;
 
     /// <summary>
     /// constructor
@@ -24,11 +36,9 @@ public partial class User : Player, IEquatable<User>
     /// <param name="avatar">file name of the avatar of this Player</param>
     /// <param name="email">email of this Player</param>
     /// <param name="password">password of this Player</param>
-    public User(string firstName, string lastName, string nickName, string avatar, string email, string password) :
-        base(firstName, lastName, nickName, avatar)
+    public User(string firstName, string lastName, string nickName, string avatar, string email, string password)
+        : this(0, firstName, lastName, nickName, avatar, email, password)
     {
-        Email = email;
-        Password = password;
     }
 
     /// <summary>
@@ -51,7 +61,7 @@ public partial class User : Player, IEquatable<User>
     public bool Equals(User? other)
     {
         if (other is null) return false;
-        if (Id == 0 || other.Id == 0) return PlayerFullComparer.Equals(this, other);
+        if (Id == 0 || other.Id == 0) return UserFullComparer.Equals(this, other);
         return Id == other.Id;
     }
 
@@ -62,7 +72,7 @@ public partial class User : Player, IEquatable<User>
         return obj.GetType() == GetType() && Equals(obj as User);
     }
 
-    public override int GetHashCode() => Id == 0 ? UserEqualityComparer.GetHashCode(this) : Id.GetHashCode();
+    public override int GetHashCode() => Id == 0 ? UserFullComparer.GetHashCode(this) : Id.GetHashCode();
 
     public override string ToString() => $"{base.ToString()}: {Email}";
 }
