@@ -234,9 +234,9 @@ internal static class PlayerTestData
         };
         yield return new object?[]
         {
-            true,
-            new Player(4, "Florent", "MARQUES", "Flo", "avatar"),
-            new Player(4, "Florent", "MARQUES", "Flo", "avatar")
+            false,
+            null,
+            null
         };
     }
 }

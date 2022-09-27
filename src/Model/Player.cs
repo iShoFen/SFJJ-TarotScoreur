@@ -79,7 +79,8 @@
             if ((string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) &&
                 string.IsNullOrWhiteSpace(nickName))
             {
-                throw new ArgumentException("A player must have a first name and a last name if he do not have a nickname");
+                throw new ArgumentException(
+                    "A player must have a first name and a last name if he do not have a nickname");
             }
 
             Id = id;
@@ -87,7 +88,6 @@
             LastName = lastName;
             NickName = nickName;
             Avatar = avatar;
-
         }
 
         public bool Equals(Player? other)

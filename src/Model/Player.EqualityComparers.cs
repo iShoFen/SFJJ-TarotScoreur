@@ -14,9 +14,9 @@ namespace Model
             /// <returns>true if players are equals, otherwise false</returns>
             public bool Equals(Player? x, Player? y)
             {
-                if (ReferenceEquals(x, y)) return true;
                 if (x is null) return false;
                 if (y is null) return false;
+                if (ReferenceEquals(x, y)) return true;
                 if (x.GetType() != y.GetType()) return false;
                 return x.FirstName == y.FirstName
                     && x.LastName == y.LastName
