@@ -30,7 +30,7 @@ namespace Model
 
         };
         //private Dictionary<Bidding, int> _biddingPrice;
-        private Dictionary<Bidding, int> _multiplicators = new()
+        private readonly Dictionary<Bidding, int> _multiplicators = new()
         {
         
           [Bidding.Petite] = 1,
@@ -202,7 +202,7 @@ namespace Model
                 if (bidding == Bidding.Unknown) return Validity.PlayerShallHaveBidding;
             }
 
-            if (nbKing > MaxNbKing || (biddings.Count() < 5 && nbKing > 0)) return Validity.TooManyKing;
+            if (nbKing > MaxNbKing || (biddings.Count < 5 && nbKing > 0)) return Validity.TooManyKing;
             if (nbTaker == 0) return Validity.NoTaker;
             return Validity.Valid;
         }
