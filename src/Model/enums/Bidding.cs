@@ -1,5 +1,6 @@
 ﻿namespace Model.enums;
 
+[Flags]
 public enum Bidding : byte
 {    
     /// <summary>
