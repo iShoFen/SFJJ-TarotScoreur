@@ -26,7 +26,7 @@ public partial class Hand : IEquatable<Hand>
         get => _rules;
         init => _rules = value ?? throw new ArgumentNullException(nameof(value), "Rules cannot be null");
     }
-    private readonly IRules _rules;
+    private readonly IRules _rules = null!;
 
     /// <summary>
     /// The date of the hand
@@ -84,7 +84,8 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
     /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
-    public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
+    public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
+        PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
     {
         Id = id;
         HandNumber = handNumber;
@@ -105,7 +106,9 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="number"> The number of the hand </param>
     /// <param name="rules"> The Rules of the game applied to this hand </param>
     /// <param name="date"> The date of the hand </param>
-    public Hand(int number, IRules rules, DateTime date) : this(0L, number, rules, date, 0, null, null, PetitResult.Unknown, Chelem.Unknown) { }
+    public Hand(int number, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
+        PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings) : 
+        this(0UL, number, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings) {}
         
     /// <summary>
     /// Add a bidding to the hand
@@ -142,8 +145,7 @@ public partial class Hand : IEquatable<Hand>
     /// <returns> True if the two Hands are equal, false otherwise </returns>
     public bool Equals(Hand? other)
     {
-        if (other is null) return false;
-        if (Id == 0 || other.Id == 0) return FullComparer.Equals(this, other);
+        if (Id == 0 || other!.Id == 0) return FullComparer.Equals(this, other);
         return Id == other.Id;
     }
 

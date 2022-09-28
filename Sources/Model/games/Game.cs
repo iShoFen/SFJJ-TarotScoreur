@@ -22,14 +22,14 @@ public partial class Game : IEquatable<Game>
             ? throw new ArgumentException("Game name cannot be null or empty", nameof(value))
             : value;
     }
-    private readonly string _name;
+    private readonly string _name = null!;
 
     public IRules Rules
     {
         get => _rules;
         private init => _rules = value ?? throw new ArgumentNullException(nameof(value), "Game rules cannot be null");
     }
-    private readonly IRules _rules;
+    private readonly IRules _rules = null!;
 
 
     /// <summary>
@@ -142,7 +142,7 @@ public partial class Game : IEquatable<Game>
     /// Get the score of all the hands played in the game
     /// </summary>
     /// <returns> The score of all the hands played in the game </returns>
-    public IEnumerable<IReadOnlyDictionary<Player, int>> GetScores() => Hands.Select(hand => Rules.GetHandScore(hand.Value)).ToList();
+    public IEnumerable<IReadOnlyDictionary<Player, int>> GetScores() => Hands.Select(hand => Rules.GetHandScore(hand.Value));
     
     /// <summary>
     /// Checks if this Game is equal to another Game
@@ -151,8 +151,7 @@ public partial class Game : IEquatable<Game>
     /// <returns> True if the two games are equal, false otherwise </returns>
     public bool Equals(Game? other)
     {
-        if (other is null) return false;
-        if (Id == 0 || other.Id == 0) return FullComparer.Equals(this, other);
+        if (Id == 0 || other!.Id == 0) return FullComparer.Equals(this, other);
         return Id == other.Id;
     }
 
