@@ -28,21 +28,21 @@ public class Manager
     /// Method to load all players
     /// </summary>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadAllPlayer() => _dataManager.LoadAllPlayer();
+    public IEnumerable<Player> LoadAllPlayer() => _dataManager.LoadAllPlayer();
 
     /// <summary>
     /// Method to load a player by group
     /// </summary>
     /// <param name="group">Group to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayersByGroup(Group group) => _dataManager.LoadPlayersByGroup(group);
+    public IEnumerable<Player> LoadPlayersByGroup(Group group) => _dataManager.LoadPlayersByGroup(group);
 
     /// <summary>
     /// Method to load a player by firstname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayerByFirstName(string firstName) =>
+    public IEnumerable<Player> LoadPlayerByFirstName(string firstName) =>
         _dataManager.LoadPlayerByFirstName(firstName);
 
     /// <summary>
@@ -50,7 +50,7 @@ public class Manager
     /// </summary>
     /// <param name="lastName">Lastname to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayerByLastName(string lastName) =>
+    public IEnumerable<Player> LoadPlayerByLastName(string lastName) =>
         _dataManager.LoadPlayerByLastName(lastName);
 
     /// <summary>
@@ -58,7 +58,7 @@ public class Manager
     /// </summary>
     /// <param name="nickname">nickname to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayerByNickname(string nickname) =>
+    public IEnumerable<Player> LoadPlayerByNickname(string nickname) =>
         _dataManager.LoadPlayerByNickname(nickname);
 
     /// <summary>
@@ -67,7 +67,7 @@ public class Manager
     /// <param name="firstName">Firstname to search</param>
     /// <param name="lastName">Lastname to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName) =>
+    public IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName) =>
         _dataManager.LoadPlayerByFirstNameAndLastName(firstName, lastName);
 
     /// <summary>
@@ -76,7 +76,7 @@ public class Manager
     /// <param name="firstName">Firstname to search</param>
     /// <param name="nickname">nickname to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname) =>
+    public IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname) =>
         _dataManager.LoadPlayerByFirstNameAndNickname(firstName, nickname);
 
     /// <summary>
@@ -85,7 +85,7 @@ public class Manager
     /// <param name="lastName">Lastname to search</param>
     /// <param name="nickname">nickname to search</param>
     /// <returns>List of players</returns>
-    public ReadOnlyCollection<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname) =>
+    public IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname) =>
         _dataManager.LoadPlayerByLastNameAndNickname(lastName, nickname);
 
     /// <summary>
@@ -120,7 +120,7 @@ public class Manager
     /// </summary>
     /// <param name="startDate">Start date of games</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadGameByStartDate(DateTime startDate) =>
+    public IEnumerable<Game> LoadGameByStartDate(DateTime startDate) =>
         _dataManager.LoadGameByStartDate(startDate);
 
     /// <summary>
@@ -128,7 +128,7 @@ public class Manager
     /// </summary>
     /// <param name="endDate">End date of games</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadGameByEndDate(DateTime endDate) => _dataManager.LoadGameByEndDate(endDate);
+    public IEnumerable<Game> LoadGameByEndDate(DateTime endDate) => _dataManager.LoadGameByEndDate(endDate);
 
     /// <summary>
     /// Method to load games by an interval of dates
@@ -136,7 +136,7 @@ public class Manager
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate) =>
+    public IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate) =>
         _dataManager.LoadGameByDateInterval(startDate, endDate);
 
     /// <summary>
@@ -146,7 +146,7 @@ public class Manager
     /// <param name="endDate">End date of the interval</param>
     /// <param name="group">Group to search</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate, Group group) =>
+    public IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate, Group group) =>
         _dataManager.LoadGameByDateAndGroupInterval(startDate, endDate, group);
 
     /// <summary>
@@ -156,7 +156,7 @@ public class Manager
     /// <param name="endDate">End date of the interval</param>
     /// <param name="player">Player to search</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game>
+    public IEnumerable<Game>
         LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate, Player player) =>
         _dataManager.LoadGameByDateAndPlayerInterval(startDate, endDate, player);
 
@@ -165,20 +165,20 @@ public class Manager
     /// </summary>
     /// <param name="player">Player to search</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadGameByPlayer(Player player) => _dataManager.LoadGameByPlayer(player);
+    public IEnumerable<Game> LoadGameByPlayer(Player player) => _dataManager.LoadGameByPlayer(player);
 
     /// <summary>
     /// Method to load games by a group
     /// </summary>
     /// <param name="group">Group to search</param>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadGameByGroup(Group group) => _dataManager.LoadGameByGroup(group);
+    public IEnumerable<Game> LoadGameByGroup(Group group) => _dataManager.LoadGameByGroup(group);
 
     /// <summary>
     /// Method to load all games
     /// </summary>
     /// <returns>List of games</returns>
-    public ReadOnlyCollection<Game> LoadAllGames() => _dataManager.LoadAllGames();
+    public IEnumerable<Game> LoadAllGames() => _dataManager.LoadAllGames();
 
     /// <summary>
     /// Method to create a game
@@ -202,7 +202,7 @@ public class Manager
     /// Method to load all rules
     /// </summary>
     /// <returns>List of rules</returns>
-    public ReadOnlyCollection<IRules> LoadAllRules() => _dataManager.LoadAllRules();
+    public IEnumerable<IRules> LoadAllRules() => _dataManager.LoadAllRules();
     /*========== End rules ==========*/
 
     /*========== Group ==========*/
@@ -223,14 +223,14 @@ public class Manager
     /// Method to load all groups
     /// </summary>
     /// <returns>List of groups</returns>
-    public ReadOnlyCollection<Group> LoadAllGroups() => _dataManager.LoadAllGroups();
+    public IEnumerable<Group> LoadAllGroups() => _dataManager.LoadAllGroups();
 
     /// <summary>
     /// Method to load a group by player
     /// </summary>
     /// <param name="player">Player to search</param>
     /// <returns>List of groups</returns>
-    public ReadOnlyCollection<Group> LoadGroupsByPlayer(Player player) => _dataManager.LoadGroupsByPlayer(player);
+    public IEnumerable<Group> LoadGroupsByPlayer(Player player) => _dataManager.LoadGroupsByPlayer(player);
 
     /// <summary>
     /// Method to create a group

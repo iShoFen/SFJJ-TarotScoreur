@@ -18,21 +18,21 @@ public interface ILoader
     /// </summary>
     /// <param name="player">Player to search</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByPlayer(Player player);
+    IEnumerable<Game> LoadGameByPlayer(Player player);
     
     /// <summary>
     /// Method to load games by start date
     /// </summary>
     /// <param name="startDate">Start date of games</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByStartDate(DateTime startDate);
+    IEnumerable<Game> LoadGameByStartDate(DateTime startDate);
     
     /// <summary>
     /// Method to load games by end date
     /// </summary>
     /// <param name="endDate">End date of games</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByEndDate(DateTime endDate);
+    IEnumerable<Game> LoadGameByEndDate(DateTime endDate);
     
     /// <summary>
     /// Method to load games by an interval of dates
@@ -40,7 +40,7 @@ public interface ILoader
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate);
+    IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate);
     
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -49,7 +49,7 @@ public interface ILoader
     /// <param name="endDate">End date of the interval</param>
     /// <param name="group">Group to search</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate,Group group);
+    IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate,Group group);
     
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -58,20 +58,20 @@ public interface ILoader
     /// <param name="endDate">End date of the interval</param>
     /// <param name="player">Player to search</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate,Player player);
+    IEnumerable<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate,Player player);
     
     /// <summary>
     /// Method to load games by a group
     /// </summary>
     /// <param name="group">Group to search</param>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadGameByGroup(Group group);
+    IEnumerable<Game> LoadGameByGroup(Group group);
     
     /// <summary>
     /// Method to load all games
     /// </summary>
     /// <returns>List of games</returns>
-    ReadOnlyCollection<Game> LoadAllGames();
+    IEnumerable<Game> LoadAllGames();
     /*========== End Games ==========*/
     
     
@@ -82,7 +82,7 @@ public interface ILoader
     /// <param name="lastName">Lastname to search</param>
     /// <param name="nickname">Nickname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname);
+    IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname);
     
     /// <summary>
     /// Method to load a player by firstName and nickname
@@ -90,7 +90,7 @@ public interface ILoader
     /// <param name="firstName">Firstname to search</param>
     /// <param name="nickname">Nickname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname);
+    IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname);
     
     /// <summary>
     /// Method to load a player by firstname and lastname
@@ -98,41 +98,41 @@ public interface ILoader
     /// <param name="firstName">Firstname to search</param>
     /// <param name="lastName">Lastname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName);
+    IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName);
     
     /// <summary>
     /// Method to load a player by nickname
     /// </summary>
     /// <param name="nickname">Nickname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByNickname(string nickname);
+    IEnumerable<Player> LoadPlayerByNickname(string nickname);
     
     /// <summary>
     /// Method to load a player by lastname
     /// </summary>
     /// <param name="lastName">Lastname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByLastName(string lastName);
+    IEnumerable<Player> LoadPlayerByLastName(string lastName);
     
     /// <summary>
     /// Method to load a player by firstname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayerByFirstName(string firstName);
+    IEnumerable<Player> LoadPlayerByFirstName(string firstName);
     
     /// <summary>
     /// Method to load all players
     /// </summary>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadAllPlayer();
+    IEnumerable<Player> LoadAllPlayer();
     
     /// <summary>
     /// Method to load a player by group
     /// </summary>
     /// <param name="group">Group to search</param>
     /// <returns>List of players</returns>
-    ReadOnlyCollection<Player> LoadPlayersByGroup(Group group);
+    IEnumerable<Player> LoadPlayersByGroup(Group group);
     /*========== End Players ==========*/
     
     
@@ -148,14 +148,14 @@ public interface ILoader
     /// Method to load all groups
     /// </summary>
     /// <returns>List of groups</returns>
-    ReadOnlyCollection<Group> LoadAllGroups();
+    IEnumerable<Group> LoadAllGroups();
     
     /// <summary>
     /// Method to load a group by player
     /// </summary>
     /// <param name="player">Player to search</param>
     /// <returns>List of groups</returns>
-    ReadOnlyCollection<Group> LoadGroupsByPlayer(Player player);
+    IEnumerable<Group> LoadGroupsByPlayer(Player player);
     /*========== End Groups ==========*/
     
     
@@ -171,6 +171,6 @@ public interface ILoader
     /// Method to load all rules
     /// </summary>
     /// <returns>List of rules</returns>
-    ReadOnlyCollection<IRules> LoadAllRules();
+    IEnumerable<IRules> LoadAllRules();
     /*========== End Rules ==========*/
 }
