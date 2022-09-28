@@ -17,30 +17,38 @@ public interface ILoader
     /// Method to load games by player
     /// </summary>
     /// <param name="player">Player to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByPlayer(Player player);
+    IEnumerable<Game> LoadGameByPlayer(Player player, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by start date
     /// </summary>
     /// <param name="startDate">Start date of games</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByStartDate(DateTime startDate);
+    IEnumerable<Game> LoadGameByStartDate(DateTime startDate, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by end date
     /// </summary>
     /// <param name="endDate">End date of games</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByEndDate(DateTime endDate);
+    IEnumerable<Game> LoadGameByEndDate(DateTime endDate, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by an interval of dates
     /// </summary>
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate);
+    IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -48,8 +56,10 @@ public interface ILoader
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
     /// <param name="group">Group to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate,Group group);
+    IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate,Group group, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -57,21 +67,27 @@ public interface ILoader
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
     /// <param name="player">Player to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate,Player player);
+    IEnumerable<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate,Player player, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by a group
     /// </summary>
     /// <param name="group">Group to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByGroup(Group group);
+    IEnumerable<Game> LoadGameByGroup(Group group, int page, int pageSize);
     
     /// <summary>
     /// Method to load all games
     /// </summary>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadAllGames();
+    IEnumerable<Game> LoadAllGames(int page, int pageSize);
     /*========== End Games ==========*/
     
     
@@ -81,58 +97,74 @@ public interface ILoader
     /// </summary>
     /// <param name="lastName">Lastname to search</param>
     /// <param name="nickname">Nickname to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname);
+    IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize);
     
     /// <summary>
     /// Method to load a player by firstName and nickname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
     /// <param name="nickname">Nickname to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname);
+    IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page, int pageSize);
     
     /// <summary>
     /// Method to load a player by firstname and lastname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
     /// <param name="lastName">Lastname to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName);
+    IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page, int pageSize);
     
     /// <summary>
     /// Method to load a player by nickname
     /// </summary>
     /// <param name="nickname">Nickname to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayerByNickname(string nickname);
+    IEnumerable<Player> LoadPlayerByNickname(string nickname, int page, int pageSize);
     
     /// <summary>
     /// Method to load a player by lastname
     /// </summary>
     /// <param name="lastName">Lastname to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayerByLastName(string lastName);
+    IEnumerable<Player> LoadPlayerByLastName(string lastName, int page, int pageSize);
     
     /// <summary>
     /// Method to load a player by firstname
     /// </summary>
     /// <param name="firstName">Firstname to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayerByFirstName(string firstName);
+    IEnumerable<Player> LoadPlayerByFirstName(string firstName, int page, int pageSize);
     
     /// <summary>
     /// Method to load all players
     /// </summary>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadAllPlayer();
+    IEnumerable<Player> LoadAllPlayer(int page, int pageSize);
     
     /// <summary>
     /// Method to load a player by group
     /// </summary>
     /// <param name="group">Group to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayersByGroup(Group group);
+    IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize);
     /*========== End Players ==========*/
     
     
@@ -147,15 +179,19 @@ public interface ILoader
     /// <summary>
     /// Method to load all groups
     /// </summary>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
-    IEnumerable<Group> LoadAllGroups();
+    IEnumerable<Group> LoadAllGroups(int page, int pageSize);
     
     /// <summary>
     /// Method to load a group by player
     /// </summary>
     /// <param name="player">Player to search</param>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
-    IEnumerable<Group> LoadGroupsByPlayer(Player player);
+    IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize);
     /*========== End Groups ==========*/
     
     
@@ -170,7 +206,9 @@ public interface ILoader
     /// <summary>
     /// Method to load all rules
     /// </summary>
+    /// <param name="page"> Number of the page to load</param>
+    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of rules</returns>
-    IEnumerable<IRules> LoadAllRules();
+    IEnumerable<IRules> LoadAllRules(int page, int pageSize);
     /*========== End Rules ==========*/
 }
