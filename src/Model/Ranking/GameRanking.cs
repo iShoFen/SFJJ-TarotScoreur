@@ -2,7 +2,7 @@ using Model.games;
 
 namespace Model.Ranking;
 
-public class GameRanking : Ranking<Game, Game>
+public class GameRanking : Ranking<Game>
 {
     public GameRanking(string name, GameType gameType, params Game[] data) : base(name, gameType, data)
     {

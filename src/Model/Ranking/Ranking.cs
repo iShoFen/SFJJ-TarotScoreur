@@ -4,23 +4,22 @@ namespace Model.Ranking;
 /// Generic Ranking class with 2 template type
 /// </summary>
 /// <typeparam name="T">generic input type for the ranking</typeparam>
-/// <typeparam name="U">generic output type for the ranking</typeparam>
-public abstract class Ranking<T, U>
+public abstract class Ranking<T>
 {
     /// <summary>
     /// name of this Ranking
     /// </summary>
-    public string Name { get; protected set; }
+    public string Name { get; }
 
     /// <summary>
     /// game type of this GameType
     /// </summary>
-    public GameType GameType { get; protected set; }
+    public GameType GameType { get; }
 
     /// <summary>
     /// set of datas to apply the ranking
     /// </summary>
-    protected readonly HashSet<T> _datas = new();
+    protected readonly List<T> _datas = new();
 
     /// <summary>
     /// constructor
@@ -41,17 +40,24 @@ public abstract class Ranking<T, U>
     /// <param name="rankingDatas">data to add</param>
     public void AddRankingData(params T[] rankingDatas)
     {
-        _datas.UnionWith(rankingDatas);
+        _datas.AddRange(rankingDatas);
     }
 
-    public abstract IEnumerable<U> SortByAscendingScore();
-    public abstract IEnumerable<U> SortByDescendingScore();
-    public abstract IEnumerable<U> SortByAscendingDate();
-    public abstract IEnumerable<U> SortByDescendingDate();
-    public abstract IEnumerable<U> SortByAscendingDateRange(DateTime startDate, DateTime endDate);
-    public abstract IEnumerable<U> SortByDescendingDateRange(DateTime startDate, DateTime endDate);
-    public abstract IEnumerable<U> SortByAscendingWin();
-    public abstract IEnumerable<U> SortByDescendingWin();
-    public abstract IEnumerable<U> SortByAscendingLoss();
-    public abstract IEnumerable<U> SortByDescendingLoss();
+    public abstract IEnumerable<T> SortByAscendingScore();
+    public abstract IEnumerable<T> SortByDescendingScore();
+    public abstract IEnumerable<T> SortByAscendingDate();
+    public abstract IEnumerable<T> SortByDescendingDate();
+    public abstract IEnumerable<T> SortByAscendingDateRange(DateTime startDate, DateTime endDate);
+    public abstract IEnumerable<T> SortByDescendingDateRange(DateTime startDate, DateTime endDate);
+    public abstract IEnumerable<T> SortByAscendingWin();
+    public abstract IEnumerable<T> SortByDescendingWin();
+    public abstract IEnumerable<T> SortByAscendingLoss();
+    public abstract IEnumerable<T> SortByDescendingLoss();
+    
+    protected IEnumerable<T> GenericSort(Comparison<T> comparison)
+    {
+        var sortedData = new List<T>(_datas);
+        sortedData.Sort(comparison);
+        return sortedData;
+    }
 }
