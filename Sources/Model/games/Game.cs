@@ -122,14 +122,14 @@ public partial class Game : IEquatable<Game>
     /// </summary>
     /// <param name="hand"> The hand to add </param>
     /// <returns> true if the hand was added, false if the hand was already in the game </returns>
-    public bool AddHand(Hand hand) => _hands.TryAdd(hand.HandNumber, hand);
+    public bool AddHand(Hand hand) => _hands.TryAdd(hand.Number, hand);
 
     /// <summary>
     /// Add multiple hands to the game
     /// </summary>
     /// <param name="hands"> The hands to add </param>
     /// <returns> true if all hands were added, false if at least one hand was already in the game </returns>
-    public bool AddHands(params Hand[] hands) => hands.All(hand => !_hands.ContainsKey(hand.HandNumber)) && hands.All(AddHand);
+    public bool AddHands(params Hand[] hands) => hands.All(hand => !_hands.ContainsKey(hand.Number)) && hands.All(AddHand);
     
 
     /// <summary>

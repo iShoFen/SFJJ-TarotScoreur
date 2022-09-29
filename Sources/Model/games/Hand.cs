@@ -16,7 +16,7 @@ public partial class Hand : IEquatable<Hand>
     /// <summary>
     /// The number of the hand
     /// </summary>
-    public int HandNumber { get; }
+    public int Number { get; }
 
     /// <summary>
     /// The Rules of the game applied to this hand
@@ -24,7 +24,7 @@ public partial class Hand : IEquatable<Hand>
     public IRules Rules
     {
         get => _rules;
-        init => _rules = value ?? throw new ArgumentNullException(nameof(value), "Rules cannot be null");
+        private init => _rules = value ?? throw new ArgumentNullException(nameof(value), "Rules cannot be null");
     }
     private readonly IRules _rules = null!;
 
@@ -75,7 +75,7 @@ public partial class Hand : IEquatable<Hand>
     /// Full constructor used to create a new game from existing data
     /// </summary>
     /// <param name="id">The unique identifier for the hand</param>
-    /// <param name="handNumber"> The number of the hand </param>
+    /// <param name="number"> The number of the hand </param>
     /// <param name="rules"> The Rules of the game applied to this hand </param>
     /// <param name="date"> The date of the hand </param>
     /// <param name="takerScore"> The score of the taker </param>
@@ -84,11 +84,11 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
     /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
-    public Hand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
+    public Hand(ulong id, int number, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
         PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
     {
         Id = id;
-        HandNumber = handNumber;
+        Number = number;
         Rules = rules;
         Date = date;
         TakerScore = takerScore;
@@ -99,13 +99,19 @@ public partial class Hand : IEquatable<Hand>
         AddBiddings(biddings);
         Biddings = new ReadOnlyDictionary<Player, (Bidding, Poignee)>(_biddings);
     }
-        
+
     /// <summary>
     /// Constructor used to create a new hand
     /// </summary>
     /// <param name="number"> The number of the hand </param>
     /// <param name="rules"> The Rules of the game applied to this hand </param>
     /// <param name="date"> The date of the hand </param>
+    /// <param name="takerScore"> The score of the taker </param>
+    /// <param name="twentyOne"> Indicates if the taker as the twenty one oudler </param>
+    /// <param name="excuse"> Indicates if the taker as the excuse oudler </param>
+    /// <param name="petit"> Indicates the state of the Petit related to the taker </param>
+    /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
+    /// <param name="biddings"> Players bidding details </param>
     public Hand(int number, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
         PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings) : 
         this(0UL, number, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings) {}
@@ -171,5 +177,5 @@ public partial class Hand : IEquatable<Hand>
     /// Get a string representation of the Hand
     /// </summary>
     /// <returns> A string representation of the Hand </returns>
-    public override string ToString() => $"({Id}) {HandNumber} ({Date:dd/MM/yyyy})";
+    public override string ToString() => $"({Id}) {Number} ({Date:dd/MM/yyyy})";
 }

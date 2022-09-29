@@ -69,7 +69,7 @@ public class UT_Game
         Assert.Equal(expResult, game.AddHand(hand));
         foreach (var exHand in exHands)
         {
-            Assert.Equal(exHand.Key, exHand.Value.HandNumber);
+            Assert.Equal(exHand.Key, exHand.Value.Number);
             Assert.Equal(exHand.Value, game.Hands[exHand.Key]);
         }
     }
@@ -81,7 +81,7 @@ public class UT_Game
         Assert.Equal(expResult, game.AddHands(hands));
         foreach (var exHand in exHands)
         {
-            Assert.Equal(exHand.Key, exHand.Value.HandNumber);
+            Assert.Equal(exHand.Key, exHand.Value.Number);
             Assert.Equal(exHand.Value, game.Hands[exHand.Key]);
         }
     }

@@ -23,7 +23,7 @@ public class UT_Hand
             Hand hand = new(expId, expHandNumber, expRules, expDate, expTakerScore, expTwentyOne, expExcuse, expPetit,
                 expChelem, expBiddings);
             Assert.Equal(expId, hand.Id);
-            Assert.Equal(expHandNumber, hand.HandNumber);
+            Assert.Equal(expHandNumber, hand.Number);
             Assert.Equal(expRules, hand.Rules);
             Assert.Equal(expDate, hand.Date);
             Assert.Equal(expTakerScore, hand.TakerScore);
@@ -51,7 +51,7 @@ public class UT_Hand
         Hand hand = new(expNum, expRules, expDate, expTakerScore, expTwentyOne, expExcuse, expPetit, expChelem);
 
         Assert.Equal(expId, hand.Id);
-        Assert.Equal(expNum, hand.HandNumber);
+        Assert.Equal(expNum, hand.Number);
         Assert.Equal(expRules, hand.Rules);
         Assert.Equal(expDate, hand.Date);
         Assert.Equal(expTakerScore, hand.TakerScore);
