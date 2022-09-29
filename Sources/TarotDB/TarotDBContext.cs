@@ -2,6 +2,9 @@
 
 namespace TarotDB;
 
+/// <summary>
+/// Database context of the TarotScoreur app
+/// </summary>
 internal class TarotDBContext : DbContext
 {
     public DbSet<PlayerEntity> Players { get; set; }
