@@ -23,7 +23,7 @@ public class UT_Hand
             Hand hand = new(expId, expHandNumber, expRules, expDate, expTakerScore, expTwentyOne, expExcuse, expPetit,
                 expChelem, expBiddings);
             Assert.Equal(expId, hand.Id);
-            Assert.Equal(expHandNumber, hand.HandNumber);
+            Assert.Equal(expHandNumber, hand.Number);
             Assert.Equal(expRules, hand.Rules);
             Assert.Equal(expDate, hand.Date);
             Assert.Equal(expTakerScore, hand.TakerScore);
@@ -48,10 +48,10 @@ public class UT_Hand
         bool? expExcuse = null;
         var expPetit = PetitResult.Unknown;
         var expChelem = Chelem.Unknown;
-        Hand hand = new(expNum, expRules, expDate);
+        Hand hand = new(expNum, expRules, expDate, expTakerScore, expTwentyOne, expExcuse, expPetit, expChelem);
 
         Assert.Equal(expId, hand.Id);
-        Assert.Equal(expNum, hand.HandNumber);
+        Assert.Equal(expNum, hand.Number);
         Assert.Equal(expRules, hand.Rules);
         Assert.Equal(expDate, hand.Date);
         Assert.Equal(expTakerScore, hand.TakerScore);
@@ -82,12 +82,7 @@ public class UT_Hand
 
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestHashCode), MemberType = typeof(HandTestData))]
-    public void TestHashCode(bool expResult, Hand hand1, Hand hand2)
-    {
-        var testHashCode1 = hand1.GetHashCode();
-        var testHashCode2 = hand2.GetHashCode();
-        Assert.Equal(expResult, hand1.GetHashCode() == hand2.GetHashCode());
-    }
+    public void TestHashCode(bool expResult, Hand hand1, Hand hand2) => Assert.Equal(expResult, hand1.GetHashCode() == hand2.GetHashCode());
 
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestEquals), MemberType = typeof(HandTestData))]
@@ -97,10 +92,9 @@ public class UT_Hand
     [Fact]
     public void TestEquals_Null_Type_Ref()
     {
-        Hand hand = new(1, new FrenchTarotRules(), DateTime.Now);
+        Hand hand = new(1, new FrenchTarotRules(), DateTime.Now, 0, null, null, PetitResult.Unknown, Chelem.Unknown);
         Assert.False(Hand.FullComparer.Equals(hand, null));
         Assert.False(Hand.FullComparer.Equals(null, hand));
-        Assert.False(hand!.Equals(null));
         Assert.False(hand!.Equals(new object()));
         Assert.True(hand!.Equals(hand as object));
     }

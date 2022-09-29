@@ -15,7 +15,7 @@ public partial class Hand
             return
                 x is not null &&
                 y is not null &&
-                x.HandNumber == y.HandNumber &&
+                x.Number == y.Number &&
                 Equals(x.Rules, y.Rules) &&
                 x.Date == y.Date &&
                 x.TakerScore == y.TakerScore &&
@@ -32,7 +32,7 @@ public partial class Hand
         /// </summary>
         /// <param name="obj"> The hand to get the hash code of </param>
         /// <returns> The hash code of the hand </returns>
-        public int GetHashCode(Hand obj) => obj.HandNumber % 31;
+        public int GetHashCode(Hand obj) => obj.Number % 31;
     }
 
     /// <summary>
