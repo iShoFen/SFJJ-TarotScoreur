@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT_Model", "Tests\FT_Model\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarotDB", "TarotDB\TarotDB.csproj", "{7398AF78-8A07-4CFF-9358-5E2401F4C929}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tarot2B2Model", "Tarot2B2Model\Tarot2B2Model.csproj", "{A3822897-3239-40C4-BE41-8DD9FE0B7DE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{7398AF78-8A07-4CFF-9358-5E2401F4C929}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7398AF78-8A07-4CFF-9358-5E2401F4C929}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7398AF78-8A07-4CFF-9358-5E2401F4C929}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3822897-3239-40C4-BE41-8DD9FE0B7DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3822897-3239-40C4-BE41-8DD9FE0B7DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3822897-3239-40C4-BE41-8DD9FE0B7DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3822897-3239-40C4-BE41-8DD9FE0B7DE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
