@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using Model.games;
 
 namespace Model.data;
@@ -11,7 +10,7 @@ public interface ILoader
     /// </summary>
     /// <param name="name">Name of the game</param>
     /// <returns>A game</returns>
-    Game LoadGameByName(string name);
+    Game? LoadGameByName(string name);
     
     /// <summary>
     /// Method to load games by player
@@ -164,7 +163,7 @@ public interface ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize);
+    IEnumerable<Player>? LoadPlayersByGroup(Group group, int page, int pageSize);
     /*========== End Players ==========*/
     
     
@@ -174,7 +173,7 @@ public interface ILoader
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    Group LoadGroupsByName(string name);
+    Group? LoadGroupsByName(string name);
     
     /// <summary>
     /// Method to load all groups
@@ -201,7 +200,7 @@ public interface ILoader
     /// </summary>
     /// <param name="name">Name of the rule to search</param>
     /// <returns>A IRules</returns>
-    IRules LoadRule(string name);
+    IRules? LoadRule(string name);
     
     /// <summary>
     /// Method to load all rules

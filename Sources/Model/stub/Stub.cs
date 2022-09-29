@@ -8,12 +8,14 @@ public class Stub : ILoader
     private readonly List<Game> _gameList= new();
     private readonly List<Player> _playerList = new();
     private readonly List<Group> _groupList = new();
+    private readonly List<IRules> _rulesList= new();
 
     public Stub()
     {
         SetGameList();
         SetPlayerList();
         SetGroupList();
+        SetRuleList();
     }
 
     private void SetGameList()
@@ -80,110 +82,67 @@ public class Stub : ILoader
         _groupList.Add(new Group(11UL, "Group 11", _playerList[10], _playerList[11], _playerList[12], _playerList[13], _playerList[14]));
         _groupList.Add(new Group(12UL, "Group 12", _playerList[11], _playerList[12], _playerList[13], _playerList[14], _playerList[15]));
     }
-    
-    private int GetRangeMin(int page, int pageSize)
+    private void SetRuleList()
     {
-        return (page - 1) * pageSize;
-    }
-    
-    private int GetRangeMax(int page, int pageSize)
-    {
-        return GetRangeMin(page, pageSize) + pageSize;
+        _rulesList.Add(new FrenchTarotRules());
     }
 
     public Game? LoadGameByName(string name) => _gameList.FirstOrDefault(game => game.Name == name);
 
     public IEnumerable<Game> LoadGameByPlayer(Player player, int page, int pageSize)
-    {
-        var gameList = _gameList.Where(game => game.Players.Contains(player)).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => _gameList.Where(game => game.Players.Contains(player)).Skip((page - 1) * pageSize).Take(page * pageSize);
 
     public IEnumerable<Game> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-    {
-        var gameList = _gameList.Where(game => game.StartDate == startDate).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => _gameList.Where(game => game.StartDate == startDate).Skip((page-1) * pageSize).Take(page*pageSize);
 
     public IEnumerable<Game> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-    {
-        var gameList = _gameList.Where(game => game.EndDate == endDate).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => _gameList.Where(game => game.EndDate == endDate).Skip((page-1) * pageSize).Take(page*pageSize);
 
     public IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize)
-    {
-        var gameList = _gameList.Where(game => game.StartDate >= startDate && game.EndDate <= endDate).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => _gameList.Where(game => game.StartDate >= startDate && game.EndDate <= endDate).Skip((page-1) * pageSize).Take(page*pageSize);
 
     public IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate, Group group, int page, int pageSize)
-    {
-        var gameList = (from g in _groupList from player in g.Players from game in _gameList where game.Players.Contains(player) && game.StartDate >= startDate && game.EndDate <= endDate select game).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => (from g in _groupList from player in g.Players from game in _gameList where game.Players.Contains(player) && game.StartDate >= startDate && game.EndDate <= endDate select game).Skip((page-1) * pageSize).Take(page*pageSize);
     
     public IEnumerable<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate, Player player, int page, int pageSize)
-    {
-        var gameList = _gameList.Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player)).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => _gameList.Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player)).Skip((page-1) * pageSize).Take(page*pageSize);
     
     public IEnumerable<Game> LoadGameByGroup(Group group, int page, int pageSize)
-    {
-        var gameList = (from g in _groupList from player in g.Players from game in _gameList where game.Players.Contains(player) select game).ToList();
-        return gameList.GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-    }
+        => (from g in _groupList from player in g.Players from game in _gameList where game.Players.Contains(player) select game).Skip((page-1) * pageSize).Take(page*pageSize);
+
+    public IEnumerable<Game> LoadAllGames(int page, int pageSize)
+        => _gameList.Skip((page-1) * pageSize).Take(page*pageSize);
+
+    public IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
+        =>  _playerList.Where(player => player.LastName == lastName && player.NickName == nickname).Skip((page-1) * pageSize).Take(page*pageSize);
     
-    public IEnumerable<Game> LoadAllGames(int page, int pageSize) => _gameList.ToList().GetRange(GetRangeMin(page, pageSize), GetRangeMax(page, pageSize));
-
-    public IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize) => _playerList.Where(player => player.LastName == lastName && player.NickName == nickname).ToList();
-
-    public IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page, int pageSize) => _playerList.Where(player => player.FirstName == firstName && player.NickName == nickname).ToList();
-
-    public IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page, int pageSize) => _playerList.Where(player => player.FirstName == firstName && player.LastName == lastName).ToList();
-
-    public IEnumerable<Player> LoadPlayerByNickname(string nickname, int page, int pageSize) => _playerList.Where(player => player.NickName == nickname).ToList();
-
-    public IEnumerable<Player> LoadPlayerByLastName(string lastName, int page, int pageSize) => _playerList.Where(player => player.LastName == lastName).ToList();
-
+    public IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page, int pageSize)
+        => _playerList.Where(player => player.FirstName == firstName && player.NickName == nickname).Skip((page-1) * pageSize).Take(page*pageSize);
+    
+    public IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page, int pageSize)
+        => _playerList.Where(player => player.FirstName == firstName && player.LastName == lastName).Skip((page-1) * pageSize).Take(page*pageSize);
+    
+    public IEnumerable<Player> LoadPlayerByNickname(string nickname, int page, int pageSize)
+        => _playerList.Where(player => player.NickName == nickname).Skip((page-1) * pageSize).Take(page*pageSize);
+    
+    public IEnumerable<Player> LoadPlayerByLastName(string lastName, int page, int pageSize)
+        => _playerList.Where(player => player.LastName == lastName).Skip((page-1) * pageSize).Take(page*pageSize);
+    
     public IEnumerable<Player> LoadPlayerByFirstName(string firstName, int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+        => _playerList.Where(player => player.FirstName == firstName).Skip((page-1) * pageSize).Take(page*pageSize);
 
-    public IEnumerable<Player> LoadAllPlayer(int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<Player> LoadAllPlayer(int page, int pageSize) => _playerList.Skip((page-1) * pageSize).Take(page*pageSize);
 
-    public IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<Player>? LoadPlayersByGroup(Group group, int page, int pageSize)
+        => _groupList.FirstOrDefault(g => g.Name == group.Name)?.Players.Skip((page - 1) * pageSize).Take(page * pageSize);
+    
+    public Group? LoadGroupsByName(string name) => _groupList.FirstOrDefault(g => g.Name == name);
 
-    public Group LoadGroupsByName(string name)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<Group> LoadAllGroups(int page, int pageSize) => _groupList.Skip((page-1) * pageSize).Take(page*pageSize);
 
-    public IEnumerable<Group> LoadAllGroups(int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize) => _groupList.Where(g => g.Players.Contains(player)).Skip((page-1) * pageSize).Take(page*pageSize);
 
-    public IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+    public IRules? LoadRule(string name) => _rulesList.FirstOrDefault(r => r.Name == name);
 
-    public IRules LoadRule(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<IRules> LoadAllRules(int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+    public IEnumerable<IRules> LoadAllRules(int page, int pageSize) => _rulesList.Skip((page-1) * pageSize).Take(page*pageSize);
 }
