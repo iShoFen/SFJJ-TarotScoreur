@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Model\Model.csproj" />
-      <ProjectReference Include="..\TarotDB\TarotDB.csproj" />
+        <ProjectReference Include="..\Model\Model.csproj" />
+        <ProjectReference Include="..\TarotDB\TarotDB.csproj" />
+        <InternalsVisibleTo Include="FT_TarotDB" />
     </ItemGroup>
 
 </Project>

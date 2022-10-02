@@ -3,7 +3,7 @@ using TarotDB;
 
 namespace Tarot2B2Model;
 
-static class PlayerExtension
+internal static class PlayerExtension
 {
     /// <summary>
     /// Converts a Player to a PlayerEntity thanks to extension method
@@ -46,6 +46,6 @@ static class PlayerExtension
     /// </summary>
     /// <param name="players">Collection of PlayerEntity to convert</param>
     /// <returns>Collection of Player converted</returns>
-    public static IEnumerable<Player> ToEntities(this IEnumerable<PlayerEntity> players)
+    public static IEnumerable<Player> ToModels(this IEnumerable<PlayerEntity> players)
         => players.Select(e => e.ToModel());
 }
