@@ -1,4 +1,4 @@
-﻿namespace Model.enums;
+﻿namespace TarotDB.enums;
 
 [Flags]
 public enum Bidding : byte

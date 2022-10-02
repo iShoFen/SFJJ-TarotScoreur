@@ -1,4 +1,4 @@
-﻿namespace Model.enums;
+﻿namespace TarotDB.enums;
 
 public enum Chelem : byte
 {

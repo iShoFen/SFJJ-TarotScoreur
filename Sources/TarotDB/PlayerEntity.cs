@@ -1,8 +1,3 @@
-using System.Runtime.CompilerServices;
-
-[assembly:InternalsVisibleTo("Tarot2B2Model")]
-[assembly:InternalsVisibleTo("FT_TarotDB")]
-
 namespace TarotDB;
 
 /// <summary>
