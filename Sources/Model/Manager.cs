@@ -295,5 +295,7 @@ public class Manager
     public Hand CreateHand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne,
         bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player, (Bidding, Poignee)>[] biddings) =>
         new Hand(id, handNumber, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings);
+    
+    public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize) => _dataManager.LoadHandByGame(game, page, pageSize); 
     /*========== End hand ==========*/
 }

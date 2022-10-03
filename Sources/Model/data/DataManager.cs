@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using Model.games;
 
 namespace Model.data;
@@ -41,7 +40,7 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize) => Loader.LoadPlayersByGroup(group, page, pageSize);
+    public IEnumerable<Player>? LoadPlayersByGroup(Group group, int page, int pageSize) => Loader.LoadPlayersByGroup(group, page, pageSize);
     
     /// <summary>
     /// Method to load a player by firstname
@@ -114,7 +113,7 @@ public class DataManager
     /// </summary>
     /// <param name="name">Name of the game</param>
     /// <returns>A game</returns>
-    public Game LoadGameByName(string name) => Loader.LoadGameByName(name);
+    public Game? LoadGameByName(string name) => Loader.LoadGameByName(name);
 
     /// <summary>
     /// Method to load games by start date
@@ -206,7 +205,7 @@ public class DataManager
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    public Group LoadGroupsByName(string name) => Loader.LoadGroupsByName(name);
+    public Group? LoadGroupsByName(string name) => Loader.LoadGroupsByName(name);
     
     /// <summary>
     /// Method to load all groups
@@ -233,7 +232,7 @@ public class DataManager
     /// </summary>
     /// <param name="name">Name of the rule to search</param>
     /// <returns>A IRules</returns>
-    public IRules LoadRule(string name) => Loader.LoadRule(name);
+    public IRules? LoadRule(string name) => Loader.LoadRule(name);
     
     /// <summary>
     /// Method to load all rules
@@ -243,4 +242,9 @@ public class DataManager
     /// <returns>List of rules</returns>
     public IEnumerable<IRules> LoadAllRules(int page, int pageSize) =>Loader.LoadAllRules(page, pageSize);
     /*========== End Rules ==========*/
+    
+    /*========== Hand ==========*/
+    public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize) => Loader.LoadHandByGame(game, page, pageSize);
+    /*========== End hand ==========*/
+    
 }

@@ -210,4 +210,9 @@ public interface ILoader
     /// <returns>List of rules</returns>
     IEnumerable<IRules> LoadAllRules(int page, int pageSize);
     /*========== End Rules ==========*/
+    
+    /*========== Hands ==========*/
+
+    IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize);
+    /*========== End Hands ==========*/
 }
