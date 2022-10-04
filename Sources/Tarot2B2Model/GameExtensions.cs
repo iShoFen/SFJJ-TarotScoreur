@@ -40,8 +40,22 @@ internal static class GameExtensions
             entity.EndDate
         );
         game.AddPlayers(entity.Players.Select(p => p.ToModel()).ToArray());
-        // game.AddHands()
+        game.AddHands(entity.Hands.Select(h => h.ToModel()).ToArray());
 
         return game;
     }
+    
+    /// <summary>
+    /// Converts a collections of Game to a collection of GameEntity
+    /// </summary>
+    /// <param name="models"> The collection of Game </param>
+    /// <returns> The collection of GameEntity </returns>
+    public static IEnumerable<GameEntity> ToEntities(this IEnumerable<Game> models) => models.Select(m => m.ToEntity());
+    
+    /// <summary>
+    /// Converts a collections of GameEntity to a collection of Game
+    /// </summary>
+    /// <param name="entities"> The collection of GameEntity </param>
+    /// <returns> The collection of Game </returns>
+    public static IEnumerable<Game> ToModels(this IEnumerable<GameEntity> entities) => entities.Select(e => e.ToModel());
 }

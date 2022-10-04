@@ -15,7 +15,7 @@ internal static class HandExtensions
     /// </summary>
     /// <param name="model"> The Hand </param>
     /// <returns> The HandEntity </returns>
-    public static HandEntity ToEntity(Hand model)
+    public static HandEntity ToEntity(this Hand model)
     {
         var handEntity = HandsMapper.GetEntity(model);
 
@@ -51,7 +51,7 @@ internal static class HandExtensions
     /// </summary>
     /// <param name="entity"> The HandEntity </param>
     /// <returns> The Hand </returns>
-    public static Hand ToModel(HandEntity entity)
+    public static Hand ToModel(this HandEntity entity)
     {
         var hand = HandsMapper.GetModel(entity);
 
@@ -75,4 +75,19 @@ internal static class HandExtensions
         
         return hand;
     }
+    
+    /// <summary>
+    /// Converts a collections of Hand to a collections of HandEntity.
+    /// </summary>
+    /// <param name="models"> The collections of Hand </param>
+    /// <returns> The collections of HandEntity </returns>
+    public static IEnumerable<HandEntity> ToEntities(this IEnumerable<Hand> models) => models.Select(ToEntity);
+    
+    /// <summary>
+    /// Converts a collections of HandEntity to a collections of Hand.
+    /// </summary>
+    /// <param name="entities"> The collections of HandEntity </param>
+    /// <returns> The collections of Hand </returns>
+    public static IEnumerable<Hand> ToModels(this IEnumerable<HandEntity> entities) => entities.Select(ToModel);
+    
 }
