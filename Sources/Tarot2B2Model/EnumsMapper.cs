@@ -44,7 +44,6 @@ internal static class EnumsMapper
     /// </summary>
     public static EnumsMapper<Model.enums.Bidding, TarotDB.enums.Bidding> BiddingMapper { get; } = new(
         (Model.enums.Bidding.Unknown, TarotDB.enums.Bidding.Unknown),
-        (Model.enums.Bidding.Unknown, TarotDB.enums.Bidding.Unknown),
         (Model.enums.Bidding.Prise, TarotDB.enums.Bidding.Prise),
         (Model.enums.Bidding.Petite, TarotDB.enums.Bidding.Petite),
         (Model.enums.Bidding.Garde, TarotDB.enums.Bidding.Garde),
