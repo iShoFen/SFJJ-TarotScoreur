@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TarotDB;
 
@@ -14,7 +15,14 @@ internal class TarotDBContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=TarotScoreur.db");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<BiddingPoigneeEntity>().HasKey(b => new {b.HandId, b.PlayerId});
+        modelBuilder.Entity<GameEntity>()
+            .HasMany(g => g.Players)
+            .WithMany(p => p.Games)
+            .UsingEntity(gp => gp.ToTable("GamePlayer"));
+    }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder) 
-        => modelBuilder.Entity<BiddingPoigneeEntity>().HasKey(b => new { b.Hand, b.Player });
 }

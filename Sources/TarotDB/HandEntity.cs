@@ -51,9 +51,14 @@ internal class HandEntity
     /// Indicates the state of the Chelem related to the taker
     /// </summary>
     public Chelem Chelem { get; set; }
-
+    
     /// <summary>
     /// Players bidding details
     /// </summary>
     public ICollection<BiddingPoigneeEntity> Biddings { get; set; } = new HashSet<BiddingPoigneeEntity>();
+    
+    /// <summary>
+    /// The game to which the Hand belongs
+    /// </summary>
+    public GameEntity Game { get; set; } = null!;
 }

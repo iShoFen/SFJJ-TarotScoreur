@@ -29,4 +29,14 @@ internal class PlayerEntity
     /// Avatar of the PlayerEntity
     /// </summary>
     public string Avatar { get; set; }
+    
+    /// <summary>
+    /// All the Games the PlayerEntity has played
+    /// </summary>
+    public ICollection<GameEntity> Games { get; set; } = new HashSet<GameEntity>();
+    
+    /// <summary>
+    /// All the Biddings done by the PlayerEntity
+    /// </summary>
+    public ICollection<BiddingPoigneeEntity> Biddings { get; set; } = new HashSet<BiddingPoigneeEntity>();
 }
