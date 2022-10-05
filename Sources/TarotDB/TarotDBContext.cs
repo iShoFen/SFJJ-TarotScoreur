@@ -9,10 +9,11 @@ namespace TarotDB;
 internal class TarotDBContext : DbContext
 {
     public DbSet<PlayerEntity> Players { get; set; } = null!;
+    public DbSet<UserEntity> Users { get; set; }
     public DbSet<GameEntity> Games { get; set; } = null!;
     public DbSet<HandEntity> Hands { get; set; } = null!;
     public DbSet<BiddingPoigneeEntity> Biddings { get; set; } = null!;
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=TarotScoreur.db");
 

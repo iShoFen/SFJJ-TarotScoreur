@@ -1,5 +1,8 @@
-﻿using Model;
+﻿using System.Runtime.CompilerServices;
+using Model;
 using TarotDB;
+
+[assembly: InternalsVisibleTo("FT_TarotDB")]
 
 namespace Tarot2B2Model;
 
@@ -21,7 +24,7 @@ internal static class PlayerExtension
             Avatar = player.Avatar
         };
     }
-    
+
     /// <summary>
     /// Converts a PlayerEntity to a Player thanks to extension method
     /// </summary>

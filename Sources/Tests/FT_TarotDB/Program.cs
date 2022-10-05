@@ -1,4 +1,5 @@
-﻿using TarotDB;
+﻿using Tarot2B2Model;
+using TarotDB;
 
 Console.WriteLine("Hello, World!");
 
@@ -19,12 +20,14 @@ playersEntities.AddRange(new PlayerEntity[]
             Nickname = "Sam",
             Avatar = "avatar"
         },
-        new()
+        new UserEntity()
         {
             FirstName = "Julien",
             LastName = "Theme",
             Nickname = "Ju",
-            Avatar = "avatar"
+            Avatar = "avatar",
+            Email = "email",
+            Password = "password"
         },
         new()
         {
@@ -42,3 +45,13 @@ context.Players.AddRange(playersEntities);
 int result = await context.SaveChangesAsync();
 
 Console.WriteLine(result);
+
+var selectedPlayers = context.Players
+    .Where(e => e.FirstName.Contains("e"))
+    .OrderBy(e => e.LastName);
+
+Console.WriteLine(selectedPlayers.Count());
+foreach (var player in selectedPlayers)
+{
+    Console.WriteLine(player.ToModel());
+}
