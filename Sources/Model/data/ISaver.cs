@@ -9,13 +9,13 @@ public interface ISaver
     /// </summary>
     /// <param name="player">Player to register</param>
     void SavePlayer(Player player);
-    
+
     /// <summary>
     /// Method to save a game
     /// </summary>
     /// <param name="game">Game to register</param>
     void SaveGame(Game game);
-    
+
     /// <summary>
     /// Method to save a group
     /// </summary>
