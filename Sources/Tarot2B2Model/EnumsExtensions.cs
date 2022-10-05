@@ -48,65 +48,65 @@ internal static class EnumsExtensions
     }
     
     /// <summary>
-    /// Bidding version of ToEntity
+    /// BiddingDB version of ToEntity
     /// </summary>
     /// <param name="model"> The model </param>
     /// <returns> The entity </returns>
-    public static TarotDB.enums.Bidding ToEntity(this Model.enums.Bidding model) 
-        => ToEntity<Model.enums.Bidding, TarotDB.enums.Bidding>(model);
+    public static TarotDB.enums.BiddingDB ToEntity(this Model.enums.Bidding model) 
+        => ToEntity<Model.enums.Bidding, TarotDB.enums.BiddingDB>(model);
     
     /// <summary>
-    /// Chelem version of ToEntity
+    /// ChelemDB version of ToEntity
     /// </summary>
     /// <param name="model"> The model </param>
     /// <returns> The entity </returns>
-    public static TarotDB.enums.Chelem ToEntity(this Model.enums.Chelem model)
-        => ToEntity<Model.enums.Chelem, TarotDB.enums.Chelem>(model);
+    public static TarotDB.enums.ChelemDB ToEntity(this Model.enums.Chelem model)
+        => ToEntity<Model.enums.Chelem, TarotDB.enums.ChelemDB>(model);
     
     /// <summary>
-    /// PetitResult version of ToEntity
+    /// PetitResultDB version of ToEntity
     /// </summary>
     /// <param name="model"> The model </param>
     /// <returns> The entity </returns>
-    public static TarotDB.enums.PetitResult ToEntity(this Model.enums.PetitResult model)
-        => ToEntity<Model.enums.PetitResult, TarotDB.enums.PetitResult>(model);
+    public static TarotDB.enums.PetitResultDB ToEntity(this Model.enums.PetitResult model)
+        => ToEntity<Model.enums.PetitResult, TarotDB.enums.PetitResultDB>(model);
 
     /// <summary>
-    /// Poignee version of ToEntity
+    /// PoigneeDB version of ToEntity
     /// </summary>
     /// <param name="model"> The model </param>
     /// <returns> The entity </returns>
-    public static TarotDB.enums.Poignee ToEntity(this Model.enums.Poignee model)
-        => ToEntity<Model.enums.Poignee, TarotDB.enums.Poignee>(model);
+    public static TarotDB.enums.PoigneeDB ToEntity(this Model.enums.Poignee model)
+        => ToEntity<Model.enums.Poignee, TarotDB.enums.PoigneeDB>(model);
     /// <summary>
-    /// Bidding version of ToModel
+    /// BiddingDB version of ToModel
     /// </summary>
     /// <param name="entity"> The entity </param>
     /// <returns> The model </returns>
-    public static Model.enums.Bidding ToModel(this TarotDB.enums.Bidding entity) 
-        => ToModel<Model.enums.Bidding, TarotDB.enums.Bidding>(entity);
+    public static Model.enums.Bidding ToModel(this TarotDB.enums.BiddingDB entity) 
+        => ToModel<Model.enums.Bidding, TarotDB.enums.BiddingDB>(entity);
     
     /// <summary>
-    /// Chelem version of ToModel
+    /// ChelemDB version of ToModel
     /// </summary>
     /// <param name="entity"> The entity </param>
     /// <returns> The model </returns>
-    public static Model.enums.Chelem ToModel(this TarotDB.enums.Chelem entity) 
-        => ToModel<Model.enums.Chelem, TarotDB.enums.Chelem>(entity);
+    public static Model.enums.Chelem ToModel(this TarotDB.enums.ChelemDB entity) 
+        => ToModel<Model.enums.Chelem, TarotDB.enums.ChelemDB>(entity);
     
     /// <summary>
-    /// PetitResult version of ToModel
+    /// PetitResultDB version of ToModel
     /// </summary>
     /// <param name="entity"> The entity </param>
     /// <returns> The model </returns>
-    public static Model.enums.PetitResult ToModel(this TarotDB.enums.PetitResult entity) 
-        => ToModel<Model.enums.PetitResult, TarotDB.enums.PetitResult>(entity);
+    public static Model.enums.PetitResult ToModel(this TarotDB.enums.PetitResultDB entity) 
+        => ToModel<Model.enums.PetitResult, TarotDB.enums.PetitResultDB>(entity);
     
     /// <summary>
-    /// Poignee version of ToModel
+    /// PoigneeDB version of ToModel
     /// </summary>
     /// <param name="entity"> The entity </param>
     /// <returns> The model </returns>
-    public static Model.enums.Poignee ToModel(this TarotDB.enums.Poignee entity) 
-        => ToModel<Model.enums.Poignee, TarotDB.enums.Poignee>(entity);
+    public static Model.enums.Poignee ToModel(this TarotDB.enums.PoigneeDB entity) 
+        => ToModel<Model.enums.Poignee, TarotDB.enums.PoigneeDB>(entity);
 }

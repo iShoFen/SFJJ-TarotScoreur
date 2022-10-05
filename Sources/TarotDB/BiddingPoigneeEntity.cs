@@ -3,7 +3,7 @@ using TarotDB.enums;
 namespace TarotDB;
 
 /// <summary>
-/// A join entity for dictionary entries and their translations. (Represent a Bidding in HandEntity)
+/// A join entity for dictionary entries and their translations. (Represent a BiddingDB in HandEntity)
 /// <see cref="Hand"/>
 /// </summary>
 internal class BiddingPoigneeEntity
@@ -11,12 +11,12 @@ internal class BiddingPoigneeEntity
     /// <summary>
     /// The type of the bidding
     /// </summary>
-    public Bidding Bidding { get; set; }
+    public BiddingDB BiddingDb { get; set; }
     
     /// <summary>
     /// The type of the poignee
     /// </summary>
-    public Poignee Poignee { get; set; }
+    public PoigneeDB PoigneeDb { get; set; }
     
     /// <summary>
     /// The unique identifier of the hand

@@ -1,6 +1,7 @@
 using Model;
 using Model.games;
 using TarotDB;
+using static Tarot2B2Model.Mapper;
 
 namespace Tarot2B2Model;
 
@@ -14,16 +15,26 @@ internal static class GameExtensions
     /// </summary>
     /// <param name="model"> The Game </param>
     /// <returns> The GameEntity </returns>
-    public static GameEntity ToEntity(this Game model) => new() 
+    public static GameEntity ToEntity(this Game model)
     {
-        Id = model.Id,
-        Name = model.Name,
-        Rules = model.Rules.Name,
-        StartDate = model.StartDate,
-        EndDate = model.EndDate,
-        Players = model.Players.Select(p => p.ToEntity()).ToHashSet(),
-        // Hands = 
-    };
+        var gameEntity = GamesMapper.GetEntity(model);
+        
+        if (gameEntity is not null) return gameEntity;
+        gameEntity = new GameEntity() 
+        {
+            Id = model.Id,
+            Name = model.Name,
+            Rules = model.Rules.Name,
+            StartDate = model.StartDate,
+            EndDate = model.EndDate,
+            Players = model.Players.Select(p => p.ToEntity()).ToHashSet(),
+            Hands = model.Hands.Select(kv => kv.Value.ToEntity()).ToHashSet()
+        };
+
+        GamesMapper.Map(model, gameEntity);
+        
+        return gameEntity;
+    }
 
     /// <summary>
     /// Converts a GameEntity to a Game.
@@ -32,7 +43,10 @@ internal static class GameExtensions
     /// <returns> The Game </returns>
     public static Game ToModel(this GameEntity entity)
     {
-        Game game = new(
+        var game = GamesMapper.GetModel(entity);
+        
+        if (game is not null) return game;
+        game = new Game(
             entity.Id, 
             entity.Name,
             RulesFactory.Create(entity.Name)!,
@@ -41,6 +55,8 @@ internal static class GameExtensions
         );
         game.AddPlayers(entity.Players.Select(p => p.ToModel()).ToArray());
         game.AddHands(entity.Hands.Select(h => h.ToModel()).ToArray());
+        
+        GamesMapper.Map(game, entity);
 
         return game;
     }

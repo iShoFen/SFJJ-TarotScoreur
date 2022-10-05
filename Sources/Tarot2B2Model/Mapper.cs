@@ -55,6 +55,11 @@ internal static class Mapper
     public static Mapper<Hand, HandEntity> HandsMapper { get; } = new();
     
     /// <summary>
+    /// The Mapper for the Game
+    /// </summary>
+    public static Mapper<Game, GameEntity> GamesMapper { get; } = new();
+
+    /// <summary>
     /// Reset all the Mappers (call when the connection with the database is closed)
     /// </summary>
     public static void Reset()

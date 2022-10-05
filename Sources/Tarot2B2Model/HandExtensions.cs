@@ -19,7 +19,7 @@ internal static class HandExtensions
     {
         var handEntity = HandsMapper.GetEntity(model);
 
-        if (handEntity != null) return handEntity;
+        if (handEntity is not null) return handEntity;
         handEntity = new HandEntity
         {
             Id = model.Id,
@@ -30,13 +30,13 @@ internal static class HandExtensions
             TwentyOne = model.TwentyOne,
             Excuse = model.Excuse,
             Petit = model.Petit.ToEntity(),
-            Chelem = model.Chelem.ToEntity()
+            ChelemDb = model.Chelem.ToEntity()
         };
 
         handEntity.Biddings = model.Biddings.Select(kv => new BiddingPoigneeEntity
         {
-            Bidding = kv.Value.Item1.ToEntity(),
-            Poignee = kv.Value.Item2.ToEntity(),
+            BiddingDb = kv.Value.Item1.ToEntity(),
+            PoigneeDb = kv.Value.Item2.ToEntity(),
             Hand = handEntity,
             Player = kv.Key.ToEntity()
         }).ToHashSet();
@@ -55,7 +55,7 @@ internal static class HandExtensions
     {
         var hand = HandsMapper.GetModel(entity);
 
-        if (hand != null) return hand;
+        if (hand is not null) return hand;
         hand = new Hand(
             entity.Id,
             entity.Number,
@@ -65,10 +65,10 @@ internal static class HandExtensions
             entity.TwentyOne,
             entity.Excuse,
             entity.Petit.ToModel(),
-            entity.Chelem.ToModel(),
+            entity.ChelemDb.ToModel(),
             entity.Biddings.ToDictionary(
                 bidding => bidding.Player.ToModel(),
-                bidding => (bidding.Bidding.ToModel(), bidding.Poignee.ToModel())
+                bidding => (bidding.BiddingDb.ToModel(), bidding.PoigneeDb.ToModel())
             ).ToArray()
         );
         HandsMapper.Map(hand, entity);

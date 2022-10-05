@@ -45,12 +45,12 @@ internal class HandEntity
     /// <summary>
     /// Indicates the state of the Petit related to the taker
     /// </summary>
-    public PetitResult Petit { get; set; }
+    public PetitResultDB Petit { get; set; }
     
     /// <summary>
-    /// Indicates the state of the Chelem related to the taker
+    /// Indicates the state of the ChelemDB related to the taker
     /// </summary>
-    public Chelem Chelem { get; set; }
+    public ChelemDB ChelemDb { get; set; }
     
     /// <summary>
     /// Players bidding details
