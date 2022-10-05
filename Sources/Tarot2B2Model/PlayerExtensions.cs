@@ -6,7 +6,7 @@ using TarotDB;
 
 namespace Tarot2B2Model;
 
-static class PlayerExtension
+internal static class PlayerExtension
 {
     /// <summary>
     /// Converts a Player to a PlayerEntity thanks to extension method
@@ -15,7 +15,7 @@ static class PlayerExtension
     /// <returns>PlayerEntity converted</returns>
     public static PlayerEntity ToEntity(this Player player)
     {
-        return new PlayerEntity()
+        return new PlayerEntity
         {
             Id = player.Id,
             FirstName = player.FirstName,
