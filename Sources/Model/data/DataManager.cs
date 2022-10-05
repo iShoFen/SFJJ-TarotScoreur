@@ -14,7 +14,7 @@ public class DataManager
     /// <param name="iSaver">Interface to save data</param>
     public DataManager(ILoader iLoader , ISaver iSaver)
     {
-        this.Loader = iLoader;
+        Loader = iLoader;
         Saver = iSaver;
     }
 
@@ -152,7 +152,7 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate, Group group, int page, int pageSize) => Loader.LoadGameByDateAndGroupInterval(startDate, endDate, group, page, pageSize);
+    public IEnumerable<Game> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page, int pageSize) => Loader.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize);
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -163,7 +163,7 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate, Player player, int page, int pageSize) => Loader.LoadGameByDateAndPlayerInterval(startDate, endDate, player, page, pageSize);
+    public IEnumerable<Game> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player, int page, int pageSize) => Loader.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize);
     
     /// <summary>
     /// Method to load games by player
@@ -244,7 +244,13 @@ public class DataManager
     /*========== End Rules ==========*/
     
     /*========== Hand ==========*/
+    /// <summary>
+    /// Method to load hands by game
+    /// </summary>
+    /// <param name="game"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns>List of hands</returns>
     public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize) => Loader.LoadHandByGame(game, page, pageSize);
     /*========== End hand ==========*/
-    
 }

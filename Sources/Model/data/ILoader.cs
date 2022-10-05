@@ -58,7 +58,7 @@ public interface ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByDateAndGroupInterval(DateTime startDate, DateTime endDate,Group group, int page, int pageSize);
+    IEnumerable<Game> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,Group group, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -69,7 +69,7 @@ public interface ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    IEnumerable<Game> LoadGameByDateAndPlayerInterval(DateTime startDate, DateTime endDate,Player player, int page, int pageSize);
+    IEnumerable<Game> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,Player player, int page, int pageSize);
     
     /// <summary>
     /// Method to load games by a group
@@ -212,7 +212,13 @@ public interface ILoader
     /*========== End Rules ==========*/
     
     /*========== Hands ==========*/
-
+    /// <summary>
+    /// Method to load hands by game
+    /// </summary>
+    /// <param name="game"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <returns>List of hands</returns>
     IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize);
     /*========== End Hands ==========*/
 }
