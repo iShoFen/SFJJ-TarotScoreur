@@ -24,7 +24,45 @@ public class Stub : ILoader
         SetRuleList();
         SetHandList();
     }
+    
+    /// <summary>
+    /// Method to set the player list
+    /// </summary>
+    private void SetPlayerList()
+    {
+        List<String> _playerFirstName = new()
+        {
+            "Jean", "Michel", "Albert", "Julien", "Pierre", "Paul", "Jacques", "Jeanne", "Marie", "Sophie", "Anne",
+            "Claire", "Marion", "Julie", "Catherine", "Caroline"
+        };
 
+        List<String> _playerLastName = new()
+        {
+            "Dupont", "Durand", "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Moreau",
+            "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux"
+        };
+        
+        List<String> _playerNickname = new()
+        {
+            "Jojo", "Michou", "Bebert", "Juju", "Pierot", "Paupaul", "Jacquouille", "Jeanou", "Mama", 
+            "Sophie la girafe", "Annette", "PetitChat48", "Rose5678", "Juju29", "Cathou", "Caro the Queen"
+        };
+
+        List<String> _avatar = new()
+        {
+            "avatar1", "avatar2", "avatar3", "avatar4"
+        };
+
+        ulong id = 1;
+
+        for (var i = 0; i < 16; i++)
+        {
+            id++;
+            _playerList.Add(new Player(id, _playerFirstName[i], _playerLastName[i],
+                _playerNickname[i], _avatar[i % 4]));
+        }
+    }
+    
     /// <summary>
     /// Method to set the game list
     /// </summary>
@@ -40,29 +78,6 @@ public class Stub : ILoader
         _gameList.Add(new Game(8UL, "Game 15", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
         _gameList.Add(new Game(9UL, "Game 16", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
         _gameList.Add(new Game(10UL, "Game 17", _rulesList[0], new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
-    }
-
-    /// <summary>
-    /// Method to set the player list
-    /// </summary>
-    private void SetPlayerList()
-    {
-        _playerList.Add(new Player("Jean", "BON", "JEBO", "avatar1"));
-        _playerList.Add(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"));
-        _playerList.Add(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"));
-        _playerList.Add(new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"));
-        _playerList.Add(new Player("Albert", "GOL", "LOL", "avatar1"));
-        _playerList.Add(new Player("Julien", "PETIT", "THEGIANT", "avatar2"));
-        _playerList.Add(new Player("Simon", "SEBAT", "SEBAT", "avatar1"));
-        _playerList.Add(new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"));
-        _playerList.Add(new Player("Samuel", "LeChanteur", "SS", "avatar1"));
-        _playerList.Add(new Player("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar1"));
-        _playerList.Add(new Player("Jeanne", "LERICHE", "JEMA", "avatar2"));
-        _playerList.Add(new Player("Jules", "INFANTE", "KIKOU7", "avatar3"));
-        _playerList.Add(new Player("Anne", "SAURIN", "FRIPOUILLE", "avatar4"));
-        _playerList.Add(new Player("Marine", "TABLETTE", "LOL", "avatar1"));
-        _playerList.Add(new Player("Eliaz", "DU JARDIN", "THEGIANT", "avatar2"));
-        _playerList.Add(new Player("Alizee", "SEBAT", "SEBAT", "avatar1"));
     }
 
     /// <summary>
