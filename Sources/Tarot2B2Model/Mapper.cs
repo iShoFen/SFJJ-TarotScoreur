@@ -71,6 +71,11 @@ internal static class Mapper
     public static Mapper<User, UserEntity> UsersMapper { get; } = new();
 
     /// <summary>
+    /// The Mapper for the Group
+    /// </summary>
+    public static Mapper<Group, GroupEntity> GroupsMapper { get; } = new();
+
+    /// <summary>
     /// Reset all the Mappers (call when the connection with the database is closed)
     /// </summary>
     public static void Reset()
@@ -78,5 +83,6 @@ internal static class Mapper
         HandsMapper.Reset();
         GamesMapper.Reset();
         PlayersMapper.Reset();
+        GroupsMapper.Reset();
     }
 }

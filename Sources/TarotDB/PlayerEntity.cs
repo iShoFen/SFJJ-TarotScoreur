@@ -39,4 +39,9 @@ internal class PlayerEntity
     /// All the Biddings done by the PlayerEntity
     /// </summary>
     public ICollection<BiddingPoigneeEntity> Biddings { get; set; } = new HashSet<BiddingPoigneeEntity>();
+
+    /// <summary>
+    /// All the Groups of the Player
+    /// </summary>
+    public ICollection<GroupEntity> Groups { get; set; } = new HashSet<GroupEntity>();
 }
