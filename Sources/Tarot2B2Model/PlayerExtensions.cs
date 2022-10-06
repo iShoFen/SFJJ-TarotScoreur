@@ -1,8 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using Model;
+﻿using Model;
 using TarotDB;
-
-[assembly: InternalsVisibleTo("FT_TarotDB")]
 
 namespace Tarot2B2Model;
 
@@ -15,7 +12,9 @@ internal static class PlayerExtension
     /// <returns>PlayerEntity converted</returns>
     public static PlayerEntity ToEntity(this Player player)
     {
-        return new PlayerEntity
+        var playerEntity = Mapper.PlayersMapper.GetEntity(player);
+        if (playerEntity is not null) return playerEntity;
+        playerEntity = new PlayerEntity
         {
             Id = player.Id,
             FirstName = player.FirstName,
@@ -23,6 +22,10 @@ internal static class PlayerExtension
             Nickname = player.NickName,
             Avatar = player.Avatar
         };
+
+        Mapper.PlayersMapper.Map(player, playerEntity);
+
+        return playerEntity;
     }
 
     /// <summary>
@@ -32,8 +35,14 @@ internal static class PlayerExtension
     /// <returns>Player converted</returns>
     public static Player ToModel(this PlayerEntity playerEntity)
     {
-        return new Player(playerEntity.Id, playerEntity.FirstName, playerEntity.LastName, playerEntity.Nickname,
+        var playerModel = Mapper.PlayersMapper.GetModel(playerEntity);
+        if (playerModel is not null) return playerModel;
+        playerModel = new Player(playerEntity.Id, playerEntity.FirstName, playerEntity.LastName, playerEntity.Nickname,
             playerEntity.Avatar);
+
+        Mapper.PlayersMapper.Map(playerModel, playerEntity);
+
+        return playerModel;
     }
 
     /// <summary>
