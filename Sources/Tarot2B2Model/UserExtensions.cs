@@ -1,8 +1,5 @@
-using System.Runtime.CompilerServices;
 using Model;
 using TarotDB;
-
-[assembly: InternalsVisibleTo("FT_TarotDB")]
 
 namespace Tarot2B2Model;
 
@@ -15,7 +12,9 @@ static class UserExtensions
     /// <returns>UserEntity converted</returns>
     public static UserEntity ToEntity(this User user)
     {
-        return new UserEntity()
+        var userEntity = Mapper.UsersMapper.GetEntity(user);
+        if (userEntity is not null) return userEntity;
+        userEntity = new UserEntity
         {
             Id = user.Id,
             FirstName = user.FirstName,
@@ -25,6 +24,10 @@ static class UserExtensions
             Email = user.Email,
             Password = user.Password
         };
+
+        Mapper.UsersMapper.Map(user, userEntity);
+
+        return userEntity;
     }
 
     /// <summary>
@@ -33,8 +36,12 @@ static class UserExtensions
     /// <param name="entity">UserEntity to convert into User</param>
     /// <returns>User converted</returns>
     public static User ToModel(this UserEntity entity)
-        => new(entity.Id, entity.FirstName, entity.LastName, entity.Nickname, entity.Avatar, entity.Email,
+    {
+        var userModel = Mapper.UsersMapper.GetModel(entity);
+        if (userModel is not null) return userModel;
+        return new(entity.Id, entity.FirstName, entity.LastName, entity.Nickname, entity.Avatar, entity.Email,
             entity.Password);
+    }
 
     /// <summary>
     /// Converts a collection of User to a collection of UserEntity thanks to extension method

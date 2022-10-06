@@ -13,30 +13,35 @@ internal class PlayerEntity
     /// <summary>
     /// First name of the PlayerEntity
     /// </summary>
-    public string FirstName { get; set; }
+    public string FirstName { get; set; } = null!;
 
     /// <summary>
     /// Last name of the PlayerEntity
     /// </summary>
-    public string LastName { get; set; }
+    public string LastName { get; set; } = null!;
 
     /// <summary>
     /// Nickname of the PlayerEntity
     /// </summary>
-    public string Nickname { get; set; }
+    public string Nickname { get; set; } = null!;
 
     /// <summary>
     /// Avatar of the PlayerEntity
     /// </summary>
-    public string Avatar { get; set; }
-    
+    public string Avatar { get; set; } = null!;
+
     /// <summary>
     /// All the Games the PlayerEntity has played
     /// </summary>
     public ICollection<GameEntity> Games { get; set; } = new HashSet<GameEntity>();
-    
+
     /// <summary>
     /// All the Biddings done by the PlayerEntity
     /// </summary>
     public ICollection<BiddingPoigneeEntity> Biddings { get; set; } = new HashSet<BiddingPoigneeEntity>();
+
+    /// <summary>
+    /// All the Groups of the Player
+    /// </summary>
+    public ICollection<GroupEntity> Groups { get; set; } = new HashSet<GroupEntity>();
 }
