@@ -15,6 +15,7 @@
         </PackageReference>
         <InternalsVisibleTo Include="FT_TarotDB" />
         <InternalsVisibleTo Include="Tarot2B2Model" />
+        <InternalsVisibleTo Include="StubContext" />
     </ItemGroup>
 
 </Project>
