@@ -30,37 +30,22 @@ public class Stub : ILoader
     /// </summary>
     private void SetPlayerList()
     {
-        List<String> playerFirstName = new()
-        {
-            "Jean", "Michel", "Albert", "Julien", "Pierre", "Paul", "Jacques", "Jeanne", "Marie", "Sophie", "Anne",
-            "Claire", "Marion", "Julie", "Catherine", "Caroline"
-        };
-
-        List<String> playerLastName = new()
-        {
-            "Dupont", "Durand", "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Moreau",
-            "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux"
-        };
-        
-        List<String> playerNickname = new()
-        {
-            "Jojo", "Michou", "Bebert", "Juju", "Pierot", "Paupaul", "Jacquouille", "Jeanou", "Mama", 
-            "Sophie la girafe", "Annette", "PetitChat48", "Rose5678", "Juju29", "Cathou", "Caro the Queen"
-        };
-
-        List<String> avatar = new()
-        {
-            "avatar1", "avatar2", "avatar3", "avatar4"
-        };
-
-        ulong id = 1;
-
-        for (var i = 0; i < 16; i++)
-        {
-            id++;
-            _playerList.Add(new Player(id, playerFirstName[i], playerLastName[i],
-                playerNickname[i], avatar[i % 4]));
-        }
+        _playerList.Add(new Player("Jean", "BON", "JEBO", "avatar1"));
+        _playerList.Add(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"));
+        _playerList.Add(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"));
+        _playerList.Add(new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"));
+        _playerList.Add(new Player("Albert", "GOL", "LOL", "avatar1"));
+        _playerList.Add(new Player("Julien", "PETIT", "THEGIANT", "avatar2"));
+        _playerList.Add(new Player("Simon", "SEBAT", "SEBAT", "avatar1"));
+        _playerList.Add(new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"));
+        _playerList.Add(new Player("Samuel", "LeChanteur", "SS", "avatar1"));
+        _playerList.Add(new Player("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar1"));
+        _playerList.Add(new Player("Jeanne", "LERICHE", "JEMA", "avatar2"));
+        _playerList.Add(new Player("Jules", "INFANTE", "KIKOU7", "avatar3"));
+        _playerList.Add(new Player("Anne", "SAURIN", "FRIPOUILLE", "avatar4"));
+        _playerList.Add(new Player("Marine", "TABLETTE", "LOL", "avatar1"));
+        _playerList.Add(new Player("Eliaz", "DU JARDIN", "THEGIANT", "avatar2"));
+        _playerList.Add(new Player("Alizee", "SEBAT", "SEBAT", "avatar1"));
     }
     
     /// <summary>
@@ -68,26 +53,17 @@ public class Stub : ILoader
     /// </summary>
     private void SetGameList()
     {
-        ulong id = 1;
-        var aleatoire = new Random();
-        for (var i = 0; i < 5; i++)
-        {
-            id++;
-            _gameList.Add(new Game(id, "Game" + i, _rulesList[0], DateTime.Now, null));
-        }
+        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(6UL, "Game 13", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
+        _gameList.Add(new Game(7UL, "Game 14", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
+        _gameList.Add(new Game(8UL, "Game 15", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
+        _gameList.Add(new Game(9UL, "Game 16", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
+        _gameList.Add(new Game(10UL, "Game 17", _rulesList[0], new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
         
-        for (var i = 0; i < 5; i++)
-        {
-            id++;
-            var startDay = aleatoire.Next(1, 31);
-            var startMonth = aleatoire.Next(1, 10);
-            var startYear = aleatoire.Next(2021, 2023);
-            var endDay = 0;
-            var endMonth = aleatoire.Next(1, 10);
-            if (endMonth == startMonth) endDay = aleatoire.Next(1, startDay);
-            var endYear = aleatoire.Next(2021, startYear);
-            _gameList.Add(new Game(id, "Game" + i, _rulesList[0], new DateTime(startYear, startMonth, startDay), new DateTime(endYear, endMonth, endDay)));
-        }
     }
 
     /// <summary>
@@ -95,30 +71,12 @@ public class Stub : ILoader
     /// </summary>
     private void SetGroupList()
     {
-        _groupList.Add(new Group(1UL, "Group 1", _playerList[0], _playerList[1], _playerList[2], _playerList[3],
-            _playerList[4]));
-        _groupList.Add(new Group(2UL, "Group 2", _playerList[1], _playerList[2], _playerList[3], _playerList[4],
-            _playerList[5]));
-        _groupList.Add(new Group(3UL, "Group 3", _playerList[2], _playerList[3], _playerList[4], _playerList[5],
-            _playerList[6]));
-        _groupList.Add(new Group(4UL, "Group 4", _playerList[3], _playerList[4], _playerList[5], _playerList[6],
-            _playerList[7]));
-        _groupList.Add(new Group(5UL, "Group 5", _playerList[4], _playerList[5], _playerList[6], _playerList[7],
-            _playerList[8]));
-        _groupList.Add(new Group(6UL, "Group 6", _playerList[5], _playerList[6], _playerList[7], _playerList[8],
-            _playerList[9]));
-        _groupList.Add(new Group(7UL, "Group 7", _playerList[6], _playerList[7], _playerList[8], _playerList[9],
-            _playerList[10]));
-        _groupList.Add(new Group(8UL, "Group 8", _playerList[7], _playerList[8], _playerList[9], _playerList[10],
-            _playerList[11]));
-        _groupList.Add(new Group(9UL, "Group 9", _playerList[8], _playerList[9], _playerList[10], _playerList[11],
-            _playerList[12]));
-        _groupList.Add(new Group(10UL, "Group 10", _playerList[9], _playerList[10], _playerList[11], _playerList[12],
-            _playerList[13]));
-        _groupList.Add(new Group(11UL, "Group 11", _playerList[10], _playerList[11], _playerList[12], _playerList[13],
-            _playerList[14]));
-        _groupList.Add(new Group(12UL, "Group 12", _playerList[11], _playerList[12], _playerList[13], _playerList[14],
-            _playerList[15]));
+        var j = 1UL;
+        for(var i = 0; i<12; i++)
+        {
+            _groupList.Add(new Group(j, "Group" + i + 1, _playerList[i], _playerList[i + 1], _playerList[i + 2], _playerList[i + 3], _playerList[i + 4]));
+            ++j;
+        }
     }
 
     /// <summary>
