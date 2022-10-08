@@ -64,6 +64,60 @@ public class Stub : ILoader
         _gameList.Add(new Game(9UL, "Game 16", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
         _gameList.Add(new Game(10UL, "Game 17", _rulesList[0], new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
         
+        _gameList[0].AddPlayer(_playerList[0]);
+        _gameList[0].AddPlayer(_playerList[1]);
+        _gameList[0].AddPlayer(_playerList[2]);
+        _gameList[0].AddPlayer(_playerList[3]);
+        _gameList[0].AddPlayer(_playerList[4]);
+        
+        _gameList[1].AddPlayer(_playerList[5]);
+        _gameList[1].AddPlayer(_playerList[6]);
+        _gameList[1].AddPlayer(_playerList[7]);
+        _gameList[1].AddPlayer(_playerList[8]);
+        _gameList[1].AddPlayer(_playerList[9]);
+        
+        _gameList[2].AddPlayer(_playerList[10]);
+        _gameList[2].AddPlayer(_playerList[11]);
+        _gameList[2].AddPlayer(_playerList[12]);
+        
+        _gameList[3].AddPlayer(_playerList[13]);
+        _gameList[3].AddPlayer(_playerList[14]);
+        _gameList[3].AddPlayer(_playerList[15]);
+        _gameList[3].AddPlayer(_playerList[1]);
+        
+        _gameList[4].AddPlayer(_playerList[8]);
+        _gameList[4].AddPlayer(_playerList[10]);
+        _gameList[4].AddPlayer(_playerList[3]);
+        _gameList[4].AddPlayer(_playerList[12]);
+        _gameList[4].AddPlayer(_playerList[9]);
+        
+        _gameList[4].AddPlayer(_playerList[0]);
+        _gameList[4].AddPlayer(_playerList[15]);
+        _gameList[4].AddPlayer(_playerList[5]);
+        _gameList[4].AddPlayer(_playerList[11]);
+        _gameList[4].AddPlayer(_playerList[6]);
+        
+        _gameList[5].AddPlayer(_playerList[4]);
+        _gameList[5].AddPlayer(_playerList[7]);
+        _gameList[5].AddPlayer(_playerList[13]);
+        _gameList[5].AddPlayer(_playerList[15]);
+        _gameList[5].AddPlayer(_playerList[1]);
+        
+        _gameList[6].AddPlayer(_playerList[2]);
+        _gameList[6].AddPlayer(_playerList[3]);
+        _gameList[6].AddPlayer(_playerList[5]);
+        _gameList[6].AddPlayer(_playerList[11]);
+        _gameList[6].AddPlayer(_playerList[9]);
+        
+        _gameList[7].AddPlayer(_playerList[0]);
+        _gameList[7].AddPlayer(_playerList[4]);
+        _gameList[7].AddPlayer(_playerList[6]);
+        
+        _gameList[8].AddPlayer(_playerList[7]);
+        _gameList[8].AddPlayer(_playerList[8]);
+        _gameList[8].AddPlayer(_playerList[10]);
+        _gameList[8].AddPlayer(_playerList[12]);
+        
     }
 
     /// <summary>
