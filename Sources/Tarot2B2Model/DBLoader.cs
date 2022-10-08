@@ -282,27 +282,15 @@ public class DBLoader : ILoader
 
     public IRules? LoadRule(string name)
     {
-        // IRules rules;
-        // using (var context = new TarotDBContext())
-        // {
-        //     rules = context.Rules.FirstOrDefault(r => r.Name == name)?.ToModel();
-        // }
-        // return rules;
-        throw new NotImplementedException();
+        return RulesFactory.Rules.SingleOrDefault(r => r.Key.Equals(name)).Value;
     }
 
     public IEnumerable<IRules> LoadAllRules(int page, int pageSize)
     {
-        // List<IRules> rules;
-        // using (var context = new TarotDBContext())
-        // {
-        //     rules = context.Rules.Skip((page-1) * pageSize)
-        //                          .Take(pageSize)
-        //                          .Select(r => r.ToModel())
-        //                          .ToList();
-        // }
-        // return rules;
-        throw new NotImplementedException();
+        return RulesFactory.Rules.Skip((page-1) * pageSize)
+                                 .Take(pageSize)
+                                 .Select(r => r.Value)
+                                 .ToList();
     }
 
     public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize)
