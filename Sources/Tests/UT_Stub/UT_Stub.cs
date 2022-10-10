@@ -6,6 +6,7 @@ namespace UT_Stub;
 
 public class UT_Stub
 {
+    /*========== Players test ==========*/
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestAllPlayers), MemberType = typeof(PlayerTestData))]
     public void TestLoadAllPlayer(int page, int pageSize, Player[] players)
@@ -50,7 +51,6 @@ public class UT_Stub
         Assert.Equal(playersFound, players);
     }
     
-    
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
     public void TestLoadPlayerByFirstNameAndLastName(string firstName, string lastName, Player[] players, int page, int pageSize)
@@ -83,4 +83,16 @@ public class UT_Stub
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
     }
+    
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayersByGroup), MemberType = typeof(PlayerTestData))]
+    public void TestLoadPlayersByGroup(Group group, Player[] players, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var playersFound = stub.LoadPlayersByGroup(group, page, pageSize).ToList();
+
+        Assert.Equal(playersFound.Count, players.Length);
+        Assert.Equal(playersFound, players);
+    }
+    /*========== End players test ==========*/
 }

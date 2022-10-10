@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.games;
 
 namespace UT_Stub;
 
@@ -462,6 +463,161 @@ internal static  class PlayerTestData
             new Player[]{},
             1,
             10,
+        };
+    }
+    
+    public static IEnumerable<Object[]> Data_TestPlayersByGroup()
+    {
+        yield return new Object[]
+        {
+            new Group(1UL, "Group 1", 
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+                ),
+            new Player[]
+            {
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+            },
+            1,
+            10
+        };
+        yield return new Object[]
+        {
+            new Group(1UL, "Group 1", 
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+            ),
+            new Player[]
+            {
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4")
+            },
+            1,
+            4
+        };
+        yield return new Object[]
+        {
+            new Group(1UL, "Group 1", 
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+            ),
+            new Player[]
+            {
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+            },
+            2,
+            3
+        };
+        yield return new Object[]
+        {
+            new Group(1UL, "Group 1", 
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+            ),
+            new Player[]
+            {
+                new ("Jean", "BON", "JEBO", "avatar1"),
+                new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new ("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                new ("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                new ("Albert", "GOL", "LOLA", "avatar1")
+            },
+            1,
+            10
+        };
+        yield return new Object[]
+        {
+            new Group(3UL, "Group 3", 
+                new ("Jeanne", "LERICHE", "JEMAA", "avatar2"),
+                new ("Jules", "INFANTE", "KIKOU77", "avatar3"),
+                new ("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
+                new ("Marine", "TABLETTE", "LOLO", "avatar1"),
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            ),
+            new Player[]
+            {
+                new ("Jeanne", "LERICHE", "JEMAA", "avatar2"),
+                new ("Jules", "INFANTE", "KIKOU77", "avatar3"),
+                new ("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
+                new ("Marine", "TABLETTE", "LOLO", "avatar1"),
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            },
+            1,
+            5
+        };
+        yield return new Object[]
+        {
+            new Group(3UL, "Group 3", 
+                new ("Jeanne", "LERICHE", "JEMAA", "avatar2"),
+                new ("Jules", "INFANTE", "KIKOU77", "avatar3"),
+                new ("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
+                new ("Marine", "TABLETTE", "LOLO", "avatar1"),
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            ),
+            new Player[]
+            {
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            },
+            2,
+            4
+        };
+        yield return new Object[]
+        {
+            new Group(3UL, "Group 3", 
+                new ("Jeanne", "LERICHE", "JEMAA", "avatar2"),
+                new ("Jules", "INFANTE", "KIKOU77", "avatar3"),
+                new ("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
+                new ("Marine", "TABLETTE", "LOLO", "avatar1"),
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            ),
+            new Player[]{},
+            0,
+            1,
+        };
+        yield return new Object[]
+        {
+            new Group(3UL, "Group 3", 
+                new ("Jeanne", "LERICHE", "JEMAA", "avatar2"),
+                new ("Jules", "INFANTE", "KIKOU77", "avatar3"),
+                new ("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
+                new ("Marine", "TABLETTE", "LOLO", "avatar1"),
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            ),
+            new Player[]{},
+            0,
+            0,
+        };
+        yield return new Object[]
+        {
+            new Group(3UL, "Group 3", 
+                new ("Jeanne", "LERICHE", "JEMAA", "avatar2"),
+                new ("Jules", "INFANTE", "KIKOU77", "avatar3"),
+                new ("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
+                new ("Marine", "TABLETTE", "LOLO", "avatar1"),
+                new ("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+            ),
+            new Player[]{},
+            1,
+            0,
         };
     }
 }

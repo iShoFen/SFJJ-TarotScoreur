@@ -639,9 +639,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
     public IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize)
-        => group
-            .Players
-            .Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if(page == 0 || pageSize == 0) return new List<Player>();
+        return group.Players.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Players ==========*/
 
 
