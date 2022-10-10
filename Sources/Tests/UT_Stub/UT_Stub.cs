@@ -49,4 +49,38 @@ public class UT_Stub
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
     }
+    
+    
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
+    public void TestLoadPlayerByFirstNameAndLastName(string firstName, string lastName, Player[] players, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var playersFound = stub.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize).ToList();
+
+        Assert.Equal(playersFound.Count, players.Length);
+        Assert.Equal(playersFound, players);
+    }
+    
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayerByFirstNameAndNickname), MemberType = typeof(PlayerTestData))]
+    public void TestLoadPlayerByFirstNameAndNickname(string firstName, string nickname, Player[] players, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var playersFound = stub.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize).ToList();
+
+        Assert.Equal(playersFound.Count, players.Length);
+        Assert.Equal(playersFound, players);
+    }
+    
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayerByLastNameAndNickname), MemberType = typeof(PlayerTestData))]
+    public void TestLoadPlayerByLastNameAndNickname(string lastName, string nickname, Player[] players, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var playersFound = stub.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize).ToList();
+
+        Assert.Equal(playersFound.Count, players.Length);
+        Assert.Equal(playersFound, players);
+    }
 }

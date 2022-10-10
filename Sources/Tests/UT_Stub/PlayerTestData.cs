@@ -53,8 +53,8 @@ internal static  class PlayerTestData
         {
             "",
             new Player[]{},
-            0,
-            0,
+            1,
+            10,
         };
     }
     
@@ -107,8 +107,8 @@ internal static  class PlayerTestData
         {
             "",
             new Player[]{},
-            0,
-            0,
+            1,
+            10,
         };
     }
     
@@ -159,8 +159,8 @@ internal static  class PlayerTestData
         {
             "",
             new Player[]{},
-            0,
-            0,
+            1,
+            10,
         };
     }
     
@@ -240,6 +240,7 @@ internal static  class PlayerTestData
             0,
             new Player[]{}
         };
+        
         /*yield return new Object[]
         {
             1,
@@ -264,5 +265,203 @@ internal static  class PlayerTestData
                 new Player("Alizee", "SEBAT", "SEBAT", "avatar1")
             }
         };*/
+    }
+    
+    public static IEnumerable<Object[]> Data_TestPlayersByFirstNameAndLastName()
+    {
+        yield return new Object[]
+        {
+            "Jean",
+            "BON",
+            new Player[]
+            {
+                new ("Jean", "BON", "JEBO", "avatar1")
+            },
+            1,
+            10
+        };
+        yield return new Object[]
+        {
+            "Julien",
+            "PETIT",
+            new Player[]
+            {
+                new ("Julien", "PETIT", "THEGIANT", "avatar2"),
+            },
+            1,
+            10,
+        };
+        yield return new Object[]
+        {
+            "Jeanne",
+            "LERICHE",
+            new Player[]{},
+            0,
+            10,
+        };
+        yield return new Object[]
+        {
+            "Eliaz",
+            "DU JARDIN",
+            new Player[]{},
+            1,
+            0,
+        };
+        yield return new Object[]
+        {
+            "Simon",
+            "SEBAT",
+            new Player[]{},
+            0,
+            0,
+        };
+        yield return new Object[]
+        {
+            "",
+            "SEBAT",
+            new Player[]{},
+            1,
+            10,
+        };
+        yield return new Object[]
+        {
+            "Alizee",
+            "",
+            new Player[]{},
+            1,
+            10,
+        };
+    }
+    
+    public static IEnumerable<Object[]> Data_TestPlayerByFirstNameAndNickname()
+    {
+        yield return new Object[]
+        {
+            "Jean",
+            "JEBO",
+            new Player[]
+            {
+                new ("Jean", "BON", "JEBO", "avatar1")
+            },
+            1,
+            10
+        };
+        yield return new Object[]
+        {
+            "Julien",
+            "THEGIANT",
+            new Player[]
+            {
+                new ("Julien", "PETIT", "THEGIANT", "avatar2"),
+            },
+            1,
+            10,
+        };
+        yield return new Object[]
+        {
+            "Jeanne",
+            "JEMAA",
+            new Player[]{},
+            0,
+            10,
+        };
+        yield return new Object[]
+        {
+            "Eliaz",
+            "THEGIANTE",
+            new Player[]{},
+            1,
+            0,
+        };
+        yield return new Object[]
+        {
+            "Simon",
+            "SEBATA",
+            new Player[]{},
+            0,
+            0,
+        };
+        yield return new Object[]
+        {
+            "",
+            "SEBAT",
+            new Player[]{},
+            1,
+            10,
+        };
+        yield return new Object[]
+        {
+            "Alizee",
+            "",
+            new Player[]{},
+            1,
+            10,
+        };
+    }
+    
+    public static IEnumerable<Object[]> Data_TestPlayerByLastNameAndNickname()
+    {
+        yield return new Object[]
+        {
+            "BON",
+            "JEBO",
+            new Player[]
+            {
+                new ("Jean", "BON", "JEBO", "avatar1")
+            },
+            1,
+            10
+        };
+        yield return new Object[]
+        {
+            "PETIT",
+            "THEGIANT",
+            new Player[]
+            {
+                new ("Julien", "PETIT", "THEGIANT", "avatar2"),
+            },
+            1,
+            10,
+        };
+        yield return new Object[]
+        {
+            "LERICHE",
+            "JEMAA",
+            new Player[]{},
+            0,
+            10,
+        };
+        yield return new Object[]
+        {
+            "DU JARDIN",
+            "THEGIANTE",
+            new Player[]{},
+            1,
+            0,
+        };
+        yield return new Object[]
+        {
+            "SEBAT",
+            "SEBATA",
+            new Player[]{},
+            0,
+            0,
+        };
+        yield return new Object[]
+        {
+            "",
+            "SEBAT",
+            new Player[]{},
+            1,
+            10,
+        };
+        yield return new Object[]
+        {
+            "SEBAT",
+            "",
+            new Player[]{},
+            1,
+            10,
+        };
     }
 }
