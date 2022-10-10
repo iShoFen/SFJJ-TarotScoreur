@@ -26,99 +26,97 @@ internal class TarotDBContextStub : TarotDBContext
     }
 
     private void AddPlayers(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity
-            {Id = 1, FirstName = "Jean", LastName = "BON", Nickname = "JEBO", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 2, FirstName = "Jean", LastName = "MAUVAIS", Nickname = "JEMA", Avatar = "avatar2"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 3, FirstName = "Jean", LastName = "MOYEN", Nickname = "KIKOU7", Avatar = "avatar3"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 4, FirstName = "Michel", LastName = "BELIN", Nickname = "FRIPOUILLE", Avatar = "avatar4"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity
-                {Id = 5, FirstName = "Albert", LastName = "GOL", Nickname = "LOL", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity
-                {Id = 6, FirstName = "Julien", LastName = "PETIT", Nickname = "THEGIANT", Avatar = "avatar2"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 7, FirstName = "Simon", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 8, FirstName = "Jordan", LastName = "LEG", Nickname = "BIGBRAIN", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 9, FirstName = "Samuel", LastName = "LeChanteur", Nickname = "SS", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 10, FirstName = "Brigitte", LastName = "PUECH", Nickname = "XXFRIPOUILLEXX", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity
-                {Id = 11, FirstName = "Jeanne", LastName = "LERICHE", Nickname = "JEMA", Avatar = "avatar2"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 12, FirstName = "Jules", LastName = "INFANTE", Nickname = "KIKOU7", Avatar = "avatar3"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 13, FirstName = "Anne", LastName = "SAURIN", Nickname = "FRIPOUILLE", Avatar = "avatar4"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 14, FirstName = "Marine", LastName = "TABLETTE", Nickname = "LOL", Avatar = "avatar1"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity 
-                {Id = 15, FirstName = "Eliaz", LastName = "DU JARDIN", Nickname = "THEGIANT", Avatar = "avatar2"});
-        modelBuilder.Entity<PlayerEntity>().HasData(new PlayerEntity
-                {Id = 16, FirstName = "Alizee", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar1"});
+    { 
+            modelBuilder
+                    .Entity<PlayerEntity>().HasData(
+                    new PlayerEntity
+                            {Id = 1, FirstName = "Jean", LastName = "BON", Nickname = "JEBO", Avatar = "avatar1"},
+                    new PlayerEntity
+                            {Id = 2, FirstName = "Jean", LastName = "MAUVAIS", Nickname = "JEMA", Avatar = "avatar2"},
+                    new PlayerEntity
+                            {Id = 3, FirstName = "Jean", LastName = "MOYEN", Nickname = "KIKOU7", Avatar = "avatar3"},
+                    new PlayerEntity
+                             {Id = 4, FirstName = "Michel", LastName = "BELIN", Nickname = "FRIPOUILLE", Avatar = "avatar4"},
+                    new PlayerEntity
+                            {Id = 5, FirstName = "Albert", LastName = "GOL", Nickname = "LOL", Avatar = "avatar1"},
+                    new PlayerEntity 
+                            {Id = 6, FirstName = "Julien", LastName = "PETIT", Nickname = "THEGIANT", Avatar = "avatar2"},
+                    new PlayerEntity
+                            {Id = 7, FirstName = "Simon", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar1"},
+                    new PlayerEntity
+                            {Id = 8, FirstName = "Jordan", LastName = "LEG", Nickname = "BIGBRAIN", Avatar = "avatar1"},
+                    new PlayerEntity 
+                            {Id = 9, FirstName = "Samuel", LastName = "LeChanteur", Nickname = "SS", Avatar = "avatar1"},
+                    new PlayerEntity 
+                            {Id = 10, FirstName = "Brigitte", LastName = "PUECH", Nickname = "XXFRIPOUILLEXX", Avatar = "avatar1"},
+                    new PlayerEntity 
+                            {Id = 11, FirstName = "Jeanne", LastName = "LERICHE", Nickname = "JEMA", Avatar = "avatar2"},
+                    new PlayerEntity 
+                            {Id = 12, FirstName = "Jules", LastName = "INFANTE", Nickname = "KIKOU7", Avatar = "avatar3"},
+                    new PlayerEntity 
+                            {Id = 13, FirstName = "Anne", LastName = "SAURIN", Nickname = "FRIPOUILLE", Avatar = "avatar4"},
+                    new PlayerEntity 
+                            {Id = 14, FirstName = "Marine", LastName = "TABLETTE", Nickname = "LOL", Avatar = "avatar1"},
+                    new PlayerEntity 
+                            {Id = 15, FirstName = "Eliaz", LastName = "DU JARDIN", Nickname = "THEGIANT", Avatar = "avatar2"},
+                    new PlayerEntity 
+                            {Id = 16, FirstName = "Alizee", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar1"});
     }
 
     private void AddGroups(ModelBuilder modelBuilder)
     {
+        var groups = new List<GroupEntity>();
         for (var i = 1UL; i < 13UL; ++i)
         {
-            modelBuilder.Entity<GroupEntity>().HasData(new GroupEntity {Id = i, Name = $"Group{i}"});
+            groups.Add(new GroupEntity {Id = i, Name = $"Group{i}"});
         }
+        modelBuilder.Entity<GroupEntity>().HasData(groups);
 
-        // TODO Find a way to fill the join table between groups and players commented code doesn't work
-        /*var playerGroup = new List<object>();
+        var playerGroup = modelBuilder.Entity("GroupEntityPlayerEntity");
         for (var i = 1UL; i < 13; ++i)
         {
             for (var j = i; j < 6UL; ++j)
             {
-               playerGroup.Add(new {GroupsId = i, PlayersId = j});
+               playerGroup.HasData(new {GroupsId = i, PlayersId = j});
             }
         }
-
-        modelBuilder.Entity<GroupEntity>()
-            .HasMany(g => g.Players)
-            .WithMany(p => p.Groups)
-            .UsingEntity(gp => gp.ToTable("PlayerGroup"))
-            .HasData(playerGroup);*/
     }
 
     private void AddGames(ModelBuilder modelBuilder)
     {
+            modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
+                    {Id = 1UL, Name = "Game1", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
+            new GameEntity
+                {Id = 2UL, Name = "Game2", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
+            new GameEntity 
+                {Id = 3UL, Name = "Game3", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
+            new GameEntity  
+                {Id = 4UL, Name = "Game4", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
+            new GameEntity 
+                {Id = 5UL, Name = "Game5", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
+            new GameEntity 
+                    {Id = 6UL, Name = "Game13", Rules = "FrenchTarotRules", 
+                            StartDate = new DateTime(2022, 09, 21), 
+                            EndDate = new DateTime(2022, 09, 25)}, 
+            new GameEntity 
+                    {Id = 7UL, Name = "Game14", Rules = "FrenchTarotRules", 
+                            StartDate = new DateTime(2022, 09, 21), 
+                            EndDate = new DateTime(2022, 09, 25)}, 
+            new GameEntity {Id = 8UL, Name = "Game15", Rules = "FrenchTarotRules", 
+                    StartDate = new DateTime(2022, 09, 21), 
+                    EndDate = new DateTime(2022, 09, 25)}, 
+            new GameEntity 
+                    {Id = 9UL, Name = "Game16", Rules = "FrenchTarotRules", 
+                            StartDate = new DateTime(2022, 09, 21), 
+                            EndDate = new DateTime(2022, 09, 25)}, 
+            new GameEntity 
+                    {Id = 10UL, Name = "Game17", Rules = "FrenchTarotRules", 
+                            StartDate = new DateTime(2022, 09, 18), 
+                            EndDate = new DateTime(2022, 09, 23)});
         
-        
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-            {Id = 1UL, Name = "Game1", Rules = "FrenchTarotRules", StartDate = DateTime.Now});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity
-                {Id = 2UL, Name = "Game2", Rules = "FrenchTarotRules", StartDate = DateTime.Now});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-                {Id = 3UL, Name = "Game3", Rules = "FrenchTarotRules", StartDate = DateTime.Now});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity  
-                {Id = 4UL, Name = "Game4", Rules = "FrenchTarotRules", StartDate = DateTime.Now});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-                {Id = 5UL, Name = "Game5", Rules = "FrenchTarotRules", StartDate = DateTime.Now});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-            {Id = 6UL, Name = "Game13", Rules = "FrenchTarotRules", 
-                StartDate = new DateTime(2022, 09, 21), EndDate = new DateTime(2022, 09, 25)});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-            {Id = 7UL, Name = "Game14", Rules = "FrenchTarotRules", 
-                StartDate = new DateTime(2022, 09, 21), EndDate = new DateTime(2022, 09, 25)});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity
-            {Id = 8UL, Name = "Game15", Rules = "FrenchTarotRules", 
-                StartDate = new DateTime(2022, 09, 21), EndDate = new DateTime(2022, 09, 25)});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-            {Id = 9UL, Name = "Game16", Rules = "FrenchTarotRules", 
-                StartDate = new DateTime(2022, 09, 21), EndDate = new DateTime(2022, 09, 25)});
-        modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-            {Id = 10UL, Name = "Game17", Rules = "FrenchTarotRules", 
-                StartDate = new DateTime(2022, 09, 18), EndDate = new DateTime(2022, 09, 23)});
-        
-        // TODO Find a way to fill the join table between games and players commented code doesn't work
-        // AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
-        // AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
-        // AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
+        AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
+        AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
+        AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
     }
     
     private void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
@@ -132,15 +130,12 @@ internal class TarotDBContextStub : TarotDBContext
             }
         }
         
-        modelBuilder.Entity<GameEntity>()
-            .HasMany(g => g.Players)
-            .WithMany(p => p.Games)
-            .UsingEntity(gp => gp.ToTable("GamePlayer"))
-            .HasData(gamePlayer);
+        modelBuilder.Entity("GameEntityPlayerEntity").HasData(gamePlayer);
     }
 
     private void AddHands(ModelBuilder modelBuilder)
     {
+            
         modelBuilder.Entity<HandEntity>().HasData(new {Id = 1UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
                 TakerScore = 210, TwentyOne = false, Excuse = true, Petit = PetitResultDB.Lost, 
                 Chelem = ChelemDB.Unknown, GameId = 1UL});
