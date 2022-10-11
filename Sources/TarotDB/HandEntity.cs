@@ -50,7 +50,7 @@ internal class HandEntity
     /// <summary>
     /// Indicates the state of the ChelemDB related to the taker
     /// </summary>
-    public ChelemDB ChelemDb { get; set; }
+    public ChelemDB Chelem { get; set; }
     
     /// <summary>
     /// Players bidding details
