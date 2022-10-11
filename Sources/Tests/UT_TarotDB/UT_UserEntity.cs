@@ -8,21 +8,10 @@ namespace UT_TarotDB;
 
 public class UT_UserEntity
 {
-    private DbContextOptions<TarotDBContext> InitTest()
-    {
-        // Connection must be opened to use In-Memory database
-        var connection = new SqliteConnection("DataSource=:memory:");
-        connection.Open();
-
-        return new DbContextOptionsBuilder<TarotDBContext>()
-            .UseSqlite(connection)
-            .Options;
-    }
-
     [Fact]
     public async Task TestRead()
     {
-        var options = InitTest();
+        var options = TestInitializer.InitDb();
 
         using (var context = new TarotDBContextStub(options))
         {
@@ -92,7 +81,7 @@ public class UT_UserEntity
     public async Task TestAdd(bool isValid, int initialUsersCount, string firstname, string lastname,
         string nickname, string avatar, string email, string password)
     {
-        var options = InitTest();
+        var options = TestInitializer.InitDb();
 
         using (var context = new TarotDBContextStub(options))
         {
@@ -148,7 +137,7 @@ public class UT_UserEntity
         string password, string firstname2, string lastname2, string nickname2, string avatar2, string email2,
         string password2)
     {
-        var options = InitTest();
+        var options = TestInitializer.InitDb();
 
         using (var context = new TarotDBContextStub(options))
         {
@@ -241,7 +230,7 @@ public class UT_UserEntity
     public async Task TestDelete(string firstname, string lastname, string nickname, string avatar, string email,
         string password)
     {
-        var options = InitTest();
+        var options = TestInitializer.InitDb();
 
         using (var context = new TarotDBContextStub(options))
         {
