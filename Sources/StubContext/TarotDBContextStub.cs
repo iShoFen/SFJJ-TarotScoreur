@@ -6,581 +6,279 @@ namespace StubContext;
 
 internal class TarotDBContextStub : TarotDBContext
 {
-    public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options) { }
+	public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options)
+	{
+	}
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseSqlite(@"Data Source=TarotStub.db", b => b.MigrationsAssembly("TarotDB"));
+		}
+	}
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		base.OnModelCreating(modelBuilder);
+		AddPlayers(modelBuilder);
+		AddGroups(modelBuilder);
+		AddGames(modelBuilder);
+		AddHands(modelBuilder);
+	}
+
+	private static void AddPlayers(ModelBuilder modelBuilder)
+	{
+		var fName = new[]
+		{
+			"Jean", "Jean", "Jean", "Michel", "Albert", "Julien", "Simon", "Jordan", "Samuel", "Brigitte",
+			"Jeanne", "Jules", "Anne", "Marine", "Eliaz", "Alizee"
+		};
+		var lName = new[]
+		{
+			"BON", "MAUVAIS", "MOYEN", "BELIN", "GOL", "PETIT", "SEBAT", "LEG", "LeChanteur", "PUECH",
+			"LERICHE", "INFANTE", "SAURIN", "TABLETTE", "DU JARDIN", "SEBAT"
+		};
+		var nName = new[]
+		{
+			"JEBO", "JEMA", "KIKOU7", "FRIPOUILLE", "LOL", "THEGIANT", "SEBAT", "BIGBRAIN", "SS",
+			"XXFRIPOUILLEXX", "JEMO", "KIKOU8", "FRIPOUILLE2", "LOL2", "THEGIANT2", "SEBAT2"
+		};
+
+		var players = new List<PlayerEntity>();
+		for (var i = 0UL; i < 16UL; ++i)
+		{
+			players.Add(new PlayerEntity
+			{
+				Id = i + 1UL, FirstName = fName[i], LastName = lName[i],
+				Nickname = nName[i], Avatar = $"avatar{i + 1}"
+			});
+		}
+
+		modelBuilder.Entity<PlayerEntity>().HasData(players);
+	}
+
+	private static void AddGroups(ModelBuilder modelBuilder)
+	{
+		var groups = new List<GroupEntity>();
+		for (var i = 1UL; i < 13UL; ++i)
+		{
+			groups.Add(new GroupEntity {Id = i, Name = $"Group{i}"});
+		}
+
+		modelBuilder.Entity<GroupEntity>().HasData(groups);
+
+		var playerGroup = new List<object>();
+		for (var i = 1UL; i < 13UL; ++i)
+		{
+			for (var j = i; j < 6UL; ++j)
+			{
+				playerGroup.Add(new {GroupsId = i, PlayersId = j});
+			}
+		}
+
+		modelBuilder.Entity("GroupEntityPlayerEntity").HasData(playerGroup);
+	}
+
+	private static void AddGames(ModelBuilder modelBuilder)
+	{
+		var startDates = new[]
+		{
+			DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now,
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21),
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21),
+			new DateTime(2022, 09, 18)
+		};
+
+		var endDates = new DateTime?[]
+		{
+			null, null, null, null, null, new(2022, 09, 29), new(2022, 09, 29),
+			new(2022, 09, 30), new(2022, 09, 30), new(2022, 09, 30)
+		};
+
+		var games = new List<GameEntity>();
+		for (var i = 0UL; i < 10UL; ++i)
+		{
+			games.Add(new GameEntity
+			{
+				Id = i + 1UL, Name = $"Game{i + 1UL}", Rules = "FrenchTarotRules", StartDate = startDates[i],
+				EndDate = endDates[i]
+			});
+		}
+
+		modelBuilder.Entity<GameEntity>().HasData(games);
+
+		AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
+		AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
+		AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
+	}
+
+	private static void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlite(@"Data Source=TarotStub.db", b => b.MigrationsAssembly("TarotDB"));
-        }
+	    var gamePlayer = new List<object>();
+	    for (var i = startG; i < nbG + 1UL; ++i)
+	    {
+		    for (var j = i; j < nbP + 1UL; ++j)
+		    {
+			    gamePlayer.Add(new {GamesId = i, PlayersId = j});
+		    }
+	    }
+
+	    modelBuilder.Entity("GameEntityPlayerEntity").HasData(gamePlayer);
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    private static void AddHands(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        AddPlayers(modelBuilder);
-        AddGroups(modelBuilder);
-        AddGames(modelBuilder);
-        AddHands(modelBuilder);
+	    var dates = new DateTime[]
+	    {
+		    new(2022, 09, 21), new(2022, 09, 22), new(2022, 09, 23),
+		    new(2022, 09, 21), new(2022, 09, 21), new(2022, 09, 21),
+		    new(2022, 09, 21), new(2022, 09, 27), new(2022, 09, 30),
+		    new(2022, 09, 16), new(2022, 09, 21), new(2022, 09, 28),
+		    new(2022, 09, 21), new(2022, 09, 21), new(2022, 09, 25),
+		    new(2022, 09, 21), new(2022, 09, 25), new(2022, 09, 27), 
+		    new(2022, 09, 29), new(2022, 09, 21), new(2022, 09, 21),
+		    new(2022, 09, 29), new(2022, 09, 30), new(2022, 09, 21),
+		    new(2022, 09, 25), new(2022, 09, 27), new(2022, 09, 29),
+		    new(2022, 09, 30), new(2022, 09, 18), new(2022, 09, 25),
+		    new(2022, 09, 29), new(2022, 09, 30)
+	    };
+	    
+	    var scores = new[]
+	    {
+		    210, 256, 151, 561, 256, 151, 567, 256, 654, 567, 365, 151, 567, 567, 151, 873, 567, 151, 567, 567, 826,
+		    745, 567, 567, 567, 567, 567, 567, 567, 567, 567, 567
+	    };
+	    var twentys = new[]
+	    {
+		    false, true, false, false, false, true, true, false, false, false, false, true, true, false, true, false,
+		    true, true, true, false, false, true, true, false, false, true, true, false, false, true, true, true
+	    };
+	    var excuses = new[]
+	    {
+		    true, true, false, false, true, false, true, true, false, false, true, false, false, false, true, true,
+		    false, true, false, false, false, true, false, false, true, true, false, false, true, false, true, false
+	    };
+	    var petits = new[]
+	    {
+		    PetitResultDB.Lost, PetitResultDB.Lost, PetitResultDB.Lost, PetitResultDB.Lost, PetitResultDB.AuBoutOwned,
+		    PetitResultDB.Owned, PetitResultDB.LostAuBout, PetitResultDB.AuBoutOwned, PetitResultDB.Owned,
+		    PetitResultDB.NotOwned, PetitResultDB.AuBoutOwned, PetitResultDB.AuBoutOwned, PetitResultDB.Lost,
+		    PetitResultDB.Lost, PetitResultDB.Owned, PetitResultDB.LostAuBout, PetitResultDB.Lost, PetitResultDB.Owned,
+		    PetitResultDB.Owned, PetitResultDB.LostAuBout, PetitResultDB.Lost, PetitResultDB.Owned, PetitResultDB.Lost,
+		    PetitResultDB.Lost, PetitResultDB.LostAuBout, PetitResultDB.Owned, PetitResultDB.Lost, PetitResultDB.Lost,
+		    PetitResultDB.LostAuBout, PetitResultDB.Lost, PetitResultDB.Owned, PetitResultDB.Lost
+	    };
+	    var chelems = new[]
+	    {
+		    ChelemDB.Unknown, ChelemDB.Announced, ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
+		    ChelemDB.Success, ChelemDB.Unknown, ChelemDB.Success, ChelemDB.Success, ChelemDB.AnnouncedSuccess,
+		    ChelemDB.Fail, ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess, ChelemDB.Success,
+		    ChelemDB.Fail, ChelemDB.AnnouncedSuccess, ChelemDB.AnnouncedSuccess, ChelemDB.Unknown, ChelemDB.Unknown,
+		    ChelemDB.AnnouncedSuccess, ChelemDB.Success, ChelemDB.Unknown, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
+		    ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
+		    ChelemDB.Success, ChelemDB.Unknown
+	    };
+	    var nbHperG = new[]
+	    {
+		    3, 3, 3, 3, 3, 4, 3, 1, 5, 4
+	    };
+	    
+	    var hands = new List<object>();
+	    var gId = 1UL;
+	    var hId = 1UL;
+	    var index = 0;
+	    foreach (var nbId in nbHperG)
+	    {
+		    for (var i = 0; i < nbId; ++i)
+		    {
+			    hands.Add(new
+			    {
+				    Id = hId, Number = i, Rules = "FrenchTarotRules", Date = dates[index], TakerScore = scores[index],
+				    TwentyOne = twentys[index], Excuse = excuses[index], Petit = petits[index], Chelem = chelems[index],
+				    GameId = gId
+			    });
+			    ++hId; ++index;
+		    }
+		    ++gId;
+	    }
+	    modelBuilder.Entity<HandEntity>().HasData(hands);
+	    
+	    AddBiddings(modelBuilder,nbHperG);
     }
 
-    private void AddPlayers(ModelBuilder modelBuilder)
-    { 
-            modelBuilder
-                    .Entity<PlayerEntity>().HasData(
-                    new PlayerEntity
-                            {Id = 1, FirstName = "Jean", LastName = "BON", Nickname = "JEBO", Avatar = "avatar1"},
-                    new PlayerEntity
-                            {Id = 2, FirstName = "Jean", LastName = "MAUVAIS", Nickname = "JEMA", Avatar = "avatar2"},
-                    new PlayerEntity
-                            {Id = 3, FirstName = "Jean", LastName = "MOYEN", Nickname = "KIKOU7", Avatar = "avatar3"},
-                    new PlayerEntity
-                             {Id = 4, FirstName = "Michel", LastName = "BELIN", Nickname = "FRIPOUILLE", Avatar = "avatar4"},
-                    new PlayerEntity
-                            {Id = 5, FirstName = "Albert", LastName = "GOL", Nickname = "LOL", Avatar = "avatar1"},
-                    new PlayerEntity 
-                            {Id = 6, FirstName = "Julien", LastName = "PETIT", Nickname = "THEGIANT", Avatar = "avatar2"},
-                    new PlayerEntity
-                            {Id = 7, FirstName = "Simon", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar1"},
-                    new PlayerEntity
-                            {Id = 8, FirstName = "Jordan", LastName = "LEG", Nickname = "BIGBRAIN", Avatar = "avatar1"},
-                    new PlayerEntity 
-                            {Id = 9, FirstName = "Samuel", LastName = "LeChanteur", Nickname = "SS", Avatar = "avatar1"},
-                    new PlayerEntity 
-                            {Id = 10, FirstName = "Brigitte", LastName = "PUECH", Nickname = "XXFRIPOUILLEXX", Avatar = "avatar1"},
-                    new PlayerEntity 
-                            {Id = 11, FirstName = "Jeanne", LastName = "LERICHE", Nickname = "JEMA", Avatar = "avatar2"},
-                    new PlayerEntity 
-                            {Id = 12, FirstName = "Jules", LastName = "INFANTE", Nickname = "KIKOU7", Avatar = "avatar3"},
-                    new PlayerEntity 
-                            {Id = 13, FirstName = "Anne", LastName = "SAURIN", Nickname = "FRIPOUILLE", Avatar = "avatar4"},
-                    new PlayerEntity 
-                            {Id = 14, FirstName = "Marine", LastName = "TABLETTE", Nickname = "LOL", Avatar = "avatar1"},
-                    new PlayerEntity 
-                            {Id = 15, FirstName = "Eliaz", LastName = "DU JARDIN", Nickname = "THEGIANT", Avatar = "avatar2"},
-                    new PlayerEntity 
-                            {Id = 16, FirstName = "Alizee", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar1"});
-    }
-
-    private void AddGroups(ModelBuilder modelBuilder)
+    private static void AddBiddings(ModelBuilder modelBuilder, params int[] nbGperH)
     {
-        var groups = new List<GroupEntity>();
-        for (var i = 1UL; i < 13UL; ++i)
-        {
-            groups.Add(new GroupEntity {Id = i, Name = $"Group{i}"});
-        }
-        modelBuilder.Entity<GroupEntity>().HasData(groups);
+	    var biddings = new[]
+	    {
+		    BiddingDB.Petite, BiddingDB.Petite, BiddingDB.Garde, BiddingDB.GardeSansLeChien,
+		    BiddingDB.GardeContreLeChien, BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.GardeContreLeChien,
+		    BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.GardeContreLeChien, BiddingDB.Petite,
+		    BiddingDB.GardeSansLeChien, BiddingDB.GardeContreLeChien, BiddingDB.Petite, BiddingDB.GardeSansLeChien,
+		    BiddingDB.GardeContreLeChien, BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.GardeSansLeChien,
+		    BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.Garde,
+		    BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.Garde,
+		    BiddingDB.Petite, BiddingDB.GardeContreLeChien
+	    };
+	    var poignees = new[]
+	    {
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+		    PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None
+	    };
 
-        var playerGroup = modelBuilder.Entity("GroupEntityPlayerEntity");
-        for (var i = 1UL; i < 13; ++i)
-        {
-            for (var j = i; j < 6UL; ++j)
-            {
-               playerGroup.HasData(new {GroupsId = i, PlayersId = j});
-            }
-        }
-    }
+	    var nbPperG = new[]
+	    {
+		    3, 3, 3, 4, 4, 4, 5, 5, 5, 5
+	    };
 
-    private void AddGames(ModelBuilder modelBuilder)
-    {
-            modelBuilder.Entity<GameEntity>().HasData(new GameEntity 
-                    {Id = 1UL, Name = "Game1", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
-            new GameEntity
-                {Id = 2UL, Name = "Game2", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
-            new GameEntity 
-                {Id = 3UL, Name = "Game3", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
-            new GameEntity  
-                {Id = 4UL, Name = "Game4", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
-            new GameEntity 
-                {Id = 5UL, Name = "Game5", Rules = "FrenchTarotRules", StartDate = DateTime.Now}, 
-            new GameEntity 
-                    {Id = 6UL, Name = "Game13", Rules = "FrenchTarotRules", 
-                            StartDate = new DateTime(2022, 09, 21), 
-                            EndDate = new DateTime(2022, 09, 25)}, 
-            new GameEntity 
-                    {Id = 7UL, Name = "Game14", Rules = "FrenchTarotRules", 
-                            StartDate = new DateTime(2022, 09, 21), 
-                            EndDate = new DateTime(2022, 09, 25)}, 
-            new GameEntity {Id = 8UL, Name = "Game15", Rules = "FrenchTarotRules", 
-                    StartDate = new DateTime(2022, 09, 21), 
-                    EndDate = new DateTime(2022, 09, 25)}, 
-            new GameEntity 
-                    {Id = 9UL, Name = "Game16", Rules = "FrenchTarotRules", 
-                            StartDate = new DateTime(2022, 09, 21), 
-                            EndDate = new DateTime(2022, 09, 25)}, 
-            new GameEntity 
-                    {Id = 10UL, Name = "Game17", Rules = "FrenchTarotRules", 
-                            StartDate = new DateTime(2022, 09, 18), 
-                            EndDate = new DateTime(2022, 09, 23)});
-        
-        AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
-        AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
-        AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
-    }
-    
-    private void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
-    {
-        var gamePlayer = new List<object>();
-        for (var i = startG; i < nbG + 1UL; ++i)
-        {
-            for (var j = i; j < nbP + 1UL; ++j)
-            {
-                gamePlayer.Add(new {GamesId = i, PlayersId = j});
-            }
-        }
-        
-        modelBuilder.Entity("GameEntityPlayerEntity").HasData(gamePlayer);
-    }
+	    var bids = new List<BiddingPoigneeEntity>();
+	    var hId = 1UL;
+	    var index = 0;
+	    var biddingIndex = 0;
 
-    private void AddHands(ModelBuilder modelBuilder)
-    {
-            
-        modelBuilder.Entity<HandEntity>().HasData(new {Id = 1UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 210, TwentyOne = false, Excuse = true, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 1UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 2UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 22), 
-                TakerScore = 256, TwentyOne = true, Excuse = true, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 1UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 3UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 23), 
-                TakerScore = 151, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Success, GameId = 1UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 4UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 561, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 2UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 5UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 256, TwentyOne = false, Excuse = true, Petit = PetitResultDB.AuBoutOwned, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 2UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 6UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 151, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Success, GameId = 2UL});
+	    for (var gpIndex = 0; gpIndex < nbGperH.Length; ++gpIndex)
+	    {
+		    for (var i = 0;  i < nbGperH[gpIndex]; ++i)
+		    {
+			    var pId = Convert.ToUInt64(gpIndex + 1);
+			    for (var j = 0; j < nbPperG[gpIndex]; ++j)
+			    {
+				    var bidding = j switch
+				    {
+					    0 => biddings[biddingIndex],
+					    4 => BiddingDB.King,
+					    _ => BiddingDB.Opponent
+				    };
 
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 7UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 567, TwentyOne = true, Excuse = true, Petit = PetitResultDB.LostAuBout, 
-                Chelem = ChelemDB.Unknown, GameId = 3UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 8UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 27), 
-                TakerScore = 256, TwentyOne = false, Excuse = true, Petit = PetitResultDB.AuBoutOwned, 
-                Chelem = ChelemDB.Success, GameId = 3UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 9UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 30), 
-                TakerScore = 654, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Success, GameId = 3UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 10UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 16), 
-                TakerScore = 567, TwentyOne = false, Excuse = false, Petit = PetitResultDB.NotOwned, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 4UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 11UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 365, TwentyOne = false, Excuse = true, Petit = PetitResultDB.AuBoutOwned, 
-                Chelem = ChelemDB.Fail, GameId = 4UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 12UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 28), 
-                TakerScore = 151, TwentyOne = true, Excuse = false, Petit = PetitResultDB.AuBoutOwned, 
-                Chelem = ChelemDB.Success, GameId = 4UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 13UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 5UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 14UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 567, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 5UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 15UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 25), 
-                TakerScore = 151, TwentyOne = true, Excuse = true, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Success, GameId = 5UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 16UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 873, TwentyOne = false, Excuse = true, Petit = PetitResultDB.LostAuBout, 
-                Chelem = ChelemDB.Fail, GameId = 6UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 17UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 25), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 6UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 18UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 27), 
-                TakerScore = 151, TwentyOne = true, Excuse = true, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 6UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 19UL, Number = 4, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 29), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Unknown, GameId = 6UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 20UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 567, TwentyOne = false, Excuse = false, Petit = PetitResultDB.LostAuBout, 
-                Chelem = ChelemDB.Unknown, GameId = 7UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 21UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 826, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 7UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 22UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 29), 
-                TakerScore = 745, TwentyOne = true, Excuse = true, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Success, GameId = 7UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 23UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 30), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 8UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 24UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 567, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 9UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 25UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 25), 
-                TakerScore = 567, TwentyOne = false, Excuse = true, Petit = PetitResultDB.LostAuBout, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 9UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 26UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 27), 
-                TakerScore = 567, TwentyOne = true, Excuse = true, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Success, GameId = 9UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 27UL, Number = 4, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 29), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 9UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 28UL, Number = 5, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 30), 
-                TakerScore = 567, TwentyOne = false, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 9UL});
-        
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 29UL, Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 21), 
-                TakerScore = 567, TwentyOne = false, Excuse = true, Petit = PetitResultDB.LostAuBout, 
-                Chelem = ChelemDB.Unknown, GameId = 10UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 30UL, Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 25), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.AnnouncedSuccess, GameId = 10UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 31UL, Number = 3, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 29), 
-                TakerScore = 567, TwentyOne = true, Excuse = true, Petit = PetitResultDB.Owned, 
-                Chelem = ChelemDB.Success, GameId = 10UL});
-        modelBuilder.Entity<HandEntity>().HasData(
-            new {Id = 32UL, Number = 4, Rules = "FrenchTarotRules", Date = new DateTime(2022, 09, 30), 
-                TakerScore = 567, TwentyOne = true, Excuse = false, Petit = PetitResultDB.Lost, 
-                Chelem = ChelemDB.Unknown, GameId = 10UL});
-        
-        AddBiddings(modelBuilder);
-    }
-
-    private void AddBiddings(ModelBuilder modelBuilder)
-    {
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.None, HandId = 1UL, PlayerId = 1UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 1UL, PlayerId = 2UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 1UL, PlayerId = 3UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.Simple, HandId = 2UL, PlayerId = 1UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 2UL, PlayerId = 2UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 2UL, PlayerId = 3UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Garde, Poignee = PoigneeDB.Simple, HandId = 3UL, PlayerId = 1UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 3UL, PlayerId = 2UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Simple, HandId = 3UL, PlayerId = 3UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 4UL, PlayerId = 2UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 4UL, PlayerId = 3UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 4UL, PlayerId = 4UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeContreLeChien, Poignee = PoigneeDB.None, HandId = 5UL, PlayerId = 2UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Double, HandId = 5UL, PlayerId = 3UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 5UL, PlayerId = 4UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.None, HandId = 6UL, PlayerId = 2UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 6UL, PlayerId = 3UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Triple, HandId = 6UL, PlayerId = 4UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 7UL, PlayerId = 3UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 7UL, PlayerId = 4UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 7UL, PlayerId = 5UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeContreLeChien, Poignee = PoigneeDB.Triple, HandId = 8UL, PlayerId = 3UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 8UL, PlayerId = 4UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 8UL, PlayerId = 5UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.Triple, HandId = 9UL, PlayerId = 3UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 9UL, PlayerId = 4UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 9UL, PlayerId = 5UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 10UL, PlayerId = 4UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 10UL, PlayerId = 5UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 10UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 10UL, PlayerId = 7UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeContreLeChien, Poignee = PoigneeDB.None, HandId = 11UL, PlayerId = 4UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Simple, HandId = 11UL, PlayerId = 5UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 11UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 11UL, PlayerId = 7UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.Triple, HandId = 12UL, PlayerId = 4UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 12UL, PlayerId = 5UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 12UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 12UL, PlayerId = 7UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 13UL, PlayerId = 5UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 13UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 13UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 13UL, PlayerId = 8UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeContreLeChien, Poignee = PoigneeDB.None, HandId = 14UL, PlayerId = 5UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 14UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 14UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 14UL, PlayerId = 8UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.None, HandId = 15UL, PlayerId = 5UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 15UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 15UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 15UL, PlayerId = 8UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.Simple, HandId = 16UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 16UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 16UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 16UL, PlayerId = 9UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeContreLeChien, Poignee = PoigneeDB.None, HandId = 17UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 17UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 17UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 17UL, PlayerId = 9UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.None, HandId = 18UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Triple, HandId = 18UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 18UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 18UL, PlayerId = 9UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 19UL, PlayerId = 6UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 19UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Simple, HandId = 19UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 19UL, PlayerId = 9UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 20UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 20UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 20UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 20UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 20UL, PlayerId = 11UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 21UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 21UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 21UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 21UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 21UL, PlayerId = 11UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Garde, Poignee = PoigneeDB.Simple, HandId = 22UL, PlayerId = 7UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 22UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 22UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 22UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 22UL, PlayerId = 11UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.None, HandId = 23UL, PlayerId = 8UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 23UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 23UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 23UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 23UL, PlayerId = 12UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 24UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 24UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 24UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 24UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 24UL, PlayerId = 13UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Garde, Poignee = PoigneeDB.None, HandId = 25UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Triple, HandId = 25UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 25UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 25UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 25UL, PlayerId = 13UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 26UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 26UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 26UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 26UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.Simple, HandId = 26UL, PlayerId = 13UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Garde, Poignee = PoigneeDB.None, HandId = 27UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Double, HandId = 27UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 27UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 27UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 27UL, PlayerId = 13UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.GardeSansLeChien, Poignee = PoigneeDB.None, HandId = 28UL, PlayerId = 9UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 28UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Triple, HandId = 28UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 28UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 28UL, PlayerId = 13UL});
-
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Garde, Poignee = PoigneeDB.None, HandId = 29UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 29UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 29UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 29UL, PlayerId = 13UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 29UL, PlayerId = 14UL});
-
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Garde, Poignee = PoigneeDB.None, HandId = 30UL, PlayerId = 10UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 30UL, PlayerId = 11UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 30UL, PlayerId = 12UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 30UL, PlayerId = 13UL});
-            modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-                    {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 30UL, PlayerId = 14UL});
-
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Petite, Poignee = PoigneeDB.None, HandId = 31UL, PlayerId = 10UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 31UL, PlayerId = 11UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 31UL, PlayerId = 12UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.Simple, HandId = 31UL, PlayerId = 13UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 31UL, PlayerId = 14UL});
-
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.GardeContreLeChien, Poignee = PoigneeDB.Triple, HandId = 32UL, PlayerId = 10UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 32UL, PlayerId = 11UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 32UL, PlayerId = 12UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.Opponent, Poignee = PoigneeDB.None, HandId = 32UL, PlayerId = 13UL});
-        modelBuilder.Entity<BiddingPoigneeEntity>().HasData(new BiddingPoigneeEntity
-            {Bidding = BiddingDB.King, Poignee = PoigneeDB.None, HandId = 32UL, PlayerId = 14UL});
+				    bids.Add(new BiddingPoigneeEntity
+					    {Bidding = bidding, Poignee = poignees[index], HandId = hId, PlayerId = pId});
+				    
+				    ++pId; ++index;
+			    }
+			    ++hId; ++biddingIndex;
+		    }
+	    }
+	    
+	    modelBuilder.Entity<BiddingPoigneeEntity>().HasData(bids);
     }
 }
