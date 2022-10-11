@@ -30,11 +30,11 @@ public class UT_PlayerEntity
             context.Database.EnsureCreated();
             Assert.Equal(16, await context.Players.CountAsync());
 
-            var julien = await context.Players.FindAsync((ulong)6);
+            var julien = await context.Players.FindAsync(6UL);
             Assert.Equal("Julien", julien?.FirstName);
             Assert.Equal("PETIT", julien?.LastName);
             Assert.Equal("THEGIANT", julien?.Nickname);
-            Assert.Equal("avatar2", julien?.Avatar);
+            Assert.Equal("avatar6", julien?.Avatar);
 
             var playersWith_ne = context.Players.Where(p => p.FirstName.Contains("ne"));
             Assert.Equal(3, await playersWith_ne.CountAsync());
@@ -124,7 +124,7 @@ public class UT_PlayerEntity
         {
             context.Database.EnsureCreated();
 
-            await context.Players.AddAsync(new PlayerEntity()
+            await context.Players.AddAsync(new PlayerEntity
             {
                 FirstName = firstname,
                 LastName = lastname,
@@ -196,7 +196,6 @@ public class UT_PlayerEntity
     [InlineData("Florent", "Marques", "    ", "avatar")]
     [InlineData("Florent", "Marques", "Flo", "    ")]
     [InlineData("    ", "    ", "    ", "avatar")]
-
     public async Task TestDelete(string firstname, string lastname, string nickname, string avatar)
     {
         var options = InitTest();
@@ -221,10 +220,10 @@ public class UT_PlayerEntity
         using (var context = new TarotDBContextStub(options))
         {
             var players = context.Players.Where(p => p.FirstName == firstname
-                                       && p.LastName == lastname
-                                       && p.Nickname == nickname
-                                       && p.Avatar == avatar);
-            
+                                                     && p.LastName == lastname
+                                                     && p.Nickname == nickname
+                                                     && p.Avatar == avatar);
+
             Assert.Equal(1, await players.CountAsync());
 
             var player = players.Single();
@@ -239,8 +238,8 @@ public class UT_PlayerEntity
                                                      && p.LastName == lastname
                                                      && p.Nickname == nickname
                                                      && p.Avatar == avatar);
-            
-            Assert.Equal(0, await players.CountAsync());         
+
+            Assert.Equal(0, await players.CountAsync());
             Assert.Null(await context.Players.FindAsync(playerId));
         }
     }
