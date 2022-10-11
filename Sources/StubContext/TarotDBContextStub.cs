@@ -221,8 +221,8 @@ internal class TarotDBContextStub : TarotDBContext
 	    };
 	    
 	    var hands = new List<object>();
-	    var gId = 1UL;
-	    var hId = 1UL;
+	    var gameId = 1UL;
+	    var handId = 1UL;
 	    var index = 0;
 	    foreach (var nbId in nbHperG)
 	    {
@@ -231,13 +231,13 @@ internal class TarotDBContextStub : TarotDBContext
 		    {
 			    hands.Add(new
 			    {
-				    Id = hId, Number = i, Rules = "FrenchTarotRules", Date = dates[index], TakerScore = scores[index],
+				    Id = handId, Number = i, Rules = "FrenchTarotRules", Date = dates[index], TakerScore = scores[index],
 				    TwentyOne = twentys[index], Excuse = excuses[index], Petit = petits[index], Chelem = chelems[index],
-				    GameId = gId
+				    GameId = gameId
 			    });
-			    ++hId; ++index;
+			    ++handId; ++index;
 		    }
-		    ++gId;
+		    ++gameId;
 	    }
 	    modelBuilder.Entity<HandEntity>().HasData(hands);
 	    
