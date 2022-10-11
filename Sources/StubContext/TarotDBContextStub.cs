@@ -81,9 +81,9 @@ internal class TarotDBContextStub : TarotDBContext
         modelBuilder.Entity<GroupEntity>().HasData(groups);
 
         var playerGroup = new List<object>();
-        for (var i = 1UL; i < 13UL; ++i)
+        for (var i = 1UL; i <= Convert.ToUInt64(groups.Count); ++i)
         {
-            for (var j = i; j < 6UL; ++j)
+            for (var j = i; j < i + 5UL; ++j)
             {
                 playerGroup.Add(new { GroupsId = i, PlayersId = j });
             }
