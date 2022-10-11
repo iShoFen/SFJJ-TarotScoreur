@@ -130,28 +130,31 @@ internal class TarotDBContextStub : TarotDBContext
 
 		modelBuilder.Entity<GameEntity>().HasData(games);
 
-		AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
-		AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
-		AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
+		AddPlayersGame(1UL, 3U, 3U, modelBuilder);
+		AddPlayersGame(4UL, 3U, 4U, modelBuilder);
+		AddPlayersGame(7UL, 4U, 5U, modelBuilder);
 	}
 
 	/// <summary>
-	/// 
+	/// Add players to a game
 	/// </summary>
-	/// <param name="startG"> The first game id </param>
+	/// <param name="gameId"> The first game id </param>
 	/// <param name="nbG"> The number of games </param>
 	/// <param name="nbP"> The number of players per game </param>
 	/// <param name="modelBuilder"> Model builder </param>
-	private static void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
+	private static void AddPlayersGame(ulong gameId, uint nbG, uint nbP, ModelBuilder modelBuilder)
     {
 	    // Add players nbP Players to nbG games
 	    var gamePlayer = new List<object>();
-	    for (var i = startG; i < nbG + 1UL; ++i)
+	    for (var i = 0; i < nbG; ++i)
 	    {
-		    for (var j = i; j < nbP + 1UL; ++j)
+		    var playerId = gameId;
+		    for (var j = 0; j < nbP; ++j)
 		    {
-			    gamePlayer.Add(new {GamesId = i, PlayersId = j});
+			    gamePlayer.Add(new {GamesId = gameId, PlayersId = playerId});
+			    ++playerId;
 		    }
+		    ++gameId;
 	    }
 
 	    modelBuilder.Entity("GameEntityPlayerEntity").HasData(gamePlayer);
