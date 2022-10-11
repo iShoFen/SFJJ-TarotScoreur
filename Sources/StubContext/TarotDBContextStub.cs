@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.CompilerServices;
 using TarotDB;
 using TarotDB.enums;
 
@@ -7,123 +6,114 @@ namespace StubContext;
 
 internal class TarotDBContextStub : TarotDBContext
 {
-	public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options) { }
-	
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{ 
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlite(@"Data Source=TarotStub.db", b => b.MigrationsAssembly("TarotDB"));
-        }
-    }
+	public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options)
+	{
+	}
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    { 
-	    base.OnModelCreating(modelBuilder);
-        AddPlayers(modelBuilder);
-        AddGroups(modelBuilder);
-        AddGames(modelBuilder);
-        AddHands(modelBuilder);
-    }
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseSqlite(@"Data Source=TarotStub.db", b => b.MigrationsAssembly("TarotDB"));
+		}
+	}
 
-    private static void AddPlayers(ModelBuilder modelBuilder)
-    {
-	    var fName = new[]
-	    {
-		    "Jean", "Jean", "Jean", "Michel", "Albert", "Julien", "Simon", "Jordan", "Samuel", "Brigitte",
-		    "Jeanne", "Jules", "Anne", "Marine", "Eliaz", "Alizee"
-	    };
-	    var lName = new[]
-	    {
-		    "BON", "MAUVAIS", "MOYEN", "BELIN", "GOL", "PETIT", "SEBAT", "LEG", "LeChanteur", "PUECH",
-		    "LERICHE", "INFANTE", "SAURIN", "TABLETTE", "DU JARDIN", "SEBAT"
-	    };
-	    var nName = new[]
-	    {
-		    "JEBO", "JEMA", "KIKOU7", "FRIPOUILLE", "LOL", "THEGIANT", "SEBAT", "BIGBRAIN", "SS",
-		    "XXFRIPOUILLEXX", "JEMO", "KIKOU8", "FRIPOUILLE2", "LOL2", "THEGIANT2", "SEBAT2"
-	    };
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		base.OnModelCreating(modelBuilder);
+		AddPlayers(modelBuilder);
+		AddGroups(modelBuilder);
+		AddGames(modelBuilder);
+		AddHands(modelBuilder);
+	}
 
-	    var players = new List<PlayerEntity>();
-	    for (var i = 0UL; i < 16UL; ++i)
-	    {
-		    players.Add(new PlayerEntity
-		    {
-			    Id = i + 1UL, FirstName = fName[i], LastName = lName[i],
-			    Nickname = nName[i], Avatar = $"avatar{i + 1}"
-		    });
-	    }
+	private static void AddPlayers(ModelBuilder modelBuilder)
+	{
+		var fName = new[]
+		{
+			"Jean", "Jean", "Jean", "Michel", "Albert", "Julien", "Simon", "Jordan", "Samuel", "Brigitte",
+			"Jeanne", "Jules", "Anne", "Marine", "Eliaz", "Alizee"
+		};
+		var lName = new[]
+		{
+			"BON", "MAUVAIS", "MOYEN", "BELIN", "GOL", "PETIT", "SEBAT", "LEG", "LeChanteur", "PUECH",
+			"LERICHE", "INFANTE", "SAURIN", "TABLETTE", "DU JARDIN", "SEBAT"
+		};
+		var nName = new[]
+		{
+			"JEBO", "JEMA", "KIKOU7", "FRIPOUILLE", "LOL", "THEGIANT", "SEBAT", "BIGBRAIN", "SS",
+			"XXFRIPOUILLEXX", "JEMO", "KIKOU8", "FRIPOUILLE2", "LOL2", "THEGIANT2", "SEBAT2"
+		};
 
-	    modelBuilder.Entity<PlayerEntity>().HasData(players);
-    }
+		var players = new List<PlayerEntity>();
+		for (var i = 0UL; i < 16UL; ++i)
+		{
+			players.Add(new PlayerEntity
+			{
+				Id = i + 1UL, FirstName = fName[i], LastName = lName[i],
+				Nickname = nName[i], Avatar = $"avatar{i + 1}"
+			});
+		}
 
-    private static void AddGroups(ModelBuilder modelBuilder)
-    {
-	    var groups = new List<GroupEntity>();
-	    for (var i = 1UL; i < 13UL; ++i)
-	    {
-		    groups.Add(new GroupEntity {Id = i, Name = $"Group{i}"});
-	    }
+		modelBuilder.Entity<PlayerEntity>().HasData(players);
+	}
 
-	    modelBuilder.Entity<GroupEntity>().HasData(groups);
+	private static void AddGroups(ModelBuilder modelBuilder)
+	{
+		var groups = new List<GroupEntity>();
+		for (var i = 1UL; i < 13UL; ++i)
+		{
+			groups.Add(new GroupEntity {Id = i, Name = $"Group{i}"});
+		}
 
-	    var playerGroup = new List<object>();
-	    for (var i = 1UL; i < 13UL; ++i)
-	    {
-		    for (var j = i; j < 6UL; ++j)
-		    {
-			    playerGroup.Add(new {GroupsId = i, PlayersId = j});
-		    }
-	    }
+		modelBuilder.Entity<GroupEntity>().HasData(groups);
 
-	    modelBuilder.Entity("GroupEntityPlayerEntity").HasData(playerGroup);
-    }
+		var playerGroup = new List<object>();
+		for (var i = 1UL; i < 13UL; ++i)
+		{
+			for (var j = i; j < 6UL; ++j)
+			{
+				playerGroup.Add(new {GroupsId = i, PlayersId = j});
+			}
+		}
 
-    private static void AddGames(ModelBuilder modelBuilder)
-    {
-	    modelBuilder.Entity<GameEntity>().HasData(
-		    new GameEntity
-			    {Id = 1UL, Name = "Game1", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
-		    new GameEntity
-			    {Id = 2UL, Name = "Game2", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
-		    new GameEntity
-			    {Id = 3UL, Name = "Game3", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
-		    new GameEntity
-			    {Id = 4UL, Name = "Game4", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
-		    new GameEntity
-			    {Id = 5UL, Name = "Game5", Rules = "FrenchTarotRules", StartDate = DateTime.Now},
-		    new GameEntity
-		    {
-			    Id = 6UL, Name = "Game13", Rules = "FrenchTarotRules", StartDate = new DateTime(2022, 09, 21),
-			    EndDate = new DateTime(2022, 09, 25)
-		    },
-		    new GameEntity
-		    {
-			    Id = 7UL, Name = "Game14", Rules = "FrenchTarotRules", StartDate = new DateTime(2022, 09, 21),
-			    EndDate = new DateTime(2022, 09, 25)
-		    },
-		    new GameEntity
-		    {
-			    Id = 8UL, Name = "Game15", Rules = "FrenchTarotRules", StartDate = new DateTime(2022, 09, 21),
-			    EndDate = new DateTime(2022, 09, 25)
-		    },
-		    new GameEntity
-		    {
-			    Id = 9UL, Name = "Game16", Rules = "FrenchTarotRules", StartDate = new DateTime(2022, 09, 21),
-			    EndDate = new DateTime(2022, 09, 25)
-		    },
-		    new GameEntity
-		    {
-			    Id = 10UL, Name = "Game17", Rules = "FrenchTarotRules", StartDate = new DateTime(2022, 09, 18),
-			    EndDate = new DateTime(2022, 09, 23)
-		    });
+		modelBuilder.Entity("GroupEntityPlayerEntity").HasData(playerGroup);
+	}
 
-	    AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
-	    AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
-	    AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
-    }
+	private static void AddGames(ModelBuilder modelBuilder)
+	{
+		var startDates = new[]
+		{
+			DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now,
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21),
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21),
+			new DateTime(2022, 09, 18)
+		};
 
-    private static void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
+		var endDates = new DateTime?[]
+		{
+			null, null, null, null, null, new(2022, 09, 29), new(2022, 09, 29),
+			new(2022, 09, 30), new(2022, 09, 30), new(2022, 09, 30)
+		};
+
+		var games = new List<GameEntity>();
+		for (var i = 0UL; i < 10UL; ++i)
+		{
+			games.Add(new GameEntity
+			{
+				Id = i + 1UL, Name = $"Game{i + 1UL}", Rules = "FrenchTarotRules", StartDate = startDates[i],
+				EndDate = endDates[i]
+			});
+		}
+
+		modelBuilder.Entity<GameEntity>().HasData(games);
+
+		AddPlayersGame(1UL, 3UL, 3UL, modelBuilder);
+		AddPlayersGame(4UL, 3UL, 4UL, modelBuilder);
+		AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
+	}
+
+	private static void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
     {
 	    var gamePlayer = new List<object>();
 	    for (var i = startG; i < nbG + 1UL; ++i)
@@ -141,21 +131,16 @@ internal class TarotDBContextStub : TarotDBContext
     {
 	    var dates = new DateTime[]
 	    {
-		    new(2022, 09, 21), new(2022, 09, 22), 
-		    new(2022, 09, 23), new(2022, 09, 21), 
-		    new(2022, 09, 21), new(2022, 09, 21), 
-		    new(2022, 09, 21), new(2022, 09, 27),
-		    new(2022, 09, 30), new(2022, 09, 16),
-		    new(2022, 09, 21), new(2022, 09, 28), 
-		    new(2022, 09, 21), new(2022, 09, 21), 
-		    new(2022, 09, 25), new(2022, 09, 21),
-		    new(2022, 09, 25), new(2022, 09, 27), 
-		    new(2022, 09, 29), new(2022, 09, 21),
-		    new(2022, 09, 21), new(2022, 09, 29),
-		    new(2022, 09, 30), new(2022, 09, 21),
-		    new(2022, 09, 25), new(2022, 09, 27), 
-		    new(2022, 09, 29), new(2022, 09, 30), 
-		    new(2022, 09, 21), new(2022, 09, 25),
+		    new(2022, 09, 21), new(2022, 09, 22), new(2022, 09, 23),
+		    new(2022, 09, 21), new(2022, 09, 21), new(2022, 09, 21),
+		    new(2022, 09, 21), new(2022, 09, 27), new(2022, 09, 30),
+		    new(2022, 09, 16), new(2022, 09, 21), new(2022, 09, 28),
+		    new(2022, 09, 21), new(2022, 09, 21), new(2022, 09, 25),
+		    new(2022, 09, 21), new(2022, 09, 25), new(2022, 09, 27), 
+		    new(2022, 09, 29), new(2022, 09, 21), new(2022, 09, 21),
+		    new(2022, 09, 29), new(2022, 09, 30), new(2022, 09, 21),
+		    new(2022, 09, 25), new(2022, 09, 27), new(2022, 09, 29),
+		    new(2022, 09, 30), new(2022, 09, 18), new(2022, 09, 25),
 		    new(2022, 09, 29), new(2022, 09, 30)
 	    };
 	    
