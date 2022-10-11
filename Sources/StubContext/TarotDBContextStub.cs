@@ -4,12 +4,19 @@ using TarotDB.enums;
 
 namespace StubContext;
 
+/// <summary>
+/// Stub context for testing
+/// </summary>
 internal class TarotDBContextStub : TarotDBContext
 {
+	/// <summary>
+	/// Constructor with options
+	/// </summary>
+	/// <param name="options"> Options </param>
 	public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options)
 	{
 	}
-
+	
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		if (!optionsBuilder.IsConfigured)
@@ -17,7 +24,7 @@ internal class TarotDBContextStub : TarotDBContext
 			optionsBuilder.UseSqlite(@"Data Source=TarotStub.db", b => b.MigrationsAssembly("TarotDB"));
 		}
 	}
-
+	
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
@@ -27,6 +34,10 @@ internal class TarotDBContextStub : TarotDBContext
 		AddHands(modelBuilder);
 	}
 
+	/// <summary>
+	/// Add players to the context
+	/// </summary>
+	/// <param name="modelBuilder"> Model builder </param>
 	private static void AddPlayers(ModelBuilder modelBuilder)
 	{
 		var fName = new[]
@@ -45,6 +56,7 @@ internal class TarotDBContextStub : TarotDBContext
 			"XXFRIPOUILLEXX", "JEMO", "KIKOU8", "FRIPOUILLE2", "LOL2", "THEGIANT2", "SEBAT2"
 		};
 
+		// Add players and increment their id and avatar
 		var players = new List<PlayerEntity>();
 		for (var i = 0UL; i < 16UL; ++i)
 		{
@@ -58,6 +70,10 @@ internal class TarotDBContextStub : TarotDBContext
 		modelBuilder.Entity<PlayerEntity>().HasData(players);
 	}
 
+	/// <summary>
+	/// Add groups to the context
+	/// </summary>
+	/// <param name="modelBuilder"> Model builder </param>
 	private static void AddGroups(ModelBuilder modelBuilder)
 	{
 		var groups = new List<GroupEntity>();
@@ -68,6 +84,7 @@ internal class TarotDBContextStub : TarotDBContext
 
 		modelBuilder.Entity<GroupEntity>().HasData(groups);
 
+		// Add players to groups (5 players per group)
 		var playerGroup = new List<object>();
 		for (var i = 1UL; i < 13UL; ++i)
 		{
@@ -80,14 +97,19 @@ internal class TarotDBContextStub : TarotDBContext
 		modelBuilder.Entity("GroupEntityPlayerEntity").HasData(playerGroup);
 	}
 
+	/// <summary>
+	/// Add games to the context
+	/// </summary>
+	/// <param name="modelBuilder"> Model builder </param>
 	private static void AddGames(ModelBuilder modelBuilder)
 	{
 		var startDates = new[]
 		{
-			DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now,
 			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21),
 			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21),
-			new DateTime(2022, 09, 18)
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21), 
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 21), 
+			new DateTime(2022, 09, 21), new DateTime(2022, 09, 18)
 		};
 
 		var endDates = new DateTime?[]
@@ -95,7 +117,7 @@ internal class TarotDBContextStub : TarotDBContext
 			null, null, null, null, null, new(2022, 09, 29), new(2022, 09, 29),
 			new(2022, 09, 30), new(2022, 09, 30), new(2022, 09, 30)
 		};
-
+		
 		var games = new List<GameEntity>();
 		for (var i = 0UL; i < 10UL; ++i)
 		{
@@ -113,8 +135,16 @@ internal class TarotDBContextStub : TarotDBContext
 		AddPlayersGame(7UL, 4UL, 5UL, modelBuilder);
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="startG"> The first game id </param>
+	/// <param name="nbG"> The number of games </param>
+	/// <param name="nbP"> The number of players per game </param>
+	/// <param name="modelBuilder"> Model builder </param>
 	private static void AddPlayersGame(ulong startG, ulong nbG, ulong nbP, ModelBuilder modelBuilder)
     {
+	    // Add players nbP Players to nbG games
 	    var gamePlayer = new List<object>();
 	    for (var i = startG; i < nbG + 1UL; ++i)
 	    {
@@ -127,6 +157,10 @@ internal class TarotDBContextStub : TarotDBContext
 	    modelBuilder.Entity("GameEntityPlayerEntity").HasData(gamePlayer);
     }
 
+	/// <summary>
+	/// Add hands to the context
+	/// </summary>
+	/// <param name="modelBuilder"> Model builder </param>
     private static void AddHands(ModelBuilder modelBuilder)
     {
 	    var dates = new DateTime[]
@@ -179,6 +213,8 @@ internal class TarotDBContextStub : TarotDBContext
 		    ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
 		    ChelemDB.Success, ChelemDB.Unknown
 	    };
+	    
+	    // Number of hands per game
 	    var nbHperG = new[]
 	    {
 		    3, 3, 3, 3, 3, 4, 3, 1, 5, 4
@@ -190,6 +226,7 @@ internal class TarotDBContextStub : TarotDBContext
 	    var index = 0;
 	    foreach (var nbId in nbHperG)
 	    {
+		    // Add nbId hands to a game 
 		    for (var i = 0; i < nbId; ++i)
 		    {
 			    hands.Add(new
@@ -207,7 +244,12 @@ internal class TarotDBContextStub : TarotDBContext
 	    AddBiddings(modelBuilder,nbHperG);
     }
 
-    private static void AddBiddings(ModelBuilder modelBuilder, params int[] nbGperH)
+	/// <summary>
+	/// Add biddings to the database
+	/// </summary>
+	/// <param name="modelBuilder"> Model builder </param>
+	/// <param name="numGperH"> Number of games per hand </param>
+    private static void AddBiddings(ModelBuilder modelBuilder, params int[] numGperH)
     {
 	    var biddings = new[]
 	    {
@@ -246,23 +288,27 @@ internal class TarotDBContextStub : TarotDBContext
 		    PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None
 	    };
 
-	    var nbPperG = new[]
+	    var numPlayerperGame = new[]
 	    {
 		    3, 3, 3, 4, 4, 4, 5, 5, 5, 5
 	    };
 
 	    var bids = new List<BiddingPoigneeEntity>();
-	    var hId = 1UL;
+	    var handId = 1UL;
 	    var index = 0;
 	    var biddingIndex = 0;
 
-	    for (var gpIndex = 0; gpIndex < nbGperH.Length; ++gpIndex)
+	    // browse number of games per hand (numGperH) and number of players per game (nbPperG)
+	    for (var gamePlayerIndex = 0; gamePlayerIndex < numGperH.Length; ++gamePlayerIndex)
 	    {
-		    for (var i = 0;  i < nbGperH[gpIndex]; ++i)
+		    // Add bidding for each hand
+		    for (var i = 0;  i < numGperH[gamePlayerIndex]; ++i)
 		    {
-			    var pId = Convert.ToUInt64(gpIndex + 1);
-			    for (var j = 0; j < nbPperG[gpIndex]; ++j)
+			    // Add player id for each hand (and return to the first player id for the next hand)
+			    var playerId = Convert.ToUInt64(gamePlayerIndex + 1);
+			    for (var j = 0; j < numPlayerperGame[gamePlayerIndex]; ++j)
 			    {
+				    // Add the taker bidding for first player, if 5 players the last one is a King and all the others are a Opponent
 				    var bidding = j switch
 				    {
 					    0 => biddings[biddingIndex],
@@ -271,11 +317,11 @@ internal class TarotDBContextStub : TarotDBContext
 				    };
 
 				    bids.Add(new BiddingPoigneeEntity
-					    {Bidding = bidding, Poignee = poignees[index], HandId = hId, PlayerId = pId});
+					    {Bidding = bidding, Poignee = poignees[index], HandId = handId, PlayerId = playerId});
 				    
-				    ++pId; ++index;
+				    ++playerId; ++index;
 			    }
-			    ++hId; ++biddingIndex;
+			    ++handId; ++biddingIndex;
 		    }
 	    }
 	    
