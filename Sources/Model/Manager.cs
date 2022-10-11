@@ -20,7 +20,7 @@ public class Manager
     /// Method to save a player
     /// </summary>
     /// <param name="player">Player to register</param>
-    public void SavePlayer(Player player) => _dataManager.SavePlayer(player);
+    public async Task<Player> SavePlayer(Player player) => await _dataManager.SavePlayer(player);
 
     /// <summary>
     /// Method to load all players
@@ -28,8 +28,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadAllPlayer(int page, int pageSize)
-        => _dataManager.LoadAllPlayer(page, pageSize);
+    public async Task<IEnumerable<Player>> LoadAllPlayer(int page, int pageSize)
+        => await _dataManager.LoadAllPlayer(page, pageSize);
 
     /// <summary>
     /// Method to load a player by group
@@ -38,8 +38,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize)
-        => _dataManager.LoadPlayersByGroup(group, page, pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
+        => await _dataManager.LoadPlayersByGroup(group, page, pageSize);
 
     /// <summary>
     /// Method to load a player by firstname
@@ -48,8 +48,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByFirstName(string firstName, int page, int pageSize)
-        => _dataManager.LoadPlayerByFirstName(firstName, page, pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstName(string firstName, int page, int pageSize)
+        => await _dataManager.LoadPlayerByFirstName(firstName, page, pageSize);
 
     /// <summary>
     /// Method to load a player by lastname
@@ -58,8 +58,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByLastName(string lastName, int page, int pageSize)
-        => _dataManager.LoadPlayerByLastName(lastName, page, pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByLastName(string lastName, int page, int pageSize)
+        => await _dataManager.LoadPlayerByLastName(lastName, page, pageSize);
 
     /// <summary>
     /// Method to load a player by nickname
@@ -68,8 +68,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByNickname(string nickname, int page, int pageSize)
-        => _dataManager.LoadPlayerByNickname(nickname, page, pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByNickname(string nickname, int page, int pageSize)
+        => await _dataManager.LoadPlayerByNickname(nickname, page, pageSize);
 
     /// <summary>
     /// Method to load a player by firstname and lastname
@@ -79,9 +79,9 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
         int pageSize)
-        => _dataManager.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize);
+        => await _dataManager.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize);
 
     /// <summary>
     /// Method to load a player by firstname and nickname
@@ -91,9 +91,9 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
         int pageSize)
-        => _dataManager.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize);
+        => await _dataManager.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize);
 
     /// <summary>
     /// Method to load a player by lastname and nickname
@@ -103,8 +103,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
-        => _dataManager.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
+        => await _dataManager.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize);
 
     /// <summary>
     /// Method to create a player
@@ -115,7 +115,7 @@ public class Manager
     /// <param name="avatar">Avatar of the player</param>
     /// <returns>The player created</returns>
     public Player CreatePlayer(string firstName, string lastName, string nickname, string avatar) =>
-        new Player(firstName, lastName, nickname, avatar);
+        new (firstName, lastName, nickname, avatar);
     /*========== End player ==========*/
 
 
@@ -124,14 +124,14 @@ public class Manager
     /// Method to save a game
     /// </summary>
     /// <param name="game">Game to register</param>
-    public void SaveGame(Game game) => _dataManager.SaveGame(game);
+    public async Task<Game> SaveGame(Game game) => await _dataManager.SaveGame(game);
 
     /// <summary>
     /// Method to load a game by name
     /// </summary>
     /// <param name="name">Name of the game</param>
     /// <returns>A game</returns>
-    public Game? LoadGameByName(string name) => _dataManager.LoadGameByName(name);
+    public async Task<Game?> LoadGameByName(string name) => await _dataManager.LoadGameByName(name);
 
     /// <summary>
     /// Method to load games by start date
@@ -140,8 +140,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-        => _dataManager.LoadGameByStartDate(startDate, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
+        => await _dataManager.LoadGameByStartDate(startDate, page, pageSize);
 
     /// <summary>
     /// Method to load games by end date
@@ -150,8 +150,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-        => _dataManager.LoadGameByEndDate(endDate, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+        => await _dataManager.LoadGameByEndDate(endDate, page, pageSize);
 
     /// <summary>
     /// Method to load games by an interval of dates
@@ -161,8 +161,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize) =>
-        _dataManager.LoadGameByDateInterval(startDate, endDate, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize) =>
+        await _dataManager.LoadGameByDateInterval(startDate, endDate, page, pageSize);
 
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -173,9 +173,9 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
         int pageSize)
-        => _dataManager.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize);
+        => await _dataManager.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize);
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -186,9 +186,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game>
-        LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player, int page, int pageSize)
-        => _dataManager.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player, int page, int pageSize)
+        => await _dataManager.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize);
 
     /// <summary>
     /// Method to load games by player
@@ -197,8 +196,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByPlayer(Player player, int page, int pageSize)
-        => _dataManager.LoadGameByPlayer(player, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByPlayer(Player player, int page, int pageSize)
+        => await _dataManager.LoadGameByPlayer(player, page, pageSize);
 
     /// <summary>
     /// Method to load games by a group
@@ -207,8 +206,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByGroup(Group group, int page, int pageSize)
-        => _dataManager.LoadGameByGroup(group, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByGroup(Group group, int page, int pageSize)
+        => await _dataManager.LoadGameByGroup(group, page, pageSize);
 
     /// <summary>
     /// Method to load all games
@@ -216,7 +215,7 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadAllGames(int page, int pageSize) => _dataManager.LoadAllGames(page, pageSize);
+    public async Task<IEnumerable<Game>> LoadAllGames(int page, int pageSize) => await _dataManager.LoadAllGames(page, pageSize);
 
     /// <summary>
     /// Method to create a game
@@ -234,7 +233,7 @@ public class Manager
     /// </summary>
     /// <param name="name">Name of the rule to search</param>
     /// <returns>A IRules</returns>
-    public IRules? LoadRule(string name) => _dataManager.LoadRule(name);
+    public async Task<IRules?> LoadRule(string name) => await _dataManager.LoadRule(name);
 
     /// <summary>
     /// Method to load all rules
@@ -242,7 +241,7 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of rules</returns>
-    public IEnumerable<IRules> LoadAllRules(int page, int pageSize) => _dataManager.LoadAllRules(page, pageSize);
+    public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize) => await _dataManager.LoadAllRules(page, pageSize);
     /*========== End rules ==========*/
 
     /*========== Group ==========*/
@@ -250,14 +249,14 @@ public class Manager
     /// Method to save a group
     /// </summary>
     /// <param name="group">Group to register</param>
-    public void SaveGroup(Group group) => _dataManager.SaveGroup(group);
+    public async Task<Group> SaveGroup(Group group) => await _dataManager.SaveGroup(group);
 
     /// <summary>
     /// Method to load a group by name
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    public Group? LoadGroupsByName(string name) => _dataManager.LoadGroupsByName(name);
+    public async Task<Group?> LoadGroupsByName(string name) => await _dataManager.LoadGroupsByName(name);
 
     /// <summary>
     /// Method to load all groups
@@ -265,7 +264,7 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
-    public IEnumerable<Group> LoadAllGroups(int page, int pageSize) => _dataManager.LoadAllGroups(page, pageSize);
+    public async Task<IEnumerable<Group>> LoadAllGroups(int page, int pageSize) => await _dataManager.LoadAllGroups(page, pageSize);
 
     /// <summary>
     /// Method to load a group by player
@@ -274,8 +273,8 @@ public class Manager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
-    public IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize)
-        => _dataManager.LoadGroupsByPlayer(player, page, pageSize);
+    public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
+        => await _dataManager.LoadGroupsByPlayer(player, page, pageSize);
 
     /// <summary>
     /// Method to create a group
@@ -311,7 +310,7 @@ public class Manager
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <returns>List of hands</returns>
-    public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize)
-        => _dataManager.LoadHandByGame(game, page, pageSize);
+    public async Task<IEnumerable<KeyValuePair<int, Hand>>> LoadHandByGame(Game game, int page, int pageSize)
+        => await _dataManager.LoadHandByGame(game, page, pageSize);
     /*========== End hand ==========*/
 }

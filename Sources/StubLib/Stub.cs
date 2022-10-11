@@ -238,8 +238,8 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name of the game</param>
     /// <returns>A game</returns>
-    public Game? LoadGameByName(string name)
-        => _gameList.FirstOrDefault(game => name.Equals(game.Name));
+    public async Task<Game?> LoadGameByName(string name)
+        => await Task.FromResult(_gameList.FirstOrDefault(game => name.Equals(game.Name)));
 
     /// <summary>
     /// Method to load games by player
@@ -248,10 +248,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByPlayer(Player player, int page, int pageSize)
-        => _gameList
+    public async Task<IEnumerable<Game>> LoadGameByPlayer(Player player, int page, int pageSize)
+        => await Task.FromResult(_gameList
             .Where(game => game.Players.Contains(player))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load games by start date
@@ -260,10 +260,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-        => _gameList
+    public async Task<IEnumerable<Game>> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
+        => await Task.FromResult( _gameList
             .Where(game => game.StartDate == startDate)
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load games by end date
@@ -272,10 +272,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-        => _gameList
+    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+        => await Task.FromResult(_gameList
             .Where(game => game.EndDate == endDate)
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load games by an interval of dates
@@ -285,10 +285,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize)
-        => _gameList
+    public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize)
+        => await Task.FromResult(_gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -299,12 +299,11 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
         int pageSize)
-        => _gameList
-            .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
-            .Where(g => g.Players.Any(p => group.Players.Contains(p)))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+        => await Task.FromResult(_gameList
+            .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Any(p => group.Players.Contains(p)))
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -315,11 +314,11 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
         int page, int pageSize)
-        => _gameList
+        => await Task.FromResult(_gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load games by a group
@@ -328,10 +327,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadGameByGroup(Group group, int page, int pageSize)
-        => _gameList
+    public async Task<IEnumerable<Game>> LoadGameByGroup(Group group, int page, int pageSize)
+        => await Task.FromResult(_gameList
             .Where(g => g.Players.Any(p => group.Players.Contains(p)))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load all games
@@ -339,8 +338,8 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public IEnumerable<Game> LoadAllGames(int page, int pageSize)
-        => _gameList.Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Game>> LoadAllGames(int page, int pageSize)
+        => await Task.FromResult(_gameList.Skip((page - 1) * pageSize).Take(pageSize));
     /*========== End Games ==========*/
 
 
@@ -353,10 +352,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
-        => _playerList
-            .Where(player => player.LastName.Equals(lastName) && player.NickName.Equals(nickname))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
+        => await Task.FromResult(_playerList
+            .Where(player => player.LastName == lastName && player.NickName == nickname)
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a player by firstname and nickname
@@ -366,11 +365,11 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
         int pageSize)
-        => _playerList
-            .Where(player => player.FirstName.Equals(firstName) && player.NickName.Equals(nickname))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+        => await Task.FromResult(_playerList
+            .Where(player => player.FirstName == firstName && player.NickName == nickname)
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a player by firstname and lastname
@@ -380,11 +379,11 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
         int pageSize)
-        => _playerList
-            .Where(player => player.FirstName.Equals(firstName) && player.LastName.Equals(lastName))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+        => await Task.FromResult(_playerList
+            .Where(player => player.FirstName == firstName && player.LastName == lastName)
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a player by nickname
@@ -393,10 +392,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByNickname(string nickname, int page, int pageSize)
-        => _playerList
-            .Where(player => player.NickName.Equals(nickname))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByNickname(string nickname, int page, int pageSize)
+        => await Task.FromResult(_playerList
+            .Where(player => player.NickName == nickname)
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a player by lastname
@@ -405,10 +404,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByLastName(string lastName, int page, int pageSize)
-        => _playerList
-            .Where(player => player.LastName.Equals(lastName))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByLastName(string lastName, int page, int pageSize)
+        => await Task.FromResult(_playerList
+            .Where(player => player.LastName == lastName)
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a player by firstname
@@ -417,10 +416,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayerByFirstName(string firstName, int page, int pageSize)
-        => _playerList
-            .Where(player => player.FirstName.Equals(firstName))
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstName(string firstName, int page, int pageSize)
+        => await Task.FromResult(_playerList
+            .Where(player => player.FirstName == firstName)
+            .Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load all players
@@ -428,8 +427,8 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadAllPlayer(int page, int pageSize)
-        => _playerList.Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Player>> LoadAllPlayer(int page, int pageSize)
+        => await Task.FromResult(_playerList.Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a player by group
@@ -438,10 +437,10 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize)
-        => group
-            .Players
-            .Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
+        => await Task.FromResult(_playerList
+            .Where(player => group.Players.Contains(player))
+            .Skip((page - 1) * pageSize).Take(pageSize));
     /*========== End Players ==========*/
 
 
@@ -451,7 +450,8 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    public Group? LoadGroupsByName(string name) => _groupList.FirstOrDefault(g => g.Name == name);
+    public async Task<Group?> LoadGroupsByName(string name) 
+        => await Task.FromResult(_groupList.FirstOrDefault(g => g.Name == name));
 
     /// <summary>
     /// Method to load all groups
@@ -459,8 +459,8 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
-    public IEnumerable<Group> LoadAllGroups(int page, int pageSize)
-        => _groupList.Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Group>> LoadAllGroups(int page, int pageSize)
+        => await Task.FromResult(_groupList.Skip((page - 1) * pageSize).Take(pageSize));
 
     /// <summary>
     /// Method to load a group by player
@@ -469,8 +469,8 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
-    public IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize)
-        => _groupList.Where(g => g.Players.Contains(player)).Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
+        => await Task.FromResult(_groupList.Where(g => g.Players.Contains(player)).Skip((page - 1) * pageSize).Take(pageSize));
     /*========== End Groups ==========*/
 
 
@@ -480,7 +480,8 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name of the rule to search</param>
     /// <returns>A IRules</returns>
-    public IRules? LoadRule(string name) => _rulesList.FirstOrDefault(r => r.Name.Equals(name));
+    public async Task<IRules?> LoadRule(string name) 
+        => await Task.FromResult(_rulesList.FirstOrDefault(r => r.Name.Equals(name)));
 
     /// <summary>
     /// Method to load all rules
@@ -488,8 +489,8 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of rules</returns>
-    public IEnumerable<IRules> LoadAllRules(int page, int pageSize)
-        => _rulesList.Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize)
+        => await Task.FromResult( _rulesList.Skip((page - 1) * pageSize).Take(pageSize));
     /*========== End Rules ==========*/
 
 
@@ -501,7 +502,7 @@ public class Stub : ILoader
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <returns>List of hands</returns>
-    public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize)
-        => _gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize).Take(page * pageSize);
+    public async Task<IEnumerable<KeyValuePair<int, Hand>>> LoadHandByGame(Game game, int page, int pageSize)
+        => await Task.FromResult(_gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize).Take(pageSize));
     /*========== End hand ==========*/
 }

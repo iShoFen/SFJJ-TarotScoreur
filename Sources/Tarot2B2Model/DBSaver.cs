@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Model;
 using Model.data;
 using Model.games;
 using TarotDB;
@@ -7,30 +8,31 @@ namespace Tarot2B2Model;
 
 public class DBSaver : ISaver
 {
-    public void SavePlayer(Player player)
+    protected DbContext Context { get; }
+    
+    public DBSaver(DbContext context)
     {
-        using(var context = new TarotDBContext())
-        {
-            context.Players.Add(player.ToEntity());
-            context.SaveChanges();
-        }
+        Context = context;
+    }
+    public DBSaver() : this(new TarotDBContext()){}
+    public async Task<Player> SavePlayer(Player player)
+    { 
+        ((TarotDBContext) Context).Players.Add(player.ToEntity());
+        await Context.SaveChangesAsync();
+        return player;
     }
 
-    public void SaveGame(Game game)
+    public async Task<Game> SaveGame(Game game)
     {
-        using(var context = new TarotDBContext())
-        {
-            context.Games.Add(game.ToEntity());
-            context.SaveChanges();
-        }
+        ((TarotDBContext) Context).Games.Add(game.ToEntity());
+        await Context.SaveChangesAsync();
+        return game;
     }
 
-    public void SaveGroup(Group group)
+    public async Task<Group> SaveGroup(Group group)
     {
-        using(var context = new TarotDBContext())
-        {
-            context.Groups.Add(group.ToEntity());
-            context.SaveChanges();
-        }    
+        ((TarotDBContext) Context).Groups.Add(group.ToEntity());
+        await Context.SaveChangesAsync();
+        return group;
     }
 }
