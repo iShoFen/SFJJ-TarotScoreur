@@ -11,12 +11,12 @@ internal class BiddingPoigneeEntity
     /// <summary>
     /// The type of the bidding
     /// </summary>
-    public BiddingDB BiddingDb { get; set; }
+    public BiddingDB Bidding { get; set; }
     
     /// <summary>
     /// The type of the poignee
     /// </summary>
-    public PoigneeDB PoigneeDb { get; set; }
+    public PoigneeDB Poignee { get; set; }
     
     /// <summary>
     /// The unique identifier of the hand
