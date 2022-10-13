@@ -661,8 +661,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
     public IEnumerable<Group> LoadAllGroups(int page, int pageSize)
-        => _groupList.Skip((page - 1) * pageSize).Take(pageSize);
-
+    {
+        if (page == 0 || pageSize == 0) return new List<Group>();
+        return _groupList.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /// <summary>
     /// Method to load a group by player
     /// </summary>
@@ -671,7 +673,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
     public IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize)
-        => _groupList.Where(g => g.Players.Contains(player)).Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<Group>();
+        return _groupList.Where(g => g.Players.Contains(player)).Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Groups ==========*/
 
 

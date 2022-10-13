@@ -105,7 +105,6 @@ public class UT_Stub
         var stub = new Stub();
         var groupFound = stub.LoadGroupsByName(name);
 
-        /*Assert.Equal(playersFound.Count, players.Length);*/
         Assert.Equal(groupFound, group);
     }
     
@@ -116,6 +115,18 @@ public class UT_Stub
         var stub = new Stub();
         var groupFound = stub.LoadGroupsByPlayer(player, page,  pageSize).ToList();
 
+        Assert.Equal(groupFound.Count, group.Length);
+        Assert.Equal(groupFound, group);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestLoadAllGroups), MemberType = typeof(GroupTestData))]
+    public void TestLoadAllGroups(Group[] group, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var groupFound = stub.LoadAllGroups(page,  pageSize).ToList();
+
+        Assert.Equal(groupFound.Count, group.Length);
         Assert.Equal(groupFound, group);
     }
 }
