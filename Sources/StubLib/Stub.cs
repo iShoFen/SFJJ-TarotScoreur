@@ -53,11 +53,11 @@ public class Stub : ILoader
     /// </summary>
     private void SetGameList()
     {
-        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], new DateTime(2022, 09, 01), null));
+        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], new DateTime(2022, 09, 02), null));
+        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], new DateTime(2022, 09, 03), null));
+        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], new DateTime(2022, 09, 04), null));
+        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], new DateTime(2022, 09, 05), null));
         _gameList.Add(new Game(6UL, "Game 6", _rulesList[0], 
             new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
         _gameList.Add(new Game(7UL, "Game 7", _rulesList[0], 
@@ -711,6 +711,9 @@ public class Stub : ILoader
     /// <param name="pageSize"></param>
     /// <returns>List of hands</returns>
     public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize)
-        => _gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<KeyValuePair<int, Hand>>();
+        return _gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End hand ==========*/
 }

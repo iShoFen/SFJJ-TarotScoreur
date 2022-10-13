@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.games;
 using StubLib;
 using Xunit;
 
@@ -154,4 +155,18 @@ public class UT_Stub
         Assert.Equal(rulesFound, rules);
     }
     /*========== End rule test ==========*/
+    
+    
+    /*========== Hand test ==========*/
+    [Theory]
+    [MemberData(nameof(HandTestData.Data_TestLoadHandByGame), MemberType = typeof(HandTestData))]
+    public void TestLoadHandByGame(Game game, List<KeyValuePair<int, Hand>> hands, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var handsFound = stub.LoadHandByGame(game, page, pageSize).ToList();
+
+        Assert.Equal(handsFound.Count, hands.Count);
+        Assert.Equal(handsFound, hands);
+    }
+    /*========== End hand test ==========*/
 }
