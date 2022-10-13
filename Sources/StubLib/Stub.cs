@@ -132,7 +132,7 @@ public class Stub : ILoader
         var j = 1UL;
         for (var i = 0; i < 12; i++)
         {
-            _groupList.Add(new Group(j, "Group" + i + 1, _playerList[i],
+            _groupList.Add(new Group(j, "Group " + (i + 1), _playerList[i],
                 _playerList[i + 1], _playerList[i + 2], _playerList[i + 3], _playerList[i + 4]));
             ++j;
         }
@@ -652,7 +652,7 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    public Group? LoadGroupsByName(string name) => _groupList.FirstOrDefault(g => g.Name == name);
+    public Group? LoadGroupsByName(string name) => _groupList.FirstOrDefault(g => g.Name.Equals(name));
 
     /// <summary>
     /// Method to load all groups

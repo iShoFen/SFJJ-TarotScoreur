@@ -95,4 +95,27 @@ public class UT_Stub
         Assert.Equal(playersFound, players);
     }
     /*========== End players test ==========*/
+    
+    
+    /*========== Group test ==========*/
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestGroupsByName), MemberType = typeof(GroupTestData))]
+    public void TestLoadGroupsByName(string name, Group group)
+    {
+        var stub = new Stub();
+        var groupFound = stub.LoadGroupsByName(name);
+
+        /*Assert.Equal(playersFound.Count, players.Length);*/
+        Assert.Equal(groupFound, group);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestLoadGroupsByPlayer), MemberType = typeof(GroupTestData))]
+    public void TestLoadGroupsByPlayer(Player player, Group[] group, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var groupFound = stub.LoadGroupsByPlayer(player, page,  pageSize).ToList();
+
+        Assert.Equal(groupFound, group);
+    }
 }
