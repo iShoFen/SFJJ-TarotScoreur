@@ -169,4 +169,17 @@ public class UT_Stub
         Assert.Equal(handsFound, hands);
     }
     /*========== End hand test ==========*/
+    
+    
+    /*========== Game test ==========*/
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadAllGames), MemberType = typeof(GameTestData))]
+    public void TestLoadAllGames(Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadAllGames(page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
 }

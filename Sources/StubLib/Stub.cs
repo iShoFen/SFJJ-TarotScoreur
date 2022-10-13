@@ -428,9 +428,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByPlayer(Player player, int page, int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.Players.Contains(player))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by start date
@@ -440,9 +443,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate == startDate)
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by end date
@@ -452,9 +458,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.EndDate == endDate)
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by an interval of dates
@@ -465,9 +474,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -480,10 +492,13 @@ public class Stub : ILoader
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
         int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
             .Where(g => g.Players.Any(p => group.Players.Contains(p)))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -496,9 +511,12 @@ public class Stub : ILoader
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
         int page, int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by a group
@@ -508,9 +526,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByGroup(Group group, int page, int pageSize)
-        => _gameList
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(g => g.Players.Any(p => group.Players.Contains(p)))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load all games
@@ -519,7 +540,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadAllGames(int page, int pageSize)
-        => _gameList.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if(page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Games ==========*/
 
 
