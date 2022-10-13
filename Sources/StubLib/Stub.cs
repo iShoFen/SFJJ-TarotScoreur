@@ -695,7 +695,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of rules</returns>
     public IEnumerable<IRules> LoadAllRules(int page, int pageSize)
-        => _rulesList.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<IRules>();
+        return _rulesList.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Rules ==========*/
 
 

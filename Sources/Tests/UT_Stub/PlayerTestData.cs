@@ -3,7 +3,7 @@ using Model.games;
 
 namespace UT_Stub;
 
-internal static  class PlayerTestData
+internal static class PlayerTestData
 {
     
     public static IEnumerable<Object[]> Data_TestPlayersByLastName()

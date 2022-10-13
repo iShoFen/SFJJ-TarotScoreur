@@ -129,4 +129,29 @@ public class UT_Stub
         Assert.Equal(groupFound.Count, group.Length);
         Assert.Equal(groupFound, group);
     }
+    /*========== End group test ==========*/
+    
+    
+    /*========== Rule test ==========*/
+    [Theory]
+    [MemberData(nameof(RuleTestData.Data_TestLoadRule), MemberType = typeof(RuleTestData))]
+    public void TestLoadRule(string name, IRules rule)
+    {
+        var stub = new Stub();
+        var ruleFound = stub.LoadRule(name);
+
+        Assert.Equal(ruleFound, rule);
+    }
+    
+    [Theory]
+    [MemberData(nameof(RuleTestData.Data_TestLoadAllRules), MemberType = typeof(RuleTestData))]
+    public void TestLoadAllRules(IRules[] rules, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var rulesFound = stub.LoadAllRules(page, pageSize).ToList();
+
+        Assert.Equal(rulesFound.Count, rules.Length);
+        Assert.Equal(rulesFound, rules);
+    }
+    /*========== End rule test ==========*/
 }
