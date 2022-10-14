@@ -30,13 +30,13 @@ internal static class HandExtensions
             TwentyOne = model.TwentyOne,
             Excuse = model.Excuse,
             Petit = model.Petit.ToEntity(),
-            ChelemDb = model.Chelem.ToEntity()
+            Chelem = model.Chelem.ToEntity()
         };
 
         handEntity.Biddings = model.Biddings.Select(kv => new BiddingPoigneeEntity
         {
-            BiddingDb = kv.Value.Item1.ToEntity(),
-            PoigneeDb = kv.Value.Item2.ToEntity(),
+            Bidding = kv.Value.Item1.ToEntity(),
+            Poignee = kv.Value.Item2.ToEntity(),
             Hand = handEntity,
             Player = kv.Key.ToEntity()
         }).ToHashSet();
@@ -65,10 +65,10 @@ internal static class HandExtensions
             entity.TwentyOne,
             entity.Excuse,
             entity.Petit.ToModel(),
-            entity.ChelemDb.ToModel(),
+            entity.Chelem.ToModel(),
             entity.Biddings.ToDictionary(
                 bidding => bidding.Player.ToModel(),
-                bidding => (bidding.BiddingDb.ToModel(), bidding.PoigneeDb.ToModel())
+                bidding => (bidding.Bidding.ToModel(), bidding.Poignee.ToModel())
             ).ToArray()
         );
         HandsMapper.Map(hand, entity);
