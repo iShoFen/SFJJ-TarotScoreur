@@ -4,18 +4,18 @@ namespace UT_Stub;
 
 public static class RuleTestData
 {
-    public static IEnumerable<Object[]> Data_TestLoadRule()
+    public static IEnumerable<object[]> Data_TestLoadRule()
     {
-        yield return new Object[]
+        yield return new object[]
         {
             "FrenchTarotRules",
             new FrenchTarotRules()
         };
     }
     
-    public static IEnumerable<Object[]> Data_TestLoadAllRules()
+    public static IEnumerable<object[]> Data_TestLoadAllRules()
     {
-        yield return new Object[]
+        yield return new object[]
         {
             new IRules[]
             {
@@ -24,21 +24,21 @@ public static class RuleTestData
             1,
             10
         };
-        yield return new Object[]
+        yield return new object[]
         {
-            new IRules[] {},
+            Array.Empty<IRules>(),
             1,
             0
         };
-        yield return new Object[]
+        yield return new object[]
         {
-            new IRules[] {},
+            Array.Empty<IRules>(),
             0,
             0
         };
-        yield return new Object[]
+        yield return new object[]
         {
-            new IRules[] {},
+            Array.Empty<IRules>(),
             0,
             1
         };

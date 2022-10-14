@@ -54,7 +54,8 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
-    public void TestLoadPlayerByFirstNameAndLastName(string firstName, string lastName, Player[] players, int page, int pageSize)
+    public void TestLoadPlayerByFirstNameAndLastName(string firstName, string lastName, Player[] players, int page, 
+        int pageSize)
     {
         var stub = new Stub();
         var playersFound = stub.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize).ToList();
@@ -65,7 +66,8 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayerByFirstNameAndNickname), MemberType = typeof(PlayerTestData))]
-    public void TestLoadPlayerByFirstNameAndNickname(string firstName, string nickname, Player[] players, int page, int pageSize)
+    public void TestLoadPlayerByFirstNameAndNickname(string firstName, string nickname, Player[] players, int page, 
+        int pageSize)
     {
         var stub = new Stub();
         var playersFound = stub.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize).ToList();
@@ -76,7 +78,8 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayerByLastNameAndNickname), MemberType = typeof(PlayerTestData))]
-    public void TestLoadPlayerByLastNameAndNickname(string lastName, string nickname, Player[] players, int page, int pageSize)
+    public void TestLoadPlayerByLastNameAndNickname(string lastName, string nickname, Player[] players, int page, 
+        int pageSize)
     {
         var stub = new Stub();
         var playersFound = stub.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize).ToList();
@@ -250,7 +253,8 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndGroup), MemberType = typeof(GameTestData))]
-    public void TestLoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, Game[] games, int page, int pageSize)
+    public void TestLoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, Game[] games, 
+        int page, int pageSize)
     {
         var stub = new Stub();
         var gamesFound = stub.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize).ToList();
@@ -261,7 +265,8 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndPlayer), MemberType = typeof(GameTestData))]
-    public void TestLoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player, Game[] games, int page, int pageSize)
+    public void TestLoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player, Game[] games, 
+        int page, int pageSize)
     {
         var stub = new Stub();
         var gamesFound = stub.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize).ToList();
