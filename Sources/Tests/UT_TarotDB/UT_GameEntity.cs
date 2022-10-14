@@ -59,4 +59,62 @@ public class UT_GameEntity
 		                                         && ha.Game.Equals(game)));
 	    }
     }
+    
+    [Theory]
+    [MemberData(nameof(GameEntityTestData.Data_TestAdd), MemberType = typeof(GameEntityTestData))]
+    internal async Task TestAdd(string name, string rules, DateTime startDate,
+        DateTime? endDate, IEnumerable<PlayerEntity> iPlayers, IEnumerable<HandEntity> iHands)
+    {
+        var players = iPlayers.ToHashSet();
+        var hands = iHands.ToHashSet();
+        var options = InitDB();
+        
+        await using (var context = new TarotDBContextStub(options))
+        {
+            await context.Database.EnsureCreatedAsync();
+            Assert.Empty(context.Games.Where(ga => ga.Name == name));
+            
+            var game = new GameEntity
+            {
+                Name = name,
+                Rules = rules,
+                StartDate = startDate,
+                EndDate = endDate,
+                Players = players.Select(pl => pl.Id == 0 ? pl : context.Players.Find(pl.Id)!).ToHashSet(),
+                Hands = hands
+            };
+            
+            await context.Games.AddAsync(game);
+            await context.SaveChangesAsync();
+        }
+
+        await using (var context = new TarotDBContextStub(options))
+        {
+            await context.Database.EnsureCreatedAsync();
+            
+            var game = await context.Games
+                .Include(ga => ga.Players)
+                .Include(ga => ga.Hands)
+                .SingleOrDefaultAsync(ga => ga.Name == name);
+            
+            Assert.NotNull(game);
+            Assert.Equal(name, game!.Name);
+            Assert.Equal(rules, game.Rules);
+            Assert.Equal(startDate, game.StartDate);
+            Assert.Equal(endDate, game.EndDate);
+            Assert.Equal(players.Count, game.Players.Count);
+            
+            foreach (var player in game.Players)
+            {
+                Assert.Contains(game, player.Games);
+                Assert.Contains(player, context.Players);
+            }
+
+            foreach (var hand in game.Hands)
+            {
+                Assert.Equal(hand.Game.Id, game.Id);
+                Assert.Contains(hand, context.Hands);
+            }
+        }
+    }
 }
