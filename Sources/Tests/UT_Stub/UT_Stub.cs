@@ -182,4 +182,91 @@ public class UT_Stub
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
     }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByGroup), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByGroup(Group group, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByGroup(group, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByPlayer), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByPlayer(Player player, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByPlayer(player, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.LoadGameByName), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByName(string name, Game game)
+    {
+        var stub = new Stub();
+        var gameFound = stub.LoadGameByName(name);
+
+        Assert.Equal(gameFound, game);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByStartDate), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByStartDate(DateTime startDate, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByStartDate(startDate, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByEndDate), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByEndDate(DateTime endDate, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByEndDate(endDate, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByDateInterval), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByDateInterval(DateTime startDate, DateTime endDate, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByDateInterval(startDate, endDate, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndGroup), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndPlayer), MemberType = typeof(GameTestData))]
+    public void TestLoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player, Game[] games, int page, int pageSize)
+    {
+        var stub = new Stub();
+        var gamesFound = stub.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize).ToList();
+
+        Assert.Equal(gamesFound.Count, games.Length);
+        Assert.Equal(gamesFound, games);
+    }
 }

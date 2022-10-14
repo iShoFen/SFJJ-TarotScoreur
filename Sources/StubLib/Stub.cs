@@ -96,32 +96,33 @@ public class Stub : ILoader
         _gameList[4].AddPlayer(_playerList[12]);
         _gameList[4].AddPlayer(_playerList[9]);
 
-        _gameList[4].AddPlayer(_playerList[0]);
-        _gameList[4].AddPlayer(_playerList[15]);
-        _gameList[4].AddPlayer(_playerList[5]);
-        _gameList[4].AddPlayer(_playerList[11]);
-        _gameList[4].AddPlayer(_playerList[6]);
-
-        _gameList[5].AddPlayer(_playerList[4]);
-        _gameList[5].AddPlayer(_playerList[7]);
-        _gameList[5].AddPlayer(_playerList[13]);
+        _gameList[5].AddPlayer(_playerList[0]);
         _gameList[5].AddPlayer(_playerList[15]);
-        _gameList[5].AddPlayer(_playerList[1]);
+        _gameList[5].AddPlayer(_playerList[5]);
+        _gameList[5].AddPlayer(_playerList[11]);
+        _gameList[5].AddPlayer(_playerList[6]);
 
-        _gameList[6].AddPlayer(_playerList[2]);
-        _gameList[6].AddPlayer(_playerList[3]);
-        _gameList[6].AddPlayer(_playerList[5]);
-        _gameList[6].AddPlayer(_playerList[11]);
-        _gameList[6].AddPlayer(_playerList[9]);
+        _gameList[6].AddPlayer(_playerList[4]);
+        _gameList[6].AddPlayer(_playerList[7]);
+        _gameList[6].AddPlayer(_playerList[13]);
+        _gameList[6].AddPlayer(_playerList[15]);
+        _gameList[6].AddPlayer(_playerList[1]);
 
-        _gameList[7].AddPlayer(_playerList[0]);
-        _gameList[7].AddPlayer(_playerList[4]);
-        _gameList[7].AddPlayer(_playerList[6]);
+        _gameList[7].AddPlayer(_playerList[2]);
+        _gameList[7].AddPlayer(_playerList[3]);
+        _gameList[7].AddPlayer(_playerList[5]);
+        _gameList[7].AddPlayer(_playerList[11]);
+        _gameList[7].AddPlayer(_playerList[9]);
 
-        _gameList[8].AddPlayer(_playerList[7]);
-        _gameList[8].AddPlayer(_playerList[8]);
-        _gameList[8].AddPlayer(_playerList[10]);
-        _gameList[8].AddPlayer(_playerList[12]);
+        _gameList[8].AddPlayer(_playerList[0]);
+        _gameList[8].AddPlayer(_playerList[4]);
+        _gameList[8].AddPlayer(_playerList[6]);
+
+        _gameList[9].AddPlayer(_playerList[0]);
+        _gameList[9].AddPlayer(_playerList[1]);
+        _gameList[9].AddPlayer(_playerList[2]);
+        _gameList[9].AddPlayer(_playerList[3]);
+        _gameList[9].AddPlayer(_playerList[4]);
     }
 
     /// <summary>
@@ -418,7 +419,7 @@ public class Stub : ILoader
     /// <param name="name">Name of the game</param>
     /// <returns>A game</returns>
     public Game? LoadGameByName(string name)
-        => _gameList.Single(game => name.Equals(game.Name));
+        => _gameList.SingleOrDefault(game => name.Equals(game.Name));
 
     /// <summary>
     /// Method to load games by player
@@ -529,7 +530,7 @@ public class Stub : ILoader
     {
         if(page == 0 || pageSize == 0) return new List<Game>();
         return _gameList
-            .Where(g => g.Players.Any(p => group.Players.Contains(p)))
+            .Where(g => g.Players.All(p => group.Players.Contains(p)))
             .Skip((page - 1) * pageSize).Take(pageSize);
     }
 
