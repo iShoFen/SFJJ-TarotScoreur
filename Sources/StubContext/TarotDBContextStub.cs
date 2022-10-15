@@ -234,7 +234,7 @@ internal class TarotDBContextStub : TarotDBContext
 		    {
 			    hands.Add(new
 			    {
-				    Id = handId, Number = i, Rules = "FrenchTarotRules", Date = dates[index], TakerScore = scores[index],
+				    Id = handId, Number = i + 1, Rules = "FrenchTarotRules", Date = dates[index], TakerScore = scores[index],
 				    TwentyOne = twentys[index], Excuse = excuses[index], Petit = petits[index], Chelem = chelems[index],
 				    GameId = gameId
 			    });
