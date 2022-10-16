@@ -57,21 +57,21 @@ public static class HandTestData
         yield return new object[]
         {
             new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-            new List<KeyValuePair<int, Hand>> { },
+            new List<KeyValuePair<int, Hand>>(),
             0,
             1
         };
         yield return new object[]
         {
             new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-            new List<KeyValuePair<int, Hand>> { },
+            new List<KeyValuePair<int, Hand>>(),
             1,
             0
         };
         yield return new object[]
         {
             new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-            new List<KeyValuePair<int, Hand>> { },
+            new List<KeyValuePair<int, Hand>>(),
             0,
             0
         };

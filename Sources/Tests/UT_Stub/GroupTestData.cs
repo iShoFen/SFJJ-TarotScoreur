@@ -9,7 +9,7 @@ public static class GroupTestData
         yield return new object?[]
         {
             "Group 1",
-            new Group (1UL, "Group 1",
+            new Group(1UL, "Group 1",
                 new Player("Jean", "BON", "JEBO", "avatar1"),
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
@@ -20,7 +20,7 @@ public static class GroupTestData
         yield return new object?[]
         {
             "Group 2",
-            new Group (2UL, "Group 2",
+            new Group(2UL, "Group 2",
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
@@ -39,7 +39,7 @@ public static class GroupTestData
             null
         };
     }
-    
+
     public static IEnumerable<object?[]> Data_TestLoadGroupsByPlayer()
     {
         yield return new object?[]
@@ -47,14 +47,14 @@ public static class GroupTestData
             new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
             new Group[]
             {
-                new (1UL, "Group 1",
+                new(1UL, "Group 1",
                     new Player("Jean", "BON", "JEBO", "avatar1"),
                     new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                     new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1")
                 ),
-                new (2UL, "Group 2",
+                new(2UL, "Group 2",
                     new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                     new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
@@ -70,35 +70,35 @@ public static class GroupTestData
             new Player("Albert", "GOL", "LOLA", "avatar1"),
             new Group[]
             {
-                new (1UL, "Group 1",
+                new(1UL, "Group 1",
                     new Player("Jean", "BON", "JEBO", "avatar1"),
                     new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                     new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1")
                 ),
-                new (2UL, "Group 2",
-                    new ("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                new(2UL, "Group 2",
+                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
                     new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2")
                 ),
-                new (3UL, "Group 3",
+                new(3UL, "Group 3",
                     new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1")
                 ),
-                new (4UL, "Group 4",
+                new(4UL, "Group 4",
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1"),
                     new Player("Jordan", "LEG", "BIGBRAIN", "avatar1")
                 ),
-                new (5UL, "Group 5",
+                new(5UL, "Group 5",
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1"),
@@ -114,14 +114,14 @@ public static class GroupTestData
             new Player("Albert", "GOL", "LOLA", "avatar1"),
             new Group[]
             {
-                new (3UL, "Group 3",
+                new(3UL, "Group 3",
                     new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1")
                 ),
-                new (4UL, "Group 4",
+                new(4UL, "Group 4",
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
@@ -137,28 +137,28 @@ public static class GroupTestData
             new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"),
             new Group[]
             {
-                new (4UL, "Group 4",
+                new(4UL, "Group 4",
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1"),
                     new Player("Jordan", "LEG", "BIGBRAIN", "avatar1")
                 ),
-                new (5UL, "Group 5",
+                new(5UL, "Group 5",
                     new Player("Albert", "GOL", "LOLA", "avatar1"),
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1"),
                     new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"),
                     new Player("Samuel", "LE CHANTEUR", "LOL", "avatar1")
                 ),
-                new (6UL, "Group 6",
+                new(6UL, "Group 6",
                     new Player("Julien", "PETIT", "THEGIANT", "avatar2"),
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1"),
                     new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"),
                     new Player("Samuel", "LE CHANTEUR", "LOL", "avatar1"),
                     new Player("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar1")
                 ),
-                new (7UL, "Group 7",
+                new(7UL, "Group 7",
                     new Player("Simon", "SEBAT", "SEBATA", "avatar1"),
                     new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"),
                     new Player("Samuel", "LE CHANTEUR", "LOL", "avatar1"),

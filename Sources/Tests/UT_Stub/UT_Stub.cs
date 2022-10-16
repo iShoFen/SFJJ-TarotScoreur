@@ -114,24 +114,24 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestLoadGroupsByPlayer), MemberType = typeof(GroupTestData))]
-    public void TestLoadGroupsByPlayer(Player player, Group[] group, int page, int pageSize)
+    public void TestLoadGroupsByPlayer(Player player, Group[] groups, int page, int pageSize)
     {
         var stub = new Stub();
         var groupFound = stub.LoadGroupsByPlayer(player, page,  pageSize).ToList();
 
-        Assert.Equal(groupFound.Count, group.Length);
-        Assert.Equal(groupFound, group);
+        Assert.Equal(groupFound.Count, groups.Length);
+        Assert.Equal(groupFound, groups);
     }
     
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestLoadAllGroups), MemberType = typeof(GroupTestData))]
-    public void TestLoadAllGroups(Group[] group, int page, int pageSize)
+    public void TestLoadAllGroups(Group[] groups, int page, int pageSize)
     {
         var stub = new Stub();
         var groupFound = stub.LoadAllGroups(page,  pageSize).ToList();
 
-        Assert.Equal(groupFound.Count, group.Length);
-        Assert.Equal(groupFound, group);
+        Assert.Equal(groupFound.Count, groups.Length);
+        Assert.Equal(groupFound, groups);
     }
     /*========== End group test ==========*/
     
@@ -210,7 +210,7 @@ public class UT_Stub
     
     [Theory]
     [MemberData(nameof(GameTestData.LoadGameByName), MemberType = typeof(GameTestData))]
-    public void TestLoadGameByName(string name, Game game)
+    public void TestLoadGameByName(string name, Game? game)
     {
         var stub = new Stub();
         var gameFound = stub.LoadGameByName(name);

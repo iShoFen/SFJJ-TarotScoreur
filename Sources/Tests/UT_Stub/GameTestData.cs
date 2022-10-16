@@ -5,26 +5,36 @@ namespace UT_Stub;
 
 public static class GameTestData
 {
+    private static Game CreateGameWithPlayers(Game game, IEnumerable<Player> players)
+    {
+        foreach (var player in players)
+        {
+            game.AddPlayer(player);
+        }
+
+        return game;
+    }
+    
     public static IEnumerable<object[]> Data_TestLoadAllGames()
     {
         yield return new object[]
         {
             new Game[]
             {
-                new (1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-                new (2UL, "Game 2", new FrenchTarotRules(), new DateTime(2022, 09, 02), null),
-                new (3UL, "Game 3", new FrenchTarotRules(), new DateTime(2022, 09, 03), null),
-                new (4UL, "Game 4", new FrenchTarotRules(), new DateTime(2022, 09, 04), null),
-                new (5UL, "Game 5", new FrenchTarotRules(), new DateTime(2022, 09, 05), null),
-                new (6UL, "Game 6", new FrenchTarotRules(), 
+                new(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
+                new(2UL, "Game 2", new FrenchTarotRules(), new DateTime(2022, 09, 02), null),
+                new(3UL, "Game 3", new FrenchTarotRules(), new DateTime(2022, 09, 03), null),
+                new(4UL, "Game 4", new FrenchTarotRules(), new DateTime(2022, 09, 04), null),
+                new(5UL, "Game 5", new FrenchTarotRules(), new DateTime(2022, 09, 05), null),
+                new(6UL, "Game 6", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new (7UL, "Game 7", new FrenchTarotRules(), 
+                new(7UL, "Game 7", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new (8UL, "Game 8", new FrenchTarotRules(), 
+                new(8UL, "Game 8", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new (9UL, "Game 9", new FrenchTarotRules(), 
+                new(9UL, "Game 9", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new (10UL, "Game 10", new FrenchTarotRules(), 
+                new(10UL, "Game 10", new FrenchTarotRules(),
                     new DateTime(2022, 09, 18), new DateTime(2022, 09, 23))
             },
             1,
@@ -32,7 +42,7 @@ public static class GameTestData
         };
         yield return new object[]
         {
-            new []
+            new[]
             {
                 CreateGameWithPlayers(
                     new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
@@ -90,7 +100,7 @@ public static class GameTestData
             new[]
             {
                 CreateGameWithPlayers(
-                    new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                    new Game(6UL, "Game 6", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -101,7 +111,7 @@ public static class GameTestData
                         new Player("Jules", "INFANTE", "KIKOU77", "avatar3")
                     }),
                 CreateGameWithPlayers(
-                    new Game(7UL, "Game 7", new FrenchTarotRules(), 
+                    new Game(7UL, "Game 7", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -112,7 +122,7 @@ public static class GameTestData
                         new Player("Jean", "MAUVAIS", "JEMA", "avatar2")
                     }),
                 CreateGameWithPlayers(
-                    new Game(8UL, "Game 8", new FrenchTarotRules(), 
+                    new Game(8UL, "Game 8", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -123,7 +133,7 @@ public static class GameTestData
                         new Player("Jules", "INFANTE", "KIKOU77", "avatar3")
                     }),
                 CreateGameWithPlayers(
-                    new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                    new Game(9UL, "Game 9", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -132,7 +142,7 @@ public static class GameTestData
                         new Player("Simon", "SEBAT", "SEBATA", "avatar1")
                     }),
                 CreateGameWithPlayers(
-                    new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                    new Game(10UL, "Game 10", new FrenchTarotRules(),
                         new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
                     new[]
                     {
@@ -166,16 +176,6 @@ public static class GameTestData
         };
     }
 
-    private static Game CreateGameWithPlayers(Game game, Player[] players)
-    {
-        foreach (var player in players)
-        {
-            game.AddPlayer(player);
-        }
-
-        return game;
-    }
-
     public static IEnumerable<object[]> Data_TestLoadGameByGroup()
     {
         yield return new object[]
@@ -200,7 +200,7 @@ public static class GameTestData
                         new Player("Albert", "GOL", "LOLA", "avatar1")
                     }),
                 CreateGameWithPlayers(
-                    new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                    new Game(10UL, "Game 10", new FrenchTarotRules(),
                         new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
                     new[]
                     {
@@ -286,7 +286,7 @@ public static class GameTestData
                         new Player("Albert", "GOL", "LOLA", "avatar1")
                     }),
                 CreateGameWithPlayers(
-                    new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                    new Game(6UL, "Game 6", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -297,7 +297,7 @@ public static class GameTestData
                         new Player("Jules", "INFANTE", "KIKOU77", "avatar3")
                     }),
                 CreateGameWithPlayers(
-                    new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                    new Game(9UL, "Game 9", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -306,7 +306,7 @@ public static class GameTestData
                         new Player("Simon", "SEBAT", "SEBATA", "avatar1")
                     }),
                 CreateGameWithPlayers(
-                    new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                    new Game(10UL, "Game 10", new FrenchTarotRules(),
                         new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
                     new[]
                     {
@@ -326,7 +326,7 @@ public static class GameTestData
             new[]
             {
                 CreateGameWithPlayers(
-                    new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                    new Game(9UL, "Game 9", new FrenchTarotRules(),
                         new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
                     new[]
                     {
@@ -335,7 +335,7 @@ public static class GameTestData
                         new Player("Simon", "SEBAT", "SEBATA", "avatar1")
                     }),
                 CreateGameWithPlayers(
-                    new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                    new Game(10UL, "Game 10", new FrenchTarotRules(),
                         new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
                     new[]
                     {
@@ -379,13 +379,13 @@ public static class GameTestData
         };
     }
 
-    public static IEnumerable<object[]> LoadGameByName()
+    public static IEnumerable<object?[]> LoadGameByName()
     {
         yield return new object[]
         {
             "Game 10",
             CreateGameWithPlayers(
-                new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                new Game(10UL, "Game 10", new FrenchTarotRules(),
                     new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
                 new[]
                 {
@@ -395,7 +395,6 @@ public static class GameTestData
                     new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new Player("Albert", "GOL", "LOLA", "avatar1")
                 })
-            
         };
         yield return new object[]
         {
@@ -411,7 +410,7 @@ public static class GameTestData
                     new Player("Albert", "GOL", "LOLA", "avatar1")
                 }),
         };
-        yield return new object[]
+        yield return new object?[]
         {
             "",
             null
@@ -435,13 +434,13 @@ public static class GameTestData
             new DateTime(2022, 09, 21),
             new[]
             {
-                new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                new Game(6UL, "Game 6", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(7UL, "Game 7", new FrenchTarotRules(), 
+                new Game(7UL, "Game 7", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(8UL, "Game 8", new FrenchTarotRules(), 
+                new Game(8UL, "Game 8", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                new Game(9UL, "Game 9", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
             },
             1,
@@ -476,7 +475,7 @@ public static class GameTestData
             10
         };
     }
-    
+
     public static IEnumerable<object[]> Data_TestLoadGameByEndDate()
     {
         yield return new object[]
@@ -484,7 +483,7 @@ public static class GameTestData
             new DateTime(2022, 09, 23),
             new[]
             {
-                new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                new Game(10UL, "Game 10", new FrenchTarotRules(),
                     new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
             },
             1,
@@ -495,13 +494,13 @@ public static class GameTestData
             new DateTime(2022, 09, 25),
             new[]
             {
-                new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                new Game(6UL, "Game 6", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(7UL, "Game 7", new FrenchTarotRules(), 
+                new Game(7UL, "Game 7", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(8UL, "Game 8", new FrenchTarotRules(), 
+                new Game(8UL, "Game 8", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                new Game(9UL, "Game 9", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
             },
             1,
@@ -545,7 +544,7 @@ public static class GameTestData
             new DateTime(2022, 09, 23),
             new[]
             {
-                new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                new Game(10UL, "Game 10", new FrenchTarotRules(),
                     new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)),
             },
             1,
@@ -557,13 +556,13 @@ public static class GameTestData
             new DateTime(2022, 09, 25),
             new[]
             {
-                new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                new Game(6UL, "Game 6", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(7UL, "Game 7", new FrenchTarotRules(), 
+                new Game(7UL, "Game 7", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(8UL, "Game 8", new FrenchTarotRules(), 
+                new Game(8UL, "Game 8", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                new Game(9UL, "Game 9", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
             },
             1,
@@ -602,7 +601,7 @@ public static class GameTestData
             10
         };
     }
-    
+
     public static IEnumerable<object[]> Data_TestLoadGameByDateIntervalAndGroup()
     {
         yield return new object[]
@@ -618,15 +617,15 @@ public static class GameTestData
             ),
             new[]
             {
-                new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                new Game(6UL, "Game 6", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(7UL, "Game 7", new FrenchTarotRules(), 
+                new Game(7UL, "Game 7", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(8UL, "Game 8", new FrenchTarotRules(), 
+                new Game(8UL, "Game 8", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                new Game(9UL, "Game 9", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                new Game(10UL, "Game 10", new FrenchTarotRules(),
                     new DateTime(2022, 09, 18), new DateTime(2022, 09, 23))
             },
             1,
@@ -693,7 +692,7 @@ public static class GameTestData
             10
         };
     }
-    
+
     public static IEnumerable<object[]> Data_TestLoadGameByDateIntervalAndPlayer()
     {
         yield return new object[]
@@ -703,11 +702,11 @@ public static class GameTestData
             new Player("Jean", "BON", "JEBO", "avatar1"),
             new[]
             {
-                new Game(6UL, "Game 6", new FrenchTarotRules(), 
+                new Game(6UL, "Game 6", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(9UL, "Game 9", new FrenchTarotRules(), 
+                new Game(9UL, "Game 9", new FrenchTarotRules(),
                     new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)),
-                new Game(10UL, "Game 10", new FrenchTarotRules(), 
+                new Game(10UL, "Game 10", new FrenchTarotRules(),
                     new DateTime(2022, 09, 18), new DateTime(2022, 09, 23))
             },
             1,

@@ -12,7 +12,7 @@ public static class RuleTestData
             new FrenchTarotRules()
         };
     }
-    
+
     public static IEnumerable<object[]> Data_TestLoadAllRules()
     {
         yield return new object[]
@@ -43,5 +43,4 @@ public static class RuleTestData
             1
         };
     }
-
 }
