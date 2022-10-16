@@ -40,6 +40,8 @@ playersEntities.AddRange(new PlayerEntity[]
 );
 
 using var context = new TarotDBContext();
+context.Database.EnsureCreated();
+
 context.Players.AddRange(playersEntities);
 
 int result = await context.SaveChangesAsync();

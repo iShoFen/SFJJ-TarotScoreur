@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Model\Model.csproj"/>
+      <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
+      <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
+      <ProjectReference Include="..\..\TarotDB\TarotDB.csproj" />
     </ItemGroup>
 
 </Project>
