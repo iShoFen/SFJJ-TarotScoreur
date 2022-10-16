@@ -61,7 +61,7 @@ public class UT_GroupEntity
 
             Assert.NotNull(fetchGroup);
             Assert.Equal(name, fetchGroup!.Name);
-            Assert.All(fetchGroup!.Players, p => Assert.Contains(p, context.Players));
+            Assert.All(fetchGroup.Players, p => Assert.Contains(p, context.Players));
             Assert.All(fetchGroup.Players, p => Assert.Contains(fetchGroup, p.Groups));
         }
     }
