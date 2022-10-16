@@ -90,6 +90,7 @@ public class UT_GameEntity
             Assert.Equal(startDate, game.StartDate);
             Assert.Equal(endDate, game.EndDate);
             Assert.Equal(players.Count, game.Players.Count);
+            Assert.Equal(hands.Count, game.Hands.Count);
             
             foreach (var player in game.Players)
             {
@@ -113,8 +114,8 @@ public class UT_GameEntity
 	    IEnumerable<HandEntity> iHandsToRemove)
     {
 	    var options = InitDB();
-	    var playersToRemove = iPlayersToRemove.ToHashSet();
-	    var handsToRemove = iHandsToRemove.ToHashSet();
+	    var playersToRemove = iPlayersToRemove.ToList();
+	    var handsToRemove = iHandsToRemove.ToList();
 	    await using(var context = new TarotDBContextStub(options))
 	    {
 		    await context.Database.EnsureCreatedAsync();

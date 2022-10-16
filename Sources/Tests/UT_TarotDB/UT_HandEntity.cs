@@ -125,8 +125,8 @@ public class UT_HandEntity
 			Assert.Equal(await context.Games.FindAsync(gameId), hand.Game);
 			Assert.Equal(biddings.Length, hand.Biddings.Count);
 			
-			var expPlayers = hand.Game.Players.ToArray();
-			var handBiddings = hand.Biddings.ToArray();
+			var expPlayers = hand.Game.Players.ToList();
+			var handBiddings = hand.Biddings.ToList();
 			for (var i = 0; i < biddings.Length; ++i)
 			{
 				Assert.Equal(biddings[i].Item1, handBiddings[i].Bidding);
@@ -182,7 +182,7 @@ public class UT_HandEntity
 			hand.Petit = newPetit;
 			hand.Chelem = newChelem;
 
-			var handBiddings = hand.Biddings.ToArray();
+			var handBiddings = hand.Biddings.ToList();
 			for (var i = 0; i < newBiddings.Length; ++i)
 			{
 				handBiddings[i].Bidding = newBiddings[i].Item1;
@@ -221,7 +221,7 @@ public class UT_HandEntity
 			Assert.Equal(newChelem, hand.Chelem);
 			Assert.Equal(newBiddings.Length, hand.Biddings.Count);
 			
-			var handBiddings = hand.Biddings.ToArray();
+			var handBiddings = hand.Biddings.ToList();
 			for (var i = 0; i < newBiddings.Length; ++i)
 			{
 				Assert.Equal(newBiddings[i].Item1, handBiddings[i].Bidding);
