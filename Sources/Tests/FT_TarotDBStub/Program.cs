@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
 
+namespace FT_TarotDBStub;
+
 internal class Program
 {
     public static void Main()
