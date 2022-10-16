@@ -16,8 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\TarotDB\TarotDB.csproj"/>
-        <InternalsVisibleTo Include="UT_TarotDB"/>
-        <InternalsVisibleTo Include="UT_Tarot2B2Model"/>
+        <ProjectReference Include="..\TarotDB\TarotDB.csproj" />
+        <InternalsVisibleTo Include="UT_TarotDB" />
+        <InternalsVisibleTo Include="UT_Tarot2B2Model" />
+        <InternalsVisibleTo Include="FT_TarotDBStub" />
     </ItemGroup>
 </Project>
