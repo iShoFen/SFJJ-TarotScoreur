@@ -98,11 +98,11 @@ internal static class GroupTestData
         {
             true,
             new Group("partie"),
-            new Player[]
+            new[]
             {
                 new Player("Florent", "Marques", "Flo", "avatar")
             },
-            new Player[]
+            new[]
             {
                 new Player("Florent", "Marques", "Flo", "avatar")
             }

@@ -53,20 +53,20 @@ public class Stub : ILoader
     /// </summary>
     private void SetGameList()
     {
-        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(6UL, "Game 6", _rulesList[0], 
+        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], new DateTime(2022, 09, 01), null));
+        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], new DateTime(2022, 09, 02), null));
+        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], new DateTime(2022, 09, 03), null));
+        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], new DateTime(2022, 09, 04), null));
+        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], new DateTime(2022, 09, 05), null));
+        _gameList.Add(new Game(6UL, "Game 6", _rulesList[0],
             new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
-        _gameList.Add(new Game(7UL, "Game 7", _rulesList[0], 
+        _gameList.Add(new Game(7UL, "Game 7", _rulesList[0],
             new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
-        _gameList.Add(new Game(8UL, "Game 8", _rulesList[0], 
+        _gameList.Add(new Game(8UL, "Game 8", _rulesList[0],
             new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
-        _gameList.Add(new Game(9UL, "Game 9", _rulesList[0], 
+        _gameList.Add(new Game(9UL, "Game 9", _rulesList[0],
             new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
-        _gameList.Add(new Game(10UL, "Game 10", _rulesList[0], 
+        _gameList.Add(new Game(10UL, "Game 10", _rulesList[0],
             new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
 
         _gameList[0].AddPlayer(_playerList[0]);
@@ -96,32 +96,33 @@ public class Stub : ILoader
         _gameList[4].AddPlayer(_playerList[12]);
         _gameList[4].AddPlayer(_playerList[9]);
 
-        _gameList[4].AddPlayer(_playerList[0]);
-        _gameList[4].AddPlayer(_playerList[15]);
-        _gameList[4].AddPlayer(_playerList[5]);
-        _gameList[4].AddPlayer(_playerList[11]);
-        _gameList[4].AddPlayer(_playerList[6]);
-
-        _gameList[5].AddPlayer(_playerList[4]);
-        _gameList[5].AddPlayer(_playerList[7]);
-        _gameList[5].AddPlayer(_playerList[13]);
+        _gameList[5].AddPlayer(_playerList[0]);
         _gameList[5].AddPlayer(_playerList[15]);
-        _gameList[5].AddPlayer(_playerList[1]);
+        _gameList[5].AddPlayer(_playerList[5]);
+        _gameList[5].AddPlayer(_playerList[11]);
+        _gameList[5].AddPlayer(_playerList[6]);
 
-        _gameList[6].AddPlayer(_playerList[2]);
-        _gameList[6].AddPlayer(_playerList[3]);
-        _gameList[6].AddPlayer(_playerList[5]);
-        _gameList[6].AddPlayer(_playerList[11]);
-        _gameList[6].AddPlayer(_playerList[9]);
+        _gameList[6].AddPlayer(_playerList[4]);
+        _gameList[6].AddPlayer(_playerList[7]);
+        _gameList[6].AddPlayer(_playerList[13]);
+        _gameList[6].AddPlayer(_playerList[15]);
+        _gameList[6].AddPlayer(_playerList[1]);
 
-        _gameList[7].AddPlayer(_playerList[0]);
-        _gameList[7].AddPlayer(_playerList[4]);
-        _gameList[7].AddPlayer(_playerList[6]);
+        _gameList[7].AddPlayer(_playerList[2]);
+        _gameList[7].AddPlayer(_playerList[3]);
+        _gameList[7].AddPlayer(_playerList[5]);
+        _gameList[7].AddPlayer(_playerList[11]);
+        _gameList[7].AddPlayer(_playerList[9]);
 
-        _gameList[8].AddPlayer(_playerList[7]);
-        _gameList[8].AddPlayer(_playerList[8]);
-        _gameList[8].AddPlayer(_playerList[10]);
-        _gameList[8].AddPlayer(_playerList[12]);
+        _gameList[8].AddPlayer(_playerList[0]);
+        _gameList[8].AddPlayer(_playerList[4]);
+        _gameList[8].AddPlayer(_playerList[6]);
+
+        _gameList[9].AddPlayer(_playerList[0]);
+        _gameList[9].AddPlayer(_playerList[1]);
+        _gameList[9].AddPlayer(_playerList[2]);
+        _gameList[9].AddPlayer(_playerList[3]);
+        _gameList[9].AddPlayer(_playerList[4]);
     }
 
     /// <summary>
@@ -132,7 +133,7 @@ public class Stub : ILoader
         var j = 1UL;
         for (var i = 0; i < 12; i++)
         {
-            _groupList.Add(new Group(j, "Group" + i + 1, _playerList[i],
+            _groupList.Add(new Group(j, "Group " + (i + 1), _playerList[i],
                 _playerList[i + 1], _playerList[i + 2], _playerList[i + 3], _playerList[i + 4]));
             ++j;
         }
@@ -158,15 +159,15 @@ public class Stub : ILoader
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[2], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.Opponent, Poignee.None))));
-        _handList.Add(new Hand(2UL, 2, _rulesList[0], new DateTime(2022, 09, 22), 256, 
-            true, true, PetitResult.Lost, Chelem.AnnouncedSuccess, 
+        _handList.Add(new Hand(2UL, 2, _rulesList[0], new DateTime(2022, 09, 22), 256,
+            true, true, PetitResult.Lost, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.Petite, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[2], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(3UL, 3, _rulesList[0], new DateTime(2022, 09, 23), 151,
-            false, false, PetitResult.Lost, Chelem.Success, 
+            false, false, PetitResult.Lost, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.Garde, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[2], (Bidding.Opponent, Poignee.None)),
@@ -178,21 +179,21 @@ public class Stub : ILoader
         _gameList[0].AddHand(_handList[2]);
 
         _handList.Add(new Hand(4UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            false, false, PetitResult.Lost, Chelem.Unknown, 
+            false, false, PetitResult.Lost, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.GardeContreLeChien, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[9], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(5UL, 2, _rulesList[0], new DateTime(2022, 09, 21), 256,
-            false, true, PetitResult.AuBoutOwned, Chelem.AnnouncedSuccess, 
+            false, true, PetitResult.AuBoutOwned, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[9], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(6UL, 3, _rulesList[0], new DateTime(2022, 09, 21), 151,
-            true, false, PetitResult.Owned, Chelem.Success, 
+            true, false, PetitResult.Owned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Garde, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.None)),
@@ -204,17 +205,17 @@ public class Stub : ILoader
         _gameList[1].AddHand(_handList[5]);
 
         _handList.Add(new Hand(7UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            true, true, PetitResult.LostAuBout, Chelem.Unknown, 
+            true, true, PetitResult.LostAuBout, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Petite, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(8UL, 2, _rulesList[0], new DateTime(2022, 09, 27), 256,
-            false, true, PetitResult.AuBoutOwned, Chelem.Success, 
+            false, true, PetitResult.AuBoutOwned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(9UL, 3, _rulesList[0], new DateTime(2022, 09, 30), 654,
-            false, false, PetitResult.Owned, Chelem.Success, 
+            false, false, PetitResult.Owned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Garde, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.Simple))));
@@ -224,19 +225,19 @@ public class Stub : ILoader
         _gameList[2].AddHand(_handList[8]);
 
         _handList.Add(new Hand(10UL, 1, _rulesList[0], new DateTime(2022, 09, 16), 567,
-            false, false, PetitResult.NotOwned, Chelem.AnnouncedSuccess, 
+            false, false, PetitResult.NotOwned, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.GardeSansLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[14], (Bidding.Opponent, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(11UL, 2, _rulesList[0], new DateTime(2022, 09, 21), 365,
-            false, true, PetitResult.AuBoutOwned, Chelem.Fail, 
+            false, true, PetitResult.AuBoutOwned, Chelem.Fail,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.GardeContreLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[14], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(12UL, 3, _rulesList[0], new DateTime(2022, 09, 28), 151,
-            true, false, PetitResult.AuBoutOwned, Chelem.Success, 
+            true, false, PetitResult.AuBoutOwned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[14], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
@@ -247,21 +248,21 @@ public class Stub : ILoader
         _gameList[3].AddHand(_handList[11]);
 
         _handList.Add(new Hand(13UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            true, false, PetitResult.Lost, Chelem.Unknown, 
+            true, false, PetitResult.Lost, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Garde, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[9], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(14UL, 2, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            false, false, PetitResult.Lost, Chelem.AnnouncedSuccess, 
+            false, false, PetitResult.Lost, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.GardeSansLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[9], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(15UL, 3, _rulesList[0], new DateTime(2022, 09, 25), 151,
-            true, true, PetitResult.Owned, Chelem.Success, 
+            true, true, PetitResult.Owned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Petite, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
@@ -273,28 +274,28 @@ public class Stub : ILoader
         _gameList[4].AddHand(_handList[14]);
 
         _handList.Add(new Hand(16UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 873,
-            false, true, PetitResult.LostAuBout, Chelem.Fail, 
+            false, true, PetitResult.LostAuBout, Chelem.Fail,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.Petite, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(17UL, 2, _rulesList[0], new DateTime(2022, 09, 25), 567,
-            true, false, PetitResult.Lost, Chelem.AnnouncedSuccess, 
+            true, false, PetitResult.Lost, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.Garde, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(18UL, 3, _rulesList[0], new DateTime(2022, 09, 27), 356,
-            true, true, PetitResult.Owned, Chelem.AnnouncedSuccess, 
+            true, true, PetitResult.Owned, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.GardeSansLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(19UL, 4, _rulesList[0], new DateTime(2022, 09, 29), 151,
-            true, false, PetitResult.Owned, Chelem.Unknown, 
+            true, false, PetitResult.Owned, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.GardeContreLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
@@ -307,28 +308,28 @@ public class Stub : ILoader
         _gameList[5].AddHand(_handList[18]);
 
         _handList.Add(new Hand(20UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            false, true, PetitResult.LostAuBout, Chelem.Unknown, 
+            false, true, PetitResult.LostAuBout, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.Garde, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(21UL, 2, _rulesList[0], new DateTime(2022, 09, 25), 826,
-            false, false, PetitResult.Lost, Chelem.AnnouncedSuccess, 
+            false, false, PetitResult.Lost, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.GardeSansLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.Opponent, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(22UL, 3, _rulesList[0], new DateTime(2022, 09, 29), 745,
-            true, true, PetitResult.Owned, Chelem.Success, 
+            true, true, PetitResult.Owned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.GardeContreLeChien, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[15], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[1], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(23UL, 4, _rulesList[0], new DateTime(2022, 09, 30), 567,
-            true, false, PetitResult.Lost, Chelem.Unknown, 
+            true, false, PetitResult.Lost, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[13], (Bidding.Opponent, Poignee.None)),
@@ -341,21 +342,21 @@ public class Stub : ILoader
         _gameList[6].AddHand(_handList[22]);
 
         _handList.Add(new Hand(24UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            false, false, PetitResult.Lost, Chelem.Unknown, 
+            false, false, PetitResult.Lost, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[2], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[9], (Bidding.King, Poignee.Simple))));
         _handList.Add(new Hand(25UL, 2, _rulesList[0], new DateTime(2022, 09, 25), 567,
-            false, true, PetitResult.LostAuBout, Chelem.AnnouncedSuccess, 
+            false, true, PetitResult.LostAuBout, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[2], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[11], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[9], (Bidding.King, Poignee.None))));
         _handList.Add(new Hand(26UL, 3, _rulesList[0], new DateTime(2022, 09, 29), 567,
-            true, true, PetitResult.Owned, Chelem.Success, 
+            true, true, PetitResult.Owned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[2], (Bidding.Garde, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[3], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[5], (Bidding.Opponent, Poignee.None)),
@@ -367,12 +368,12 @@ public class Stub : ILoader
         _gameList[7].AddHand(_handList[25]);
 
         _handList.Add(new Hand(27UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            true, false, PetitResult.Lost, Chelem.Unknown, 
+            true, false, PetitResult.Lost, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.Garde, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.Opponent, Poignee.Simple))));
         _handList.Add(new Hand(28UL, 2, _rulesList[0], new DateTime(2022, 09, 25), 567,
-            false, false, PetitResult.Lost, Chelem.AnnouncedSuccess, 
+            false, false, PetitResult.Lost, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[0], (Bidding.Garde, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[4], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[6], (Bidding.Opponent, Poignee.None))));
@@ -381,25 +382,25 @@ public class Stub : ILoader
         _gameList[8].AddHand(_handList[27]);
 
         _handList.Add(new Hand(29UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-            false, true, PetitResult.LostAuBout, Chelem.Unknown, 
+            false, true, PetitResult.LostAuBout, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Garde, Poignee.Simple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(30UL, 2, _rulesList[0], new DateTime(2022, 09, 25), 567,
-            true, false, PetitResult.Lost, Chelem.AnnouncedSuccess, 
+            true, false, PetitResult.Lost, Chelem.AnnouncedSuccess,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.GardeSansLeChien, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.None))));
         _handList.Add(new Hand(31UL, 3, _rulesList[0], new DateTime(2022, 09, 29), 567,
-            true, true, PetitResult.Owned, Chelem.Success, 
+            true, true, PetitResult.Owned, Chelem.Success,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Petite, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[12], (Bidding.Opponent, Poignee.Simple))));
         _handList.Add(new Hand(32UL, 4, _rulesList[0], new DateTime(2022, 09, 30), 567,
-            true, false, PetitResult.Lost, Chelem.Unknown, 
+            true, false, PetitResult.Lost, Chelem.Unknown,
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[7], (Bidding.Garde, Poignee.None)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[8], (Bidding.Opponent, Poignee.Triple)),
             new KeyValuePair<Player, (Bidding, Poignee)>(_playerList[10], (Bidding.Opponent, Poignee.None)),
@@ -418,7 +419,7 @@ public class Stub : ILoader
     /// <param name="name">Name of the game</param>
     /// <returns>A game</returns>
     public Game? LoadGameByName(string name)
-        => _gameList.Single(game => name.Equals(game.Name));
+        => _gameList.SingleOrDefault(game => name.Equals(game.Name));
 
     /// <summary>
     /// Method to load games by player
@@ -428,9 +429,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByPlayer(Player player, int page, int pageSize)
-        => _gameList
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.Players.Contains(player))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by start date
@@ -440,9 +444,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-        => _gameList
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate == startDate)
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by end date
@@ -452,9 +459,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-        => _gameList
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.EndDate == endDate)
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by an interval of dates
@@ -465,9 +475,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize)
-        => _gameList
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by an interval of dates and a group
@@ -480,10 +493,13 @@ public class Stub : ILoader
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
         int pageSize)
-        => _gameList
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
             .Where(g => g.Players.Any(p => group.Players.Contains(p)))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -496,9 +512,12 @@ public class Stub : ILoader
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
         int page, int pageSize)
-        => _gameList
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
             .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load games by a group
@@ -508,9 +527,12 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadGameByGroup(Group group, int page, int pageSize)
-        => _gameList
-            .Where(g => g.Players.Any(p => group.Players.Contains(p)))
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList
+            .Where(g => g.Players.All(p => group.Players.Contains(p)))
             .Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load all games
@@ -519,7 +541,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public IEnumerable<Game> LoadAllGames(int page, int pageSize)
-        => _gameList.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<Game>();
+        return _gameList.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Games ==========*/
 
 
@@ -534,7 +559,7 @@ public class Stub : ILoader
     /// <returns>List of players</returns>
     public IEnumerable<Player> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
     {
-        if(page == 0 || pageSize == 0) return new List<Player>();
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return _playerList
             .Where(player => player.LastName.Equals(lastName) && player.NickName.Equals(nickname))
             .Skip((page - 1) * pageSize).Take(pageSize);
@@ -551,7 +576,7 @@ public class Stub : ILoader
     public IEnumerable<Player> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
         int pageSize)
     {
-        if(page == 0 || pageSize == 0) return new List<Player>();
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return _playerList
             .Where(player => player.FirstName.Equals(firstName) && player.NickName.Equals(nickname))
             .Skip((page - 1) * pageSize).Take(pageSize);
@@ -568,7 +593,7 @@ public class Stub : ILoader
     public IEnumerable<Player> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
         int pageSize)
     {
-        if(page == 0 || pageSize == 0) return new List<Player>();
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return _playerList
             .Where(player => player.FirstName.Equals(firstName) && player.LastName.Equals(lastName))
             .Skip((page - 1) * pageSize).Take(pageSize);
@@ -583,7 +608,7 @@ public class Stub : ILoader
     /// <returns>List of players</returns>
     public IEnumerable<Player> LoadPlayerByNickname(string nickname, int page, int pageSize)
     {
-        if(page == 0 || pageSize == 0) return new List<Player>();
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return _playerList
             .Where(player => player.NickName.Equals(nickname) && !player.NickName.Equals(""))
             .Skip((page - 1) * pageSize).Take(pageSize);
@@ -597,11 +622,11 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
     public IEnumerable<Player> LoadPlayerByLastName(string lastName, int page, int pageSize)
-    { 
-        if(page == 0 || pageSize == 0) return new List<Player>();
+    {
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return _playerList
-        .Where(player => player.LastName.Equals(lastName))
-        .Skip((page - 1) * pageSize).Take(pageSize);
+            .Where(player => player.LastName.Equals(lastName))
+            .Skip((page - 1) * pageSize).Take(pageSize);
     }
 
     /// <summary>
@@ -615,8 +640,8 @@ public class Stub : ILoader
     {
         if (page == 0 || pageSize == 0 || string.IsNullOrEmpty(firstName)) return new List<Player>();
         return _playerList
-        .Where(player => player.FirstName.Equals(firstName))
-        .Skip((page - 1) * pageSize).Take(pageSize);
+            .Where(player => player.FirstName.Equals(firstName))
+            .Skip((page - 1) * pageSize).Take(pageSize);
     }
 
     /// <summary>
@@ -627,7 +652,7 @@ public class Stub : ILoader
     /// <returns>List of players</returns>
     public IEnumerable<Player> LoadAllPlayer(int page, int pageSize)
     {
-        if(page == 0 || pageSize == 0) return new List<Player>();
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return _playerList.Skip((page - 1) * pageSize).Take(pageSize);
     }
 
@@ -640,7 +665,7 @@ public class Stub : ILoader
     /// <returns>List of players</returns>
     public IEnumerable<Player> LoadPlayersByGroup(Group group, int page, int pageSize)
     {
-        if(page == 0 || pageSize == 0) return new List<Player>();
+        if (page == 0 || pageSize == 0) return new List<Player>();
         return group.Players.Skip((page - 1) * pageSize).Take(pageSize);
     }
     /*========== End Players ==========*/
@@ -652,7 +677,7 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    public Group? LoadGroupsByName(string name) => _groupList.FirstOrDefault(g => g.Name == name);
+    public Group? LoadGroupsByName(string name) => _groupList.FirstOrDefault(g => g.Name.Equals(name));
 
     /// <summary>
     /// Method to load all groups
@@ -661,7 +686,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
     public IEnumerable<Group> LoadAllGroups(int page, int pageSize)
-        => _groupList.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<Group>();
+        return _groupList.Skip((page - 1) * pageSize).Take(pageSize);
+    }
 
     /// <summary>
     /// Method to load a group by player
@@ -671,7 +699,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of groups</returns>
     public IEnumerable<Group> LoadGroupsByPlayer(Player player, int page, int pageSize)
-        => _groupList.Where(g => g.Players.Contains(player)).Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<Group>();
+        return _groupList.Where(g => g.Players.Contains(player)).Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Groups ==========*/
 
 
@@ -690,7 +721,10 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of rules</returns>
     public IEnumerable<IRules> LoadAllRules(int page, int pageSize)
-        => _rulesList.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<IRules>();
+        return _rulesList.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End Rules ==========*/
 
 
@@ -703,6 +737,9 @@ public class Stub : ILoader
     /// <param name="pageSize"></param>
     /// <returns>List of hands</returns>
     public IEnumerable<KeyValuePair<int, Hand>> LoadHandByGame(Game game, int page, int pageSize)
-        => _gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize).Take(pageSize);
+    {
+        if (page == 0 || pageSize == 0) return new List<KeyValuePair<int, Hand>>();
+        return _gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize).Take(pageSize);
+    }
     /*========== End hand ==========*/
 }
