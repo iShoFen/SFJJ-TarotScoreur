@@ -7,18 +7,20 @@ namespace StubContext;
 /// <summary>
 /// Stub context for testing
 /// </summary>
-internal class TarotDBContextStub : TarotDBContext
+internal class TarotDbContextStub : TarotDbContext
 {
-	/// <summary>
-	/// Default constructor
-	/// </summary>
-	public TarotDBContextStub() {}
-	
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public TarotDbContextStub()
+    {
+    }
+
     /// <summary>
     /// Constructor with options
     /// </summary>
     /// <param name="options"> Options </param>
-    public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options)
+    public TarotDbContextStub(DbContextOptions<TarotDbContext> options) : base(options)
     {
     }
 
@@ -152,14 +154,14 @@ internal class TarotDBContextStub : TarotDBContext
         AddPlayersGame(7UL, 4U, 5U, modelBuilder);
     }
 
-	/// <summary>
-	/// Add players to a game
-	/// </summary>
-	/// <param name="gameId"> The first game id </param>
-	/// <param name="nbG"> The number of games </param>
-	/// <param name="nbP"> The number of players per game </param>
-	/// <param name="modelBuilder"> Model builder </param>
-	private static void AddPlayersGame(ulong gameId, uint nbG, uint nbP, ModelBuilder modelBuilder)
+    /// <summary>
+    /// Add players to a game
+    /// </summary>
+    /// <param name="gameId"> The first game id </param>
+    /// <param name="nbG"> The number of games </param>
+    /// <param name="nbP"> The number of players per game </param>
+    /// <param name="modelBuilder"> Model builder </param>
+    private static void AddPlayersGame(ulong gameId, uint nbG, uint nbP, ModelBuilder modelBuilder)
     {
         // Add players nbP Players to nbG games
         var gamePlayer = new List<object>();

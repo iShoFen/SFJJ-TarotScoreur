@@ -15,9 +15,9 @@ public class UT_HandEntity
 		bool? expTwentyOne, bool? expExcuse, PetitResultDB expPetit, ChelemDB expChelem, ulong expGameId,
 		IEnumerable<(ulong, ulong)> iExpBiddingsId, IEnumerable<(BiddingDB, PoigneeDB)> iExpBiddings)
 	{
-		var expBiddingsId = iExpBiddingsId.ToArray();
+		var expBiddingIds = iExpBiddingsId.ToArray();
 		var expBiddings = iExpBiddings.ToArray();
-		await using var context = new TarotDBContextStub(InitDb());
+		await using var context = new TarotDbContextStub(InitDb());
 
 		await context.Database.EnsureCreatedAsync();
 		var hand = await context.Hands
@@ -28,7 +28,7 @@ public class UT_HandEntity
 
 		Assert.NotNull(hand);
 
-		Assert.Equal(id, hand!.Id);
+		Assert.Equal(id, hand.Id);
 		Assert.Equal(expNumber, hand.Number);
 		Assert.Equal(expRules, hand.Rules);
 		Assert.Equal(expDate, hand.Date);
@@ -39,11 +39,11 @@ public class UT_HandEntity
 		Assert.Equal(expChelem, hand.Chelem);
 		Assert.Equal(await context.Games.FindAsync(expGameId), hand.Game);
 
-		Assert.Equal(expBiddingsId.Length, hand.Biddings.Count);
-		for (var i = 0; i < expBiddingsId.Length; ++i)
+		Assert.Equal(expBiddingIds.Length, hand.Biddings.Count);
+		for (var i = 0; i < expBiddingIds.Length; ++i)
 		{
 			var bidding =
-				(await context.FindAsync<BiddingPoigneeEntity>(expBiddingsId[i].Item1, expBiddingsId[i].Item2))!;
+				(await context.FindAsync<BiddingPoigneeEntity>(expBiddingIds[i].Item1, expBiddingIds[i].Item2))!;
 			var player = (await context.Players.FindAsync(bidding.Player.Id))!;
 			Assert.Single(hand.Biddings.Where(bi =>
 				bi.Bidding == expBiddings[i].Item1 && bi.Poignee == expBiddings[i].Item2 && bi.Player.Equals(player) &&
@@ -59,7 +59,7 @@ public class UT_HandEntity
 		params (BiddingDB, PoigneeDB)[] biddings)
 	{
 		var options = InitDb();
-		await using (var context = new TarotDBContextStub(options))
+		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
 			var hand = new HandEntity
@@ -106,7 +106,7 @@ public class UT_HandEntity
 			await context.SaveChangesAsync();
 		}
 
-		await using (var context = new TarotDBContextStub(options))
+		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
 			var hand = await context.Hands
@@ -116,7 +116,7 @@ public class UT_HandEntity
 				.SingleOrDefaultAsync(ha => ha.Game.Id == gameId && ha.Number == number);
 			
 			Assert.NotNull(hand);
-			Assert.NotEqual(0UL, hand!.Id);
+			Assert.NotEqual(0UL, hand.Id);
 			Assert.Equal(number, hand.Number);
 			Assert.Equal(rules, hand.Rules);
 			Assert.Equal(date, hand.Date);
@@ -152,7 +152,7 @@ public class UT_HandEntity
 		var newBiddings = iNewBiddings.ToArray();
 		
 		var options = InitDb();
-		await using (var context = new TarotDBContextStub(options))
+		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
 			var hand = context.Hands
@@ -162,7 +162,7 @@ public class UT_HandEntity
 				.SingleOrDefault(ha => ha.Id == id);
 			
 			Assert.NotNull(hand);
-			Assert.Equal(id, hand!.Id);
+			Assert.Equal(id, hand.Id);
 			Assert.Equal(number, hand.Number);
 			Assert.Equal(rules, hand.Rules);
 			Assert.Equal(date, hand.Date);
@@ -217,7 +217,7 @@ public class UT_HandEntity
 			await context.SaveChangesAsync();
 		}
 		
-		await using (var context = new TarotDBContextStub(options))
+		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
 			var hand = context.Hands
@@ -227,7 +227,7 @@ public class UT_HandEntity
 				.SingleOrDefault(ha => ha.Id == newId);
 			
 			Assert.NotNull(hand);
-			Assert.Equal(newId, hand!.Id);
+			Assert.Equal(newId, hand.Id);
 			Assert.Equal(newNumber, hand.Number);
 			Assert.Equal(newRules, hand.Rules);
 			Assert.Equal(newDate, hand.Date);
@@ -252,7 +252,7 @@ public class UT_HandEntity
 	public async Task TestDelete()
 	{
 		var options = InitDb();
-		await using (var context = new TarotDBContextStub(options))
+		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
 			var hand = context.Hands
@@ -262,7 +262,7 @@ public class UT_HandEntity
 				.SingleOrDefault(ha => ha.Id == 1UL);
 
 			Assert.NotNull(hand);
-			Assert.Equal(1UL, hand!.Id);
+			Assert.Equal(1UL, hand.Id);
 			Assert.Equal(1, hand.Number);
 			Assert.Equal("FrenchTarotRules", hand.Rules);
 			Assert.Equal(new DateTime(2022, 09, 21), hand.Date);
@@ -282,7 +282,7 @@ public class UT_HandEntity
 			await context.SaveChangesAsync();
 		}
 		
-		await using (var context = new TarotDBContextStub(options))
+		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
 			var hand = context.Hands

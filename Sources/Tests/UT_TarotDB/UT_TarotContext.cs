@@ -13,29 +13,29 @@ public class UT_TarotContext
 	{
 		yield return new object[]
 		{
-			new TarotDBContext(),
+			new TarotDbContext(),
 			"Data Source=TarotScoreur.db"
 		};
 		yield return new object[]
 		{
-			new TarotDBContext(InitDb()),
+			new TarotDbContext(InitDb()),
 			"DataSource=:memory:"
 		};
 		yield return new object[]
 		{
-			new TarotDBContextStub(),
+			new TarotDbContextStub(),
 			"Data Source=TarotStub.db"
 		};
 		yield return new object[]
 		{
-			new TarotDBContextStub(InitDb()),
+			new TarotDbContextStub(InitDb()),
 			"DataSource=:memory:"
 		};
 	}
 	
 	[Theory]
 	[MemberData(nameof(TestConstructor))]
-	internal async Task TestDefaultConstructor(TarotDBContext context, string expConnectionString)
+	internal async Task TestDefaultConstructor(TarotDbContext context, string expConnectionString)
 	{
 		Assert.Equal(expConnectionString, context.Database.GetDbConnection().ConnectionString);
 
