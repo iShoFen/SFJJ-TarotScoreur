@@ -5,7 +5,7 @@ namespace TarotDB;
 /// <summary>
 /// Database context of the TarotScoreur app
 /// </summary>
-internal class TarotDBContext : DbContext
+internal class TarotDbContext : DbContext
 {
     /// <summary>
     /// Table of Players
@@ -35,7 +35,7 @@ internal class TarotDBContext : DbContext
     /// <summary>
     /// Default constructor
     /// </summary>
-    public TarotDBContext()
+    public TarotDbContext()
     {
     }
 
@@ -43,7 +43,7 @@ internal class TarotDBContext : DbContext
     /// Constructor with options
     /// </summary>
     /// <param name="options"> Options </param>
-    public TarotDBContext(DbContextOptions<TarotDBContext> options) : base(options)
+    public TarotDbContext(DbContextOptions<TarotDbContext> options) : base(options)
     {
     }
 

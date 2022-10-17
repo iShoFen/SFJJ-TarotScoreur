@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Model;
+﻿using Model;
 using Model.data;
 using Model.enums;
 using Model.games;
@@ -496,8 +495,7 @@ public class Stub : ILoader
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
     public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,
-        Group group, int page,
-        int pageSize)
+        Group group, int page, int pageSize)
     {
         if (page == 0 || pageSize == 0) return new List<Game>();
         return await Task.FromResult(_gameList
@@ -506,7 +504,7 @@ public class Stub : ILoader
             .Skip((page - 1) * pageSize).Take(pageSize));
     }
 
-/// <summary>
+    /// <summary>
     /// Method to load games by an interval of dates and a player
     /// </summary>
     /// <param name="startDate">Start date of the interval</param>
@@ -515,13 +513,13 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
-        int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,
+        Player player, int page, int pageSize)
     {
         if (page == 0 || pageSize == 0) return new List<Game>();
         return await Task.FromResult(_gameList
-        .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player))
-        .Skip((page - 1) * pageSize).Take(pageSize));
+            .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player))
+            .Skip((page - 1) * pageSize).Take(pageSize));
     }
 
     /// <summary>
@@ -535,8 +533,8 @@ public class Stub : ILoader
     {
         if (page == 0 || pageSize == 0) return new List<Game>();
         return await Task.FromResult(_gameList
-        .Where(g => g.Players.All(p => group.Players.Contains(p)))
-        .Skip((page - 1) * pageSize).Take(pageSize));
+            .Where(g => g.Players.All(p => group.Players.Contains(p)))
+            .Skip((page - 1) * pageSize).Take(pageSize));
     }
 
     /// <summary>
@@ -562,7 +560,8 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
+    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
+        int pageSize)
     {
         if (page == 0 || pageSize == 0) return new List<Player>();
         return await Task.FromResult(_playerList
@@ -686,7 +685,7 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name to search</param>
     /// <returns>A group</returns>
-    public async Task<Group?> LoadGroupsByName(string name) 
+    public async Task<Group?> LoadGroupsByName(string name)
         => await Task.FromResult(_groupList.FirstOrDefault(g => g.Name == name));
 
     /// <summary>
@@ -727,7 +726,7 @@ public class Stub : ILoader
     /// </summary>
     /// <param name="name">Name of the rule to search</param>
     /// <returns>A IRules</returns>
-    public async Task<IRules?> LoadRule(string name) 
+    public async Task<IRules?> LoadRule(string name)
         => await Task.FromResult(_rulesList.FirstOrDefault(r => r.Name.Equals(name)));
 
     /// <summary>

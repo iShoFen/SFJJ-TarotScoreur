@@ -107,7 +107,8 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page, int pageSize)
+    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
+        int pageSize)
         => await Loader.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize);
     /*========== End Players ==========*/
 
@@ -156,7 +157,8 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page,
+        int pageSize)
         => await Loader.LoadGameByDateInterval(startDate, endDate, page, pageSize);
 
     /// <summary>
@@ -168,9 +170,9 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group, int page,
-        int pageSize)
-        =>await Loader.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize);
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,
+        Group group, int page, int pageSize)
+        => await Loader.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize);
 
     /// <summary>
     /// Method to load games by an interval of dates and a player
@@ -181,8 +183,8 @@ public class DataManager
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
-        int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,
+        Player player, int page, int pageSize)
         => await Loader.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize);
 
     /// <summary>
@@ -260,7 +262,8 @@ public class DataManager
     /// <param name="name">Name of the rule to search</param>
     /// <returns>A IRules</returns>
     public async Task<IRules?> LoadRule(string name)
-        =>await Loader.LoadRule(name); 
+        => await Loader.LoadRule(name);
+
     /// <summary>
     /// Method to load all rules
     /// </summary>
@@ -268,7 +271,7 @@ public class DataManager
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of rules</returns>
     public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize)
-        =>await Loader.LoadAllRules(page, pageSize);
+        => await Loader.LoadAllRules(page, pageSize);
     /*========== End Rules ==========*/
 
     /*========== Hand ==========*/

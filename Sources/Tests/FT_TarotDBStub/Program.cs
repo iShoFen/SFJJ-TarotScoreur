@@ -13,7 +13,7 @@ internal class Program
 
         connection.Open();
 
-        var options = new DbContextOptionsBuilder<TarotDBContext>()
+        var options = new DbContextOptionsBuilder<TarotDbContext>()
             .UseSqlite(connection)
             .Options;
 

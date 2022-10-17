@@ -6,13 +6,13 @@ namespace UT_TarotDB;
 
 internal static class TestInitializer
 {
-    public static DbContextOptions<TarotDBContext> InitDb()
+    public static DbContextOptions<TarotDbContext> InitDb()
     {
         // Connection must be opened to use In-Memory database
         var connection = new SqliteConnection("DataSource=:memory:");
         connection.Open();
 
-        return new DbContextOptionsBuilder<TarotDBContext>()
+        return new DbContextOptionsBuilder<TarotDbContext>()
             .UseSqlite(connection)
             .Options;
     }

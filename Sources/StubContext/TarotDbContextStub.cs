@@ -7,7 +7,7 @@ namespace StubContext;
 /// <summary>
 /// Stub context for testing
 /// </summary>
-internal class TarotDbContextStub : TarotDBContext
+internal class TarotDbContextStub : TarotDbContext
 {
     /// <summary>
     /// Default constructor
@@ -20,7 +20,7 @@ internal class TarotDbContextStub : TarotDBContext
     /// Constructor with options
     /// </summary>
     /// <param name="options"> Options </param>
-    public TarotDbContextStub(DbContextOptions<TarotDBContext> options) : base(options)
+    public TarotDbContextStub(DbContextOptions<TarotDbContext> options) : base(options)
     {
     }
 
