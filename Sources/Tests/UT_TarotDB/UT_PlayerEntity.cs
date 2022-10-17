@@ -10,7 +10,7 @@ public class UT_PlayerEntity
     [Fact]
     public async Task TestRead()
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using var context = new TarotDBContextStub(options);
         await context.Database.EnsureCreatedAsync();
@@ -55,7 +55,7 @@ public class UT_PlayerEntity
         string nickname,
         string avatar)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using (var context = new TarotDBContextStub(options))
         {
@@ -104,7 +104,7 @@ public class UT_PlayerEntity
     public async Task TestUpdate(string firstname, string lastname, string nickname, string avatar,
         string firstname2, string lastname2, string nickname2, string avatar2)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using (var context = new TarotDBContextStub(options))
         {
@@ -186,7 +186,7 @@ public class UT_PlayerEntity
     [InlineData("    ", "    ", "    ", "avatar")]
     public async Task TestDelete(string firstname, string lastname, string nickname, string avatar)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using (var context = new TarotDBContextStub(options))
         {

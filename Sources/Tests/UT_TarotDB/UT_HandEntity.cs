@@ -46,8 +46,9 @@ public class UT_HandEntity
 				(await context.FindAsync<BiddingPoigneeEntity>(expBiddingsId[i].Item1, expBiddingsId[i].Item2))!;
 			var player = (await context.Players.FindAsync(bidding.Player.Id))!;
 			Assert.Single(hand.Biddings.Where(bi =>
-				bi.Bidding == expBiddings[i].Item1 && bi.Poignee == expBiddings[i].Item2 && bi.Equals(bidding) &&
-				bi.Player.Equals(player) && player.Biddings.Contains(bi) && bi.Hand.Equals(hand)));
+				bi.Bidding == expBiddings[i].Item1 && bi.Poignee == expBiddings[i].Item2 && bi.Player.Equals(player) &&
+				bi.PlayerId == player.Id && player.Biddings.Contains(bi) && bi.Hand.Equals(hand) &&
+				bi.HandId == hand.Id && hand.Biddings.Contains(bi) && bi.Equals(bidding)));
 		}
 	}
 
@@ -77,6 +78,7 @@ public class UT_HandEntity
 					.SingleOrDefaultAsync(ga => ga.Id == gameId))!
 			};
 
+			var myBiddings = new List<BiddingPoigneeEntity>();
 			var players = hand.Game.Players.ToArray();
 			for (var i = 0; i < biddings.Length; ++i)
 			{
@@ -87,8 +89,9 @@ public class UT_HandEntity
 					Player = players[i],
 					Hand = hand
 				};
-				hand.Biddings.Add(bidding);
+				myBiddings.Add(bidding);
 			}
+			hand.Biddings = myBiddings;
 
 			await context.Hands.AddAsync(hand);
 
@@ -142,7 +145,7 @@ public class UT_HandEntity
 	internal async Task TestUpdate(bool isValid, ulong id, ulong newId, int number, int newNumber, string rules,
 		string newRules, DateTime date, DateTime newDate, int takerScore, int newTakerScore, bool? twentyOne,
 		bool? newTwentyOne, bool? excuse, bool? newExcuse, PetitResultDB petit, PetitResultDB newPetit, ChelemDB chelem,
-		ChelemDB newChelem, IEnumerable<(ulong, ulong)> iBiddingsId,
+		ChelemDB newChelem,  ulong gameId, ulong newGameId, IEnumerable<(ulong, ulong)> iBiddingsId,
 		IEnumerable<(BiddingDB, PoigneeDB)> iNewBiddings)
 	{
 		var biddingsId = iBiddingsId.ToArray();
@@ -168,6 +171,7 @@ public class UT_HandEntity
 			Assert.Equal(excuse, hand.Excuse);
 			Assert.Equal(petit, hand.Petit);
 			Assert.Equal(chelem, hand.Chelem);
+			Assert.Equal(await context.Games.FindAsync(gameId), hand.Game);
 			Assert.Equal(biddingsId.Length, hand.Biddings.Count);
 			Assert.True(biddingsId.All(bi => 
 				hand.Biddings.Contains(context.Find<BiddingPoigneeEntity>(bi.Item1, bi.Item2)!)));
@@ -181,18 +185,31 @@ public class UT_HandEntity
 			hand.Excuse = newExcuse;
 			hand.Petit = newPetit;
 			hand.Chelem = newChelem;
+			hand.Game = await context.Games
+				.Include(ga => ga.Players)
+				.SingleAsync(ga => ga.Id == newGameId);
 
 			var handBiddings = hand.Biddings.ToList();
+			var players = hand.Game.Players.ToList();
 			for (var i = 0; i < newBiddings.Length; ++i)
 			{
+				handBiddings[i].HandId = newId;
+				handBiddings[i].PlayerId = players[i].Id;
 				handBiddings[i].Bidding = newBiddings[i].Item1;
 				handBiddings[i].Poignee = newBiddings[i].Item2;
 			}
 			
 			if (!isValid)
 			{
-				var error = await Assert.ThrowsAsync<InvalidOperationException>(() =>  context.SaveChangesAsync());
-				Assert.Contains("The property 'HandEntity.Id' is part of a key", error.Message);
+				var error = await Assert.ThrowsAsync<InvalidOperationException>(() => context.SaveChangesAsync());
+				if (id != newId)
+				{
+					Assert.Contains("The property 'HandEntity.Id' is part of a key", error.Message);
+				}
+				else if (gameId != newGameId)
+				{
+					Assert.Contains("The property 'BiddingPoigneeEntity.PlayerId' is part of a key", error.Message);
+				}
 
 				return;
 			}
@@ -219,6 +236,7 @@ public class UT_HandEntity
 			Assert.Equal(newExcuse, hand.Excuse);
 			Assert.Equal(newPetit, hand.Petit);
 			Assert.Equal(newChelem, hand.Chelem);
+			Assert.Equal(await context.Games.FindAsync(newGameId), hand.Game);
 			Assert.Equal(newBiddings.Length, hand.Biddings.Count);
 			
 			var handBiddings = hand.Biddings.ToList();

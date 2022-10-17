@@ -10,7 +10,7 @@ public class UT_GroupEntity
     [Fact]
     public async Task TestRead()
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using var context = new TarotDBContextStub(options);
         await context.Database.EnsureCreatedAsync();
@@ -19,6 +19,7 @@ public class UT_GroupEntity
             .Include(g => g.Players)
             .FirstAsync(g => g.Id == 6UL);
 
+        Assert.Equal(6UL, group.Id);
         Assert.Equal("Group6", group.Name);
         Assert.Equal(5, group.Players.Count);
     }
@@ -27,7 +28,7 @@ public class UT_GroupEntity
     [MemberData(nameof(GroupEntityTestData.Data_TestAdd), MemberType = typeof(GroupEntityTestData))]
     internal async Task TestAdd(bool isValid, string name, IEnumerable<PlayerEntity> players, int expectedPlayers)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
         await using (var context = new TarotDBContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
@@ -70,7 +71,7 @@ public class UT_GroupEntity
     [MemberData(nameof(GroupEntityTestData.Data_TestUpdateName), MemberType = typeof(GroupEntityTestData))]
     internal async Task TestUpdateName(bool isValid, string name, IEnumerable<PlayerEntity> players, string newName)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using (var context = new TarotDBContextStub(options))
         {
@@ -114,7 +115,7 @@ public class UT_GroupEntity
     internal async Task TestAddPlayer(bool isValid, string name, IEnumerable<PlayerEntity> players,
         int expectedPlayerCount, params PlayerEntity[] newPlayers)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using (var context = new TarotDBContextStub(options))
         {
@@ -165,7 +166,7 @@ public class UT_GroupEntity
     internal async Task TestRemovePlayers(string name, IEnumerable<PlayerEntity> players,
         int expectedPlayerCount, params PlayerEntity[] removePlayers)
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
 
         await using (var context = new TarotDBContextStub(options))
         {
@@ -216,7 +217,7 @@ public class UT_GroupEntity
     [Fact]
     internal async Task TestRemove()
     {
-        var options = TestInitializer.InitDb();
+        var options = TestInitializer.InitDB();
         const string name = "NewGroup1";
         var players = new[]
         {

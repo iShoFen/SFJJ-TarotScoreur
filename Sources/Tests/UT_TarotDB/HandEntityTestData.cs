@@ -213,6 +213,8 @@ public static class HandEntityTestData
 			PetitResultDB.Owned,
 			ChelemDB.Unknown,
 			ChelemDB.Success,
+			1UL,
+			1UL,
 			new[]
 			{
 				(1UL, 1UL),
@@ -247,6 +249,8 @@ public static class HandEntityTestData
 			PetitResultDB.NotOwned,
 			ChelemDB.Unknown,
 			ChelemDB.NotAnnouncedSuccess,
+			1UL,
+			1UL,
 			new[]
 			{
 				(1UL, 1UL),
@@ -254,6 +258,42 @@ public static class HandEntityTestData
 				(1UL, 3UL)
 			},
 			Array.Empty<(BiddingDB, PoigneeDB)>()
+		};
+		yield return new object?[]
+		{
+			false,
+			1UL,
+			1UL,
+			1,
+			4,
+			"FrenchTarotRules",
+			"TestRules",
+			new DateTime(2022, 09, 21),
+			new DateTime(2022, 10, 22),
+			210, 
+			512,
+			false,
+			true,
+			true,
+			null,
+			PetitResultDB.Lost,
+			PetitResultDB.Owned,
+			ChelemDB.Unknown,
+			ChelemDB.Success,
+			1UL,
+			2UL,
+			new[]
+			{
+				(1UL, 1UL),
+				(1UL, 2UL),
+				(1UL, 3UL)
+			},
+			new[]
+			{
+				(BiddingDB.GardeContreLeChien, PoigneeDB.Triple),
+				(BiddingDB.Opponent, PoigneeDB.None),
+				(BiddingDB.Opponent, PoigneeDB.None)
+			}
 		};
 	}
 }
