@@ -13,9 +13,9 @@ public class UT_Stub
     public void TestLoadAllPlayer(int page, int pageSize, Player[] players)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadAllPlayer(page, pageSize).ToList();
+        var playersFound = stub.LoadAllPlayer(page, pageSize).Result.ToList();
 
-        Assert.Equal(playersFound.Count, players.Length);
+        Assert.Equal(playersFound.Count(), players.Length);
         Assert.Equal(playersFound, players);
     }
     
@@ -24,7 +24,7 @@ public class UT_Stub
     public void TestLoadPlayersByFirstName(string firstName, Player[] players, int page, int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayerByFirstName(firstName, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayerByFirstName(firstName, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -35,7 +35,7 @@ public class UT_Stub
     public void TestLoadPlayerByLastName(string lastName, Player[] players, int page, int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayerByLastName(lastName, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayerByLastName(lastName, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -46,7 +46,7 @@ public class UT_Stub
     public void TestLoadPlayerByNickname(string nickname, Player[] players, int page, int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayerByNickname(nickname, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayerByNickname(nickname, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -58,7 +58,7 @@ public class UT_Stub
         int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -70,7 +70,7 @@ public class UT_Stub
         int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -82,7 +82,7 @@ public class UT_Stub
         int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -93,7 +93,7 @@ public class UT_Stub
     public void TestLoadPlayersByGroup(Group group, Player[] players, int page, int pageSize)
     {
         var stub = new Stub();
-        var playersFound = stub.LoadPlayersByGroup(group, page, pageSize).ToList();
+        var playersFound = stub.LoadPlayersByGroup(group, page, pageSize).Result.ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -107,7 +107,7 @@ public class UT_Stub
     public void TestLoadGroupsByName(string name, Group group)
     {
         var stub = new Stub();
-        var groupFound = stub.LoadGroupsByName(name);
+        var groupFound = stub.LoadGroupsByName(name).Result;
 
         Assert.Equal(groupFound, group);
     }
@@ -117,7 +117,7 @@ public class UT_Stub
     public void TestLoadGroupsByPlayer(Player player, Group[] groups, int page, int pageSize)
     {
         var stub = new Stub();
-        var groupFound = stub.LoadGroupsByPlayer(player, page,  pageSize).ToList();
+        var groupFound = stub.LoadGroupsByPlayer(player, page,  pageSize).Result.ToList();
 
         Assert.Equal(groupFound.Count, groups.Length);
         Assert.Equal(groupFound, groups);
@@ -128,7 +128,7 @@ public class UT_Stub
     public void TestLoadAllGroups(Group[] groups, int page, int pageSize)
     {
         var stub = new Stub();
-        var groupFound = stub.LoadAllGroups(page,  pageSize).ToList();
+        var groupFound = stub.LoadAllGroups(page,  pageSize).Result.ToList();
 
         Assert.Equal(groupFound.Count, groups.Length);
         Assert.Equal(groupFound, groups);
@@ -142,7 +142,7 @@ public class UT_Stub
     public void TestLoadRule(string name, IRules rule)
     {
         var stub = new Stub();
-        var ruleFound = stub.LoadRule(name);
+        var ruleFound = stub.LoadRule(name).Result;
 
         Assert.Equal(ruleFound, rule);
     }
@@ -152,7 +152,7 @@ public class UT_Stub
     public void TestLoadAllRules(IRules[] rules, int page, int pageSize)
     {
         var stub = new Stub();
-        var rulesFound = stub.LoadAllRules(page, pageSize).ToList();
+        var rulesFound = stub.LoadAllRules(page, pageSize).Result.ToList();
 
         Assert.Equal(rulesFound.Count, rules.Length);
         Assert.Equal(rulesFound, rules);
@@ -166,7 +166,7 @@ public class UT_Stub
     public void TestLoadHandByGame(Game game, List<KeyValuePair<int, Hand>> hands, int page, int pageSize)
     {
         var stub = new Stub();
-        var handsFound = stub.LoadHandByGame(game, page, pageSize).ToList();
+        var handsFound = stub.LoadHandByGame(game, page, pageSize).Result.ToList();
 
         Assert.Equal(handsFound.Count, hands.Count);
         Assert.Equal(handsFound, hands);
@@ -180,7 +180,7 @@ public class UT_Stub
     public void TestLoadAllGames(Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadAllGames(page, pageSize).ToList();
+        var gamesFound = stub.LoadAllGames(page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -191,7 +191,7 @@ public class UT_Stub
     public void TestLoadGameByGroup(Group group, Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByGroup(group, page, pageSize).ToList();
+        var gamesFound = stub.LoadGameByGroup(group, page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -202,7 +202,7 @@ public class UT_Stub
     public void TestLoadGameByPlayer(Player player, Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByPlayer(player, page, pageSize).ToList();
+        var gamesFound = stub.LoadGameByPlayer(player, page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -213,7 +213,7 @@ public class UT_Stub
     public void TestLoadGameByName(string name, Game? game)
     {
         var stub = new Stub();
-        var gameFound = stub.LoadGameByName(name);
+        var gameFound = stub.LoadGameByName(name).Result;
 
         Assert.Equal(gameFound, game);
     }
@@ -223,7 +223,7 @@ public class UT_Stub
     public void TestLoadGameByStartDate(DateTime startDate, Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByStartDate(startDate, page, pageSize).ToList();
+        var gamesFound = stub.LoadGameByStartDate(startDate, page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -234,7 +234,7 @@ public class UT_Stub
     public void TestLoadGameByEndDate(DateTime endDate, Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByEndDate(endDate, page, pageSize).ToList();
+        var gamesFound = stub.LoadGameByEndDate(endDate, page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -245,7 +245,7 @@ public class UT_Stub
     public void TestLoadGameByDateInterval(DateTime startDate, DateTime endDate, Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByDateInterval(startDate, endDate, page, pageSize).ToList();
+        var gamesFound = stub.LoadGameByDateInterval(startDate, endDate, page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -257,8 +257,7 @@ public class UT_Stub
         int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize).ToList();
-
+        var gamesFound = stub.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize).Result.ToList();
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
     }
@@ -269,7 +268,7 @@ public class UT_Stub
         int page, int pageSize)
     {
         var stub = new Stub();
-        var gamesFound = stub.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize).ToList();
+        var gamesFound = stub.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize).Result.ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);

@@ -449,7 +449,8 @@ public class Stub : ILoader
         if (page == 0 || pageSize == 0) return new List<Game>();
         return await Task.FromResult(_gameList
             .Where(game => game.StartDate == startDate)
-            .Skip((page - 1) * pageSize).Take(pageSize));
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize));
     }
 
 
@@ -534,7 +535,7 @@ public class Stub : ILoader
     {
         if (page == 0 || pageSize == 0) return new List<Game>();
         return await Task.FromResult(_gameList
-        .Where(g => g.Players.Any(p => group.Players.Contains(p)))
+        .Where(g => g.Players.All(p => group.Players.Contains(p)))
         .Skip((page - 1) * pageSize).Take(pageSize));
     }
 
