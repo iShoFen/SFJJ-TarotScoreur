@@ -9,6 +9,11 @@ namespace StubContext;
 /// </summary>
 internal class TarotDBContextStub : TarotDBContext
 {
+	/// <summary>
+	/// Default constructor
+	/// </summary>
+	public TarotDBContextStub() {}
+	
     /// <summary>
     /// Constructor with options
     /// </summary>

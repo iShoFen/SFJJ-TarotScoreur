@@ -42,13 +42,19 @@ internal class TarotDBContext : DbContext
 	/// </summary>
 	/// <param name="options"> Options </param>
     public TarotDBContext(DbContextOptions<TarotDBContext> options) : base(options) {}
-	
+
 	/// <summary>
 	/// Configures the database
 	/// </summary>
 	/// <param name="optionsBuilder"> Options builder </param>
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite("Data Source=TarotScoreur.db");
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseSqlite(@"Data Source=TarotScoreur.db");
+		}
+	}
+
 
 	/// <summary>
 	/// Creates the database
