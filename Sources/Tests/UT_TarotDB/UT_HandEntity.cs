@@ -17,7 +17,7 @@ public class UT_HandEntity
 	{
 		var expBiddingsId = iExpBiddingsId.ToArray();
 		var expBiddings = iExpBiddings.ToArray();
-		await using var context = new TarotDBContextStub(InitDB());
+		await using var context = new TarotDBContextStub(InitDb());
 
 		await context.Database.EnsureCreatedAsync();
 		var hand = await context.Hands
@@ -58,7 +58,7 @@ public class UT_HandEntity
 		bool? twentyOne, bool? excuse, PetitResultDB petit, ChelemDB chelem, ulong gameId,
 		params (BiddingDB, PoigneeDB)[] biddings)
 	{
-		var options = InitDB();
+		var options = InitDb();
 		await using (var context = new TarotDBContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
@@ -151,7 +151,7 @@ public class UT_HandEntity
 		var biddingsId = iBiddingsId.ToArray();
 		var newBiddings = iNewBiddings.ToArray();
 		
-		var options = InitDB();
+		var options = InitDb();
 		await using (var context = new TarotDBContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
@@ -251,7 +251,7 @@ public class UT_HandEntity
 	[Fact]
 	public async Task TestDelete()
 	{
-		var options = InitDB();
+		var options = InitDb();
 		await using (var context = new TarotDBContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();

@@ -13,7 +13,7 @@ public class UT_GameEntity
     public async Task TestRead(ulong expId, string expName, string expRules, DateTime expStartDate,
 	    DateTime? expEndDate, IEnumerable<ulong> expPlayers, IEnumerable<ulong> expHands)
     {
-	    await using var context = new TarotDBContextStub(InitDB());
+	    await using var context = new TarotDBContextStub(InitDb());
 	    await context.Database.EnsureCreatedAsync();
 
 	    var game = await context.Games
@@ -45,7 +45,7 @@ public class UT_GameEntity
     {
         var players = iPlayers.ToHashSet();
         var hands = iHands.ToHashSet();
-        var options = InitDB();
+        var options = InitDb();
         
         await using (var context = new TarotDBContextStub(options))
         {
@@ -113,7 +113,7 @@ public class UT_GameEntity
 	    IEnumerable<PlayerEntity> players, IEnumerable<PlayerEntity> iPlayersToRemove, IEnumerable<HandEntity> hands,
 	    IEnumerable<HandEntity> iHandsToRemove)
     {
-	    var options = InitDB();
+	    var options = InitDb();
 	    var playersToRemove = iPlayersToRemove.ToList();
 	    var handsToRemove = iHandsToRemove.ToList();
 	    await using(var context = new TarotDBContextStub(options))
@@ -185,7 +185,7 @@ public class UT_GameEntity
     [Fact]
     public async Task TestDelete()
     {
-	    var options = InitDB();
+	    var options = InitDb();
 	    await using (var context = new TarotDBContextStub(options))
 	    {
 		    await context.Database.EnsureCreatedAsync();

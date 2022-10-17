@@ -18,7 +18,7 @@ public class UT_TarotContext
 		};
 		yield return new object[]
 		{
-			new TarotDBContext(InitDB()),
+			new TarotDBContext(InitDb()),
 			"DataSource=:memory:"
 		};
 		yield return new object[]
@@ -28,7 +28,7 @@ public class UT_TarotContext
 		};
 		yield return new object[]
 		{
-			new TarotDBContextStub(InitDB()),
+			new TarotDBContextStub(InitDb()),
 			"DataSource=:memory:"
 		};
 	}
