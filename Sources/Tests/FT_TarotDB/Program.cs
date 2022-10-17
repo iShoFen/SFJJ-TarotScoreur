@@ -39,7 +39,7 @@ playersEntities.AddRange(new PlayerEntity[]
     }
 );
 
-using var context = new TarotDBContext();
+using var context = new TarotDbContext();
 context.Database.EnsureCreated();
 
 context.Players.AddRange(playersEntities);

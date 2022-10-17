@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
 
+namespace FT_TarotDBStub;
+
 internal class Program
 {
     public static void Main()
@@ -11,11 +13,11 @@ internal class Program
 
         connection.Open();
 
-        var options = new DbContextOptionsBuilder<TarotDBContext>()
+        var options = new DbContextOptionsBuilder<TarotDbContext>()
             .UseSqlite(connection)
             .Options;
 
-        using (var context = new TarotDBContextStub(options))
+        using (var context = new TarotDbContextStub(options))
         {
             context.Database.EnsureCreated();
 

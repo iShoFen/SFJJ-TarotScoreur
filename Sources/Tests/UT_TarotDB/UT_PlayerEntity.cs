@@ -1,5 +1,3 @@
-using System.Security.AccessControl;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
@@ -14,20 +12,18 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
-        {
-            context.Database.EnsureCreated();
-            Assert.Equal(16, await context.Players.CountAsync());
+        await using var context = new TarotDbContextStub(options);
+        await context.Database.EnsureCreatedAsync();
+        Assert.Equal(16, await context.Players.CountAsync());
 
-            var julien = await context.Players.FindAsync(6UL);
-            Assert.Equal("Julien", julien?.FirstName);
-            Assert.Equal("PETIT", julien?.LastName);
-            Assert.Equal("THEGIANT", julien?.Nickname);
-            Assert.Equal("avatar6", julien?.Avatar);
+        var julien = await context.Players.FindAsync(6UL);
+        Assert.Equal("Julien", julien?.FirstName);
+        Assert.Equal("PETIT", julien?.LastName);
+        Assert.Equal("THEGIANT", julien?.Nickname);
+        Assert.Equal("avatar6", julien?.Avatar);
 
-            var playersWith_ne = context.Players.Where(p => p.FirstName.Contains("ne"));
-            Assert.Equal(3, await playersWith_ne.CountAsync());
-        }
+        var playersWith_ne = context.Players.Where(p => p.FirstName.Contains("ne"));
+        Assert.Equal(3, await playersWith_ne.CountAsync());
     }
 
     [Theory]
@@ -61,9 +57,9 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             await context.Players.AddAsync(new PlayerEntity
             {
@@ -83,9 +79,10 @@ public class UT_PlayerEntity
             }
         }
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            if (isValid)
+	        await context.Database.EnsureCreatedAsync();
+	        if (isValid)
             {
                 Assert.Equal(initialPlayersCount + 1, await context.Players.CountAsync());
                 Assert.Equal(1, await context.Players.Where(p => p.FirstName == firstname
@@ -109,9 +106,9 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             await context.Players.AddAsync(new PlayerEntity
             {
@@ -125,12 +122,13 @@ public class UT_PlayerEntity
         }
 
         ulong playerId;
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            var players = context.Players.Where(p => p.FirstName == firstname
-                                                     && p.LastName == lastname
-                                                     && p.Nickname == nickname
-                                                     && p.Avatar == avatar);
+	        await context.Database.EnsureCreatedAsync();
+	        var players = context.Players.Where(p => p.FirstName == firstname
+	                                                 && p.LastName == lastname
+	                                                 && p.Nickname == nickname
+	                                                 && p.Avatar == avatar);
 
             var playersAfter = context.Players.Where(p => p.FirstName == firstname2
                                                           && p.LastName == lastname2
@@ -150,12 +148,13 @@ public class UT_PlayerEntity
             await context.SaveChangesAsync();
         }
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            var players = context.Players.Where(p => p.FirstName == firstname
-                                                     && p.LastName == lastname
-                                                     && p.Nickname == nickname
-                                                     && p.Avatar == avatar);
+	        await context.Database.EnsureCreatedAsync();
+	        var players = context.Players.Where(p => p.FirstName == firstname
+	                                                 && p.LastName == lastname
+	                                                 && p.Nickname == nickname
+	                                                 && p.Avatar == avatar);
 
             var playersAfter = context.Players.Where(p => p.FirstName == firstname2
                                                           && p.LastName == lastname2
@@ -189,9 +188,9 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             await context.Players.AddAsync(new PlayerEntity
             {
@@ -206,12 +205,13 @@ public class UT_PlayerEntity
 
         ulong playerId;
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            var players = context.Players.Where(p => p.FirstName == firstname
-                                                     && p.LastName == lastname
-                                                     && p.Nickname == nickname
-                                                     && p.Avatar == avatar);
+	        await context.Database.EnsureCreatedAsync();
+	        var players = context.Players.Where(p => p.FirstName == firstname
+	                                                 && p.LastName == lastname
+	                                                 && p.Nickname == nickname
+	                                                 && p.Avatar == avatar);
 
             Assert.Equal(1, await players.CountAsync());
 
@@ -221,12 +221,13 @@ public class UT_PlayerEntity
             await context.SaveChangesAsync();
         }
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            var players = context.Players.Where(p => p.FirstName == firstname
-                                                     && p.LastName == lastname
-                                                     && p.Nickname == nickname
-                                                     && p.Avatar == avatar);
+	        await context.Database.EnsureCreatedAsync();
+	        var players = context.Players.Where(p => p.FirstName == firstname
+	                                                 && p.LastName == lastname
+	                                                 && p.Nickname == nickname
+	                                                 && p.Avatar == avatar);
 
             Assert.Equal(0, await players.CountAsync());
             Assert.Null(await context.Players.FindAsync(playerId));

@@ -1,4 +1,3 @@
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
@@ -13,22 +12,20 @@ public class UT_UserEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
-        {
-            context.Database.EnsureCreated();
+        await using var context = new TarotDbContextStub(options);
+        await context.Database.EnsureCreatedAsync();
 
-            var user = await context.Users.FindAsync(13UL);
+        var user = await context.Users.FindAsync(13UL);
 
-            Assert.Equal("Anne", user?.FirstName);
-            Assert.Equal("SAURIN", user?.LastName);
-            Assert.Equal("FRIPOUILLE2", user?.Nickname);
-            Assert.Equal("avatar13", user?.Avatar);
-            Assert.Equal("email13", user?.Email);
-            Assert.Equal("password13", user?.Password);
+        Assert.Equal("Anne", user?.FirstName);
+        Assert.Equal("SAURIN", user?.LastName);
+        Assert.Equal("FRIPOUILLE2", user?.Nickname);
+        Assert.Equal("avatar13", user?.Avatar);
+        Assert.Equal("email13", user?.Email);
+        Assert.Equal("password13", user?.Password);
 
-            var usersWith_ne = context.Users.Where(p => p.FirstName.Contains("ne"));
-            Assert.Equal(3, await usersWith_ne.CountAsync());
-        }
+        var usersWith_ne = context.Users.Where(p => p.FirstName.Contains("ne"));
+        Assert.Equal(3, await usersWith_ne.CountAsync());
     }
 
     [Theory]
@@ -83,9 +80,9 @@ public class UT_UserEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             await context.Users.AddAsync(new UserEntity
             {
@@ -107,7 +104,7 @@ public class UT_UserEntity
             }
         }
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             if (isValid)
             {
@@ -139,9 +136,9 @@ public class UT_UserEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             await context.Users.AddAsync(new UserEntity
             {
@@ -157,7 +154,7 @@ public class UT_UserEntity
         }
 
         ulong userId;
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var users = context.Users.Where(u => u.FirstName == firstname
                                                  && u.LastName == lastname
@@ -188,7 +185,7 @@ public class UT_UserEntity
             await context.SaveChangesAsync();
         }
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var users = context.Users.Where(u => u.FirstName == firstname
                                                  && u.LastName == lastname
@@ -232,9 +229,9 @@ public class UT_UserEntity
     {
         var options = TestInitializer.InitDb();
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
 
             await context.Users.AddAsync(new UserEntity
             {
@@ -251,7 +248,7 @@ public class UT_UserEntity
 
         ulong userId;
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var users = context.Users.Where(u => u.FirstName == firstname
                                                  && u.LastName == lastname
@@ -268,7 +265,7 @@ public class UT_UserEntity
             await context.SaveChangesAsync();
         }
 
-        using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var users = context.Users.Where(u => u.FirstName == firstname
                                                      && u.LastName == lastname

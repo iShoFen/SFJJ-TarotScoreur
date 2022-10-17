@@ -7,13 +7,20 @@ namespace StubContext;
 /// <summary>
 /// Stub context for testing
 /// </summary>
-internal class TarotDBContextStub : TarotDBContext
+internal class TarotDbContextStub : TarotDbContext
 {
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public TarotDbContextStub()
+    {
+    }
+
     /// <summary>
     /// Constructor with options
     /// </summary>
     /// <param name="options"> Options </param>
-    public TarotDBContextStub(DbContextOptions<TarotDBContext> options) : base(options)
+    public TarotDbContextStub(DbContextOptions<TarotDbContext> options) : base(options)
     {
     }
 
@@ -247,7 +254,7 @@ internal class TarotDBContextStub : TarotDBContext
             {
                 hands.Add(new
                 {
-                    Id = handId, Number = i, Rules = "FrenchTarotRules", Date = dates[index],
+                    Id = handId, Number = i + 1, Rules = "FrenchTarotRules", Date = dates[index],
                     TakerScore = scores[index],
                     TwentyOne = twentys[index], Excuse = excuses[index], Petit = petits[index], Chelem = chelems[index],
                     GameId = gameId

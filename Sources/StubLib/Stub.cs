@@ -54,11 +54,11 @@ public class Stub : ILoader
     /// </summary>
     private void SetGameList()
     {
-        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], DateTime.Now, null));
-        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], DateTime.Now, null));
+        _gameList.Add(new Game(1UL, "Game 1", _rulesList[0], new DateTime(2022, 09, 01), null));
+        _gameList.Add(new Game(2UL, "Game 2", _rulesList[0], new DateTime(2022, 09, 02), null));
+        _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], new DateTime(2022, 09, 03), null));
+        _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], new DateTime(2022, 09, 04), null));
+        _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], new DateTime(2022, 09, 05), null));
         _gameList.Add(new Game(6UL, "Game 6", _rulesList[0],
             new DateTime(2022, 09, 21), new DateTime(2022, 09, 25)));
         _gameList.Add(new Game(7UL, "Game 7", _rulesList[0],
@@ -97,32 +97,33 @@ public class Stub : ILoader
         _gameList[4].AddPlayer(_playerList[12]);
         _gameList[4].AddPlayer(_playerList[9]);
 
-        _gameList[4].AddPlayer(_playerList[0]);
-        _gameList[4].AddPlayer(_playerList[15]);
-        _gameList[4].AddPlayer(_playerList[5]);
-        _gameList[4].AddPlayer(_playerList[11]);
-        _gameList[4].AddPlayer(_playerList[6]);
-
-        _gameList[5].AddPlayer(_playerList[4]);
-        _gameList[5].AddPlayer(_playerList[7]);
-        _gameList[5].AddPlayer(_playerList[13]);
+        _gameList[5].AddPlayer(_playerList[0]);
         _gameList[5].AddPlayer(_playerList[15]);
-        _gameList[5].AddPlayer(_playerList[1]);
+        _gameList[5].AddPlayer(_playerList[5]);
+        _gameList[5].AddPlayer(_playerList[11]);
+        _gameList[5].AddPlayer(_playerList[6]);
 
-        _gameList[6].AddPlayer(_playerList[2]);
-        _gameList[6].AddPlayer(_playerList[3]);
-        _gameList[6].AddPlayer(_playerList[5]);
-        _gameList[6].AddPlayer(_playerList[11]);
-        _gameList[6].AddPlayer(_playerList[9]);
+        _gameList[6].AddPlayer(_playerList[4]);
+        _gameList[6].AddPlayer(_playerList[7]);
+        _gameList[6].AddPlayer(_playerList[13]);
+        _gameList[6].AddPlayer(_playerList[15]);
+        _gameList[6].AddPlayer(_playerList[1]);
 
-        _gameList[7].AddPlayer(_playerList[0]);
-        _gameList[7].AddPlayer(_playerList[4]);
-        _gameList[7].AddPlayer(_playerList[6]);
+        _gameList[7].AddPlayer(_playerList[2]);
+        _gameList[7].AddPlayer(_playerList[3]);
+        _gameList[7].AddPlayer(_playerList[5]);
+        _gameList[7].AddPlayer(_playerList[11]);
+        _gameList[7].AddPlayer(_playerList[9]);
 
-        _gameList[8].AddPlayer(_playerList[7]);
-        _gameList[8].AddPlayer(_playerList[8]);
-        _gameList[8].AddPlayer(_playerList[10]);
-        _gameList[8].AddPlayer(_playerList[12]);
+        _gameList[8].AddPlayer(_playerList[0]);
+        _gameList[8].AddPlayer(_playerList[4]);
+        _gameList[8].AddPlayer(_playerList[6]);
+
+        _gameList[9].AddPlayer(_playerList[0]);
+        _gameList[9].AddPlayer(_playerList[1]);
+        _gameList[9].AddPlayer(_playerList[2]);
+        _gameList[9].AddPlayer(_playerList[3]);
+        _gameList[9].AddPlayer(_playerList[4]);
     }
 
     /// <summary>
@@ -133,7 +134,7 @@ public class Stub : ILoader
         var j = 1UL;
         for (var i = 0; i < 12; i++)
         {
-            _groupList.Add(new Group(j, "Group" + i + 1, _playerList[i],
+            _groupList.Add(new Group(j, "Group " + (i + 1), _playerList[i],
                 _playerList[i + 1], _playerList[i + 2], _playerList[i + 3], _playerList[i + 4]));
             ++j;
         }
