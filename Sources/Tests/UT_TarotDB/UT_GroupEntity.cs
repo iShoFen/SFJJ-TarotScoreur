@@ -12,13 +12,14 @@ public class UT_GroupEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using var context = new TarotDBContextStub(options);
+        await using var context = new TarotDbContextStub(options);
         await context.Database.EnsureCreatedAsync();
 
         var group = await context.Groups
             .Include(g => g.Players)
             .FirstAsync(g => g.Id == 6UL);
 
+        Assert.Equal(6UL, group.Id);
         Assert.Equal("Group6", group.Name);
         Assert.Equal(5, group.Players.Count);
     }
@@ -28,7 +29,7 @@ public class UT_GroupEntity
     internal async Task TestAdd(bool isValid, string name, IEnumerable<PlayerEntity> players, int expectedPlayers)
     {
         var options = TestInitializer.InitDb();
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
             Assert.Empty(context.Groups.Where(g => g.Name == name));
@@ -51,7 +52,7 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -60,7 +61,7 @@ public class UT_GroupEntity
                 .FirstOrDefaultAsync(g => g.Name == name);
 
             Assert.NotNull(fetchGroup);
-            Assert.Equal(name, fetchGroup!.Name);
+            Assert.Equal(name, fetchGroup.Name);
             Assert.All(fetchGroup.Players, p => Assert.Contains(p, context.Players));
             Assert.All(fetchGroup.Players, p => Assert.Contains(fetchGroup, p.Groups));
         }
@@ -72,7 +73,7 @@ public class UT_GroupEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -85,12 +86,12 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var group = context.Groups.FirstOrDefault(g => g.Name == name);
             Assert.NotNull(group);
 
-            group!.Name = newName;
+            group.Name = newName;
 
             if (!isValid)
             {
@@ -101,7 +102,7 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var group = context.Groups.FirstOrDefault(g => g.Name == newName);
             Assert.NotNull(group);
@@ -116,7 +117,7 @@ public class UT_GroupEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -129,14 +130,14 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var group = await context.Groups.Include(g => g.Players).FirstOrDefaultAsync(g => g.Name == name);
             Assert.NotNull(group);
 
             foreach (var p in newPlayers)
             {
-                group!.Players.Add(p.Id == 0 ? p : (await context.Players.FindAsync(p.Id))!);
+                group.Players.Add(p.Id == 0 ? p : (await context.Players.FindAsync(p.Id))!);
             }
 
             if (!isValid)
@@ -147,14 +148,14 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var group = await context.Groups
                 .Include(g => g.Players)
                 .FirstOrDefaultAsync(g => g.Name == name);
             Assert.NotNull(group);
 
-            Assert.Equal(expectedPlayerCount, group!.Players.Count);
+            Assert.Equal(expectedPlayerCount, group.Players.Count);
             Assert.All(group.Players, p => Assert.Contains(p, context.Players));
             Assert.All(group.Players, p => Assert.Contains(group, p.Groups));
         }
@@ -167,7 +168,7 @@ public class UT_GroupEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -180,7 +181,7 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -193,13 +194,13 @@ public class UT_GroupEntity
 
             foreach (var removePlayer in playersToRemove)
             {
-                group!.Players.Remove(removePlayer);
+                group.Players.Remove(removePlayer);
             }
 
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -226,7 +227,7 @@ public class UT_GroupEntity
             new PlayerEntity { Id = 15UL }
         };
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -239,7 +240,7 @@ public class UT_GroupEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -248,11 +249,11 @@ public class UT_GroupEntity
                 .FirstOrDefaultAsync(g => g.Name == name);
             Assert.NotNull(groupToRemove);
 
-            context.Groups.Remove(groupToRemove!);
+            context.Groups.Remove(groupToRemove);
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             var group = context.Groups
                 .Include(g => g.Players)

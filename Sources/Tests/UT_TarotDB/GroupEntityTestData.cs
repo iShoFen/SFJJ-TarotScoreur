@@ -4,7 +4,7 @@ namespace UT_TarotDB;
 
 public static class GroupEntityTestData
 {
-    public static IEnumerable<object?> Data_TestAdd()
+    public static IEnumerable<object?[]> Data_TestAdd()
     {
         yield return new object?[]
         {
@@ -101,7 +101,7 @@ public static class GroupEntityTestData
         };
     }
 
-    public static IEnumerable<object?> Data_TestUpdateName()
+    public static IEnumerable<object?[]> Data_TestUpdateName()
     {
         yield return new object?[]
         {
@@ -155,7 +155,7 @@ public static class GroupEntityTestData
         };
     }
 
-    public static IEnumerable<object?> Data_TestAddPlayers()
+    public static IEnumerable<object?[]> Data_TestAddPlayers()
     {
         yield return new object?[]
         {
@@ -322,26 +322,6 @@ public static class GroupEntityTestData
             },
             4,
             new PlayerEntity { Id = 4UL }
-        };
-    }
-
-    public static IEnumerable<object?[]> Data_TestRemove()
-    {
-        yield return new object?[]
-        {
-            "NewGroup1",
-            Array.Empty<PlayerEntity>()
-        };
-        yield return new object?[]
-        {
-            "NewGroup1",
-            new[]
-            {
-                new PlayerEntity { Id = 6UL },
-                new PlayerEntity { Id = 8UL },
-                new UserEntity { Id = 13UL },
-                new UserEntity { Id = 15UL }
-            }
         };
     }
 }

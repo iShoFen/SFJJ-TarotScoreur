@@ -12,7 +12,7 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using var context = new TarotDBContextStub(options);
+        await using var context = new TarotDbContextStub(options);
         await context.Database.EnsureCreatedAsync();
         Assert.Equal(16, await context.Players.CountAsync());
 
@@ -57,7 +57,7 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -79,7 +79,7 @@ public class UT_PlayerEntity
             }
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
 	        await context.Database.EnsureCreatedAsync();
 	        if (isValid)
@@ -106,7 +106,7 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -122,7 +122,7 @@ public class UT_PlayerEntity
         }
 
         ulong playerId;
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
 	        await context.Database.EnsureCreatedAsync();
 	        var players = context.Players.Where(p => p.FirstName == firstname
@@ -148,7 +148,7 @@ public class UT_PlayerEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
 	        await context.Database.EnsureCreatedAsync();
 	        var players = context.Players.Where(p => p.FirstName == firstname
@@ -188,7 +188,7 @@ public class UT_PlayerEntity
     {
         var options = TestInitializer.InitDb();
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
 
@@ -205,7 +205,7 @@ public class UT_PlayerEntity
 
         ulong playerId;
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
 	        await context.Database.EnsureCreatedAsync();
 	        var players = context.Players.Where(p => p.FirstName == firstname
@@ -221,7 +221,7 @@ public class UT_PlayerEntity
             await context.SaveChangesAsync();
         }
 
-        await using (var context = new TarotDBContextStub(options))
+        await using (var context = new TarotDbContextStub(options))
         {
 	        await context.Database.EnsureCreatedAsync();
 	        var players = context.Players.Where(p => p.FirstName == firstname
