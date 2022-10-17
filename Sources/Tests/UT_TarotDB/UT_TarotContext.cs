@@ -37,7 +37,6 @@ public class UT_TarotContext
 	[MemberData(nameof(TestConstructor))]
 	internal async Task TestDefaultConstructor(TarotDBContext context, string expConnectionString)
 	{
-		Assert.True(await context.Database.CanConnectAsync());
 		Assert.Equal(expConnectionString, context.Database.GetDbConnection().ConnectionString);
 
 		await context.DisposeAsync();
