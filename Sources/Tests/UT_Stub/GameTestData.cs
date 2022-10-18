@@ -227,7 +227,7 @@ public static class GameTestData
             1,
             0
         };
-        yield return new Object[]
+        yield return new object[]
         {
             new Group(1UL, "Group 1",
                 new("Jean", "BON", "JEBO", "avatar1"),
@@ -240,7 +240,7 @@ public static class GameTestData
             0,
             0
         };
-        yield return new Object[]
+        yield return new object[]
         {
             new Group(1UL, "Group 1",
                 new Player("Jean", "BON", "JEBO", "avatar1"),
@@ -253,7 +253,7 @@ public static class GameTestData
             0,
             1
         };
-        yield return new Object[]
+        yield return new object[]
         {
             new Group(1458UL, "Group 1458",
                 new Player("Jean", "BON", "JEBO", "avatar1"),
