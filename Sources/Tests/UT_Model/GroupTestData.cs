@@ -61,8 +61,8 @@ internal static class GroupTestData
                 new("Julien", "Theme", "Ju", "avatar")),
             new Player[]
             {
-                new Player("Florent", "Marques", "Flo", "avatar"),
-                new Player("Jordan", "Artzet", "Jo", "avatar"),
+                new("Florent", "Marques", "Flo", "avatar"),
+                new("Jordan", "Artzet", "Jo", "avatar"),
             },
             new Player[]
             {
@@ -78,13 +78,13 @@ internal static class GroupTestData
             new Group("partie"),
             new Player[]
             {
-                new Player("Florent", "Marques", "Flo", "avatar"),
-                new Player("Jordan", "Artzet", "Jo", "avatar"),
+                new("Florent", "Marques", "Flo", "avatar"),
+                new("Jordan", "Artzet", "Jo", "avatar"),
             },
             new Player[]
             {
-                new Player("Florent", "Marques", "Flo", "avatar"),
-                new Player("Jordan", "Artzet", "Jo", "avatar"),
+                new("Florent", "Marques", "Flo", "avatar"),
+                new("Jordan", "Artzet", "Jo", "avatar"),
             }
         };
         yield return new object?[]
