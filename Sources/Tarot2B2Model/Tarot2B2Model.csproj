@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Model\Model.csproj" />
+        <ProjectReference Include="..\TarotDB\TarotDB.csproj" />
+        <InternalsVisibleTo Include="FT_TarotDB" />
+        <InternalsVisibleTo Include="UT_Tarot2B2Model" />
+    </ItemGroup>
+
+</Project>

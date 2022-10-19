@@ -45,6 +45,14 @@ public class UT_Group
         Assert.Equal(expectedPlayers, group.Players);
     }
 
+    [Theory]
+    [MemberData(nameof(GroupTestData.Data_TestAddPlayers), MemberType = typeof(GroupTestData))]
+    public void TestAddPlayers(bool isValid, Group group, Player[] players, IEnumerable<Player> expectedPlayers)
+    {
+        Assert.Equal(isValid, group.AddPlayers(players));
+        Assert.All(expectedPlayers, p => Assert.Contains(p, group.Players));
+    }
+
     [Fact]
     public void TestAddNullPlayer()
     {
@@ -75,15 +83,15 @@ public class UT_Group
     {
         Assert.Equal(isEquals, group1.Equals(group2));
     }
-    
+
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestEqualsWithGroup), MemberType = typeof(GroupTestData))]
     public void TestEqualsWithGroup(bool isEquals, Group group1, Group? group2)
     {
-        Assert.Equal(isEquals, Group.GroupFullComparer.Equals(group1,group2));
+        Assert.Equal(isEquals, Group.GroupFullComparer.Equals(group1, group2));
     }
-    
-    
+
+
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestHashCode), MemberType = typeof(GroupTestData))]
     public void TestHashCode(bool expectedResult, Group group1, Group group2)
@@ -101,7 +109,7 @@ public class UT_Group
         );
         Assert.False(group.Equals(null));
     }
-    
+
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestFullComparer), MemberType = typeof(GroupTestData))]
     public void TestEqualsFullComparer(bool expectedResult, Group group1, Group group2)

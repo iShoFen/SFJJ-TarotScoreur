@@ -105,7 +105,7 @@ public static class HandTestData
             {
                 [new Player("Florent", "Marques", "Flo", "")] = (Bidding.Unknown, Poignee.None)
             },
-            new Hand(1, new FrenchTarotRules(), DateTime.Now),
+            new Hand(1, new FrenchTarotRules(), DateTime.Now, 45, null, null, PetitResult.Unknown, Chelem.Unknown),
             new Player("Florent", "Marques", "Flo", ""),
             Bidding.Unknown,
             Poignee.None
@@ -163,7 +163,7 @@ public static class HandTestData
             {
                 [new Player("Florent", "Marques", "Flo", "")] = (Bidding.Unknown, Poignee.None)
             },
-            new Hand(1, new FrenchTarotRules(), DateTime.Now),
+            new Hand(1, new FrenchTarotRules(), DateTime.Now, 45, null, null, PetitResult.Unknown, Chelem.Unknown),
             KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))
         };
         yield return new object[]
@@ -174,7 +174,7 @@ public static class HandTestData
                 [new Player("Florent", "Marques", "Flo", "")] = (Bidding.Unknown, Poignee.None),
                 [new Player("Jordan", "Artzet", "Jojo", "")] = (Bidding.King, Poignee.Double)
             },
-            new Hand(1, new FrenchTarotRules(), DateTime.Now),
+            new Hand(1, new FrenchTarotRules(), DateTime.Now, 45, null, null, PetitResult.Unknown, Chelem.Unknown),
             KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None)),
             KeyValuePair.Create(new Player("Jordan", "Artzet", "Jojo", ""), (Bidding.King, Poignee.Double))
         };
@@ -201,7 +201,7 @@ public static class HandTestData
             {
                 [new Player("Florent", "Marques", "Flo", "")] = (Bidding.Unknown, Poignee.None)
             },
-            new Hand(1, new FrenchTarotRules(), DateTime.Now),
+            new Hand(1, new FrenchTarotRules(), DateTime.Now, 45, null, null, PetitResult.Unknown, Chelem.Unknown),
             KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None)),
             KeyValuePair.Create(new Player("Florent", "Marques", "Flo", ""), (Bidding.Unknown, Poignee.None))
         };
@@ -317,7 +317,7 @@ public static class HandTestData
         yield return new object?[]
         {
             false,
-            new Hand(1, new FrenchTarotRules(), DateTime.Now),
+            new Hand(1, new FrenchTarotRules(), DateTime.Now, 45, null, null, PetitResult.Unknown, Chelem.Unknown),
             null,
         };
         yield return new object[]
