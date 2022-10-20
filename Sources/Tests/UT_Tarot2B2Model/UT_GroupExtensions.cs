@@ -146,9 +146,9 @@ public class UT_GroupExtensions
                 Assert.Equal(player.LastName, groupsToEntities.ElementAt(i).Players.ElementAt(j).LastName);
                 Assert.Equal(player.NickName, groupsToEntities.ElementAt(i).Players.ElementAt(j).Nickname);
                 Assert.Equal(player.Avatar, groupsToEntities.ElementAt(i).Players.ElementAt(j).Avatar);
-                j++;
+                ++j;
             }
-            i++;
+            ++i;
         }
         //Use the mapper
         i = 0;

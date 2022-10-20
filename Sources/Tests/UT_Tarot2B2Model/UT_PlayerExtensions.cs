@@ -94,9 +94,10 @@ public class UT_PlayerExtensions
     [MemberData(nameof(Data_AddPlayerAndPlayerEntity))]
     internal void TestPlayerEntityToModel(Player player, PlayerEntity playerEntity)
     {
-        Assert.Equal(player, playerEntity.ToModel());
+        var playerEntityToModel = playerEntity.ToModel();
+        Assert.Equal(player, playerEntityToModel);
         //To force the mapper to be used
-        Assert.Equal(player, playerEntity.ToModel());
+        Assert.Same(playerEntityToModel, playerEntity.ToModel());
     }
     
     [Theory]
@@ -131,7 +132,7 @@ public class UT_PlayerExtensions
             Assert.Equal(playerToEntity.LastName, playerEntities[i].LastName );
             Assert.Equal(playerToEntity.Nickname, playerEntities[i].Nickname );
             Assert.Equal(playerToEntity.Avatar, playerEntities[i].Avatar );
-            i++;
+            ++i;
         }
     }
     
