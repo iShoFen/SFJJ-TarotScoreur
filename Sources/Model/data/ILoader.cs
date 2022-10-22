@@ -194,25 +194,7 @@ public interface ILoader
     /// <returns>List of groups</returns>
     Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize);
     /*========== End Groups ==========*/
-
-
-    /*========== Rules ==========*/
-    /// <summary>
-    /// Method to load a rule by name
-    /// </summary>
-    /// <param name="name">Name of the rule to search</param>
-    /// <returns>A IRules</returns>
-    Task<IRules?> LoadRule(string name);
-
-    /// <summary>
-    /// Method to load all rules
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of rules</returns>
-    Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize);
-    /*========== End Rules ==========*/
-
+    
     /*========== Hands ==========*/
     /// <summary>
     /// Method to load hands by game

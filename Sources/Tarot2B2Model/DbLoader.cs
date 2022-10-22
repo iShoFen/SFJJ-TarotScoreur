@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.data;
 using Model.games;
@@ -8,155 +9,225 @@ namespace Tarot2B2Model;
 
 public class DbLoader : ILoader
 {
-    protected DbContext Context { get; }
+	private DbContextOptions<TarotDbContext> Options;
 
-    public DbLoader(DbContext context)
-    {
-        Context = context;
-    }
+	public DbLoader() : this(@"Data Source=TarotScoreur.db")
+	{
+	}
 
-    public DbLoader() : this(new TarotDbContext())
-    {
-    }
 
-    public async Task<Game?> LoadGameByName(string name)
-        => (await ((TarotDbContext)Context).Games.SingleOrDefaultAsync(g => g.Name.Contains(name)))?.ToModel();
+	public DbLoader(string connectionString)
+	{
+		var connection = new SqliteConnection(connectionString);
+		connection.Open();
+		Options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
 
-    public async Task<IEnumerable<Game>> LoadGameByPlayer(Player player, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Games.Where(g => g.Players.Any(p => p.Id == player.Id))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		using var context = new TarotDbContext(Options);
+		context.Database.EnsureCreated();
+	}
 
-    public async Task<IEnumerable<Game>> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Games.Where(g => g.StartDate == startDate)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<Game?> LoadGameByName(string name)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Games.Where(g => g.EndDate == endDate)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return (await context.Games.FirstOrDefaultAsync(g => g.Name == name))?.ToModel();
+	}
 
-    public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page,
-        int pageSize)
-        => (await ((TarotDbContext)Context).Games.Where(g => g.StartDate >= startDate && g.EndDate <= endDate)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByPlayer(Player player, int page, int pageSize)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,
-        Group group, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Games
-            .Where(g => g.StartDate >= startDate && g.EndDate <= endDate && g.Id == group.Id)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return (await context.Games.Where(g => g.Players.Any(p => p.Equals(player)))
+			.Skip(page - 1 * pageSize)
+			.Take(pageSize).ToListAsync()).ToModels();
+	}
 
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,
-        Player player, int page,
-        int pageSize)
-        => (await ((TarotDbContext)Context).Games.Where(g =>
-                g.StartDate >= startDate && g.EndDate <= endDate && g.Players.Any(p => p.ToModel().Equals(player)))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Game>> LoadGameByGroup(Group group, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Games.Where(g => g.Id == group.Id)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return (await context.Games.Where(g => g.StartDate == startDate)
+			.Skip(page - 1 * pageSize)
+			.Take(pageSize).ToListAsync()).ToModels();
+	}
 
-    public async Task<IEnumerable<Game>> LoadAllGames(int page, int pageSize)
-        => (await ((TarotDbContext)Context).Games
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
-        int pageSize)
-        => (await ((TarotDbContext)Context).Players
-            .Where(p => p.LastName.Contains(lastName) && p.Nickname.Contains(nickname))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Games.Where(g => g.EndDate == endDate)
+			.Skip(page - 1 * pageSize)
+			.Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
-        int pageSize)
-        => (await ((TarotDbContext)Context).Players
-            .Where(p => p.FirstName.Contains(firstName) && p.Nickname.Contains(nickname))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page,
+		int pageSize)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
-        int pageSize)
-        => (await ((TarotDbContext)Context).Players
-            .Where(p => p.FirstName.Contains(firstName) && p.LastName.Contains(lastName))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Games.Where(g => g.StartDate >= startDate && g.EndDate <= endDate)
+			.Skip(page - 1 * pageSize)
+			.Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<Player>> LoadPlayerByNickname(string nickname, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Players.Where(p => p.Nickname.Contains(nickname))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,
+		Group group, int page, int pageSize)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Player>> LoadPlayerByLastName(string lastName, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Players.Where(p => p.LastName.Contains(lastName))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Games
+			.Where(g => g.StartDate >= startDate 
+			            && g.EndDate <= endDate 
+			            && group.Players.All(p => g.Players.Select(pe => pe.Id).Contains(p.Id)))
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<Player>> LoadPlayerByFirstName(string firstName, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Players.Where(p => p.FirstName.Contains(firstName))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,
+		Player player, int page, int pageSize)
+	{
+		Mapper.Reset();
 
-    public async Task<IEnumerable<Player>> LoadAllPlayer(int page, int pageSize)
-        => (await ((TarotDbContext)Context).Players
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Games
+			.Where(g => g.StartDate >= startDate 
+			            && g.EndDate <= endDate 
+			            && g.Players.Select(pe => pe.Id).Contains(player.Id))
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Players.Where(p => group.Players.Contains(p.ToModel()))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Game>> LoadGameByGroup(Group group, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Games.Where(g => group.Players.All(
+				p => g.Players.Select(pe => pe.Id).Contains(p.Id)))
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<Group?> LoadGroupsByName(string name)
-        => (await ((TarotDbContext)Context).Groups.Where(g => g.Name == name)
-            .FirstOrDefaultAsync())?.ToModel();
+	public async Task<IEnumerable<Game>> LoadAllGames(int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Games.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<Group>> LoadAllGroups(int page, int pageSize)
-        => (await ((TarotDbContext)Context).Groups
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
+		int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => p.LastName == lastName && p.Nickname == nickname)
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Groups.Where(g => g.Players.Contains(player.ToEntity()))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).ToModels();
+	public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
+		int pageSize)
+	{ 
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => p.FirstName == firstName && p.Nickname == nickname)
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IRules?> LoadRule(string name)
-        => await Task.FromResult(RulesFactory.Rules.SingleOrDefault(r => r.Key.Equals(name)).Value);
+	public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
+		int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => p.FirstName == firstName && p.LastName == lastName)
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
+	public async Task<IEnumerable<Player>> LoadPlayerByNickname(string nickname, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => p.Nickname == nickname)
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
 
-    public async Task<IEnumerable<KeyValuePair<int, Hand>>> LoadHandByGame(Game game, int page, int pageSize)
-        => (await ((TarotDbContext)Context).Hands.Where(h => h.Game.ToModel().Equals(game))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync()).Select(h => new KeyValuePair<int, Hand>(h.Number, h.ToModel())).ToList();
+
+	public async Task<IEnumerable<Player>> LoadPlayerByLastName(string lastName, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => p.LastName == lastName)
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
+
+	public async Task<IEnumerable<Player>> LoadPlayerByFirstName(string firstName, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => p.FirstName == firstName)
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
+
+	public async Task<IEnumerable<Player>> LoadAllPlayer(int page, int pageSize)
+	{ 
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
+
+
+	public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Players.Where(p => group.Players.Select(pe => pe.Id).Contains(p.Id))
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
+
+	public async Task<Group?> LoadGroupsByName(string name)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return (await context.Groups.FirstOrDefaultAsync(g => g.Name == name))?.ToModel();
+	}
+
+	public async Task<IEnumerable<Group>> LoadAllGroups(int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Groups.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
+
+
+	public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() => context.Groups.Where(g => g.Players.Select(pe => pe.Id).Contains(player.Id))
+			.Skip(page - 1 * pageSize).Take(pageSize).AsEnumerable().ToModels());
+	}
+
+	public async Task<IEnumerable<KeyValuePair<int, Hand>>> LoadHandByGame(Game game, int page, int pageSize)
+	{
+		Mapper.Reset();
+		
+		await using var context = new TarotDbContext(Options);
+		return await Task.Run(() =>
+			context.Hands.Where(h => h.Game.Id == game.Id).Skip(page - 1 * pageSize).Take(pageSize)
+				.AsEnumerable().ToModels().ToDictionary(h => h.Number, h => h));
+	}
 }

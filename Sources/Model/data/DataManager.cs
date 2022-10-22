@@ -23,7 +23,7 @@ public class DataManager
     /// Method to save a player
     /// </summary>
     /// <param name="player">Player to register</param>
-    public async Task<Player> SavePlayer(Player player)
+    public async Task<Player?> SavePlayer(Player player)
         => await Saver.SavePlayer(player);
 
     /// <summary>
@@ -118,7 +118,7 @@ public class DataManager
     /// Method to save a game
     /// </summary>
     /// <param name="game">Game to register</param>
-    public async Task<Game> SaveGame(Game game)
+    public async Task<Game?> SaveGame(Game game)
         => await Saver.SaveGame(game);
 
     /// <summary>
@@ -223,7 +223,7 @@ public class DataManager
     /// Method to save a group
     /// </summary>
     /// <param name="group">Group to register</param>
-    public async Task<Group> SaveGroup(Group group)
+    public async Task<Group?> SaveGroup(Group group)
         => await Saver.SaveGroup(group);
 
     /// <summary>
@@ -253,27 +253,7 @@ public class DataManager
     public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
         => await Loader.LoadGroupsByPlayer(player, page, pageSize);
     /*========== End Groups ==========*/
-
-
-    /*========== Rules ==========*/
-    /// <summary>
-    /// Method to load a rule by name
-    /// </summary>
-    /// <param name="name">Name of the rule to search</param>
-    /// <returns>A IRules</returns>
-    public async Task<IRules?> LoadRule(string name)
-        => await Loader.LoadRule(name);
-
-    /// <summary>
-    /// Method to load all rules
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of rules</returns>
-    public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize)
-        => await Loader.LoadAllRules(page, pageSize);
-    /*========== End Rules ==========*/
-
+    
     /*========== Hand ==========*/
     /// <summary>
     /// Method to load hands by game

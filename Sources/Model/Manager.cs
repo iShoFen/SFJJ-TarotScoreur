@@ -20,7 +20,7 @@ public class Manager
     /// Method to save a player
     /// </summary>
     /// <param name="player">Player to register</param>
-    public async Task<Player> SavePlayer(Player player) => await _dataManager.SavePlayer(player);
+    public async Task<Player?> SavePlayer(Player player) => await _dataManager.SavePlayer(player);
 
     /// <summary>
     /// Method to load all players
@@ -125,7 +125,7 @@ public class Manager
     /// Method to save a game
     /// </summary>
     /// <param name="game">Game to register</param>
-    public async Task<Game> SaveGame(Game game) => await _dataManager.SaveGame(game);
+    public async Task<Game?> SaveGame(Game game) => await _dataManager.SaveGame(game);
 
     /// <summary>
     /// Method to load a game by name
@@ -232,30 +232,13 @@ public class Manager
     public Game CreateGame(string name, IRules rules, DateTime startDate) => new Game(name, rules, startDate);
     /*========== End game ==========*/
 
-    /*========== Rules ==========*/
-    /// <summary>
-    /// Method to load a rule by name
-    /// </summary>
-    /// <param name="name">Name of the rule to search</param>
-    /// <returns>A IRules</returns>
-    public async Task<IRules?> LoadRule(string name) => await _dataManager.LoadRule(name);
-
-    /// <summary>
-    /// Method to load all rules
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of rules</returns>
-    public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize) =>
-        await _dataManager.LoadAllRules(page, pageSize);
-    /*========== End rules ==========*/
-
+    
     /*========== Group ==========*/
     /// <summary>
     /// Method to save a group
     /// </summary>
     /// <param name="group">Group to register</param>
-    public async Task<Group> SaveGroup(Group group) => await _dataManager.SaveGroup(group);
+    public async Task<Group?> SaveGroup(Group group) => await _dataManager.SaveGroup(group);
 
     /// <summary>
     /// Method to load a group by name
