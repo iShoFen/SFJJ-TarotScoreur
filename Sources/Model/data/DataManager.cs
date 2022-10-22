@@ -253,7 +253,7 @@ public class DataManager
     public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
         => await Loader.LoadGroupsByPlayer(player, page, pageSize);
     /*========== End Groups ==========*/
-    
+
     /*========== Hand ==========*/
     /// <summary>
     /// Method to load hands by game

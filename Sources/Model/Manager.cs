@@ -23,6 +23,20 @@ public class Manager
     public async Task<Player?> SavePlayer(Player player) => await _dataManager.SavePlayer(player);
 
     /// <summary>
+    /// Method to create a player
+    /// </summary>
+    /// <param name="firstName">FirstName of the player</param>
+    /// <param name="lastName">LastName of the player</param>
+    /// <param name="nickname">Nickname of the player</param>
+    /// <param name="avatar">Avatar of the player</param>
+    /// <returns>The player created</returns>
+    public async Task<Player?> SavePlayer(string firstName, string lastName, string nickname, string avatar)
+    {
+        var player = new Player(firstName, lastName, nickname, avatar);
+        return await _dataManager.SavePlayer(player);
+    }
+
+    /// <summary>
     /// Method to load all players
     /// </summary>
     /// <param name="page"> Number of the page to load</param>
@@ -106,17 +120,6 @@ public class Manager
     public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
         int pageSize)
         => await _dataManager.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize);
-
-    /// <summary>
-    /// Method to create a player
-    /// </summary>
-    /// <param name="firstName">FirstName of the player</param>
-    /// <param name="lastName">LastName of the player</param>
-    /// <param name="nickname">Nickname of the player</param>
-    /// <param name="avatar">Avatar of the player</param>
-    /// <returns>The player created</returns>
-    public Player CreatePlayer(string firstName, string lastName, string nickname, string avatar) =>
-        new(firstName, lastName, nickname, avatar);
     /*========== End player ==========*/
 
 
@@ -126,6 +129,19 @@ public class Manager
     /// </summary>
     /// <param name="game">Game to register</param>
     public async Task<Game?> SaveGame(Game game) => await _dataManager.SaveGame(game);
+
+    /// <summary>
+    /// Method to create a game
+    /// </summary>
+    /// <param name="name">Name of the game</param>
+    /// <param name="rules">Rules of the game</param>
+    /// <param name="startDate">Start date of the game</param>
+    /// <returns>The game created</returns>
+    public async Task<Game?> SaveGame(string name, IRules rules, DateTime startDate)
+    {
+        var game = new Game(name, rules, startDate);
+        return await _dataManager.SaveGame(game);
+    }
 
     /// <summary>
     /// Method to load a game by name
@@ -221,24 +237,26 @@ public class Manager
     /// <returns>List of games</returns>
     public async Task<IEnumerable<Game>> LoadAllGames(int page, int pageSize) =>
         await _dataManager.LoadAllGames(page, pageSize);
-
-    /// <summary>
-    /// Method to create a game
-    /// </summary>
-    /// <param name="name">Name of the game</param>
-    /// <param name="rules">Rules of the game</param>
-    /// <param name="startDate">Start date of the game</param>
-    /// <returns>The game created</returns>
-    public Game CreateGame(string name, IRules rules, DateTime startDate) => new Game(name, rules, startDate);
     /*========== End game ==========*/
 
-    
+
     /*========== Group ==========*/
     /// <summary>
     /// Method to save a group
     /// </summary>
     /// <param name="group">Group to register</param>
     public async Task<Group?> SaveGroup(Group group) => await _dataManager.SaveGroup(group);
+
+    /// <summary>
+    /// Method to create a group
+    /// </summary>
+    /// <param name="name">Name of the group</param>
+    /// <returns>The group created</returns>
+    public async Task<Group?> SaveGroup(string name)
+    {
+        var group = new Group(name);
+        return await _dataManager.SaveGroup(group);
+    }
 
     /// <summary>
     /// Method to load a group by name
@@ -265,13 +283,6 @@ public class Manager
     /// <returns>List of groups</returns>
     public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
         => await _dataManager.LoadGroupsByPlayer(player, page, pageSize);
-
-    /// <summary>
-    /// Method to create a group
-    /// </summary>
-    /// <param name="name">Name of the group</param>
-    /// <returns>The group created</returns>
-    public Group CreateGroup(string name) => new Group(name);
     /*========== End group ==========*/
 
     /*========== Hand ==========*/
