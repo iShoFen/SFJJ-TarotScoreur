@@ -8,31 +8,57 @@ using TarotDB;
 
 namespace Tarot2B2Model;
 
+/// <summary>
+/// The database Loader manager
+/// </summary>
 public class DbSaver : ISaver
 {
+	/// <summary>
+	/// The options for the database
+	/// </summary>
 	private readonly DbContextOptions<TarotDbContext> _options;
+	
+	/// <summary>
+	/// The type of the database context
+	/// </summary>
 	private readonly Type _dbContextType;
 
+	/// <summary>
+	/// Default constructor
+	/// </summary>
     public DbSaver() : this(typeof(TarotDbContext), @"Data Source=TarotScoreur.db")
     {
     }
-
-
-    public DbSaver(Type type, string connectionString)
+    
+	/// <summary>
+	/// Constructor type and connection string
+	/// </summary>
+	/// <param name="contextType"> The type of the database context</param>
+	/// <param name="connectionString"> The connection string</param>
+    public DbSaver(Type contextType, string connectionString)
     {
         Mapper.Reset();
 
         var connection = new SqliteConnection(connectionString);
         connection.Open();
         _options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
-        _dbContextType = type;
+        _dbContextType = contextType;
 
         var context = InitContext();
         context.Database.EnsureCreated();
     }
-    
+	
+	/// <summary>
+	/// Initialize the database context
+	/// </summary>
+	/// <returns> The database context </returns>
     private TarotDbContext InitContext() => (TarotDbContext)Activator.CreateInstance(_dbContextType, _options)!;
 
+    /// <summary>
+    ///Save a player
+    /// </summary>
+    /// <param name="player">Player to register</param>
+    /// <returns>The player saved</returns>
     public async Task<Player?> SavePlayer(Player player)
     {
         Mapper.Reset();
@@ -48,6 +74,11 @@ public class DbSaver : ISaver
         return result.Entity.ToModel();
     }
 
+    /// <summary>
+    ///Save a game
+    /// </summary>
+    /// <param name="game">Game to register</param>
+    /// <returns>The game saved</returns>
     public async Task<Game?> SaveGame(Game game)
     {
         Mapper.Reset();
@@ -61,6 +92,11 @@ public class DbSaver : ISaver
         return result.Entity.ToModel();
     }
 
+    /// <summary>
+    ///Save a group
+    /// </summary>
+    /// <param name="group">Group to register</param>
+    /// <returns>The group saved</returns>
     public async Task<Group?> SaveGroup(Group group)
     {
         Mapper.Reset();

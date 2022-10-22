@@ -54,13 +54,13 @@ internal class TarotDbContextStub : TarotDbContext
         };
         var lName = new[]
         {
-            "BON", "MAUVAIS", "MOYEN", "BELIN", "GOL", "PETIT", "SEBAT", "LEG", "LeChanteur", "PUECH",
-            "LERICHE", "INFANTE", "SAURIN", "TABLETTE", "DU JARDIN", "SEBAT"
+            "BON", "MAUVAIS", "MOYEN", "BELIN", "GOL", "PETIT", "SEBAT", "LEG", "LE CHANTEUR", "PUECH",
+            "LERICHE", "INFANTE", "PETIT", "TABLETTE", "DU JARDIN", "SEBAT"
         };
         var nName = new[]
         {
-            "JEBO", "JEMA", "KIKOU7", "FRIPOUILLE", "LOL", "THEGIANT", "SEBAT", "BIGBRAIN", "SS",
-            "XXFRIPOUILLEXX", "JEMO", "KIKOU8", "FRIPOUILLE2", "LOL2", "THEGIANT2", "SEBAT2"
+            "JEBO", "JEMA", "KIKOU7", "FRIPOUILLE", "LOLA", "THEGIANT", "SEBATA", "BIGBRAIN", "LOL",
+            "XXFRIPOUILLEXX", "JEMAA", "KIKOU77", "FRIPOUILLES", "LOLO", "THEGIANTE", "SEBAT"
         };
 
         // Add players and increment their id and avatar

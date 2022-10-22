@@ -18,8 +18,8 @@ public class UT_UserEntity
         var user = await context.Users.FindAsync(13UL);
 
         Assert.Equal("Anne", user?.FirstName);
-        Assert.Equal("SAURIN", user?.LastName);
-        Assert.Equal("FRIPOUILLE2", user?.Nickname);
+        Assert.Equal("PETIT", user?.LastName);
+        Assert.Equal("FRIPOUILLES", user?.Nickname);
         Assert.Equal("avatar13", user?.Avatar);
         Assert.Equal("email13", user?.Email);
         Assert.Equal("password13", user?.Password);

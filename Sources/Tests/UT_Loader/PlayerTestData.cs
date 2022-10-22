@@ -8,8 +8,7 @@ namespace UT_Loader;
 
 internal static class PlayerTestData
 {
-    private static Type[] loaders = new Type[]
-    {
+    private static Type[] loaders = {
         typeof(Stub),
         typeof(DbLoader)
     };
@@ -31,39 +30,39 @@ internal static class PlayerTestData
             "PETIT",
             new Player[]
             {
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
-                new("Anne", "PETIT", "FRIPOUILLES", "avatar4")
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
+                new("Anne", "PETIT", "FRIPOUILLES", "avatar13")
             },
             1,
-            10,
+            10
         };
         yield return new object[]
         {
             "GOL",
             Array.Empty<Player>(),
             0,
-            10,
+            10
         };
         yield return new object[]
         {
             "TABLETTE",
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
         yield return new object[]
         {
             "LE CHANTEUR",
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
             "",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
     }
 
@@ -86,38 +85,38 @@ internal static class PlayerTestData
             "Simon",
             new Player[]
             {
-                new("Simon", "SEBAT", "SEBATA", "avatar1")
+                new("Simon", "SEBAT", "SEBATA", "avatar7")
             },
             1,
-            10,
+            10
         };
         yield return new object[]
         {
             "Samuel",
             Array.Empty<Player>(),
             0,
-            10,
+            10
         };
         yield return new object[]
         {
             "Marine",
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
         yield return new object[]
         {
             "Alizee",
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
             "",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
     }
 
@@ -138,38 +137,38 @@ internal static class PlayerTestData
             "THEGIANT",
             new Player[]
             {
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
             },
             1,
-            10,
+            10
         };
         yield return new object[]
         {
             "JEMAA",
             Array.Empty<Player>(),
             0,
-            10,
+            10
         };
         yield return new object[]
         {
             "KIKOU7",
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
         yield return new object[]
         {
             "LOLO",
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
             "",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
     }
 
@@ -186,12 +185,12 @@ internal static class PlayerTestData
                 new("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new("Albert", "GOL", "LOLA", "avatar1"),
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
-                new("Simon", "SEBAT", "SEBATA", "avatar1"),
-                new("Jordan", "LEG", "BIGBRAIN", "avatar1"),
-                new("Samuel", "LE CHANTEUR", "LOL", "avatar1"),
-                new("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar1")
+                new("Albert", "GOL", "LOLA", "avatar5"),
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
+                new("Simon", "SEBAT", "SEBATA", "avatar7"),
+                new("Jordan", "LEG", "BIGBRAIN", "avatar8"),
+                new("Samuel", "LE CHANTEUR", "LOL", "avatar9"),
+                new("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10")
             }
         };
         yield return new object?[]
@@ -208,12 +207,12 @@ internal static class PlayerTestData
             10,
             new[]
             {
-                new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new Player("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new Player("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2"),
-                new Player("Alizee", "SEBAT", "SEBAT", "avatar1")
+                new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new Player("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new Player("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"),
+                new Player("Alizee", "SEBAT", "SEBAT", "avatar16")
             }
         };
         yield return new object?[]
@@ -223,10 +222,10 @@ internal static class PlayerTestData
             4,
             new Player[]
             {
-                new("Albert", "GOL", "LOLA", "avatar1"),
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
-                new("Simon", "SEBAT", "SEBATA", "avatar1"),
-                new("Jordan", "LEG", "BIGBRAIN", "avatar1"),
+                new("Albert", "GOL", "LOLA", "avatar5"),
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
+                new("Simon", "SEBAT", "SEBATA", "avatar7"),
+                new("Jordan", "LEG", "BIGBRAIN", "avatar8"),
             }
         };
         yield return new object?[]
@@ -284,10 +283,10 @@ internal static class PlayerTestData
             "PETIT",
             new Player[]
             {
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
             },
             1,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -295,7 +294,7 @@ internal static class PlayerTestData
             "LERICHE",
             Array.Empty<Player>(),
             0,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -303,7 +302,7 @@ internal static class PlayerTestData
             "DU JARDIN",
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
         yield return new object[]
         {
@@ -311,7 +310,7 @@ internal static class PlayerTestData
             "SEBAT",
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
@@ -319,7 +318,7 @@ internal static class PlayerTestData
             "SEBAT",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -327,7 +326,7 @@ internal static class PlayerTestData
             "",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
     }
 
@@ -350,10 +349,10 @@ internal static class PlayerTestData
             "THEGIANT",
             new Player[]
             {
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
             },
             1,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -361,7 +360,7 @@ internal static class PlayerTestData
             "JEMAA",
             Array.Empty<Player>(),
             0,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -369,7 +368,7 @@ internal static class PlayerTestData
             "THEGIANTE",
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
         yield return new object[]
         {
@@ -377,7 +376,7 @@ internal static class PlayerTestData
             "SEBATA",
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
@@ -385,7 +384,7 @@ internal static class PlayerTestData
             "SEBAT",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -393,7 +392,7 @@ internal static class PlayerTestData
             "",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
     }
 
@@ -416,10 +415,10 @@ internal static class PlayerTestData
             "THEGIANT",
             new Player[]
             {
-                new("Julien", "PETIT", "THEGIANT", "avatar2"),
+                new("Julien", "PETIT", "THEGIANT", "avatar6"),
             },
             1,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -427,7 +426,7 @@ internal static class PlayerTestData
             "JEMAA",
             Array.Empty<Player>(),
             0,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -435,7 +434,7 @@ internal static class PlayerTestData
             "THEGIANTE",
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
         yield return new object[]
         {
@@ -443,7 +442,7 @@ internal static class PlayerTestData
             "SEBATA",
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
@@ -451,7 +450,7 @@ internal static class PlayerTestData
             "SEBAT",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
         yield return new object[]
         {
@@ -459,7 +458,7 @@ internal static class PlayerTestData
             "",
             Array.Empty<Player>(),
             1,
-            10,
+            10
         };
     }
 
@@ -472,7 +471,7 @@ internal static class PlayerTestData
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new Player("Albert", "GOL", "LOLA", "avatar1")
+                new Player("Albert", "GOL", "LOLA", "avatar5")
             ),
             new Player[]
             {
@@ -480,7 +479,7 @@ internal static class PlayerTestData
                 new("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new("Albert", "GOL", "LOLA", "avatar1")
+                new("Albert", "GOL", "LOLA", "avatar5")
             },
             1,
             10
@@ -492,7 +491,7 @@ internal static class PlayerTestData
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new Player("Albert", "GOL", "LOLA", "avatar1")
+                new Player("Albert", "GOL", "LOLA", "avatar5")
             ),
             new Player[]
             {
@@ -511,12 +510,12 @@ internal static class PlayerTestData
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new Player("Albert", "GOL", "LOLA", "avatar1")
+                new Player("Albert", "GOL", "LOLA", "avatar5")
             ),
             new Player[]
             {
                 new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new("Albert", "GOL", "LOLA", "avatar1")
+                new("Albert", "GOL", "LOLA", "avatar5")
             },
             2,
             3
@@ -528,7 +527,7 @@ internal static class PlayerTestData
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new Player("Albert", "GOL", "LOLA", "avatar1")
+                new Player("Albert", "GOL", "LOLA", "avatar5")
             ),
             new Player[]
             {
@@ -536,7 +535,7 @@ internal static class PlayerTestData
                 new("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new("Albert", "GOL", "LOLA", "avatar1")
+                new("Albert", "GOL", "LOLA", "avatar5")
             },
             1,
             10
@@ -544,19 +543,19 @@ internal static class PlayerTestData
         yield return new object[]
         {
             new Group(3UL, "Group 3",
-                new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new Player("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new Player("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new Player("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new Player("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             ),
             new Player[]
             {
-                new("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             },
             1,
             5
@@ -564,15 +563,15 @@ internal static class PlayerTestData
         yield return new object[]
         {
             new Group(3UL, "Group 3",
-                new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new Player("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new Player("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new Player("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new Player("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             ),
             new Player[]
             {
-                new("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             },
             2,
             4
@@ -580,41 +579,41 @@ internal static class PlayerTestData
         yield return new object[]
         {
             new Group(3UL, "Group 3",
-                new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new Player("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new Player("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new Player("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new Player("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             ),
             Array.Empty<Player>(),
             0,
-            1,
+            1
         };
         yield return new object[]
         {
             new Group(3UL, "Group 3",
-                new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new Player("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new Player("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new Player("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new Player("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             ),
             Array.Empty<Player>(),
             0,
-            0,
+            0
         };
         yield return new object[]
         {
             new Group(3UL, "Group 3",
-                new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"),
-                new Player("Jules", "INFANTE", "KIKOU77", "avatar3"),
-                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"),
-                new Player("Marine", "TABLETTE", "LOLO", "avatar1"),
-                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2")
+                new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                new Player("Jules", "INFANTE", "KIKOU77", "avatar12"),
+                new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                new Player("Marine", "TABLETTE", "LOLO", "avatar14"),
+                new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
             ),
             Array.Empty<Player>(),
             1,
-            0,
+            0
         };
     }
 }

@@ -185,7 +185,7 @@ public static class GameTestData
                 new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                 new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                 new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                new Player("Albert", "GOL", "LOLA", "avatar1")
+                new Player("Albert", "GOL", "LOLA", "avatar5")
             ),
             new[]
             {
@@ -197,7 +197,7 @@ public static class GameTestData
                         new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                         new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                         new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                        new Player("Albert", "GOL", "LOLA", "avatar1")
+                        new Player("Albert", "GOL", "LOLA", "avatar5")
                     }),
                 CreateGameWithPlayers(
                     new Game(10UL, "Game 10", new FrenchTarotRules(),
@@ -208,7 +208,7 @@ public static class GameTestData
                         new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
                         new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
                         new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                        new Player("Albert", "GOL", "LOLA", "avatar1")
+                        new Player("Albert", "GOL", "LOLA", "avatar5")
                     })
             },
             1,

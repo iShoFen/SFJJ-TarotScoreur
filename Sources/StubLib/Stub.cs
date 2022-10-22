@@ -34,18 +34,18 @@ public class Stub : ILoader
         _playerList.Add(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"));
         _playerList.Add(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"));
         _playerList.Add(new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"));
-        _playerList.Add(new Player("Albert", "GOL", "LOLA", "avatar1"));
-        _playerList.Add(new Player("Julien", "PETIT", "THEGIANT", "avatar2"));
-        _playerList.Add(new Player("Simon", "SEBAT", "SEBATA", "avatar1"));
-        _playerList.Add(new Player("Jordan", "LEG", "BIGBRAIN", "avatar1"));
-        _playerList.Add(new Player("Samuel", "LE CHANTEUR", "LOL", "avatar1"));
-        _playerList.Add(new Player("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar1"));
-        _playerList.Add(new Player("Jeanne", "LERICHE", "JEMAA", "avatar2"));
-        _playerList.Add(new Player("Jules", "INFANTE", "KIKOU77", "avatar3"));
-        _playerList.Add(new Player("Anne", "PETIT", "FRIPOUILLES", "avatar4"));
-        _playerList.Add(new Player("Marine", "TABLETTE", "LOLO", "avatar1"));
-        _playerList.Add(new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar2"));
-        _playerList.Add(new Player("Alizee", "SEBAT", "SEBAT", "avatar1"));
+        _playerList.Add(new Player("Albert", "GOL", "LOLA", "avatar5"));
+        _playerList.Add(new Player("Julien", "PETIT", "THEGIANT", "avatar6"));
+        _playerList.Add(new Player("Simon", "SEBAT", "SEBATA", "avatar7"));
+        _playerList.Add(new Player("Jordan", "LEG", "BIGBRAIN", "avatar8"));
+        _playerList.Add(new Player("Samuel", "LE CHANTEUR", "LOL", "avatar9"));
+        _playerList.Add(new Player("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"));
+        _playerList.Add(new Player("Jeanne", "LERICHE", "JEMAA", "avatar11"));
+        _playerList.Add(new Player("Jules", "INFANTE", "KIKOU77", "avatar12"));
+        _playerList.Add(new Player("Anne", "PETIT", "FRIPOUILLES", "avatar13"));
+        _playerList.Add(new Player("Marine", "TABLETTE", "LOLO", "avatar14"));
+        _playerList.Add(new Player("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"));
+        _playerList.Add(new Player("Alizee", "SEBAT", "SEBAT", "avatar16"));
     }
 
     /// <summary>
