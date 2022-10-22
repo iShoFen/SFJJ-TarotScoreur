@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Tarot2B2Model", "Tests\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubContext", "StubContext\StubContext.csproj", "{18DF2903-AEB5-4454-A0E5-360303DC2E6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Stub", "Tests\UT_Stub\UT_Stub.csproj", "{85C791BF-1182-460D-9EC5-DD1E984BE9BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Loader", "Tests\UT_Loader\UT_Loader.csproj", "{85C791BF-1182-460D-9EC5-DD1E984BE9BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT_TarotDBStub", "Tests\FT_TarotDBStub\FT_TarotDBStub.csproj", "{FD44FAC3-AB46-438A-8180-63CDE30CE5C0}"
 EndProject

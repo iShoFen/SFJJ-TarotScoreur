@@ -35,7 +35,10 @@ public class DbSaver : ISaver
         await using var context = new TarotDbContext(Options);
         var playerEntity = player.ToEntity();
 
+        if (await context.Players.FindAsync(playerEntity.Id) != null) return null;
         var result = await context.AddAsync(playerEntity);
+        if (result.State != EntityState.Added) return null;
+
         await context.SaveChangesAsync();
         return result.Entity.ToModel();
     }
@@ -46,8 +49,9 @@ public class DbSaver : ISaver
 
         await using var context = new TarotDbContext(Options);
         var gameEntity = game.ToEntity();
-
         var result = await context.AddAsync(gameEntity);
+        if (result.State != EntityState.Added) return null;
+
         await context.SaveChangesAsync();
         return result.Entity.ToModel();
     }
@@ -58,12 +62,9 @@ public class DbSaver : ISaver
 
         await using var context = new TarotDbContext(Options);
         var groupEntity = group.ToEntity();
-
-        var existingGroup = await context.Groups.FirstOrDefaultAsync(g => g.Name == groupEntity.Name);
-        // Test if Group with the same name and different ids already exists
-        if (existingGroup != null && existingGroup.Id != groupEntity.Id) return null;
-
         var result = await context.AddAsync(groupEntity);
+        if (result.State != EntityState.Added) return null;
+
         await context.SaveChangesAsync();
         return result.Entity.ToModel();
     }

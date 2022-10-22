@@ -1,19 +1,19 @@
 ﻿using Model;
+using Model.data;
 using Model.games;
 using StubLib;
 using Xunit;
 
-namespace UT_Stub;
+namespace UT_Loader;
 
-public class UT_Stub
+public class UT_Loader
 {
     /*========== Players test ==========*/
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestAllPlayers), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadAllPlayer(int page, int pageSize, Player[] players)
+    public async Task TestLoadAllPlayer(ILoader loader, int page, int pageSize, Player[] players)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadAllPlayer(page, pageSize)).ToList();
+        var playersFound = (await loader.LoadAllPlayer(page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);

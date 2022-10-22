@@ -1,7 +1,7 @@
 ﻿using Model;
 using Model.games;
 
-namespace UT_Stub;
+namespace UT_Loader;
 
 public static class GameTestData
 {

@@ -1,6 +1,6 @@
 ﻿using Model;
 
-namespace UT_Stub;
+namespace UT_Loader;
 
 public static class RuleTestData
 {

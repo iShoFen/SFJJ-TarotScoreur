@@ -1,9 +1,19 @@
 ﻿using Model;
+using Model.data;
+using StubLib;
+using Tarot2B2Model;
+using BindingFlags = System.Reflection.BindingFlags;
 
-namespace UT_Stub;
+namespace UT_Loader;
 
 internal static class PlayerTestData
 {
+    private static Type[] loaders = new Type[]
+    {
+        typeof(Stub),
+        typeof(DbLoader)
+    };
+
     public static IEnumerable<object[]> Data_TestPlayersByLastName()
     {
         yield return new object[]
@@ -163,10 +173,11 @@ internal static class PlayerTestData
         };
     }
 
-    public static IEnumerable<object[]> Data_TestAllPlayers()
+    public static IEnumerable<object?[]> Data_TestAllPlayers()
     {
-        yield return new object[]
+        yield return new object?[]
         {
+            new Stub(),
             1,
             10,
             new Player[]
@@ -183,8 +194,16 @@ internal static class PlayerTestData
                 new("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar1")
             }
         };
-        yield return new object[]
+        yield return new object?[]
         {
+            new DbLoader(),
+            1,
+            10,
+            Array.Empty<Player>()
+        };
+        yield return new object?[]
+        {
+            new Stub(),
             2,
             10,
             new[]
@@ -197,8 +216,9 @@ internal static class PlayerTestData
                 new Player("Alizee", "SEBAT", "SEBAT", "avatar1")
             }
         };
-        yield return new object[]
+        yield return new object?[]
         {
+            new Stub(),
             2,
             4,
             new Player[]
@@ -209,8 +229,9 @@ internal static class PlayerTestData
                 new("Jordan", "LEG", "BIGBRAIN", "avatar1"),
             }
         };
-        yield return new object[]
+        yield return new object?[]
         {
+            new Stub(),
             1,
             4,
             new Player[]
@@ -221,20 +242,23 @@ internal static class PlayerTestData
                 new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
             }
         };
-        yield return new object[]
+        yield return new object?[]
         {
+            new Stub(),
             0,
             10,
             Array.Empty<Player>()
         };
-        yield return new object[]
+        yield return new object?[]
         {
+            new Stub(),
             0,
             0,
             Array.Empty<Player>()
         };
-        yield return new object[]
+        yield return new object?[]
         {
+            new Stub(),
             2,
             0,
             Array.Empty<Player>()
