@@ -1,10 +1,5 @@
 ﻿using Model.games;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestUtils;
 
@@ -38,6 +33,5 @@ internal class GameTestUtils
         game.AddHands(hands);
         return game;
     }
-
 }
 

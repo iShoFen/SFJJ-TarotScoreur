@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
+using TestUtils;
 using Xunit;
-using static UT_TarotDB.TestInitializer;
 
 namespace UT_TarotDB;
 
@@ -13,7 +13,7 @@ public class UT_GameEntity
     public async Task TestRead(ulong expId, string expName, string expRules, DateTime expStartDate,
         DateTime? expEndDate, IEnumerable<ulong> expPlayers, IEnumerable<ulong> expHands)
     {
-        await using var context = new TarotDbContextStub(InitDb());
+        await using var context = new TarotDbContextStub(TestInitializer.InitDb());
         await context.Database.EnsureCreatedAsync();
 
         var game = await context.Games
@@ -46,7 +46,7 @@ public class UT_GameEntity
     {
         var players = iPlayers.ToHashSet();
         var hands = iHands.ToHashSet();
-        var options = InitDb();
+        var options = TestInitializer.InitDb();
 
         await using (var context = new TarotDbContextStub(options))
         {
@@ -114,7 +114,7 @@ public class UT_GameEntity
         IEnumerable<PlayerEntity> players, IEnumerable<PlayerEntity> iPlayersToRemove, IEnumerable<HandEntity> hands,
         IEnumerable<HandEntity> iHandsToRemove)
     {
-        var options = InitDb();
+        var options = TestInitializer.InitDb();
         var playersToRemove = iPlayersToRemove.ToList();
         var handsToRemove = iHandsToRemove.ToList();
         await using (var context = new TarotDbContextStub(options))
@@ -187,7 +187,7 @@ public class UT_GameEntity
     [Fact]
     public async Task TestDelete()
     {
-        var options = InitDb();
+        var options = TestInitializer.InitDb();
         await using (var context = new TarotDbContextStub(options))
         {
             await context.Database.EnsureCreatedAsync();
