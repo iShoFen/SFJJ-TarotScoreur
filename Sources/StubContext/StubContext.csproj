@@ -21,5 +21,8 @@
         <InternalsVisibleTo Include="UT_TarotDB" />
         <InternalsVisibleTo Include="UT_Tarot2B2Model" />
         <InternalsVisibleTo Include="UT_Loader" />
+        <InternalsVisibleTo Include="UT_Saver" />
+        <InternalsVisibleTo Include="TestUtils" />
+        <InternalsVisibleTo Include="UT_Model" />
     </ItemGroup>
 </Project>
