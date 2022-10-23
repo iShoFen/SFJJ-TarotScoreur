@@ -25,6 +25,26 @@
 
 ## **Installation**
 
+### Launch console app
+
+1. Move into `Sources/TarotDb`
+2. Create migration with the following command
+   ```
+   dotnet ef migrations add myFirstMigration
+   ```
+3. Move into `Sources/Tests/FT_TarotDb`
+   ```
+   cd ..\Tests\FT_TarotDB\
+   ```
+4. Create or update database with the following command
+   ```
+   dotnet ef database update --project ..\..\TarotDB\
+   ```
+5. Run project `FT_TarobDb` with the following command
+   ```
+   dotnet run
+   ```
+
 ## **Examples**
 
 <!-- Mettre des images de l'application par le future -->
