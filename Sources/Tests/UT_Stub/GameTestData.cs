@@ -476,9 +476,9 @@ public static class GameTestData
         };
     }
 
-    public static IEnumerable<object[]> Data_TestLoadGameByEndDate()
+    public static IEnumerable<object?[]> Data_TestLoadGameByEndDate()
     {
-        yield return new object[]
+        yield return new object?[]
         {
             new DateTime(2022, 09, 23),
             new[]
@@ -489,7 +489,7 @@ public static class GameTestData
             1,
             10
         };
-        yield return new object[]
+        yield return new object?[]
         {
             new DateTime(2022, 09, 25),
             new[]
@@ -506,30 +506,37 @@ public static class GameTestData
             1,
             10
         };
-        yield return new object[]
+        yield return new object?[]
         {
             new DateTime(2022, 09, 25),
             Array.Empty<object>(),
             1,
             0
         };
-        yield return new object[]
+        yield return new object?[]
         {
             new DateTime(2022, 09, 25),
             Array.Empty<object>(),
             0,
             0
         };
-        yield return new object[]
+        yield return new object?[]
         {
             new DateTime(2022, 09, 25),
             Array.Empty<object>(),
             0,
             1
         };
-        yield return new object[]
+        yield return new object?[]
         {
             new DateTime(2002, 09, 25),
+            Array.Empty<object>(),
+            1,
+            10
+        };
+        yield return new object?[]
+        {
+            null,
             Array.Empty<object>(),
             1,
             10

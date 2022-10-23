@@ -460,7 +460,7 @@ public class Stub : ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime? endDate, int page, int pageSize)
     {
         if (page == 0 || pageSize == 0) return new List<Game>();
         return await Task.FromResult(_gameList

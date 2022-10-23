@@ -34,7 +34,7 @@ public class DbLoader : ILoader
             .Take(pageSize)
             .ToListAsync()).ToModels();
 
-    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime? endDate, int page, int pageSize)
         => (await ((TarotDbContext)Context).Games.Where(g => g.EndDate == endDate)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
