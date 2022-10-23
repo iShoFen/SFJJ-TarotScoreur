@@ -1,7 +1,7 @@
 ﻿using Model;
 using Model.enums;
 using Model.games;
-using static UT_Loader.DataManagers;
+using static TestUtils.DataManagers;
 
 namespace UT_Loader;
 

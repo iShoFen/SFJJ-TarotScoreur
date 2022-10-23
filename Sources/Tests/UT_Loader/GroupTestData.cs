@@ -1,5 +1,5 @@
 ﻿using Model;
-using static UT_Loader.DataManagers;
+using static TestUtils.DataManagers;
 
 namespace UT_Loader;
 
