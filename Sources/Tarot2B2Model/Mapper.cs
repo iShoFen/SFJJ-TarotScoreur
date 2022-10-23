@@ -83,6 +83,8 @@ internal static class Mapper
         HandsMapper.Reset();
         GamesMapper.Reset();
         PlayersMapper.Reset();
+        UsersMapper.Reset();
         GroupsMapper.Reset();
+        
     }
 }
