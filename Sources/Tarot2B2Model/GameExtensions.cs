@@ -49,12 +49,12 @@ internal static class GameExtensions
         game = new Game(
             entity.Id, 
             entity.Name,
-            RulesFactory.Create(entity.Name)!,
+            RulesFactory.Create(entity.Rules)!,
             entity.StartDate,
             entity.EndDate
         );
-        game.AddPlayers(entity.Players.Select(p => p.ToModel()).ToArray());
-        game.AddHands(entity.Hands.Select(h => h.ToModel()).ToArray());
+        game.AddPlayers(entity.Players.ToModels().ToArray());
+        game.AddHands(entity.Hands.ToModels().ToArray());
         
         GamesMapper.Map(game, entity);
 
