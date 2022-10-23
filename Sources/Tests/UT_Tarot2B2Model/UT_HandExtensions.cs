@@ -11,8 +11,8 @@ using TarotDB;
 using TarotDB.enums;
 using Xunit;
 
-namespace UT_Tarot2B2Model;
 
+namespace UT_Tarot2B2Model;
 public class UT_HandExtensions
 {
 
@@ -121,16 +121,20 @@ public class UT_HandExtensions
     [MemberData(nameof(Data_AddHandAndHandEntity))]
     internal void TestHandEntityToModel(Hand hand, HandEntity handEntity)
     {
+        Mapper.Reset();
         var result = handEntity.ToModel();
         Assert.Equal(hand,result);
 
         Assert.Same(handEntity.ToModel(), result);
+        Mapper.Reset();
+        Assert.NotSame(handEntity.ToModel(), actual: result);
     }
 
     [Theory]
     [MemberData(nameof(Data_AddHandAndHandEntity))]
     internal void TestHandToEntity(Hand hand, HandEntity handEntity)
     {
+        Mapper.Reset();
         var result = hand.ToEntity();
         Assert.Equal(handEntity.Id, result.Id);
         Assert.Equal(handEntity.Rules, result.Rules);
@@ -152,20 +156,30 @@ public class UT_HandExtensions
             Assert.Equal(biddingPoigneeEntity.Poignee, result.Biddings.ElementAt(i).Poignee);
             ++i;
         }
-
-        Assert.Same(hand.ToEntity(), result);
+        Assert.Same(result,hand.ToEntity());
+        Mapper.Reset();
+        Assert.NotSame(result, hand.ToEntity());
     }
     
     [Theory]
     [MemberData(nameof(Data_AddHandsAndHandsEntities))]
     internal void TestHandsEntitiesToModels(List<Hand> hands, List<HandEntity> handsEntities)
     {
+        Mapper.Reset();
         var result = handsEntities.ToModels().ToList();
         Assert.Equal(hands,result);
         var i = 0;
         foreach (var handEntity in handsEntities)
         {
-            Assert.Same(handEntity.ToModel(), result[i]);
+            Assert.Same(handEntity.ToModel(), result.ElementAt(i));
+            ++i;
+        }
+        
+        Mapper.Reset();
+        i = 0;
+        foreach (var handEntity in handsEntities)
+        {
+            Assert.NotSame(handEntity.ToModel(), result.ElementAt(i));
             ++i;
         }
     }
@@ -174,25 +188,35 @@ public class UT_HandExtensions
     [MemberData(nameof(Data_AddHandsAndHandsEntities))]
     internal void TestHandsToEntities(List<Hand> hands, List<HandEntity> handsEntities)
     {
+        Mapper.Reset();
         var result = hands.ToEntities().ToList();
         var i = 0;
         foreach (var handEntity in handsEntities)
         {
-            Assert.Equal(handEntity.Id,result[i].Id);
-            Assert.Equal(handEntity.Rules,result[i].Rules);
-            Assert.Equal(handEntity.Date,result[i].Date);
-            Assert.Equal(handEntity.TakerScore,result[i].TakerScore);
-            Assert.Equal(handEntity.TwentyOne,result[i].TwentyOne);
-            Assert.Equal(handEntity.Excuse,result[i].Excuse);
-            Assert.Equal(handEntity.Petit,result[i].Petit);
-            Assert.Equal(handEntity.Chelem,result[i].Chelem);
+            Assert.Equal(handEntity.Id,result.ElementAt(i).Id);
+            Assert.Equal(handEntity.Rules,result.ElementAt(i).Rules);
+            Assert.Equal(handEntity.Date,result.ElementAt(i).Date);
+            Assert.Equal(handEntity.TakerScore,result.ElementAt(i).TakerScore);
+            Assert.Equal(handEntity.TwentyOne,result.ElementAt(i).TwentyOne);
+            Assert.Equal(handEntity.Excuse,result.ElementAt(i).Excuse);
+            Assert.Equal(handEntity.Petit,result.ElementAt(i).Petit);
+            Assert.Equal(handEntity.Chelem,result.ElementAt(i).Chelem);
             ++i;
         }
          i = 0;
         foreach (var hand in hands)
         {
-            Assert.Same(hand.ToEntity(), result[i]);
+            Assert.Same(hand.ToEntity(), result.ElementAt(i));
             ++i;
         }
+        
+        Mapper.Reset();
+        i = 0;
+        foreach (var hand in hands)
+        {
+            Assert.NotSame(hand.ToEntity(), result.ElementAt(i));
+            ++i;
+        }
+        
     }
 }

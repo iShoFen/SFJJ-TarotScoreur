@@ -7,6 +7,7 @@ using TarotDB.enums;
 using TestUtils;
 using Xunit;
 
+
 namespace UT_Tarot2B2Model;
 
 public class UT_GameExtensions
@@ -194,17 +195,22 @@ public class UT_GameExtensions
     [MemberData(nameof(Data_AddGameAndGameEntity))]
     internal void TestGameEntityToModel(Game game, GameEntity gameEntity)
     {
+        Mapper.Reset();
         var gameEntityToModel = gameEntity.ToModel();
         Assert.Equal(game, gameEntityToModel);
 
         //To verify if the mapper work
         Assert.Same(gameEntity.ToModel(), gameEntityToModel);
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        Assert.NotSame(gameEntity.ToModel(), gameEntityToModel);
     }
 
     [Theory]
     [MemberData(nameof(Data_AddGameAndGameEntity))]
     internal void TestGameToEntity(Game game, GameEntity gameEntity)
     {
+        Mapper.Reset();
         var gameToEntity = game.ToEntity();
         Assert.Equal(gameEntity.Id, gameToEntity.Id);
         Assert.Equal(gameEntity.Name, gameToEntity.Name);
@@ -215,19 +221,32 @@ public class UT_GameExtensions
 
         //To verify if the mapper work
         Assert.Same(game.ToEntity(), gameToEntity);
+        
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        Assert.NotSame(game.ToEntity(), gameToEntity);
     }
 
     [Theory]
     [MemberData(nameof(Data_AddGamesAndGamesEntities))]
     internal void TestGameEntitiesToModels(List<Game> games, List<GameEntity> gameEntities)
     {
-        var gameEntitiesToModels = gameEntities.ToModels();
+        Mapper.Reset();
+        var gameEntitiesToModels = gameEntities.ToModels().ToList();
         Assert.Equal(games, gameEntitiesToModels);
 
         var i = 0;
         foreach (var game in gameEntitiesToModels)
         {
-            Assert.Same(game, gameEntities[i].ToModel());
+            Assert.Same(game, gameEntities.ElementAt(i).ToModel());
+            ++i;
+        }
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        i = 0;
+        foreach (var game in gameEntitiesToModels)
+        {
+            Assert.NotSame(game, gameEntities.ElementAt(i).ToModel());
             ++i;
         }
     }
@@ -236,25 +255,34 @@ public class UT_GameExtensions
     [MemberData(nameof(Data_AddGamesAndGamesEntities))]
     internal void TestGamesToEntities(List<Game> games, List<GameEntity> gameEntities)
     {
+        Mapper.Reset();
         var gameToEntities = games.ToEntities().ToList();
         var i = 0;
         foreach (var gameEntity in gameEntities)
         {
-            Assert.Equal(gameEntity.Id, gameToEntities[i].Id);
-            Assert.Equal(gameEntity.Rules, gameToEntities[i].Rules);
-            Assert.Equal(gameEntity.Name, gameToEntities[i].Name);
-            Assert.Equal(gameEntity.StartDate, gameToEntities[i].StartDate);
-            Assert.Equal(gameEntity.EndDate, gameToEntities[i].EndDate);
+            Assert.Equal(gameEntity.Id, gameToEntities.ElementAt(i).Id);
+            Assert.Equal(gameEntity.Rules, gameToEntities.ElementAt(i).Rules);
+            Assert.Equal(gameEntity.Name, gameToEntities.ElementAt(i).Name);
+            Assert.Equal(gameEntity.StartDate, gameToEntities.ElementAt(i).StartDate);
+            Assert.Equal(gameEntity.EndDate, gameToEntities.ElementAt(i).EndDate);
             ++i;
         }
 
         i = 0;
         foreach (var gameEntity in gameToEntities)
         {
-            Assert.Same(gameEntity, games[i].ToEntity());
+            Assert.Same(gameEntity, games.ElementAt(i).ToEntity());
             ++i;
         }
-
+        
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        i = 0;
+        foreach (var gameEntity in gameToEntities)
+        {
+            Assert.NotSame(gameEntity, games.ElementAt(i).ToEntity());
+            ++i;
+        }
 
     }
 
@@ -263,17 +291,22 @@ public class UT_GameExtensions
     [MemberData(nameof(Data_AddGameWithPlayerAndGameEntity))]
     internal void TestGameEntityToModelWithPlayers(Game game, GameEntity gameEntity)
     {
+        Mapper.Reset();
         var gameEntityToModel = gameEntity.ToModel();
         Assert.Equal(game, gameEntityToModel);
 
         //To force the mapper to be used
         Assert.Same(gameEntity.ToModel(), gameEntityToModel);
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        Assert.NotSame(gameEntity.ToModel(), gameEntityToModel);
     }
 
     [Theory]
     [MemberData(nameof(Data_AddGameWithPlayerAndGameEntity))]
     internal void TestGameToEntityWithPlayers(Game game, GameEntity gameEntity)
     {
+        Mapper.Reset();
         var gameToEntity = game.ToEntity();
         
         Assert.Equal(gameEntity.Id, gameToEntity.Id);
@@ -286,16 +319,19 @@ public class UT_GameExtensions
         var players = gameToEntity.Players.ToList();
         foreach (var player in gameEntity.Players)
         {
-            Assert.Equal(player.Id, players[i].Id);
-            Assert.Equal(player.FirstName, players[i].FirstName);
-            Assert.Equal(player.LastName, players[i].LastName);
-            Assert.Equal(player.Nickname, players[i].Nickname);
-            Assert.Equal(player.Avatar, players[i].Avatar);
+            Assert.Equal(player.Id, players.ElementAt(i).Id);
+            Assert.Equal(player.FirstName, players.ElementAt(i).FirstName);
+            Assert.Equal(player.LastName, players.ElementAt(i).LastName);
+            Assert.Equal(player.Nickname, players.ElementAt(i).Nickname);
+            Assert.Equal(player.Avatar, players.ElementAt(i).Avatar);
             i++;
         }
 
         //To force the mapper to be used
         Assert.Same(game.ToEntity(), gameToEntity);
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        Assert.NotSame(game.ToEntity(), gameToEntity);
     }
 
 
@@ -303,17 +339,22 @@ public class UT_GameExtensions
     [MemberData(nameof(Data_AddGameAndGameEntityWithPlayerAndHands))]
     internal void TestGameEntityToModelWithPlayersAndHands(Game game, GameEntity gameEntity)
     {
+        Mapper.Reset();
         var gameEntityToModel = gameEntity.ToModel();
         Assert.Equal(game, gameEntityToModel);
 
         //To force the mapper to be used
         Assert.Same(gameEntity.ToModel(), gameEntityToModel);
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        Assert.NotSame(gameEntity.ToModel(), gameEntityToModel);
     }
 
     [Theory]
     [MemberData(nameof(Data_AddGameAndGameEntityWithPlayerAndHands))]
     internal void TestGameToEntityWithPlayersAndHands(Game game, GameEntity gameEntity)
     {
+        Mapper.Reset();
         var gameToEntity = game.ToEntity();
         Assert.Equal(gameEntity.Id, gameToEntity.Id);
         Assert.Equal(gameEntity.Name, gameToEntity.Name);
@@ -325,11 +366,11 @@ public class UT_GameExtensions
         var players = gameToEntity.Players.ToList();
         foreach (var player in gameEntity.Players)
         {
-            Assert.Equal(player.Id, players[i].Id);
-            Assert.Equal(player.FirstName, players[i].FirstName);
-            Assert.Equal(player.LastName, players[i].LastName);
-            Assert.Equal(player.Nickname, players[i].Nickname);
-            Assert.Equal(player.Avatar, players[i].Avatar);
+            Assert.Equal(player.Id, players.ElementAt(i).Id);
+            Assert.Equal(player.FirstName, players.ElementAt(i).FirstName);
+            Assert.Equal(player.LastName, players.ElementAt(i).LastName);
+            Assert.Equal(player.Nickname, players.ElementAt(i).Nickname);
+            Assert.Equal(player.Avatar, players.ElementAt(i).Avatar);
             i++;
         }
 
@@ -337,20 +378,24 @@ public class UT_GameExtensions
         var hands = gameToEntity.Hands.ToList();
         foreach (var hand in gameEntity.Hands)
         {
-            Assert.Equal(hand.Id, hands[i].Id);
-            Assert.Equal(hand.Number, hands[i].Number);
-            Assert.Equal(hand.Rules, hands[i].Rules);
-            Assert.Equal(hand.Date, hands[i].Date);
-            Assert.Equal(hand.TakerScore, hands[i].TakerScore);
-            Assert.Equal(hand.TwentyOne, hands[i].TwentyOne);
-            Assert.Equal(hand.Excuse, hands[i].Excuse);
-            Assert.Equal(hand.Petit, hands[i].Petit);
-            Assert.Equal(hand.Chelem, hands[i].Chelem);
+            Assert.Equal(hand.Id, hands.ElementAt(i).Id);
+            Assert.Equal(hand.Number, hands.ElementAt(i).Number);
+            Assert.Equal(hand.Rules, hands.ElementAt(i).Rules);
+            Assert.Equal(hand.Date, hands.ElementAt(i).Date);
+            Assert.Equal(hand.TakerScore, hands.ElementAt(i).TakerScore);
+            Assert.Equal(hand.TwentyOne, hands.ElementAt(i).TwentyOne);
+            Assert.Equal(hand.Excuse, hands.ElementAt(i).Excuse);
+            Assert.Equal(hand.Petit, hands.ElementAt(i).Petit);
+            Assert.Equal(hand.Chelem, hands.ElementAt(i).Chelem);
             i++;
         }
 
         //To force the mapper to be used
         Assert.Same(game.ToEntity(), gameToEntity);
+        //to verify if the mapper reset work
+        Mapper.Reset();
+        Assert.NotSame(game.ToEntity(), gameToEntity);
+        
 
     }
 }

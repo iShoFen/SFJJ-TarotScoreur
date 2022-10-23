@@ -3,7 +3,9 @@ using Tarot2B2Model;
 using TarotDB;
 using Xunit;
 
+
 namespace UT_Tarot2B2Model;
+
 public class UT_GroupExtensions
 {
     public static IEnumerable<object[]> Data_AddGroupAndGroupEntity()
@@ -174,10 +176,13 @@ public class UT_GroupExtensions
     [MemberData(nameof(Data_AddGroupAndGroupEntity))] 
     internal void TestGroupEntityToModel(Group group, GroupEntity groupEntity)
     {
+        Mapper.Reset();
         var groupEntityToModel = groupEntity.ToModel();
         Assert.Equal(group, groupEntityToModel);
         //Use the mapper
         Assert.Same(groupEntity.ToModel(), groupEntityToModel);
+        Mapper.Reset();
+        Assert.NotSame(groupEntity.ToModel(), groupEntityToModel);
 
     }
 
@@ -185,6 +190,7 @@ public class UT_GroupExtensions
     [MemberData(nameof(Data_AddGroupAndGroupEntity))]
     internal void TestGroupToEntity(Group group, GroupEntity groupEntity)
     {
+        Mapper.Reset();
         var groupToEntity = group.ToEntity();
         Assert.Equal(groupEntity.Id, groupToEntity.Id);
         Assert.Equal(groupEntity.Name, groupToEntity.Name);
@@ -200,13 +206,16 @@ public class UT_GroupExtensions
         }
         //Use the mapper
         Assert.Same(group.ToEntity(), groupToEntity);
+        Mapper.Reset();
+        Assert.NotSame(group.ToEntity(), groupToEntity);
     }
 
     [Theory]
     [MemberData(nameof(Data_AddGroupsAndGroupEntities))]
     internal void TestGroupEntitiesToModels(List<Group> groups, List<GroupEntity> groupEntities)
     {
-        var groupEntitiesToModels = groupEntities.ToModels();
+        Mapper.Reset();
+        var groupEntitiesToModels = groupEntities.ToModels().ToList();
         Assert.Equal(groups, groupEntitiesToModels);
         //Use the mapper
         var i = 0;
@@ -215,12 +224,21 @@ public class UT_GroupExtensions
             Assert.Same(groupEntity.ToModel(), groupEntitiesToModels.ElementAt(i));
             ++i;
         }
+        
+        Mapper.Reset();
+        i = 0;
+        foreach (var groupEntity in groupEntities)
+        {
+            Assert.NotSame(groupEntity.ToModel(), groupEntitiesToModels.ElementAt(i));
+            ++i;
+        }
     }
 
     [Theory]
     [MemberData(nameof(Data_AddGroupsAndGroupEntities))]
     internal void TestGroupsToEntities(List<Group> groups, List<GroupEntity> groupEntities)
     {
+        Mapper.Reset();
         var groupsToEntities = groups.ToEntities().ToList();
         Assert.Equal(groupEntities.Count, groupsToEntities.Count);
         var i = 0;
@@ -245,6 +263,14 @@ public class UT_GroupExtensions
         foreach (var group in groups)
         {
             Assert.Same(group.ToEntity(), groupsToEntities.ElementAt(i));
+            ++i;
+        }
+        
+        Mapper.Reset();
+        i = 0;
+        foreach (var group in groups)
+        {
+            Assert.NotSame(group.ToEntity(), groupsToEntities.ElementAt(i));
             ++i;
         }
     }

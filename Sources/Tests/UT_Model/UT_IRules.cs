@@ -3,7 +3,7 @@ using Xunit;
 using Model;
 using Model.enums;
 using Model.games;
-
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace UT_Model;
 
 

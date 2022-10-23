@@ -9,7 +9,6 @@ using TarotDB;
 using Xunit;
 
 namespace UT_Tarot2B2Model;
-
 public class UT_UserExtension
 {
     public static IEnumerable<object[]> Data_AddUserAndUserEntity()
@@ -84,10 +83,13 @@ public class UT_UserExtension
     [MemberData(nameof(Data_AddUserAndUserEntity))]
     internal void TestUserEntityToModel(User user, UserEntity userEntity)
     {
+        Mapper.Reset();
         var userEntityToModel = userEntity.ToModel();
         Assert.Equal(user, userEntityToModel);
 
         Assert.Same(userEntity.ToModel(), userEntityToModel);
+        Mapper.Reset();
+        Assert.NotSame(userEntity.ToModel(), userEntityToModel);
     }
 
 
@@ -95,6 +97,7 @@ public class UT_UserExtension
     [MemberData(nameof(Data_AddUserAndUserEntity))]
     internal void TestUserToEntity(User user, UserEntity userEntity)
     {
+        Mapper.Reset();
         var userToEntity = user.ToEntity();
         Assert.Equal(userEntity.Id, userToEntity.Id);
         Assert.Equal(userEntity.FirstName, userToEntity.FirstName);
@@ -105,19 +108,30 @@ public class UT_UserExtension
         Assert.Equal(userEntity.Password, userToEntity.Password);
 
         Assert.Same(userToEntity, user.ToEntity());
+        Mapper.Reset();
+        Assert.NotSame(userToEntity, user.ToEntity());
     }
 
     [Theory]
     [MemberData(nameof(Data_AddUsersAndUserEntities))]
     internal void TestUserEntitiesToModel(List<User> users, List<UserEntity> userEntities)
     {
+        Mapper.Reset();
         var userEntitiesToModel = userEntities.ToModels().ToList();
         Assert.Equal(users,userEntitiesToModel);
 
         var i = 0;
         foreach (var userEntity in userEntities)
         {
-            Assert.Same(userEntity.ToModel(), userEntitiesToModel[i]);
+            Assert.Same(userEntity.ToModel(), userEntitiesToModel.ElementAt(i));
+            ++i;
+        }
+        
+        Mapper.Reset();
+        i = 0;
+        foreach (var userEntity in userEntities)
+        {
+            Assert.NotSame(userEntity.ToModel(), userEntitiesToModel.ElementAt(i));
             ++i;
         }
     }
@@ -126,24 +140,33 @@ public class UT_UserExtension
     [MemberData(nameof(Data_AddUsersAndUserEntities))]
     internal void TestUserToEntities(List<User> users, List<UserEntity> userEntities)
     {
+        Mapper.Reset();
         var userToEntities = users.ToEntities().ToList();
         var i = 0;
         foreach (var userEntity in userToEntities)
         {
-            Assert.Equal(userEntity.Id, userEntities[i].Id);
-            Assert.Equal(userEntity.FirstName, userEntities[i].FirstName);
-            Assert.Equal(userEntity.LastName, userEntities[i].LastName);
-            Assert.Equal(userEntity.Nickname, userEntities[i].Nickname);
-            Assert.Equal(userEntity.Avatar, userEntities[i].Avatar);
-            Assert.Equal(userEntity.Email, userEntities[i].Email);
-            Assert.Equal(userEntity.Password, userEntities[i].Password);
+            Assert.Equal(userEntity.Id, userEntities.ElementAt(i).Id);
+            Assert.Equal(userEntity.FirstName, userEntities.ElementAt(i).FirstName);
+            Assert.Equal(userEntity.LastName, userEntities.ElementAt(i).LastName);
+            Assert.Equal(userEntity.Nickname, userEntities.ElementAt(i).Nickname);
+            Assert.Equal(userEntity.Avatar, userEntities.ElementAt(i).Avatar);
+            Assert.Equal(userEntity.Email, userEntities.ElementAt(i).Email);
+            Assert.Equal(userEntity.Password, userEntities.ElementAt(i).Password);
             ++i;
         }
 
         i = 0;
         foreach (var user in users)
         {
-            Assert.Same(user.ToEntity(), userToEntities[i]);
+            Assert.Same(user.ToEntity(), userToEntities.ElementAt(i));
+            ++i;
+        }
+        
+        Mapper.Reset();
+        i = 0;
+        foreach (var user in users)
+        {
+            Assert.NotSame(user.ToEntity(), userToEntities.ElementAt(i));
             ++i;
         }
 
