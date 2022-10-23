@@ -46,6 +46,7 @@ public class Manager
     public async Task<Player?> SavePlayer(string firstName, string lastName, string nickname, string avatar)
     {
         var player = new Player(firstName, lastName, nickname, avatar);
+        _logger.Info("Player saved: {arguments}", player.ToString());
         return await _dataManager.SavePlayer(player);
     }
 
@@ -165,22 +166,6 @@ public class Manager
         _logger.Info("Player loaded by LastName and Nickname : {arguments} {arguments}", lastName, nickname);
         return players;
     }
-
-    /// <summary>
-    /// Method to create a player
-    /// </summary>
-    /// <param name="firstName">FirstName of the player</param>
-    /// <param name="lastName">LastName of the player</param>
-    /// <param name="nickname">Nickname of the player</param>
-    /// <param name="avatar">Avatar of the player</param>
-    /// <returns>The player created</returns>
-    public Player CreatePlayer(string firstName, string lastName, string nickname, string avatar)
-    {
-        var player = new Player(firstName, lastName, nickname, avatar);
-        _logger.Info("Player created : {arguments}", player.ToString());
-        return player;
-    }
-    
     /*========== End player ==========*/
 
 
@@ -206,6 +191,7 @@ public class Manager
     public async Task<Game?> SaveGame(string name, IRules rules, DateTime startDate)
     {
         var game = new Game(name, rules, startDate);
+        _logger.Info("Game saved : {arguments}", name);
         return await _dataManager.SaveGame(game);
     }
 
@@ -340,20 +326,6 @@ public class Manager
         _logger.Info("All games loaded");
         return games;
     }
-
-    /// <summary>
-    /// Method to create a game
-    /// </summary>
-    /// <param name="name">Name of the game</param>
-    /// <param name="rules">Rules of the game</param>
-    /// <param name="startDate">Start date of the game</param>
-    /// <returns>The game created</returns>
-    public Game CreateGame(string name, IRules rules, DateTime startDate)
-    {
-        var game = new Game(name, rules, startDate);
-        _logger.Info("Game created : {arguments}", game.ToString());
-        return game;
-    }
     /*========== End game ==========*/
     
 
@@ -377,6 +349,7 @@ public class Manager
     public async Task<Group?> SaveGroup(string name)
     {
         var group = new Group(name);
+        _logger.Info("Group saved : {arguments}", name);
         return await _dataManager.SaveGroup(group);
     }
 
@@ -417,18 +390,6 @@ public class Manager
         var groups = await _dataManager.LoadGroupsByPlayer(player, page, pageSize);
         _logger.Info("Groups loaded by player : {arguments}", player.ToString());
         return groups;
-    }
-
-    /// <summary>
-    /// Method to create a group
-    /// </summary>
-    /// <param name="name">Name of the group</param>
-    /// <returns>The group created</returns>
-    public Group CreateGroup(string name)
-    {
-        var group = new Group(name);
-        _logger.Info("Group created : {arguments}", group.ToString());
-        return group;
     }
     /*========== End group ==========*/
 

@@ -109,7 +109,7 @@ public class DbLoader : ILoader
 	/// <param name="page"> Number of the page to load</param>
 	/// <param name="pageSize">Size of the page</param>
 	/// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime? endDate, int page, int pageSize)
     {
 	    if (page == 0 || pageSize == 0) return await Task.FromResult(new List<Game>());
 	    
@@ -364,14 +364,14 @@ public class DbLoader : ILoader
 	/// <param name="pageSize">Size of the page</param>
 	/// <returns>List of players</returns>
     public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
-    {    if (page == 0 || pageSize == 0) return await Task.FromResult(new List<Player>());
-     	    
-             Mapper.Reset();
-             await using var context = InitContext();
-             return await Task.FromResult(context.Groups.Include(g => g.Players)
-     	        .First(g => g.Id == group.Id).Players
-     	        .Skip((page - 1) * pageSize).Take(pageSize).ToModels());
-	
+    {
+	    if (page == 0 || pageSize == 0) return await Task.FromResult(new List<Player>());
+        
+	    Mapper.Reset();
+	    await using var context = InitContext();
+	    return await Task.FromResult(context.Groups.Include(g => g.Players)
+		    .First(g => g.Id == group.Id).Players
+		    .Skip((page - 1) * pageSize).Take(pageSize).ToModels());
     }
 
 	/// <summary>
