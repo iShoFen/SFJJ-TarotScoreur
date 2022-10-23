@@ -103,6 +103,7 @@ public class DbSaver : ISaver
 
         await using var context = InitContext();
         var groupEntity = group.ToEntity();
+        groupEntity.Players = groupEntity.Players.Select(p => p.Id == 0 ? p : context.Players.Find(p.Id)!).ToHashSet();
         var result = await context.AddAsync(groupEntity);
         if (result.State != EntityState.Added) return null;
 

@@ -366,12 +366,12 @@ public class DbLoader : ILoader
     public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
     {
 	    if (page == 0 || pageSize == 0) return await Task.FromResult(new List<Player>());
-	    
-        Mapper.Reset();
-        await using var context = InitContext();
-        return (await context.Players.Include(p => p.Groups)
-	        .Where(p => group.Players.Select(pe => pe.Id).Contains(p.Id))
-            .Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()).ToModels();
+        
+	    Mapper.Reset();
+	    await using var context = InitContext();
+	    return await Task.FromResult(context.Groups.Include(g => g.Players)
+		    .First(g => g.Id == group.Id).Players
+		    .Skip((page - 1) * pageSize).Take(pageSize).ToModels());
     }
 
 	/// <summary>
