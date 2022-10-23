@@ -18,8 +18,8 @@ internal static class EnumsExtensions
     private static TEntity ToEntity<TModel, TEntity>(this TModel model) where TModel : Enum 
                                                                        where TEntity : Enum
     {
-	    TEntity result = default!;
-	    foreach (var props in typeof(EnumsMapper).GetProperties())
+        TEntity result = default!;
+        foreach (var props in typeof(EnumsMapper).GetProperties())
         {
             if (props.PropertyType == typeof(EnumsMapper<TModel, TEntity>))
             {
@@ -40,7 +40,7 @@ internal static class EnumsExtensions
     private static TModel ToModel<TModel, TEntity>(this TEntity entity) where TModel : Enum 
         where TEntity : Enum
     {
-	    TModel result = default!;
+        TModel result = default!;
         foreach (var props in typeof(EnumsMapper).GetProperties())
         {
             if (props.PropertyType == typeof(EnumsMapper<TModel, TEntity>))

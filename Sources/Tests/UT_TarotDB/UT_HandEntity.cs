@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
 using TarotDB.enums;
+using TestUtils;
 using Xunit;
-using static UT_TarotDB.TestInitializer;
 
 namespace UT_TarotDB;
 
@@ -17,7 +17,7 @@ public class UT_HandEntity
 	{
 		var expBiddingIds = iExpBiddingsId.ToArray();
 		var expBiddings = iExpBiddings.ToArray();
-		await using var context = new TarotDbContextStub(InitDb());
+		await using var context = new TarotDbContextStub(TestInitializer.InitDb());
 
 		await context.Database.EnsureCreatedAsync();
 		var hand = await context.Hands
@@ -58,7 +58,7 @@ public class UT_HandEntity
 		bool? twentyOne, bool? excuse, PetitResultDB petit, ChelemDB chelem, ulong gameId,
 		params (BiddingDB, PoigneeDB)[] biddings)
 	{
-		var options = InitDb();
+		var options = TestInitializer.InitDb();
 		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
@@ -151,7 +151,7 @@ public class UT_HandEntity
 		var biddingsId = iBiddingsId.ToArray();
 		var newBiddings = iNewBiddings.ToArray();
 		
-		var options = InitDb();
+		var options = TestInitializer.InitDb();
 		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();
@@ -251,7 +251,7 @@ public class UT_HandEntity
 	[Fact]
 	public async Task TestDelete()
 	{
-		var options = InitDb();
+		var options = TestInitializer.InitDb();
 		await using (var context = new TarotDbContextStub(options))
 		{
 			await context.Database.EnsureCreatedAsync();

@@ -3,8 +3,8 @@ using Tarot2B2Model;
 using TarotDB;
 using Xunit;
 
-namespace UT_Tarot2B2Model;
 
+namespace UT_Tarot2B2Model;
 public class UT_PlayerExtensions
 {
     public static IEnumerable<object[]> Data_AddPlayerAndPlayerEntity()
@@ -94,44 +94,86 @@ public class UT_PlayerExtensions
     [MemberData(nameof(Data_AddPlayerAndPlayerEntity))]
     internal void TestPlayerEntityToModel(Player player, PlayerEntity playerEntity)
     {
-        Assert.Equal(player, playerEntity.ToModel());
+        Mapper.Reset();
+        var playerEntityToModel = playerEntity.ToModel();
+        Assert.Equal(player, playerEntityToModel);
         //To force the mapper to be used
-        Assert.Equal(player, playerEntity.ToModel());
+        Assert.Same(playerEntityToModel, playerEntity.ToModel());
+        Mapper.Reset();
+        Assert.NotSame(playerEntityToModel, playerEntity.ToModel());
     }
     
     [Theory]
     [MemberData(nameof(Data_AddPlayerAndPlayerEntity))]
     internal void TestPlayerToEntity(Player player, PlayerEntity playerEntity)
     {
-        Assert.Equal(playerEntity.Id, player.ToEntity().Id );
-        Assert.Equal(playerEntity.FirstName, player.ToEntity().FirstName );
-        Assert.Equal(playerEntity.LastName, player.ToEntity().LastName );
-        Assert.Equal(playerEntity.Nickname, player.ToEntity().Nickname );
-        Assert.Equal(playerEntity.Avatar, player.ToEntity().Avatar );
+        Mapper.Reset();
+        var playerToEntity = player.ToEntity();
+        Assert.Equal(playerEntity.Id, playerToEntity.Id );
+        Assert.Equal(playerEntity.FirstName, playerToEntity.FirstName );
+        Assert.Equal(playerEntity.LastName, playerToEntity.LastName );
+        Assert.Equal(playerEntity.Nickname, playerToEntity.Nickname );
+        Assert.Equal(playerEntity.Avatar, playerToEntity.Avatar );
         
+        //To force the mapper to be used
+        Assert.Same(playerToEntity, player.ToEntity());
+        Mapper.Reset();
+        Assert.NotSame(playerToEntity, player.ToEntity());
     }
     
     [Theory]
     [MemberData(nameof(Data_AddPlayersAndPlayerEntities))]
     internal void TestPlayerEntitiesToModels(List<Player> players, List<PlayerEntity> playerEntities)
     {
-        Assert.Equal(players, playerEntities.ToModels());
+        Mapper.Reset();
+        var playerEntitiesToModels = playerEntities.ToModels().ToList();
+        Assert.Equal(players, playerEntitiesToModels);
+        //To force the mapper to be used
+        var i = 0;
+        foreach (var playerEntity in playerEntities)
+        {
+            Assert.Same(playerEntity.ToModel(), playerEntitiesToModels.ElementAt(i));
+            ++i;
+        }
+        Mapper.Reset();
+        i = 0;
+        foreach (var playerEntity in playerEntities)
+        {
+            Assert.NotSame(playerEntity.ToModel(), playerEntitiesToModels.ElementAt(i));
+            ++i;
+        }
     }
     
     [Theory]
     [MemberData(nameof(Data_AddPlayersAndPlayerEntities))]
     internal void TestPlayersToEntities(List<Player> players, List<PlayerEntity> playerEntities)
     {
-        Assert.Equal(players.Count, playerEntities.Count);
+        Mapper.Reset();
+        var playersToEntities = players.ToEntities().ToList();
         var i = 0;
-        foreach (var playerToEntity in players.ToEntities())
+        foreach (var playerToEntity in playersToEntities)
         {
             Assert.Equal(playerToEntity.Id, playerEntities[i].Id );
             Assert.Equal(playerToEntity.FirstName, playerEntities[i].FirstName );
             Assert.Equal(playerToEntity.LastName, playerEntities[i].LastName );
             Assert.Equal(playerToEntity.Nickname, playerEntities[i].Nickname );
             Assert.Equal(playerToEntity.Avatar, playerEntities[i].Avatar );
-            i++;
+            ++i;
+        }
+        
+        //To force the mapper to be used
+        i = 0;
+        foreach (var player in players)
+        {
+            Assert.Same(player.ToEntity(), playersToEntities.ElementAt(i));
+            ++i;
+        }
+        Mapper.Reset();
+        i = 0;
+        foreach (var player in players)
+        {
+            Assert.NotSame(player.ToEntity(), playersToEntities.ElementAt(i));
+            ++i;
         }
     }
     

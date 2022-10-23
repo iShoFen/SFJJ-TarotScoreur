@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
+using TestUtils;
 using Xunit;
 
 namespace UT_TarotDB;
