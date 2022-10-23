@@ -4,7 +4,7 @@ using Model.Rules;
 
 namespace TestUtils;
 
-internal class GameTestUtils
+internal static class GameTestUtils
 {
     public static Game CreateGameWithIdAndPlayers(ulong id, string name, IRules rules, DateTime date, DateTime? endDate, params Player[] players)
     {

@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UT_Tarot2B2Model", "Tests\U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StubContext", "StubContext\StubContext.csproj", "{18DF2903-AEB5-4454-A0E5-360303DC2E6B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUtils", "TestUtils\TestUtils.csproj", "{ED5CD102-998D-4260-8D47-352E33B55303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUtils", "Tests\TestUtils\TestUtils.csproj", "{ED5CD102-998D-4260-8D47-352E33B55303}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Loader", "Tests\UT_Loader\UT_Loader.csproj", "{85C791BF-1182-460D-9EC5-DD1E984BE9BA}"
 EndProject

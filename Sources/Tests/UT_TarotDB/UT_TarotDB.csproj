@@ -27,7 +27,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
         <ProjectReference Include="..\..\TarotDB\TarotDB.csproj" />
-        <ProjectReference Include="..\..\TestUtils\TestUtils.csproj" />
+        <ProjectReference Include="..\TestUtils\TestUtils.csproj" />
     </ItemGroup>
 
 </Project>
