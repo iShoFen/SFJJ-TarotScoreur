@@ -21,6 +21,8 @@
         <InternalsVisibleTo Include="FT_TarotDB"/>
         <InternalsVisibleTo Include="FT_TarotDBStub"/>
         <InternalsVisibleTo Include="UT_Saver"/>
+        <InternalsVisibleTo Include="UT_Model"/>
+        
 
     </ItemGroup>
 
