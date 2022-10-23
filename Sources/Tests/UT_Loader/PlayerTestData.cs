@@ -1,7 +1,6 @@
 ﻿using Model;
 using static UT_Loader.DataManagers;
 
-
 namespace UT_Loader;
 
 internal static class PlayerTestData
@@ -549,7 +548,7 @@ internal static class PlayerTestData
 				    new(1UL, "Jean", "BON", "JEBO", "avatar1"),
 				    new(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
 				    new(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-				    new(4UL,"Michel", "BELIN", "FRIPOUILLE", "avatar4")
+				    new(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4")
 			    },
 			    1,
 			    4
@@ -576,19 +575,19 @@ internal static class PlayerTestData
 		    {
 			    loader,
 			    new Group(3UL, "Group 3",
-				    new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-				    new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
-				    new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
-				    new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
-				    new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
+				    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+				    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+				    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+				    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    ),
 			    new Player[]
 			    {
-				    new(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-				    new(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
-				    new(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
-				    new(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
-				    new(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
+				    new(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+				    new(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+				    new(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+				    new(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    },
 			    1,
 			    5
@@ -597,15 +596,15 @@ internal static class PlayerTestData
 		    {
 			    loader,
 			    new Group(3UL, "Group 3",
-				    new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-				    new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
-				    new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
-				    new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
-				    new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
+				    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+				    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+				    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+				    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    ),
 			    new Player[]
 			    {
-				    new(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    },
 			    2,
 			    4
@@ -614,11 +613,11 @@ internal static class PlayerTestData
 		    {
 			    loader,
 			    new Group(3UL, "Group 3",
-				    new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-				    new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
-				    new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
-				    new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
-				    new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
+				    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+				    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+				    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+				    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    ),
 			    Array.Empty<Player>(),
 			    0,
@@ -628,11 +627,11 @@ internal static class PlayerTestData
 		    {
 			    loader,
 			    new Group(3UL, "Group 3",
-				    new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-				    new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
-				    new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
-				    new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
-				    new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
+				    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+				    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+				    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+				    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    ),
 			    Array.Empty<Player>(),
 			    0,
@@ -642,11 +641,11 @@ internal static class PlayerTestData
 		    {
 			    loader,
 			    new Group(3UL, "Group 3",
-				    new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-				    new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
-				    new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
-				    new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
-				    new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15")
+				    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
+				    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+				    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+				    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+				    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
 			    ),
 			    Array.Empty<Player>(),
 			    1,
