@@ -1,5 +1,4 @@
-﻿using Model;
-using static UT_Model.Manager.DataManagers;
+﻿using Model.Rules;
 
 namespace UT_Model.Manager;
 

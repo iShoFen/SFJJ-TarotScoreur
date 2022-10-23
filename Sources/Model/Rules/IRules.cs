@@ -1,6 +1,8 @@
-﻿using Model.games;
+﻿using Model.Enums;
+using Model.Games;
+using Model.Players;
 
-namespace Model;
+namespace Model.Rules;
 
 /// <summary>
 /// Interface for the basic rules logic

@@ -1,7 +1,7 @@
-﻿namespace Model.enums;
+﻿namespace TarotDB.Enums;
 
 [Flags]
-public enum Bidding : byte
+public enum BiddingsDb : byte
 {    
     /// <summary>
     /// Unknown bidding

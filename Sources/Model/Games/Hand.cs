@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using Model.enums;
+using Model.Enums;
+using Model.Players;
+using Model.Rules;
 
-namespace Model.games;
+namespace Model.Games;
 
 /// <summary>
 /// Stores the information about a Hand, the players biddings and rules
@@ -56,7 +58,7 @@ public partial class Hand : IEquatable<Hand>
     /// <summary>
     /// Indicates the state of the Petit related to the taker
     /// </summary>
-    public PetitResult Petit { get; }
+    public PetitResults Petit { get; }
         
     /// <summary>
     /// Indicates the state of the Chelem related to the taker
@@ -66,8 +68,8 @@ public partial class Hand : IEquatable<Hand>
     /// <summary>
     /// Players bidding details
     /// </summary>
-    public ReadOnlyDictionary<Player, (Bidding,Poignee)> Biddings { get; }
-    private readonly Dictionary<Player, (Bidding, Poignee)> _biddings = new();
+    public ReadOnlyDictionary<Player, (Biddings,Poignee)> Biddings { get; }
+    private readonly Dictionary<Player, (Biddings, Poignee)> _biddings = new();
 
     public IReadOnlyDictionary<Player, int> Scores => _rules.GetHandScore(this);
 
@@ -85,7 +87,7 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
     public Hand(ulong id, int number, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
-        PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings)
+        PetitResults petit, Chelem chelem, params KeyValuePair<Player,(Biddings, Poignee)>[] biddings)
     {
         Id = id;
         Number = number;
@@ -97,7 +99,7 @@ public partial class Hand : IEquatable<Hand>
         Petit = petit;
         Chelem = chelem;
         AddBiddings(biddings);
-        Biddings = new ReadOnlyDictionary<Player, (Bidding, Poignee)>(_biddings);
+        Biddings = new ReadOnlyDictionary<Player, (Biddings, Poignee)>(_biddings);
     }
 
     /// <summary>
@@ -113,24 +115,24 @@ public partial class Hand : IEquatable<Hand>
     /// <param name="chelem"> Indicates the state of the Chelem related to the taker </param>
     /// <param name="biddings"> Players bidding details </param>
     public Hand(int number, IRules rules, DateTime date, int takerScore, bool? twentyOne, bool? excuse, 
-        PetitResult petit, Chelem chelem, params KeyValuePair<Player,(Bidding, Poignee)>[] biddings) : 
+        PetitResults petit, Chelem chelem, params KeyValuePair<Player,(Biddings, Poignee)>[] biddings) : 
         this(0UL, number, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings) {}
         
     /// <summary>
     /// Add a bidding to the hand
     /// </summary>
     /// <param name="player"> The player who bid </param>
-    /// <param name="bidding"> The bidding </param>
+    /// <param name="biddings"> The bidding </param>
     /// <param name="poignee"> The poignee </param>
     /// <returns> true if the bidding was added, false if the player already bid </returns>
-    public bool AddBidding(Player player, Bidding bidding, Poignee poignee) => _biddings.TryAdd(player, (bidding, poignee));
+    public bool AddBidding(Player player, Biddings biddings, Poignee poignee) => _biddings.TryAdd(player, (biddings, poignee));
 
     /// <summary>
     /// Add multiple biddings to the hand
     /// </summary>
     /// <param name="biddings"> The biddings to add </param>
     /// <returns> true if all the biddings were added, false if at least one player already bid </returns>
-    public bool AddBiddings(params KeyValuePair<Player, (Bidding, Poignee)>[] biddings) => 
+    public bool AddBiddings(params KeyValuePair<Player, (Biddings, Poignee)>[] biddings) => 
         biddings.All(b => !_biddings.ContainsKey(b.Key))  
         && biddings.All(b => AddBidding(b.Key, b.Value.Item1, b.Value.Item2));
 

@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Model.Players;
+using Model.Rules;
 using Tarot2B2Model;
 
 // Création du manager

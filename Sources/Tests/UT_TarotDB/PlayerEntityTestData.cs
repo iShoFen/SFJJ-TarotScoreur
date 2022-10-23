@@ -1,5 +1,5 @@
 using TarotDB;
-using TarotDB.enums;
+using TarotDB.Enums;
 
 namespace UT_TarotDB;
 

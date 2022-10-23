@@ -1,7 +1,8 @@
-﻿using Model.enums;
-using Model.games;
+﻿using Model.Enums;
+using Model.Games;
+using Model.Players;
 
-namespace Model;
+namespace Model.Rules;
 
 /// <summary>
 /// The French Tarot Rules implementation.
@@ -47,12 +48,12 @@ public class FrenchTarotRules : IRules
     /// <summary>
     /// Multiplicators of of the different biddings
     /// </summary>
-    private readonly Dictionary<Bidding, int> _multiplicators = new()
+    private readonly Dictionary<Biddings, int> _multiplicators = new()
     {
-        [Bidding.Petite] = 1,
-        [Bidding.Garde] = 2,
-        [Bidding.GardeSansLeChien] = 4,
-        [Bidding.GardeContreLeChien] = 6,
+        [Biddings.Petite] = 1,
+        [Biddings.Garde] = 2,
+        [Biddings.GardeSansLeChien] = 4,
+        [Biddings.GardeContreLeChien] = 6,
     };
 
     /// <summary>
@@ -113,11 +114,11 @@ public class FrenchTarotRules : IRules
         var scores = new Dictionary<Player, int>();
         foreach (var player in hand.Biddings)
         {
-            if ((player.Value.Item1 & Bidding.Prise) == Bidding.Prise)
+            if ((player.Value.Item1 & Biddings.Prise) == Biddings.Prise)
             {
                 scores.Add(player.Key, hand.Biddings.Count == 5? takerScore * 2 : takerScore * (hand.Biddings.Count-1));
             }
-            else if (player.Value.Item1 == Bidding.King)
+            else if (player.Value.Item1 == Biddings.King)
             {
                 scores.Add(player.Key, takerScore);
             }
@@ -130,14 +131,14 @@ public class FrenchTarotRules : IRules
     /// <summary>
     /// Get the bonus for petit au bout
     /// </summary>
-    /// <param name="petitResult"> Result of the petit au bout </param>
+    /// <param name="petitResults"> Result of the petit au bout </param>
     /// <returns> The bonus for petit au bout </returns>
-    private static int GetPrimeAuBout(PetitResult petitResult)
+    private static int GetPrimeAuBout(PetitResults petitResults)
     {
-        return petitResult switch
+        return petitResults switch
         {
-            PetitResult.AuBoutOwned => PrimeAuBout,
-            PetitResult.LostAuBout => -PrimeAuBout,
+            PetitResults.AuBoutOwned => PrimeAuBout,
+            PetitResults.LostAuBout => -PrimeAuBout,
             _ => 0
         };
     }
@@ -152,7 +153,7 @@ public class FrenchTarotRules : IRules
         var nbOudlers = 0;
         if(hand.TwentyOne == true) ++nbOudlers;
         if(hand.Excuse == true) ++nbOudlers;
-        if((hand.Petit & PetitResult.Owned) == PetitResult.Owned) ++nbOudlers;
+        if((hand.Petit & PetitResults.Owned) == PetitResults.Owned) ++nbOudlers;
         return nbOudlers;
     }
     /// <summary>
@@ -183,10 +184,10 @@ public class FrenchTarotRules : IRules
     /// </summary>
     /// <param name="biddings"> List of biddings in the hand</param>
     /// <returns> The multiplicator of the taker bidding </returns>
-    private int GetMultiplicator(IEnumerable<Bidding> biddings)
+    private int GetMultiplicator(IEnumerable<Biddings> biddings)
     {
         var multiplicator = 0;
-        foreach (var bidding in biddings.Where(bidding => (bidding & Bidding.Prise) == Bidding.Prise))
+        foreach (var bidding in biddings.Where(bidding => (bidding & Biddings.Prise) == Biddings.Prise))
         {
             multiplicator = _multiplicators[bidding];
         }
@@ -261,16 +262,16 @@ public class FrenchTarotRules : IRules
     /// </summary>
     /// <param name="iBiddings"> List of biddings </param>
     /// <returns> The validity of the biddings </returns>
-    private Validity IsPlayersBiddingValid(IEnumerable<Bidding> iBiddings)
+    private Validity IsPlayersBiddingValid(IEnumerable<Biddings> iBiddings)
     {
         int nbKing = 0, nbTaker=0;
         var biddings = iBiddings.ToList();
             
         foreach (var bidding in biddings)
         {
-            if (bidding == Bidding.King) ++nbKing;
-            if((bidding & Bidding.Prise) == Bidding.Prise) ++nbTaker;
-            if (bidding == Bidding.Unknown) return Validity.PlayerShallHaveBidding;
+            if (bidding == Biddings.King) ++nbKing;
+            if((bidding & Biddings.Prise) == Biddings.Prise) ++nbTaker;
+            if (bidding == Biddings.Unknown) return Validity.PlayerShallHaveBidding;
         }
 
         if (nbKing > MaxNbKing || (biddings.Count < 5 && nbKing > 0)) return Validity.TooManyKing;

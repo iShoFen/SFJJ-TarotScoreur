@@ -1,6 +1,6 @@
-﻿namespace TarotDB.enums
+﻿namespace TarotDB.Enums
 {
-    public enum PoigneeDB : byte
+    public enum PoigneeDb : byte
     {
         /// <summary>
         /// If the player has no poignee

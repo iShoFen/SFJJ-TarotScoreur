@@ -1,5 +1,5 @@
-using Model.enums;
-using TarotDB.enums;
+using Model.Enums;
+using TarotDB.Enums;
 
 namespace Tarot2B2Model;
 
@@ -45,50 +45,50 @@ internal static class EnumsMapper
     /// <summary>
     /// The mapper for the BiddingDB
     /// </summary>
-    public static EnumsMapper<Bidding, BiddingDB> BiddingMapper { get; } = new(
-        (Bidding.Unknown, BiddingDB.Unknown),
-        (Bidding.Prise, BiddingDB.Prise),
-        (Bidding.Petite, BiddingDB.Petite),
-        (Bidding.Garde, BiddingDB.Garde),
-        (Bidding.GardeSansLeChien, BiddingDB.GardeSansLeChien),
-        (Bidding.GardeContreLeChien, BiddingDB.GardeContreLeChien),
-        (Bidding.Opponent, BiddingDB.Opponent),
-        (Bidding.King, BiddingDB.King)
+    public static EnumsMapper<Biddings, BiddingsDb> BiddingMapper { get; } = new(
+        (Biddings.Unknown, BiddingsDb.Unknown),
+        (Biddings.Prise, BiddingsDb.Prise),
+        (Biddings.Petite, BiddingsDb.Petite),
+        (Biddings.Garde, BiddingsDb.Garde),
+        (Biddings.GardeSansLeChien, BiddingsDb.GardeSansLeChien),
+        (Biddings.GardeContreLeChien, BiddingsDb.GardeContreLeChien),
+        (Biddings.Opponent, BiddingsDb.Opponent),
+        (Biddings.King, BiddingsDb.King)
         );
     
     /// <summary>
     /// The mapper for the ChelemDB
     /// </summary>
-    public static EnumsMapper<Chelem, ChelemDB> ChelemMapper { get; } = new(
-        (Chelem.Unknown, ChelemDB.Unknown),
-        (Chelem.Announced, ChelemDB.Announced),
-        (Chelem.Success, ChelemDB.Success),
-        (Chelem.Fail, ChelemDB.Fail),
-        (Chelem.NotAnnouncedSuccess, ChelemDB.NotAnnouncedSuccess),
-        (Chelem.AnnouncedSuccess, ChelemDB.AnnouncedSuccess),
-        (Chelem.AnnouncedFail, ChelemDB.AnnouncedFail)
+    public static EnumsMapper<Chelem, ChelemDb> ChelemMapper { get; } = new(
+        (Chelem.Unknown, ChelemDb.Unknown),
+        (Chelem.Announced, ChelemDb.Announced),
+        (Chelem.Success, ChelemDb.Success),
+        (Chelem.Fail, ChelemDb.Fail),
+        (Chelem.NotAnnouncedSuccess, ChelemDb.NotAnnouncedSuccess),
+        (Chelem.AnnouncedSuccess, ChelemDb.AnnouncedSuccess),
+        (Chelem.AnnouncedFail, ChelemDb.AnnouncedFail)
         );
         
     /// <summary>
-    /// The mapper for the PetitResultDB
+    /// The mapper for the PetitResultsDb
     /// </summary>
-    public static EnumsMapper<PetitResult, PetitResultDB> PetitResultMapper { get; } = new(
-        (PetitResult.Unknown, PetitResultDB.Unknown),
-        (PetitResult.Owned, PetitResultDB.Owned),
-        (PetitResult.NotOwned, PetitResultDB.NotOwned),
-        (PetitResult.Lost, PetitResultDB.Lost),
-        (PetitResult.AuBout, PetitResultDB.AuBout),
-        (PetitResult.AuBoutOwned, PetitResultDB.AuBoutOwned),
-        (PetitResult.LostAuBout, PetitResultDB.LostAuBout)
+    public static EnumsMapper<PetitResults, PetitResultsDb> PetitResultMapper { get; } = new(
+        (PetitResults.Unknown, PetitResultsDb.Unknown),
+        (PetitResults.Owned, PetitResultsDb.Owned),
+        (PetitResults.NotOwned, PetitResultsDb.NotOwned),
+        (PetitResults.Lost, PetitResultsDb.Lost),
+        (PetitResults.AuBout, PetitResultsDb.AuBout),
+        (PetitResults.AuBoutOwned, PetitResultsDb.AuBoutOwned),
+        (PetitResults.LostAuBout, PetitResultsDb.LostAuBout)
         );
     
     /// <summary>
-    /// The mapper for the PoigneeDB
+    /// The mapper for the PoigneeDb
     /// </summary>
-    public static EnumsMapper<Poignee, PoigneeDB> PoigneeMapper { get; } = new(
-        (Poignee.None, PoigneeDB.None),
-        (Poignee.Simple, PoigneeDB.Simple),
-        (Poignee.Double, PoigneeDB.Double),
-        (Poignee.Triple, PoigneeDB.Triple)
+    public static EnumsMapper<Poignee, PoigneeDb> PoigneeMapper { get; } = new(
+        (Poignee.None, PoigneeDb.None),
+        (Poignee.Simple, PoigneeDb.Simple),
+        (Poignee.Double, PoigneeDb.Double),
+        (Poignee.Triple, PoigneeDb.Triple)
         );
 }

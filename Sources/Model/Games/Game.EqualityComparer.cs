@@ -1,4 +1,4 @@
-﻿namespace Model.games;
+﻿namespace Model.Games;
 
 public partial class Game
 {

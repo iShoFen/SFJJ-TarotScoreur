@@ -1,4 +1,4 @@
-using TarotDB.enums;
+using TarotDB.Enums;
 
 namespace TarotDB;
 
@@ -11,12 +11,12 @@ internal class BiddingPoigneeEntity
     /// <summary>
     /// The type of the bidding
     /// </summary>
-    public BiddingDB Bidding { get; set; }
+    public BiddingsDb Biddings { get; set; }
     
     /// <summary>
     /// The type of the poignee
     /// </summary>
-    public PoigneeDB Poignee { get; set; }
+    public PoigneeDb Poignee { get; set; }
     
     /// <summary>
     /// The unique identifier of the hand

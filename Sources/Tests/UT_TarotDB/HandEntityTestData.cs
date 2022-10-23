@@ -1,4 +1,4 @@
-using TarotDB.enums;
+using TarotDB.Enums;
 
 namespace UT_TarotDB;
 
@@ -15,8 +15,8 @@ public static class HandEntityTestData
 			210,
 			false,
 			true,
-			PetitResultDB.Lost,
-			ChelemDB.Unknown,
+			PetitResultsDb.Lost,
+			ChelemDb.Unknown,
 			1UL,
 			new[]
 			{
@@ -26,9 +26,9 @@ public static class HandEntityTestData
 			},
 			new[]
 			{
-				(BiddingDB.Petite, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.Petite, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -40,8 +40,8 @@ public static class HandEntityTestData
 			365,
 			false,
 			true,
-			PetitResultDB.AuBoutOwned,
-			ChelemDB.Fail,
+			PetitResultsDb.AuBoutOwned,
+			ChelemDb.Fail,
 			4UL,
 			new[]
 			{
@@ -52,10 +52,10 @@ public static class HandEntityTestData
 			},
 			new[]
 			{
-				(BiddingDB.GardeContreLeChien, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.Simple),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.GardeContreLeChien, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.Simple),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -67,8 +67,8 @@ public static class HandEntityTestData
 			567,
 			true,
 			false,
-			PetitResultDB.Lost,
-			ChelemDB.Unknown,
+			PetitResultsDb.Lost,
+			ChelemDb.Unknown,
 			10UL,
 			new[]
 			{
@@ -80,11 +80,11 @@ public static class HandEntityTestData
 			},
 			new[]
 			{
-				(BiddingDB.GardeContreLeChien, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.King, PoigneeDB.None)
+				(BiddingsDb.GardeContreLeChien, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.King, PoigneeDb.None)
 			}
 		};
 	}
@@ -101,14 +101,14 @@ public static class HandEntityTestData
 			456,
 			true,
 			true,
-			PetitResultDB.AuBoutOwned,
-			ChelemDB.AnnouncedSuccess,
+			PetitResultsDb.AuBoutOwned,
+			ChelemDb.AnnouncedSuccess,
 			1UL,
 			new[]
 			{
-				(BiddingDB.GardeContreLeChien, PoigneeDB.Triple),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.GardeContreLeChien, PoigneeDb.Triple),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -121,15 +121,15 @@ public static class HandEntityTestData
 			365,
 			false,
 			true,
-			PetitResultDB.AuBoutOwned,
-			ChelemDB.Fail,
+			PetitResultsDb.AuBoutOwned,
+			ChelemDb.Fail,
 			4UL,
 			new[]
 			{
-				(BiddingDB.GardeSansLeChien, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.Simple),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.GardeSansLeChien, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.Simple),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -142,16 +142,16 @@ public static class HandEntityTestData
 			567,
 			true,
 			false,
-			PetitResultDB.Lost,
-			ChelemDB.Unknown,
+			PetitResultsDb.Lost,
+			ChelemDb.Unknown,
 			10UL,
 			new[]
 			{
-				(BiddingDB.Garde, PoigneeDB.Double),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.King, PoigneeDB.None)
+				(BiddingsDb.Garde, PoigneeDb.Double),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.King, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -164,14 +164,14 @@ public static class HandEntityTestData
 			210,
 			false,
 			true,
-			PetitResultDB.Lost,
-			ChelemDB.Unknown,
+			PetitResultsDb.Lost,
+			ChelemDb.Unknown,
 			1UL,
 			new[]
 			{
-				(BiddingDB.Petite, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.Petite, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -184,8 +184,8 @@ public static class HandEntityTestData
 			540,
 			null,
 			null,
-			PetitResultDB.LostAuBout,
-			ChelemDB.Announced,
+			PetitResultsDb.LostAuBout,
+			ChelemDb.Announced,
 			4UL
 		};
 	}
@@ -209,10 +209,10 @@ public static class HandEntityTestData
 			true,
 			true,
 			null,
-			PetitResultDB.Lost,
-			PetitResultDB.Owned,
-			ChelemDB.Unknown,
-			ChelemDB.Success,
+			PetitResultsDb.Lost,
+			PetitResultsDb.Owned,
+			ChelemDb.Unknown,
+			ChelemDb.Success,
 			1UL,
 			1UL,
 			new[]
@@ -223,9 +223,9 @@ public static class HandEntityTestData
 			},
 			new[]
 			{
-				(BiddingDB.GardeContreLeChien, PoigneeDB.Triple),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.GardeContreLeChien, PoigneeDb.Triple),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 		yield return new object?[]
@@ -245,10 +245,10 @@ public static class HandEntityTestData
 			null,
 			true,
 			null,
-			PetitResultDB.Lost,
-			PetitResultDB.NotOwned,
-			ChelemDB.Unknown,
-			ChelemDB.NotAnnouncedSuccess,
+			PetitResultsDb.Lost,
+			PetitResultsDb.NotOwned,
+			ChelemDb.Unknown,
+			ChelemDb.NotAnnouncedSuccess,
 			1UL,
 			1UL,
 			new[]
@@ -257,7 +257,7 @@ public static class HandEntityTestData
 				(1UL, 2UL),
 				(1UL, 3UL)
 			},
-			Array.Empty<(BiddingDB, PoigneeDB)>()
+			Array.Empty<(BiddingsDb, PoigneeDb)>()
 		};
 		yield return new object?[]
 		{
@@ -276,10 +276,10 @@ public static class HandEntityTestData
 			true,
 			true,
 			null,
-			PetitResultDB.Lost,
-			PetitResultDB.Owned,
-			ChelemDB.Unknown,
-			ChelemDB.Success,
+			PetitResultsDb.Lost,
+			PetitResultsDb.Owned,
+			ChelemDb.Unknown,
+			ChelemDb.Success,
 			1UL,
 			2UL,
 			new[]
@@ -290,9 +290,9 @@ public static class HandEntityTestData
 			},
 			new[]
 			{
-				(BiddingDB.GardeContreLeChien, PoigneeDB.Triple),
-				(BiddingDB.Opponent, PoigneeDB.None),
-				(BiddingDB.Opponent, PoigneeDB.None)
+				(BiddingsDb.GardeContreLeChien, PoigneeDb.Triple),
+				(BiddingsDb.Opponent, PoigneeDb.None),
+				(BiddingsDb.Opponent, PoigneeDb.None)
 			}
 		};
 	}

@@ -1,6 +1,7 @@
-using Model.games;
+using Model.Games;
+using Model.Players;
 
-namespace Model.data;
+namespace Model.Data;
 
 public interface ILoader
 {

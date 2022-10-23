@@ -1,9 +1,10 @@
-using Model;
-using Model.enums;
-using Model.games;
+using Model.Rules;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using Tarot2B2Model;
 using TarotDB;
-using TarotDB.enums;
+using TarotDB.Enums;
 using TestUtils;
 using Xunit;
 
@@ -92,7 +93,7 @@ public class UT_GameExtensions
                 new[]
                 {
                     new Hand(1L, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 25, true, true,
-                        PetitResult.Owned, Chelem.Announced)
+                        PetitResults.Owned, Chelem.Announced)
                 }
 
             ),
@@ -141,8 +142,8 @@ public class UT_GameExtensions
                         TakerScore = 25,
                         TwentyOne = true,
                         Excuse = true,
-                        Petit = PetitResultDB.Owned,
-                        Chelem = ChelemDB.Announced
+                        Petit = PetitResultsDb.Owned,
+                        Chelem = ChelemDb.Announced
                     }
                 }
 

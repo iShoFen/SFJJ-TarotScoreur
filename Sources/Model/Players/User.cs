@@ -1,4 +1,4 @@
-namespace Model;
+namespace Model.Players;
 
 /// <summary>
 /// a User of the application

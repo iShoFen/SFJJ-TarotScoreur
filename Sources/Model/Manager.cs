@@ -1,9 +1,10 @@
-using Model.data;
-using Model.enums;
-using Model.games;
+using Model.Data;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using NLog;
 
-namespace Model;
+namespace Model.Rules;
 
 public class Manager
 {
@@ -368,7 +369,7 @@ public class Manager
     /// <param name="biddings"> Players bidding details </param>
     /// <returns>The hand created</returns>
     public Hand CreateHand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne,
-        bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player, (Bidding, Poignee)>[] biddings)
+        bool? excuse, PetitResults petit, Chelem chelem, params KeyValuePair<Player, (Biddings, Poignee)>[] biddings)
     {
         var hand = new Hand(id, handNumber, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings);
         _logger.Info("Hand created : {arguments}", hand.ToString());

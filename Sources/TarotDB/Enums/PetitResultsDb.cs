@@ -1,7 +1,7 @@
-﻿namespace Model.enums;
+﻿namespace TarotDB.Enums;
 
 [Flags]
-public enum PetitResult : byte
+public enum PetitResultsDb : byte
 {
     /// <summary>
     /// Unknown status of the Petit

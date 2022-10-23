@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace Model.Players
 {
     /// <summary>
     /// a Player of the Tarot game

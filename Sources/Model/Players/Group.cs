@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace Model;
+namespace Model.Players;
 
 public partial class Group : IEquatable<Group>
 {

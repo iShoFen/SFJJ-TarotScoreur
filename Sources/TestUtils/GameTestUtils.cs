@@ -1,5 +1,6 @@
-﻿using Model.games;
-using Model;
+﻿using Model.Games;
+using Model.Players;
+using Model.Rules;
 
 namespace TestUtils;
 

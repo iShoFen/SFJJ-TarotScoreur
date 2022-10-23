@@ -1,6 +1,7 @@
-﻿using Model;
-using Model.data;
-using Model.games;
+﻿using Model.Rules;
+using Model.Data;
+using Model.Games;
+using Model.Players;
 using StubLib;
 using Xunit;
 

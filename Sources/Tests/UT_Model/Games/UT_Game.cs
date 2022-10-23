@@ -1,6 +1,7 @@
-using Model;
-using Model.enums;
-using Model.games;
+using Model.Rules;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using Xunit;
 
 namespace UT_Model.Games;
@@ -90,18 +91,18 @@ public class UT_Game
     public void TestGetScores()
     {
         Game game = new ("Test", new FrenchTarotRules(), DateTime.Now);
-        game.AddHand(new Hand(1, new FrenchTarotRules(), DateTime.Now, 40, true, true, PetitResult.Lost, Chelem.Unknown,
-            KeyValuePair.Create(new Player(1UL, "toto", "tata", "toto", ""), (Bidding.Petite, Poignee.Simple)),
-            KeyValuePair.Create(new Player(2UL, "titi", "tata", "titi", ""), (Bidding.Opponent, Poignee.None)),
-            KeyValuePair.Create(new Player(3UL, "tutu", "tata", "tutu", ""), (Bidding.Opponent, Poignee.None)),
-            KeyValuePair.Create(new Player(4UL, "tete", "tata", "tete", ""), (Bidding.Opponent, Poignee.None)),
-            KeyValuePair.Create(new Player(5UL, "tata", "tata", "tata", ""), (Bidding.King, Poignee.None))));
-        game.AddHand(new Hand(2, new FrenchTarotRules(), DateTime.Now, 60, true, true, PetitResult.Lost, Chelem.Unknown,
-            KeyValuePair.Create(new Player(1UL, "toto", "tata", "toto", ""), (Bidding.Garde, Poignee.None)),
-            KeyValuePair.Create(new Player(2UL, "titi", "tata", "titi", ""), (Bidding.Opponent, Poignee.None)),
-            KeyValuePair.Create(new Player(3UL, "tutu", "tata", "tutu", ""), (Bidding.Opponent, Poignee.None)),
-            KeyValuePair.Create(new Player(4UL, "tete", "tata", "tete", ""), (Bidding.Opponent, Poignee.Double)),
-            KeyValuePair.Create(new Player(5UL, "tata", "tata", "tata", ""), (Bidding.King, Poignee.None))));
+        game.AddHand(new Hand(1, new FrenchTarotRules(), DateTime.Now, 40, true, true, PetitResults.Lost, Chelem.Unknown,
+            KeyValuePair.Create(new Player(1UL, "toto", "tata", "toto", ""), (Biddings.Petite, Poignee.Simple)),
+            KeyValuePair.Create(new Player(2UL, "titi", "tata", "titi", ""), (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(new Player(3UL, "tutu", "tata", "tutu", ""), (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(new Player(4UL, "tete", "tata", "tete", ""), (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(new Player(5UL, "tata", "tata", "tata", ""), (Biddings.King, Poignee.None))));
+        game.AddHand(new Hand(2, new FrenchTarotRules(), DateTime.Now, 60, true, true, PetitResults.Lost, Chelem.Unknown,
+            KeyValuePair.Create(new Player(1UL, "toto", "tata", "toto", ""), (Biddings.Garde, Poignee.None)),
+            KeyValuePair.Create(new Player(2UL, "titi", "tata", "titi", ""), (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(new Player(3UL, "tutu", "tata", "tutu", ""), (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(new Player(4UL, "tete", "tata", "tete", ""), (Biddings.Opponent, Poignee.Double)),
+            KeyValuePair.Create(new Player(5UL, "tata", "tata", "tata", ""), (Biddings.King, Poignee.None))));
 
         IEnumerable<IReadOnlyDictionary<Player, int>> scores = new[]
         {

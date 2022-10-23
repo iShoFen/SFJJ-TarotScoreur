@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Model.enums;
+﻿using Model.Enums;
 using Tarot2B2Model;
-using TarotDB.enums;
+using TarotDB.Enums;
 using Xunit;
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
@@ -13,9 +12,9 @@ public class UT_EnumExtensions
     internal void Test_BiddingsToEntity()
     {
         var i = 0;
-        foreach (Bidding bidding in Enum.GetValues(typeof(Bidding)))
+        foreach (Biddings bidding in Enum.GetValues(typeof(Biddings)))
         {
-            Assert.Equal(bidding.ToEntity(), Enum.GetValues(typeof(BiddingDB)).GetValue(i));
+            Assert.Equal(bidding.ToEntity(), Enum.GetValues(typeof(BiddingsDb)).GetValue(i));
             ++i;
         }
     }
@@ -24,9 +23,9 @@ public class UT_EnumExtensions
     internal void Test_BiddingsToModel()
     {
         var i = 0;
-        foreach (BiddingDB bidding in Enum.GetValues(typeof(BiddingDB)))
+        foreach (BiddingsDb bidding in Enum.GetValues(typeof(BiddingsDb)))
         {
-            Assert.Equal(bidding.ToModel(), Enum.GetValues(typeof(Bidding)).GetValue(i));
+            Assert.Equal(bidding.ToModel(), Enum.GetValues(typeof(Biddings)).GetValue(i));
             ++i;
         }
     }
@@ -37,7 +36,7 @@ public class UT_EnumExtensions
         var i = 0;
         foreach (Chelem chelem in Enum.GetValues(typeof(Chelem)))
         {
-            Assert.Equal(chelem.ToEntity(), Enum.GetValues(typeof(ChelemDB)).GetValue(i));
+            Assert.Equal(chelem.ToEntity(), Enum.GetValues(typeof(ChelemDb)).GetValue(i));
             ++i;
         }
     }
@@ -46,7 +45,7 @@ public class UT_EnumExtensions
     internal void Test_ChelemToModel()
     {
         var i = 0;
-        foreach (ChelemDB chelem in Enum.GetValues(typeof(ChelemDB)))
+        foreach (ChelemDb chelem in Enum.GetValues(typeof(ChelemDb)))
         {
             Assert.Equal(chelem.ToModel(), Enum.GetValues(typeof(Chelem)).GetValue(i));
             ++i;
@@ -57,9 +56,9 @@ public class UT_EnumExtensions
     internal void Test_PetitResultToEntity()
     {
         var i = 0;
-        foreach (PetitResult petitResult in Enum.GetValues(typeof(PetitResult)))
+        foreach (PetitResults petitResult in Enum.GetValues(typeof(PetitResults)))
         {
-            Assert.Equal(petitResult.ToEntity(), Enum.GetValues(typeof(PetitResultDB)).GetValue(i));
+            Assert.Equal(petitResult.ToEntity(), Enum.GetValues(typeof(PetitResultsDb)).GetValue(i));
             ++i;
         }
     }
@@ -68,9 +67,9 @@ public class UT_EnumExtensions
     internal void Test_PetitResultToModel()
     {
         var i = 0;
-        foreach (PetitResultDB petitResult in Enum.GetValues(typeof(PetitResultDB)))
+        foreach (PetitResultsDb petitResult in Enum.GetValues(typeof(PetitResultsDb)))
         {
-            Assert.Equal(petitResult.ToModel(), Enum.GetValues(typeof(PetitResult)).GetValue(i));
+            Assert.Equal(petitResult.ToModel(), Enum.GetValues(typeof(PetitResults)).GetValue(i));
             ++i;
         }
     }
@@ -81,7 +80,7 @@ public class UT_EnumExtensions
         var i = 0;
         foreach (Poignee poignee in Enum.GetValues(typeof(Poignee)))
         {
-            Assert.Equal(poignee.ToEntity(), Enum.GetValues(typeof(PoigneeDB)).GetValue(i));
+            Assert.Equal(poignee.ToEntity(), Enum.GetValues(typeof(PoigneeDb)).GetValue(i));
             ++i;
         }
     }
@@ -90,7 +89,7 @@ public class UT_EnumExtensions
     internal void Test_PoigneeToModel()
     {
         var i = 0;
-        foreach (PoigneeDB poignee in Enum.GetValues(typeof(PoigneeDB)))
+        foreach (PoigneeDb poignee in Enum.GetValues(typeof(PoigneeDb)))
         {
             Assert.Equal(poignee.ToModel(), Enum.GetValues(typeof(Poignee)).GetValue(i));
             ++i;

@@ -1,5 +1,5 @@
-using Model;
-using Model.games;
+using Model.Games;
+using Model.Rules;
 using TarotDB;
 using static Tarot2B2Model.Mapper;
 
@@ -35,7 +35,7 @@ internal static class HandExtensions
 
         handEntity.Biddings = model.Biddings.Select(kv => new BiddingPoigneeEntity
         {
-            Bidding = kv.Value.Item1.ToEntity(),
+            Biddings = kv.Value.Item1.ToEntity(),
             Poignee = kv.Value.Item2.ToEntity(),
             Hand = handEntity,
             Player = kv.Key.ToEntity()
@@ -68,7 +68,7 @@ internal static class HandExtensions
             entity.Chelem.ToModel(),
             entity.Biddings.ToDictionary(
                 bidding => bidding.Player.ToModel(),
-                bidding => (bidding.Bidding.ToModel(), bidding.Poignee.ToModel())
+                bidding => (bidding.Biddings.ToModel(), bidding.Poignee.ToModel())
             ).ToArray()
         );
         HandsMapper.Map(hand, entity);

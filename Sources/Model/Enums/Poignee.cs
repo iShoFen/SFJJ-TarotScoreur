@@ -1,4 +1,4 @@
-﻿namespace Model.enums
+﻿namespace Model.Enums
 {
     public enum Poignee : byte
     {

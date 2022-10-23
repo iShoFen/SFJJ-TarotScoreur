@@ -1,4 +1,4 @@
-using Model.data;
+using Model.Data;
 using StubContext;
 using StubLib;
 using Tarot2B2Model;

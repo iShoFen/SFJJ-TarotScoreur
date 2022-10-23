@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TarotDB;
-using TarotDB.enums;
+using TarotDB.Enums;
 
 namespace StubContext;
 
@@ -228,23 +228,23 @@ internal class TarotDbContextStub : TarotDbContext
         };
         var petits = new[]
         {
-            PetitResultDB.Lost, PetitResultDB.Lost, PetitResultDB.Lost, PetitResultDB.Lost, PetitResultDB.AuBoutOwned,
-            PetitResultDB.Owned, PetitResultDB.LostAuBout, PetitResultDB.AuBoutOwned, PetitResultDB.Owned,
-            PetitResultDB.NotOwned, PetitResultDB.AuBoutOwned, PetitResultDB.AuBoutOwned, PetitResultDB.Lost,
-            PetitResultDB.Lost, PetitResultDB.Owned, PetitResultDB.LostAuBout, PetitResultDB.Lost, PetitResultDB.Owned,
-            PetitResultDB.Owned, PetitResultDB.LostAuBout, PetitResultDB.Lost, PetitResultDB.Owned, PetitResultDB.Lost,
-            PetitResultDB.Lost, PetitResultDB.LostAuBout, PetitResultDB.Owned, PetitResultDB.Lost, PetitResultDB.Lost,
-            PetitResultDB.LostAuBout, PetitResultDB.Lost, PetitResultDB.Owned, PetitResultDB.Lost
+            PetitResultsDb.Lost, PetitResultsDb.Lost, PetitResultsDb.Lost, PetitResultsDb.Lost, PetitResultsDb.AuBoutOwned,
+            PetitResultsDb.Owned, PetitResultsDb.LostAuBout, PetitResultsDb.AuBoutOwned, PetitResultsDb.Owned,
+            PetitResultsDb.NotOwned, PetitResultsDb.AuBoutOwned, PetitResultsDb.AuBoutOwned, PetitResultsDb.Lost,
+            PetitResultsDb.Lost, PetitResultsDb.Owned, PetitResultsDb.LostAuBout, PetitResultsDb.Lost, PetitResultsDb.Owned,
+            PetitResultsDb.Owned, PetitResultsDb.LostAuBout, PetitResultsDb.Lost, PetitResultsDb.Owned, PetitResultsDb.Lost,
+            PetitResultsDb.Lost, PetitResultsDb.LostAuBout, PetitResultsDb.Owned, PetitResultsDb.Lost, PetitResultsDb.Lost,
+            PetitResultsDb.LostAuBout, PetitResultsDb.Lost, PetitResultsDb.Owned, PetitResultsDb.Lost
         };
         var chelems = new[]
         {
-            ChelemDB.Unknown, ChelemDB.Announced, ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
-            ChelemDB.Success, ChelemDB.Unknown, ChelemDB.Success, ChelemDB.Success, ChelemDB.AnnouncedSuccess,
-            ChelemDB.Fail, ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess, ChelemDB.Success,
-            ChelemDB.Fail, ChelemDB.AnnouncedSuccess, ChelemDB.AnnouncedSuccess, ChelemDB.Unknown, ChelemDB.Unknown,
-            ChelemDB.AnnouncedSuccess, ChelemDB.Success, ChelemDB.Unknown, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
-            ChelemDB.Success, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess, ChelemDB.Unknown, ChelemDB.AnnouncedSuccess,
-            ChelemDB.Success, ChelemDB.Unknown
+            ChelemDb.Unknown, ChelemDb.Announced, ChelemDb.Success, ChelemDb.Unknown, ChelemDb.AnnouncedSuccess,
+            ChelemDb.Success, ChelemDb.Unknown, ChelemDb.Success, ChelemDb.Success, ChelemDb.AnnouncedSuccess,
+            ChelemDb.Fail, ChelemDb.Success, ChelemDb.Unknown, ChelemDb.AnnouncedSuccess, ChelemDb.Success,
+            ChelemDb.Fail, ChelemDb.AnnouncedSuccess, ChelemDb.AnnouncedSuccess, ChelemDb.Unknown, ChelemDb.Unknown,
+            ChelemDb.AnnouncedSuccess, ChelemDb.Success, ChelemDb.Unknown, ChelemDb.Unknown, ChelemDb.AnnouncedSuccess,
+            ChelemDb.Success, ChelemDb.Unknown, ChelemDb.AnnouncedSuccess, ChelemDb.Unknown, ChelemDb.AnnouncedSuccess,
+            ChelemDb.Success, ChelemDb.Unknown
         };
 
         // Number of hands per game
@@ -290,40 +290,40 @@ internal class TarotDbContextStub : TarotDbContext
     {
         var biddings = new[]
         {
-            BiddingDB.Petite, BiddingDB.Petite, BiddingDB.Garde, BiddingDB.GardeSansLeChien,
-            BiddingDB.GardeContreLeChien, BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.GardeContreLeChien,
-            BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.GardeContreLeChien, BiddingDB.Petite,
-            BiddingDB.GardeSansLeChien, BiddingDB.GardeContreLeChien, BiddingDB.Petite, BiddingDB.GardeSansLeChien,
-            BiddingDB.GardeContreLeChien, BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.GardeSansLeChien,
-            BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.Petite, BiddingDB.GardeSansLeChien, BiddingDB.Garde,
-            BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.Garde,
-            BiddingDB.Petite, BiddingDB.GardeContreLeChien
+            BiddingsDb.Petite, BiddingsDb.Petite, BiddingsDb.Garde, BiddingsDb.GardeSansLeChien,
+            BiddingsDb.GardeContreLeChien, BiddingsDb.Petite, BiddingsDb.GardeSansLeChien, BiddingsDb.GardeContreLeChien,
+            BiddingsDb.Petite, BiddingsDb.GardeSansLeChien, BiddingsDb.GardeContreLeChien, BiddingsDb.Petite,
+            BiddingsDb.GardeSansLeChien, BiddingsDb.GardeContreLeChien, BiddingsDb.Petite, BiddingsDb.GardeSansLeChien,
+            BiddingsDb.GardeContreLeChien, BiddingsDb.Petite, BiddingsDb.GardeSansLeChien, BiddingsDb.GardeSansLeChien,
+            BiddingsDb.GardeSansLeChien, BiddingsDb.Garde, BiddingsDb.Petite, BiddingsDb.GardeSansLeChien, BiddingsDb.Garde,
+            BiddingsDb.GardeSansLeChien, BiddingsDb.Garde, BiddingsDb.GardeSansLeChien, BiddingsDb.Garde, BiddingsDb.Garde,
+            BiddingsDb.Petite, BiddingsDb.GardeContreLeChien
         };
         
         var poignees = new[]
         {
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-	        PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.Simple, PoigneeDb.None, PoigneeDb.Simple, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.Double, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Triple,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Triple, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.Triple, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Triple,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.Triple, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Triple, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple,
+	        PoigneeDb.None, PoigneeDb.Double, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.Triple, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.Simple,
+	        PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None, PoigneeDb.None
         };
 
         var numPlayerPerGame = new[]
@@ -350,12 +350,12 @@ internal class TarotDbContextStub : TarotDbContext
                     var bidding = j switch
                     {
                         0 => biddings[biddingIndex],
-                        4 => BiddingDB.King,
-                        _ => BiddingDB.Opponent
+                        4 => BiddingsDb.King,
+                        _ => BiddingsDb.Opponent
                     };
 
                     bids.Add(new BiddingPoigneeEntity
-                        { Bidding = bidding, Poignee = poignees[index], HandId = handId, PlayerId = playerId });
+                        { Biddings = bidding, Poignee = poignees[index], HandId = handId, PlayerId = playerId });
 
                     ++playerId;
                     ++index;
@@ -376,12 +376,12 @@ internal class TarotDbContextStub : TarotDbContext
 		        var bidding = j switch
 		        {
 			        0 => biddings[biddingIndex],
-			        4 => BiddingDB.King,
-			        _ => BiddingDB.Opponent
+			        4 => BiddingsDb.King,
+			        _ => BiddingsDb.Opponent
 		        };
 
 		        bids.Add(new BiddingPoigneeEntity
-			        { Bidding = bidding, Poignee = poignees[index], HandId = handId, PlayerId = playerId });
+			        { Biddings = bidding, Poignee = poignees[index], HandId = handId, PlayerId = playerId });
 
 		        ++playerId;
 		        ++index;

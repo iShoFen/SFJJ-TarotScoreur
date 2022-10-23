@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using Xunit;
-using Model;
-using Model.enums;
-using Model.games;
+﻿using Xunit;
+using Model.Rules;
+using Model.Enums;
+using Model.Players;
+using Model.Games;
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace UT_Model;
 
@@ -67,23 +67,23 @@ public class UT_IRules
                     40,
                     true,
                     true,
-                    PetitResult.Lost,
+                    PetitResults.Lost,
                     Chelem.Unknown,
                     KeyValuePair.Create(
                         new Player(1, "toto", "tata0", "toto", ""),
-                        (Bidding.Petite, Poignee.Simple)),
+                        (Biddings.Petite, Poignee.Simple)),
                     KeyValuePair.Create(
                         new Player(2, "tata", "tata", "tata", ""),
-                        (Bidding.Opponent, Poignee.None)),
+                        (Biddings.Opponent, Poignee.None)),
                     KeyValuePair.Create(
                         new Player(3, "tutu", "tutu", "tutu", ""),
-                        (Bidding.Opponent, Poignee.None)),
+                        (Biddings.Opponent, Poignee.None)),
                     KeyValuePair.Create(
                         new Player(4,"titi","titi","titi",""),
-                        (Bidding.Opponent, Poignee.None)),
+                        (Biddings.Opponent, Poignee.None)),
                     KeyValuePair.Create(
                         new Player(5,"tete","tete","tete","tete"),
-                        (Bidding.King, Poignee.None))
+                        (Biddings.King, Poignee.None))
                 )
         };
         //This hand isn't valid because the player 2's bidding is unknown
@@ -100,23 +100,23 @@ public class UT_IRules
                 40,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Unknown, Poignee.None)),
+                    (Biddings.Unknown, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
         };
         //This hand isn't valid because there is 2 kings
@@ -133,23 +133,23 @@ public class UT_IRules
                 40,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.King, Poignee.None)),
+                    (Biddings.King, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.King, Poignee.None)),
+                    (Biddings.King, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.Opponent, Poignee.None))
+                    (Biddings.Opponent, Poignee.None))
             )
         };
         //This hand isn't valid because there is no taker
@@ -166,23 +166,23 @@ public class UT_IRules
                 40,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Opponent, Poignee.Simple)),
+                    (Biddings.Opponent, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.King, Poignee.None)),
+                    (Biddings.King, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.Opponent, Poignee.None))
+                    (Biddings.Opponent, Poignee.None))
             )
         };
         yield return new object[]
@@ -198,23 +198,23 @@ public class UT_IRules
                 40,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Garde, Poignee.Simple)),
+                    (Biddings.Garde, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.King, Poignee.None)),
+                    (Biddings.King, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.Opponent, Poignee.None))
+                    (Biddings.Opponent, Poignee.None))
             )
         };
         //This hand isn't valid because the Chelem cannot be success if the taker don't have 91 points
@@ -231,23 +231,23 @@ public class UT_IRules
                 88,
                 true,
                 true,
-                PetitResult.Owned,
+                PetitResults.Owned,
                 Chelem.Success,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
         };
         //This hand isn't valid because the taker have a score grower than 91 points
@@ -264,23 +264,23 @@ public class UT_IRules
                 96,
                 true,
                 true,
-                PetitResult.Owned,
+                PetitResults.Owned,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Unknown, Poignee.None)),
+                    (Biddings.Unknown, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
         };
         //This hand isn't valid because the taker have a negative score
@@ -297,23 +297,23 @@ public class UT_IRules
                 -42,
                 true,
                 true,
-                PetitResult.Owned,
+                PetitResults.Owned,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata0", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Unknown, Poignee.None)),
+                    (Biddings.Unknown, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", "tete"),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
         };
     }
@@ -342,23 +342,23 @@ public class UT_IRules
                 40,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -384,23 +384,23 @@ public class UT_IRules
                 40,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.Simple)),
+                    (Biddings.Petite, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.Simple)),
+                    (Biddings.Opponent, Poignee.Simple)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -426,23 +426,23 @@ public class UT_IRules
                 60,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Garde, Poignee.None)),
+                    (Biddings.Garde, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.Double)),
+                    (Biddings.Opponent, Poignee.Double)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -468,23 +468,23 @@ public class UT_IRules
                 51,
                 false,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.GardeSansLeChien, Poignee.None)),
+                    (Biddings.GardeSansLeChien, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -510,23 +510,23 @@ public class UT_IRules
                 91,
                 true,
                 true,
-                PetitResult.Owned,
+                PetitResults.Owned,
                 Chelem.Success,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.None)),
+                    (Biddings.Petite, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -552,23 +552,23 @@ public class UT_IRules
                 87,
                 true,
                 true,
-                PetitResult.Owned,
+                PetitResults.Owned,
                 Chelem.Success,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.None)),
+                    (Biddings.Petite, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -594,23 +594,23 @@ public class UT_IRules
                 91,
                 true,
                 true,
-                PetitResult.AuBoutOwned,
+                PetitResults.AuBoutOwned,
                 Chelem.Success,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.None)),
+                    (Biddings.Petite, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -635,23 +635,23 @@ public class UT_IRules
                 54,
                 false,
                 false,
-                PetitResult.LostAuBout,
+                PetitResults.LostAuBout,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.None)),
+                    (Biddings.Petite, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(5, "tete", "tete", "tete", ""),
-                    (Bidding.King, Poignee.None))
+                    (Biddings.King, Poignee.None))
             )
 
         };
@@ -675,20 +675,20 @@ public class UT_IRules
                 54,
                 false,
                 false,
-                PetitResult.LostAuBout,
+                PetitResults.LostAuBout,
                 Chelem.Unknown,
                 KeyValuePair.Create(
                     new Player(1, "toto", "tata", "toto", ""),
-                    (Bidding.Petite, Poignee.None)),
+                    (Biddings.Petite, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(2, "tata", "tata", "tata", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(3, "tutu", "tutu", "tutu", ""),
-                    (Bidding.Opponent, Poignee.None)),
+                    (Biddings.Opponent, Poignee.None)),
                 KeyValuePair.Create(
                     new Player(4, "titi", "titi", "titi", ""),
-                    (Bidding.Opponent, Poignee.None))
+                    (Biddings.Opponent, Poignee.None))
             )
         };
     }

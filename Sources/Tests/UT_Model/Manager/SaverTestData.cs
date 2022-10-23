@@ -1,5 +1,6 @@
-﻿using Model;
-using Model.games;
+﻿using Model.Rules;
+using Model.Games;
+using Model.Players;
 using TarotDB;
 using static TestUtils.DataManagers;
 

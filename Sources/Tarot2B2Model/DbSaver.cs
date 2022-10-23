@@ -1,9 +1,8 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Model;
-using Model.data;
-using Model.games;
+using Model.Players;
+using Model.Data;
+using Model.Games;
 using TarotDB;
 
 namespace Tarot2B2Model;

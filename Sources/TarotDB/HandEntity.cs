@@ -1,4 +1,4 @@
-using TarotDB.enums;
+using TarotDB.Enums;
 
 namespace TarotDB;
 
@@ -45,12 +45,12 @@ internal class HandEntity
     /// <summary>
     /// Indicates the state of the Petit related to the taker
     /// </summary>
-    public PetitResultDB Petit { get; set; }
+    public PetitResultsDb Petit { get; set; }
     
     /// <summary>
     /// Indicates the state of the ChelemDB related to the taker
     /// </summary>
-    public ChelemDB Chelem { get; set; }
+    public ChelemDb Chelem { get; set; }
     
     /// <summary>
     /// Players bidding details

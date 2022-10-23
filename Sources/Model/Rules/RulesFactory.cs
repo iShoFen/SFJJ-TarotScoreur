@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Model.Rules
 {
     /// <summary>
     /// Factory class for creating a new instance of a  IRules

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Model;
-using Model.enums;
-using Model.games;
+﻿using Model.Rules;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using Tarot2B2Model;
 using TarotDB;
-using TarotDB.enums;
+using TarotDB.Enums;
 using Xunit;
 
 
@@ -27,10 +23,10 @@ public class UT_HandExtensions
                 22,
                 true,
                 true,
-                PetitResult.Lost,
+                PetitResults.Lost,
                 Chelem.Announced, 
                 KeyValuePair.Create(
-                    new Player(0UL,"Player1", "1Player", "1P1", "avatar1") , (Bidding.Garde, Poignee.None)
+                    new Player(0UL,"Player1", "1Player", "1P1", "avatar1") , (Biddings.Garde, Poignee.None)
             )), 
             new HandEntity
             {
@@ -40,8 +36,8 @@ public class UT_HandExtensions
                 TakerScore = 22,
                 TwentyOne = true,
                 Excuse = true,
-                Petit = PetitResultDB.Lost,
-                Chelem = ChelemDB.Announced,
+                Petit = PetitResultsDb.Lost,
+                Chelem = ChelemDb.Announced,
                 Biddings = new List<BiddingPoigneeEntity>()
                 {
                     new BiddingPoigneeEntity
@@ -55,8 +51,8 @@ public class UT_HandExtensions
                             Avatar = "avatar1"
                         
                         },
-                        Bidding = BiddingDB.Garde,
-                        Poignee = PoigneeDB.None
+                        Biddings = BiddingsDb.Garde,
+                        Poignee = PoigneeDb.None
                     },
                 }
             }
@@ -70,9 +66,9 @@ public class UT_HandExtensions
         {
             new List<Hand>()
             {
-                new (1UL, 1, new FrenchTarotRules(),new DateTime(2022, 09, 21),22,true,true,PetitResult.Lost,Chelem.Announced),
-                new (2UL, 2, new FrenchTarotRules(),new DateTime(2022, 09, 21),44,false,true,PetitResult.Lost,Chelem.Unknown),
-                new (3UL, 3, new FrenchTarotRules(),new DateTime(2022, 09, 21),69,true,true,PetitResult.AuBoutOwned,Chelem.NotAnnouncedSuccess)
+                new (1UL, 1, new FrenchTarotRules(),new DateTime(2022, 09, 21),22,true,true,PetitResults.Lost,Chelem.Announced),
+                new (2UL, 2, new FrenchTarotRules(),new DateTime(2022, 09, 21),44,false,true,PetitResults.Lost,Chelem.Unknown),
+                new (3UL, 3, new FrenchTarotRules(),new DateTime(2022, 09, 21),69,true,true,PetitResults.AuBoutOwned,Chelem.NotAnnouncedSuccess)
                 
             },
             new List<HandEntity>()
@@ -86,8 +82,8 @@ public class UT_HandExtensions
                     TakerScore = 22,
                     TwentyOne = true,
                     Excuse = true,
-                    Petit = PetitResultDB.Lost,
-                    Chelem = ChelemDB.Announced
+                    Petit = PetitResultsDb.Lost,
+                    Chelem = ChelemDb.Announced
                 },
                 new()
                 {
@@ -98,8 +94,8 @@ public class UT_HandExtensions
                     TakerScore = 44,
                     TwentyOne = false,
                     Excuse = true,
-                    Petit = PetitResultDB.Lost,
-                    Chelem = ChelemDB.Unknown
+                    Petit = PetitResultsDb.Lost,
+                    Chelem = ChelemDb.Unknown
                 },
                 new()
                 {
@@ -110,8 +106,8 @@ public class UT_HandExtensions
                     TakerScore = 69,
                     TwentyOne = true,
                     Excuse = true,
-                    Petit = PetitResultDB.AuBoutOwned,
-                    Chelem = ChelemDB.NotAnnouncedSuccess
+                    Petit = PetitResultsDb.AuBoutOwned,
+                    Chelem = ChelemDb.NotAnnouncedSuccess
                 }
             }
         };
@@ -152,7 +148,7 @@ public class UT_HandExtensions
             Assert.Equal(biddingPoigneeEntity.Player.LastName, result.Biddings.ElementAt(i).Player.LastName);
             Assert.Equal(biddingPoigneeEntity.Player.Nickname, result.Biddings.ElementAt(i).Player.Nickname);
             Assert.Equal(biddingPoigneeEntity.Player.Avatar, result.Biddings.ElementAt(i).Player.Avatar);
-            Assert.Equal(biddingPoigneeEntity.Bidding, result.Biddings.ElementAt(i).Bidding);
+            Assert.Equal(biddingPoigneeEntity.Biddings, result.Biddings.ElementAt(i).Biddings);
             Assert.Equal(biddingPoigneeEntity.Poignee, result.Biddings.ElementAt(i).Poignee);
             ++i;
         }
@@ -203,7 +199,7 @@ public class UT_HandExtensions
             Assert.Equal(handEntity.Chelem,result.ElementAt(i).Chelem);
             ++i;
         }
-         i = 0;
+        i = 0;
         foreach (var hand in hands)
         {
             Assert.Same(hand.ToEntity(), result.ElementAt(i));

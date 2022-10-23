@@ -1,5 +1,7 @@
-using Model;
-using Model.games;
+using Model.Enums;
+using Model.Rules;
+using Model.Games;
+using Model.Players;
 
 namespace UT_Model;
 

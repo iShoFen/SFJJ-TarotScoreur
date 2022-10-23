@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Model.Players;
 using TarotDB;
 
 namespace Tarot2B2Model;

@@ -1,6 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using Model.Enums;
+using Model.Players;
+using Model.Rules;
 
-namespace Model.games;
+namespace Model.Games;
 
 /// <summary>
 /// Stores the information about a Game, including the players, all the hands played and the rules

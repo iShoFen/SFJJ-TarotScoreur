@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Model;
-using Model.data;
-using Model.games;
+using Model.Players;
+using Model.Data;
+using Model.Games;
 using Tarot2B2Model;
 using TarotDB;
 using Xunit;

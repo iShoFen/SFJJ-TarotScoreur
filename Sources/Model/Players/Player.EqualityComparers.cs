@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace Model.Players
 {
     public partial class Player
     {

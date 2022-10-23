@@ -1,5 +1,5 @@
-﻿using Model;
-using static UT_Model.Manager.DataManagers;
+﻿using Model.Players;
+using static TestUtils.DataManagers;
 
 namespace UT_Model.Manager;
 internal static class PlayerTestData
