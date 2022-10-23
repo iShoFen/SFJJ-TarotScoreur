@@ -197,7 +197,7 @@ public class UT_GameEntity
                 .SingleOrDefaultAsync(ga => ga.Id == 1UL);
 
             Assert.NotNull(game);
-            Assert.Equal("Game1", game!.Name);
+            Assert.Equal("Game 1", game.Name);
             Assert.Equal("FrenchTarotRules", game.Rules);
             Assert.Equal(new DateTime(2022, 09, 21), game.StartDate);
             Assert.Null(game.EndDate);

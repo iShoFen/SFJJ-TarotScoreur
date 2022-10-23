@@ -25,6 +25,7 @@
         <ProjectReference Include="..\..\Model\Model.csproj" />
         <ProjectReference Include="..\..\StubLib\StubLib.csproj" />
         <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
+        <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
     </ItemGroup>
 
 </Project>

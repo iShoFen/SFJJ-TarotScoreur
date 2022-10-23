@@ -63,7 +63,7 @@ public static class HandEntityTestData
 			32UL,
 			4,
 			"FrenchTarotRules",
-			new DateTime(2022, 09, 30),
+			new DateTime(2022, 09, 23),
 			567,
 			true,
 			false,
@@ -72,11 +72,11 @@ public static class HandEntityTestData
 			10UL,
 			new[]
 			{
+				(32UL, 9UL),
 				(32UL, 10UL),
 				(32UL, 11UL),
 				(32UL, 12UL),
-				(32UL, 13UL),
-				(32UL, 14UL)
+				(32UL, 13UL)
 			},
 			new[]
 			{

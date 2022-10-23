@@ -98,7 +98,7 @@ internal class TarotDbContextStub : TarotDbContext
         var groups = new List<GroupEntity>();
         for (var i = 1UL; i < 13UL; ++i)
         {
-            groups.Add(new GroupEntity { Id = i, Name = $"Group{i}" });
+            groups.Add(new GroupEntity { Id = i, Name = $"Group {i}" });
         }
 
         modelBuilder.Entity<GroupEntity>().HasData(groups);
@@ -134,7 +134,7 @@ internal class TarotDbContextStub : TarotDbContext
         var endDates = new DateTime?[]
         {
             null, null, null, null, null, new(2022, 09, 29), new(2022, 09, 29),
-            new(2022, 09, 30), new(2022, 09, 30), new(2022, 09, 30)
+            new(2022, 09, 30), new(2022, 09, 30), new(2022, 09, 23)
         };
 
         var games = new List<GameEntity>();
@@ -142,16 +142,26 @@ internal class TarotDbContextStub : TarotDbContext
         {
             games.Add(new GameEntity
             {
-                Id = i + 1UL, Name = $"Game{i + 1UL}", Rules = "FrenchTarotRules", StartDate = startDates[i],
+                Id = i + 1UL, Name = $"Game {i + 1UL}", Rules = "FrenchTarotRules", StartDate = startDates[i],
                 EndDate = endDates[i]
             });
         }
 
         modelBuilder.Entity<GameEntity>().HasData(games);
-
+        
         AddPlayersGame(1UL, 3U, 3U, modelBuilder);
         AddPlayersGame(4UL, 3U, 4U, modelBuilder);
-        AddPlayersGame(7UL, 4U, 5U, modelBuilder);
+        AddPlayersGame(7UL, 3U, 5U, modelBuilder);
+
+        var gamePlayers = new object[]
+        {
+	        new { GamesId = 10UL, PlayersId = 9UL },
+	        new { GamesId = 10UL, PlayersId = 10UL },
+	        new { GamesId = 10UL, PlayersId = 11UL },
+	        new { GamesId = 10UL, PlayersId = 12UL },
+	        new { GamesId = 10UL, PlayersId = 13UL }
+        };
+        modelBuilder.Entity("GameEntityPlayerEntity").HasData(gamePlayers);
     }
 
     /// <summary>
@@ -197,8 +207,8 @@ internal class TarotDbContextStub : TarotDbContext
             new(2022, 09, 29), new(2022, 09, 21), new(2022, 09, 21),
             new(2022, 09, 29), new(2022, 09, 30), new(2022, 09, 21),
             new(2022, 09, 25), new(2022, 09, 27), new(2022, 09, 29),
-            new(2022, 09, 30), new(2022, 09, 18), new(2022, 09, 25),
-            new(2022, 09, 29), new(2022, 09, 30)
+            new(2022, 09, 30), new(2022, 09, 18), new(2022, 09, 21),
+            new(2022, 09, 22), new(2022, 09, 23)
         };
 
         var scores = new[]
@@ -238,16 +248,16 @@ internal class TarotDbContextStub : TarotDbContext
         };
 
         // Number of hands per game
-        var nbHperG = new[]
+        var nbHPerG = new[]
         {
-            3, 3, 3, 3, 3, 4, 3, 1, 5, 4
+            3, 3, 3, 3, 3, 4,  3, 1, 5, 4
         };
 
         var hands = new List<object>();
         var gameId = 1UL;
         var handId = 1UL;
         var index = 0;
-        foreach (var nbId in nbHperG)
+        foreach (var nbId in nbHPerG)
         {
             // Add nbId hands to a game 
             for (var i = 0; i < nbId; ++i)
@@ -268,15 +278,15 @@ internal class TarotDbContextStub : TarotDbContext
 
         modelBuilder.Entity<HandEntity>().HasData(hands);
 
-        AddBiddings(modelBuilder, nbHperG);
+        AddBiddings(modelBuilder, nbHPerG);
     }
 
     /// <summary>
     /// Add biddings to the database
     /// </summary>
     /// <param name="modelBuilder"> Model builder </param>
-    /// <param name="numGperH"> Number of games per hand </param>
-    private static void AddBiddings(ModelBuilder modelBuilder, params int[] numGperH)
+    /// <param name="numGPerH"> Number of games per hand </param>
+    private static void AddBiddings(ModelBuilder modelBuilder, params int[] numGPerH)
     {
         var biddings = new[]
         {
@@ -289,33 +299,34 @@ internal class TarotDbContextStub : TarotDbContext
             BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.GardeSansLeChien, BiddingDB.Garde, BiddingDB.Garde,
             BiddingDB.Petite, BiddingDB.GardeContreLeChien
         };
+        
         var poignees = new[]
         {
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-            PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
-            PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+	        PoigneeDB.None, PoigneeDB.Double, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.Triple, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.Simple,
+	        PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None, PoigneeDB.None
         };
 
-        var numPlayerperGame = new[]
+        var numPlayerPerGame = new[]
         {
             3, 3, 3, 4, 4, 4, 5, 5, 5, 5
         };
@@ -325,15 +336,15 @@ internal class TarotDbContextStub : TarotDbContext
         var index = 0;
         var biddingIndex = 0;
 
-        // browse number of games per hand (numGperH) and number of players per game (nbPperG)
-        for (var gamePlayerIndex = 0; gamePlayerIndex < numGperH.Length; ++gamePlayerIndex)
+        // browse number of games per hand (numGPerH) and number of players per game (nbPperG)
+        for (var gamePlayerIndex = 0; gamePlayerIndex < numGPerH.Length - 1; ++gamePlayerIndex)
         {
             // Add bidding for each hand
-            for (var i = 0; i < numGperH[gamePlayerIndex]; ++i)
+            for (var i = 0; i < numGPerH[gamePlayerIndex]; ++i)
             {
                 // Add player id for each hand (and return to the first player id for the next hand)
                 var playerId = Convert.ToUInt64(gamePlayerIndex + 1);
-                for (var j = 0; j < numPlayerperGame[gamePlayerIndex]; ++j)
+                for (var j = 0; j < numPlayerPerGame[gamePlayerIndex]; ++j)
                 {
                     // Add the taker bidding for first player, if 5 players the last one is a King and all the others are a Opponent
                     var bidding = j switch
@@ -353,6 +364,31 @@ internal class TarotDbContextStub : TarotDbContext
                 ++handId;
                 ++biddingIndex;
             }
+        }
+        
+        for (var i = 0; i < numGPerH[^1]; ++i)
+        {
+	        // Add player id for each hand (and return to the first player id for the next hand)
+	        var playerId = 9UL;
+	        for (var j = 0; j < numPlayerPerGame[^1]; ++j)
+	        {
+		        // Add the taker bidding for first player, if 5 players the last one is a King and all the others are a Opponent
+		        var bidding = j switch
+		        {
+			        0 => biddings[biddingIndex],
+			        4 => BiddingDB.King,
+			        _ => BiddingDB.Opponent
+		        };
+
+		        bids.Add(new BiddingPoigneeEntity
+			        { Bidding = bidding, Poignee = poignees[index], HandId = handId, PlayerId = playerId });
+
+		        ++playerId;
+		        ++index;
+	        }
+
+	        ++handId;
+	        ++biddingIndex;
         }
 
         modelBuilder.Entity<BiddingPoigneeEntity>().HasData(bids);

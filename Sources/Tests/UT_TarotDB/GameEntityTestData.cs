@@ -10,7 +10,7 @@ public static class GameEntityTestData
         yield return new object?[]
         {
             1UL,
-            "Game1",
+            "Game 1",
             "FrenchTarotRules",
             new DateTime(2022, 09, 21),
             null,
@@ -26,7 +26,7 @@ public static class GameEntityTestData
         yield return new object?[]
         {
             6UL,
-            "Game6",
+            "Game 6",
             "FrenchTarotRules",
             new DateTime(2022, 09, 21),
             new DateTime(2022, 09, 29),
@@ -42,7 +42,7 @@ public static class GameEntityTestData
         yield return new object?[]
         {
             9UL,
-            "Game9",
+            "Game 9",
             "FrenchTarotRules",
             new DateTime(2022, 09, 21),
             new DateTime(2022, 09, 30),
@@ -63,7 +63,7 @@ public static class GameEntityTestData
         {
             true,
             0UL,
-            "Game11",
+            "Game 11",
             "FrenchTarotRules",
             new DateTime(2022, 10, 10),
             null,
@@ -80,7 +80,7 @@ public static class GameEntityTestData
         {
             true,
             0UL,
-            "Game12",
+            "Game 12",
             "FrenchTarotRules",
             new DateTime(2022, 10, 10),
             null,
@@ -96,7 +96,7 @@ public static class GameEntityTestData
         {
             true,
             0UL,
-            "Game13",
+            "Game 13",
             "FrenchTarotRules",
             new DateTime(2022, 10, 10),
             new DateTime(2022, 10, 20),
@@ -124,7 +124,7 @@ public static class GameEntityTestData
         {
             false,
             1UL,
-            "Game1",
+            "Game 1",
             "FrenchTarotRules",
             new DateTime(2022, 09, 21),
             null,
@@ -145,7 +145,7 @@ public static class GameEntityTestData
         {
             false,
             1UL,
-            "Game13",
+            "Game 13",
             "FrenchTarotRules",
             new DateTime(2022, 10, 10),
             new DateTime(2022, 10, 20),
@@ -178,7 +178,7 @@ public static class GameEntityTestData
             true,
             1UL,
             1UL,
-            "Game1",
+            "Game 1",
             "TestGame",
             "FrenchTarotRules",
             "TestRules",
@@ -212,7 +212,7 @@ public static class GameEntityTestData
             false,
             1UL,
             2UL,
-            "Game1",
+            "Game 1",
             "TestGame2",
             "FrenchTarotRules",
             "TestRules2",

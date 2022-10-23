@@ -42,7 +42,7 @@ public class UT_HandEntity
 		Assert.Equal(expBiddingIds.Length, hand.Biddings.Count);
 		for (var i = 0; i < expBiddingIds.Length; ++i)
 		{
-			var bidding =
+			var bidding = 
 				(await context.FindAsync<BiddingPoigneeEntity>(expBiddingIds[i].Item1, expBiddingIds[i].Item2))!;
 			var player = (await context.Players.FindAsync(bidding.Player.Id))!;
 			Assert.Single(hand.Biddings.Where(bi =>
