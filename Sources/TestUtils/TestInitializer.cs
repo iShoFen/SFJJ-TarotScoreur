@@ -2,7 +2,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using TarotDB;
 
-namespace UT_TarotDB;
+namespace TestUtils;
 
 internal static class TestInitializer
 {
