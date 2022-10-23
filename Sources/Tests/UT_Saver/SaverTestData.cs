@@ -59,12 +59,18 @@ public class SaverTestData
 			yield return new object?[]
 			{
 				saver,
-				new Group("Group 13"),
-				new Group(13UL, "Group 13"),
+				new Group("Group 13", 
+					new Player(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16")),
+				new Group(13UL, "Group 13", 
+				new Player(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16")),
 				new GroupEntity
 				{
 					Id = 13UL,
-					Name = "Group 13"
+					Name = "Group 13",
+					Players = new List<PlayerEntity>
+					{
+						new() {Id = 16UL, FirstName = "Alizee", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar16"}
+					}
 				}
 			};
 			yield return new object?[]
@@ -75,7 +81,21 @@ public class SaverTestData
 				new GroupEntity
 				{
 					Id = 12UL,
-					Name = "Group 12"
+					Name = "Group 12",
+					Players = new List<PlayerEntity>
+					{
+						new () {Id = 12UL, FirstName = "Jules", LastName = "INFANTE", Nickname = "KIKOU77", Avatar = "avatar12"},
+						new () {Id = 13UL, FirstName = "Anne", LastName = "PETIT", Nickname = "FRIPOUILLES", Avatar = "avatar13"},
+						new () {Id = 14UL, FirstName = "Marine", LastName = "TABLETTE", Nickname = "LOLO", Avatar = "avatar14"},
+						new () {Id = 15UL, FirstName = "Eliaz", LastName = "DU JARDIN", Nickname = "THEGIANTE", Avatar = "avatar15"},
+						new () {Id = 16UL, FirstName = "Alizee", LastName = "SEBAT", Nickname = "SEBAT", Avatar = "avatar16"}
+					}
+					
+					/*_playerList.Add(new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"));
+					_playerList.Add(new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"));
+					_playerList.Add(new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"));
+					_playerList.Add(new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"));
+					_playerList.Add(new Player(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16"));*/
 				}
 			};
 			yield return new object?[]
