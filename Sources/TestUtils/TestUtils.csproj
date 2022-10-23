@@ -8,10 +8,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\StubContext\StubContext.csproj" />
+    <ProjectReference Include="..\StubLib\StubLib.csproj" />
+    <ProjectReference Include="..\Tarot2B2Model\Tarot2B2Model.csproj" />
     <ProjectReference Include="..\TarotDB\TarotDB.csproj" />
     <InternalsVisibleTo Include="UT_Tarot2B2Model" />
     <InternalsVisibleTo Include="UT_Model" />
     <InternalsVisibleTo Include="UT_TarotDB" />
+    <InternalsVisibleTo Include="UT_Loader" />
+    <InternalsVisibleTo Include="UT_Saver" />
   </ItemGroup>
 
   <ItemGroup>
