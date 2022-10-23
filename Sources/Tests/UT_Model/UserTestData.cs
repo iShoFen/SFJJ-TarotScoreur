@@ -79,12 +79,18 @@ public class UserTestData
             new User(4, "Florent", "Marques", "Flo", "avatar", "email", "password"),
             null
         };
-        User u = new User(4, "Florent", "Marques", "Flo", "avatar", "email", "password");
+        var u = new User(4, "Florent", "Marques", "Flo", "avatar", "email", "password");
         yield return new object?[]
         {
             true,
             u,
             u
+        };
+        yield return new object?[]
+        {
+            false,
+            u,
+            new object()
         };
     }
 
@@ -125,7 +131,7 @@ public class UserTestData
 
     public static IEnumerable<object?[]> Data_TestFullComparer()
     {
-        User u = new User(0, "Florent", "Marques", "Flo", "avatar", "email", "password");
+        var u = new User(0, "Florent", "Marques", "Flo", "avatar", "email", "password");
         yield return new object?[]
         {
             true,
@@ -149,6 +155,12 @@ public class UserTestData
             false,
             null,
             null
+        };
+        yield return new object?[]
+        {
+            false,
+            u,
+            new UserTest(0, "Florent", "Marques", "Flo", "avatar", "email", "password")
         };
     }
 
@@ -215,5 +227,16 @@ public class UserTestData
             u,
             u
         };
+    }
+
+    internal class UserTest : User
+    {
+        public UserTest(string firstName, string lastName, string nickName, string avatar, string email, string password) : base(firstName, lastName, nickName, avatar, email, password)
+        {
+        }
+
+        public UserTest(ulong id, string firstName, string lastName, string nickName, string avatar, string email, string password) : base(id, firstName, lastName, nickName, avatar, email, password)
+        {
+        }
     }
 }
