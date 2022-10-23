@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
+using TestUtils;
 using Xunit;
 
 namespace UT_TarotDB;
@@ -20,7 +21,7 @@ public class UT_GroupEntity
             .FirstAsync(g => g.Id == 6UL);
 
         Assert.Equal(6UL, group.Id);
-        Assert.Equal("Group6", group.Name);
+        Assert.Equal("Group 6", group.Name);
         Assert.Equal(5, group.Players.Count);
     }
 

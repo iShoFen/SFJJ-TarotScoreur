@@ -1,19 +1,19 @@
 ﻿using Model;
+using Model.data;
 using Model.games;
 using StubLib;
 using Xunit;
 
-namespace UT_Stub;
+namespace UT_Loader;
 
-public class UT_Stub
+public class UT_Loader
 {
     /*========== Players test ==========*/
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestAllPlayers), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadAllPlayer(int page, int pageSize, Player[] players)
+    public async Task TestLoadAllPlayer(ILoader loader, int page, int pageSize, Player[] players)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadAllPlayer(page, pageSize)).ToList();
+        var playersFound = (await loader.LoadAllPlayer(page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -21,10 +21,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstName), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayersByFirstName(string firstName, Player[] players, int page, int pageSize)
+    public async Task TestLoadPlayersByFirstName(ILoader loader, string firstName, Player[] players, int page, int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayerByFirstName(firstName, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayerByFirstName(firstName, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -32,10 +31,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByLastName), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByLastName(string lastName, Player[] players, int page, int pageSize)
+    public async Task TestLoadPlayerByLastName(ILoader loader, string lastName, Player[] players, int page, int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayerByLastName(lastName, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayerByLastName(lastName, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -43,10 +41,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByNickname), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByNickname(string nickname, Player[] players, int page, int pageSize)
+    public async Task TestLoadPlayerByNickname(ILoader loader, string nickname, Player[] players, int page, int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayerByNickname(nickname, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayerByNickname(nickname, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -54,12 +51,11 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByFirstNameAndLastName(string firstName, string lastName, Player[] players,
+    public async Task TestLoadPlayerByFirstNameAndLastName(ILoader loader, string firstName, string lastName, Player[] players,
         int page,
         int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -67,12 +63,11 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayerByFirstNameAndNickname), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByFirstNameAndNickname(string firstName, string nickname, Player[] players,
+    public async Task TestLoadPlayerByFirstNameAndNickname(ILoader loader, string firstName, string nickname, Player[] players,
         int page,
         int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -80,11 +75,10 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayerByLastNameAndNickname), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByLastNameAndNickname(string lastName, string nickname, Player[] players, int page,
+    public async Task TestLoadPlayerByLastNameAndNickname(ILoader loader, string lastName, string nickname, Player[] players, int page,
         int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -92,10 +86,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestPlayersByGroup), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayersByGroup(Group group, Player[] players, int page, int pageSize)
+    public async Task TestLoadPlayersByGroup(ILoader loader, Group group, Player[] players, int page, int pageSize)
     {
-        var stub = new Stub();
-        var playersFound = (await stub.LoadPlayersByGroup(group, page, pageSize)).ToList();
+	    var playersFound = (await loader.LoadPlayersByGroup(group, page, pageSize)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -106,20 +99,18 @@ public class UT_Stub
     /*========== Group test ==========*/
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestGroupsByName), MemberType = typeof(GroupTestData))]
-    public async Task TestLoadGroupsByName(string name, Group group)
+    public async Task TestLoadGroupsByName(ILoader loader, string name, Group group)
     {
-        var stub = new Stub();
-        var groupFound = await stub.LoadGroupsByName(name);
+	    var groupFound = await loader.LoadGroupsByName(name);
 
         Assert.Equal(groupFound, group);
     }
 
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestLoadGroupsByPlayer), MemberType = typeof(GroupTestData))]
-    public async Task TestLoadGroupsByPlayer(Player player, Group[] groups, int page, int pageSize)
+    public async Task TestLoadGroupsByPlayer(ILoader loader, Player player, Group[] groups, int page, int pageSize)
     {
-        var stub = new Stub();
-        var groupFound = (await stub.LoadGroupsByPlayer(player, page, pageSize)).ToList();
+	    var groupFound = (await loader.LoadGroupsByPlayer(player, page, pageSize)).ToList();
 
         Assert.Equal(groupFound.Count, groups.Length);
         Assert.Equal(groupFound, groups);
@@ -127,10 +118,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GroupTestData.Data_TestLoadAllGroups), MemberType = typeof(GroupTestData))]
-    public async Task TestLoadAllGroups(Group[] groups, int page, int pageSize)
+    public async Task TestLoadAllGroups(ILoader loader, Group[] groups, int page, int pageSize)
     {
-        var stub = new Stub();
-        var groupFound = (await stub.LoadAllGroups(page, pageSize)).ToList();
+	    var groupFound = (await loader.LoadAllGroups(page, pageSize)).ToList();
 
         Assert.Equal(groupFound.Count, groups.Length);
         Assert.Equal(groupFound, groups);
@@ -165,10 +155,9 @@ public class UT_Stub
     /*========== Hand test ==========*/
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestLoadHandByGame), MemberType = typeof(HandTestData))]
-    public async Task TestLoadHandByGame(Game game, List<KeyValuePair<int, Hand>> hands, int page, int pageSize)
+    public async Task TestLoadHandByGame(ILoader loader, Game game, List<KeyValuePair<int, Hand>> hands, int page, int pageSize)
     {
-        var stub = new Stub();
-        var handsFound = (await stub.LoadHandByGame(game, page, pageSize)).ToList();
+	    var handsFound = (await loader.LoadHandByGame(game, page, pageSize)).ToList();
 
         Assert.Equal(handsFound.Count, hands.Count);
         Assert.Equal(handsFound, hands);
@@ -179,7 +168,7 @@ public class UT_Stub
     /*========== Game test ==========*/
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadAllGames), MemberType = typeof(GameTestData))]
-    public async Task TestLoadAllGames(Game[] games, int page, int pageSize)
+    public async Task TestLoadAllGames(ILoader loader, Game[] games, int page, int pageSize)
     {
         var stub = new Stub();
         var gamesFound = (await stub.LoadAllGames(page, pageSize)).ToList();
@@ -190,10 +179,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByGroup), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByGroup(Group group, Game[] games, int page, int pageSize)
+    public async Task TestLoadGameByGroup(ILoader loader, Group group, Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadGameByGroup(group, page, pageSize)).ToList();
+	    var gamesFound = (await loader.LoadGameByGroup(group, page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -201,10 +189,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByPlayer), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByPlayer(Player player, Game[] games, int page, int pageSize)
+    public async Task TestLoadGameByPlayer(ILoader loader, Player player, Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadGameByPlayer(player, page, pageSize)).ToList();
+	    var gamesFound = (await loader.LoadGameByPlayer(player, page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -212,20 +199,18 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.LoadGameByName), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByName(string name, Game? game)
+    public async Task TestLoadGameByName(ILoader loader, string name, Game? game)
     {
-        var stub = new Stub();
-        var gameFound = await stub.LoadGameByName(name);
+	    var gameFound = await loader.LoadGameByName(name);
 
         Assert.Equal(gameFound, game);
     }
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByStartDate), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByStartDate(DateTime startDate, Game[] games, int page, int pageSize)
+    public async Task TestLoadGameByStartDate(ILoader loader, DateTime startDate, Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadGameByStartDate(startDate, page, pageSize)).ToList();
+	    var gamesFound = (await loader.LoadGameByStartDate(startDate, page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -233,10 +218,9 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByEndDate), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByEndDate(DateTime endDate, Game[] games, int page, int pageSize)
+    public async Task TestLoadGameByEndDate(ILoader loader, DateTime endDate, Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadGameByEndDate(endDate, page, pageSize)).ToList();
+	    var gamesFound = (await loader.LoadGameByEndDate(endDate, page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -244,11 +228,10 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByDateInterval), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByDateInterval(DateTime startDate, DateTime endDate, Game[] games, int page,
+    public async Task TestLoadGameByDateInterval(ILoader loader, DateTime startDate, DateTime endDate, Game[] games, int page,
         int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadGameByDateInterval(startDate, endDate, page, pageSize)).ToList();
+	    var gamesFound = (await loader.LoadGameByDateInterval(startDate, endDate, page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -256,12 +239,10 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndGroup), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate, Group group,
-        Game[] games,
-        int page, int pageSize)
+    public async Task TestLoadGameByDateIntervalAndGroup(ILoader loader, DateTime startDate, DateTime endDate, Group group,
+        Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize))
+	    var gamesFound = (await loader.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize))
             .ToList();
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);
@@ -269,12 +250,11 @@ public class UT_Stub
 
     [Theory]
     [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndPlayer), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate, Player player,
+    public async Task TestLoadGameByDateIntervalAndPlayer(ILoader loader, DateTime startDate, DateTime endDate, Player player,
         Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound =
-            (await stub.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize)).ToList();
+	    var gamesFound =
+            (await loader.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);

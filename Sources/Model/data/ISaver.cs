@@ -5,23 +5,23 @@ namespace Model.data;
 public interface ISaver
 {
     /// <summary>
-    /// Method to save a player
+    ///Save a player
     /// </summary>
     /// <param name="player">Player to register</param>
     /// <returns>The player saved</returns>
-    Task<Player> SavePlayer(Player player);
+    Task<Player?> SavePlayer(Player player);
 
     /// <summary>
-    /// Method to save a game
+    ///Save a game
     /// </summary>
     /// <param name="game">Game to register</param>
     /// <returns>The game saved</returns>
-    Task<Game> SaveGame(Game game);
+    Task<Game?> SaveGame(Game game);
 
     /// <summary>
-    /// Method to save a group
+    ///Save a group
     /// </summary>
     /// <param name="group">Group to register</param>
     /// <returns>The group saved</returns>
-    Task<Group> SaveGroup(Group group);
+    Task<Group?> SaveGroup(Group group);
 }

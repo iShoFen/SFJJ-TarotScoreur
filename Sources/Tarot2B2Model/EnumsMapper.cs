@@ -76,6 +76,7 @@ internal static class EnumsMapper
         (PetitResult.Unknown, PetitResultDB.Unknown),
         (PetitResult.Owned, PetitResultDB.Owned),
         (PetitResult.NotOwned, PetitResultDB.NotOwned),
+        (PetitResult.Lost, PetitResultDB.Lost),
         (PetitResult.AuBout, PetitResultDB.AuBout),
         (PetitResult.AuBoutOwned, PetitResultDB.AuBoutOwned),
         (PetitResult.LostAuBout, PetitResultDB.LostAuBout)

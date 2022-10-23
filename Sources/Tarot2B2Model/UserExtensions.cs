@@ -39,8 +39,11 @@ static class UserExtensions
     {
         var userModel = Mapper.UsersMapper.GetModel(entity);
         if (userModel is not null) return userModel;
-        return new(entity.Id, entity.FirstName, entity.LastName, entity.Nickname, entity.Avatar, entity.Email,
-            entity.Password);
+        userModel = new User(entity.Id, entity.FirstName, entity.LastName, entity.Nickname, entity.Avatar, entity.Email, entity.Password);
+        
+        Mapper.UsersMapper.Map(userModel, entity);
+
+        return userModel;
     }
 
     /// <summary>
