@@ -527,11 +527,11 @@ internal static class GroupTestData
 
     public static IEnumerable<object?[]> Data_TestFullComparer()
     {
-        Group g = new Group(4, "partie",
-            new("Florent", "Marques", "Flo", "avatar"),
-            new("Samuel", "Sirven", "Sam", "avatar"),
-            new("Julien", "Theme", "Ju", "avatar"),
-            new("Jordan", "Artzet", "Jo", "avatar")
+        var g = new Group(4, "partie",
+            new Player("Florent", "Marques", "Flo", "avatar"),
+            new Player("Samuel", "Sirven", "Sam", "avatar"),
+            new Player("Julien", "Theme", "Ju", "avatar"),
+            new Player("Jordan", "Artzet", "Jo", "avatar")
         );
         yield return new object?[]
         {
@@ -557,5 +557,26 @@ internal static class GroupTestData
             null,
             null
         };
+        yield return new object?[]
+        {
+            false,
+            g,
+            new GroupTest(4, "partie",
+                new Player("Florent", "Marques", "Flo", "avatar"),
+                new Player("Samuel", "Sirven", "Sam", "avatar"),
+                new Player("Julien", "Theme", "Ju", "avatar"),
+                new Player("Jordan", "Artzet", "Jo", "avatar"))
+        };
+    }
+
+    internal class GroupTest : Group
+    {
+        public GroupTest(string name, params Player[] players) : base(name, players)
+        {
+        }
+
+        public GroupTest(ulong id, string name, params Player[] players) : base(id, name, players)
+        {
+        }
     }
 }

@@ -37,7 +37,7 @@ public interface ILoader
     /// <param name="page"> Number of the page to load</param>
     /// <param name="pageSize">Size of the page</param>
     /// <returns>List of games</returns>
-    Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize);
+    Task<IEnumerable<Game>> LoadGameByEndDate(DateTime? endDate, int page, int pageSize);
 
     /// <summary>
     /// Load games by an interval of dates
