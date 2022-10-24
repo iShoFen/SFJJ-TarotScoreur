@@ -1,7 +1,8 @@
-﻿using Model;
-using Model.enums;
-using Model.games;
-using static UT_Loader.DataManagers;
+﻿using Model.Rules;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
+using static TestUtils.DataManagers;
 
 namespace UT_Loader;
 
@@ -18,45 +19,45 @@ public static class HandTestData
 			    new List<KeyValuePair<int, Hand>>
 			    {
 				    new(1, new Hand(1UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 210,
-					    false, true, PetitResult.Lost, Chelem.Unknown,
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Bidding.Garde, Poignee.Simple)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(
+					    false, true, PetitResults.Lost, Chelem.Unknown,
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
+						    (Biddings.Garde, Poignee.Simple)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(
 						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Bidding.Opponent, Poignee.None)))),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
+						    (Biddings.Opponent, Poignee.None)))),
 
 				    new(2, new Hand(2UL, 2, new FrenchTarotRules(), new DateTime(2022, 09, 22), 256,
-					    true, true, PetitResult.Lost, Chelem.AnnouncedSuccess,
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Bidding.Petite, Poignee.Simple)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(
+					    true, true, PetitResults.Lost, Chelem.AnnouncedSuccess,
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
+						    (Biddings.Petite, Poignee.Simple)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(
 						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Bidding.Opponent, Poignee.None)))),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
+						    (Biddings.Opponent, Poignee.None)))),
 				    new(3, new Hand(3UL, 3, new FrenchTarotRules(), new DateTime(2022, 09, 23), 151,
-					    false, false, PetitResult.Lost, Chelem.Success,
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Bidding.Garde, Poignee.Simple)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(
+					    false, false, PetitResults.Lost, Chelem.Success,
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
+						    (Biddings.Garde, Poignee.Simple)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(
 						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Bidding.Opponent, Poignee.None))))
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
+						    (Biddings.Opponent, Poignee.None))))
 			    },
 			    1,
 			    10
@@ -92,32 +93,32 @@ public static class HandTestData
 			    new List<KeyValuePair<int, Hand>>
 			    {
 				    new(1, new Hand(1UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 210,
-					    false, true, PetitResult.Lost, Chelem.Unknown,
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Bidding.Garde, Poignee.Simple)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(
+					    false, true, PetitResults.Lost, Chelem.Unknown,
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
+						    (Biddings.Garde, Poignee.Simple)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(
 						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Bidding.Opponent, Poignee.None)))),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
+						    (Biddings.Opponent, Poignee.None)))),
 
 				    new(2, new Hand(2UL, 2, new FrenchTarotRules(), new DateTime(2022, 09, 22), 256,
-					    true, true, PetitResult.Lost, Chelem.AnnouncedSuccess,
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Bidding.Petite, Poignee.Simple)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(
+					    true, true, PetitResults.Lost, Chelem.AnnouncedSuccess,
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
+						    (Biddings.Petite, Poignee.Simple)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(
 						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Bidding.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Bidding, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Bidding.Opponent, Poignee.None))))
+						    (Biddings.Opponent, Poignee.None)),
+					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
+						    (Biddings.Opponent, Poignee.None))))
 			    },
 			    1,
 			    2

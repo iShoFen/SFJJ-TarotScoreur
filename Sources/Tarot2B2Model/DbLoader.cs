@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Model;
-using Model.data;
-using Model.games;
+using Model.Players;
+using Model.Data;
+using Model.Games;
 using TarotDB;
 
 namespace Tarot2B2Model;
@@ -15,12 +15,12 @@ public class DbLoader : ILoader
 	/// <summary>
 	/// The options for the database
 	/// </summary>
-    private readonly DbContextOptions<TarotDbContext> _options;
+    internal readonly DbContextOptions<TarotDbContext> Options;
 	
 	/// <summary>
 	/// The type of the database context
 	/// </summary>
-    private readonly Type _dbContextType;
+    internal readonly Type DbContextType;
 
 	/// <summary>
 	/// Default constructor
@@ -38,8 +38,8 @@ public class DbLoader : ILoader
     {
         var connection = new SqliteConnection(connectionString);
         connection.Open();
-        _options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
-        _dbContextType = contextType;
+        Options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
+        DbContextType = contextType;
 
         using var context = InitContext();
         context.Database.EnsureCreated();
@@ -49,7 +49,7 @@ public class DbLoader : ILoader
 	/// Initialize the database context
 	/// </summary>
 	/// <returns> The database context </returns>
-    private TarotDbContext InitContext() => (TarotDbContext)Activator.CreateInstance(_dbContextType, _options)!;
+    private TarotDbContext InitContext() => (TarotDbContext)Activator.CreateInstance(DbContextType, Options)!;
     
 	/// <summary>
 	/// Load a game by name
@@ -109,7 +109,7 @@ public class DbLoader : ILoader
 	/// <param name="page"> Number of the page to load</param>
 	/// <param name="pageSize">Size of the page</param>
 	/// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
+    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime? endDate, int page, int pageSize)
     {
 	    if (page == 0 || pageSize == 0) return await Task.FromResult(new List<Game>());
 	    

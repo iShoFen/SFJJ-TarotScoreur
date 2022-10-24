@@ -1,6 +1,7 @@
-﻿using Model;
-using Model.games;
-using static UT_Loader.DataManagers;
+﻿using Model.Rules;
+using Model.Games;
+using Model.Players;
+using static TestUtils.DataManagers;
 
 namespace UT_Loader;
 

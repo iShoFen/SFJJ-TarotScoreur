@@ -1,5 +1,5 @@
-using Model;
-using Model.games;
+using Model.Rules;
+using Model.Games;
 using TarotDB;
 using static Tarot2B2Model.Mapper;
 

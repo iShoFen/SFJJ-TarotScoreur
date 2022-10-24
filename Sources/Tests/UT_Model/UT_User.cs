@@ -1,6 +1,4 @@
-using System.Globalization;
-using Microsoft.VisualBasic.CompilerServices;
-using Model;
+using Model.Players;
 using Xunit;
 
 namespace UT_Model;

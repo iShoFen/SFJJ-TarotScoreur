@@ -1,6 +1,7 @@
-using Model;
-using Model.enums;
-using Model.games;
+using Model.Rules;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using Xunit;
 
 namespace UT_Model.Games;
@@ -10,8 +11,8 @@ public class UT_Hand
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestFullConstructor), MemberType = typeof(HandTestData))]
     public void TestFullConstructor(bool isValid, ulong expId, int expHandNumber, IRules? expRules, DateTime expDate,
-        int expTakerScore, bool? expTwentyOne, bool? expExcuse, PetitResult expPetit, Chelem expChelem,
-        params KeyValuePair<Player, (Bidding, Poignee)>[] expBiddings)
+        int expTakerScore, bool? expTwentyOne, bool? expExcuse, PetitResults expPetit, Chelem expChelem,
+        params KeyValuePair<Player, (Biddings, Poignee)>[] expBiddings)
     {
         if (expRules is null || expDate == default)
         {
@@ -46,7 +47,7 @@ public class UT_Hand
         const int expTakerScore = 0;
         bool? expTwentyOne = null;
         bool? expExcuse = null;
-        var expPetit = PetitResult.Unknown;
+        var expPetit = PetitResults.Unknown;
         var expChelem = Chelem.Unknown;
         Hand hand = new(expNum, expRules, expDate, expTakerScore, expTwentyOne, expExcuse, expPetit, expChelem);
 
@@ -64,17 +65,17 @@ public class UT_Hand
 
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestAddBidding), MemberType = typeof(HandTestData))]
-    public void TestAddBidding(bool expResult, IEnumerable<KeyValuePair<Player, (Bidding, Poignee)>> expBiddings,
-        Hand hand, Player player, Bidding bidding, Poignee poignee)
+    public void TestAddBidding(bool expResult, IEnumerable<KeyValuePair<Player, (Biddings, Poignee)>> expBiddings,
+        Hand hand, Player player, Biddings biddings, Poignee poignee)
     {
-        Assert.Equal(expResult, hand.AddBidding(player, bidding, poignee));
+        Assert.Equal(expResult, hand.AddBidding(player, biddings, poignee));
         Assert.Equal(expBiddings, hand.Biddings);
     }
 
     [Theory]
     [MemberData(nameof(HandTestData.Data_TestAddBiddings), MemberType = typeof(HandTestData))]
-    public void TestAddBiddings(bool expResult, IEnumerable<KeyValuePair<Player, (Bidding, Poignee)>> expBiddings,
-        Hand hand, params KeyValuePair<Player, (Bidding, Poignee)>[] biddings)
+    public void TestAddBiddings(bool expResult, IEnumerable<KeyValuePair<Player, (Biddings, Poignee)>> expBiddings,
+        Hand hand, params KeyValuePair<Player, (Biddings, Poignee)>[] biddings)
     {
         Assert.Equal(expResult, hand.AddBiddings(biddings));
         Assert.Equal(expBiddings, hand.Biddings);
@@ -92,7 +93,7 @@ public class UT_Hand
     [Fact]
     public void TestEquals_Null_Type_Ref()
     {
-        Hand hand = new(1, new FrenchTarotRules(), DateTime.Now, 0, null, null, PetitResult.Unknown, Chelem.Unknown);
+        Hand hand = new(1, new FrenchTarotRules(), DateTime.Now, 0, null, null, PetitResults.Unknown, Chelem.Unknown);
         Assert.False(Hand.FullComparer.Equals(hand, null));
         Assert.False(Hand.FullComparer.Equals(null, hand));
         Assert.False(hand!.Equals(new object()));

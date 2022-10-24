@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StubContext;
 using TarotDB;
-using TarotDB.enums;
+using TarotDB.Enums;
 using TestUtils;
 using Xunit;
 
@@ -12,8 +12,8 @@ public class UT_HandEntity
 	[Theory]
 	[MemberData(nameof(HandEntityTestData.Data_TestRead), MemberType = typeof(HandEntityTestData))]
 	internal async Task TestRead(ulong id, int expNumber, string expRules, DateTime expDate, int expTakerScore,
-		bool? expTwentyOne, bool? expExcuse, PetitResultDB expPetit, ChelemDB expChelem, ulong expGameId,
-		IEnumerable<(ulong, ulong)> iExpBiddingsId, IEnumerable<(BiddingDB, PoigneeDB)> iExpBiddings)
+		bool? expTwentyOne, bool? expExcuse, PetitResultsDb expPetit, ChelemDb expChelem, ulong expGameId,
+		IEnumerable<(ulong, ulong)> iExpBiddingsId, IEnumerable<(BiddingsDb, PoigneeDb)> iExpBiddings)
 	{
 		var expBiddingIds = iExpBiddingsId.ToArray();
 		var expBiddings = iExpBiddings.ToArray();
@@ -46,7 +46,7 @@ public class UT_HandEntity
 				(await context.FindAsync<BiddingPoigneeEntity>(expBiddingIds[i].Item1, expBiddingIds[i].Item2))!;
 			var player = (await context.Players.FindAsync(bidding.Player.Id))!;
 			Assert.Single(hand.Biddings.Where(bi =>
-				bi.Bidding == expBiddings[i].Item1 && bi.Poignee == expBiddings[i].Item2 && bi.Player.Equals(player) &&
+				bi.Biddings == expBiddings[i].Item1 && bi.Poignee == expBiddings[i].Item2 && bi.Player.Equals(player) &&
 				bi.PlayerId == player.Id && player.Biddings.Contains(bi) && bi.Hand.Equals(hand) &&
 				bi.HandId == hand.Id && hand.Biddings.Contains(bi) && bi.Equals(bidding)));
 		}
@@ -55,8 +55,8 @@ public class UT_HandEntity
 	[Theory]
 	[MemberData(nameof(HandEntityTestData.Data_TestAdd), MemberType = typeof(HandEntityTestData))]
 	internal async Task TestAdd(bool isValid, ulong id, int number, string rules, DateTime date, int takerScore,
-		bool? twentyOne, bool? excuse, PetitResultDB petit, ChelemDB chelem, ulong gameId,
-		params (BiddingDB, PoigneeDB)[] biddings)
+		bool? twentyOne, bool? excuse, PetitResultsDb petit, ChelemDb chelem, ulong gameId,
+		params (BiddingsDb, PoigneeDb)[] biddings)
 	{
 		var options = TestInitializer.InitDb();
 		await using (var context = new TarotDbContextStub(options))
@@ -84,7 +84,7 @@ public class UT_HandEntity
 			{
 				var bidding = new BiddingPoigneeEntity
 				{
-					Bidding = biddings[i].Item1,
+					Biddings = biddings[i].Item1,
 					Poignee = biddings[i].Item2,
 					Player = players[i],
 					Hand = hand
@@ -132,7 +132,7 @@ public class UT_HandEntity
 			var handBiddings = hand.Biddings.ToList();
 			for (var i = 0; i < biddings.Length; ++i)
 			{
-				Assert.Equal(biddings[i].Item1, handBiddings[i].Bidding);
+				Assert.Equal(biddings[i].Item1, handBiddings[i].Biddings);
 				Assert.Equal(biddings[i].Item2, handBiddings[i].Poignee);
 				Assert.Equal(await context.Players.FindAsync(expPlayers[i].Id), handBiddings[i].Player);
 				Assert.Equal(hand, handBiddings[i].Hand);
@@ -144,9 +144,9 @@ public class UT_HandEntity
 	[MemberData(nameof(HandEntityTestData.Data_TestUpdate), MemberType = typeof(HandEntityTestData))]
 	internal async Task TestUpdate(bool isValid, ulong id, ulong newId, int number, int newNumber, string rules,
 		string newRules, DateTime date, DateTime newDate, int takerScore, int newTakerScore, bool? twentyOne,
-		bool? newTwentyOne, bool? excuse, bool? newExcuse, PetitResultDB petit, PetitResultDB newPetit, ChelemDB chelem,
-		ChelemDB newChelem,  ulong gameId, ulong newGameId, IEnumerable<(ulong, ulong)> iBiddingsId,
-		IEnumerable<(BiddingDB, PoigneeDB)> iNewBiddings)
+		bool? newTwentyOne, bool? excuse, bool? newExcuse, PetitResultsDb petit, PetitResultsDb newPetit, ChelemDb chelem,
+		ChelemDb newChelem,  ulong gameId, ulong newGameId, IEnumerable<(ulong, ulong)> iBiddingsId,
+		IEnumerable<(BiddingsDb, PoigneeDb)> iNewBiddings)
 	{
 		var biddingsId = iBiddingsId.ToArray();
 		var newBiddings = iNewBiddings.ToArray();
@@ -195,7 +195,7 @@ public class UT_HandEntity
 			{
 				handBiddings[i].HandId = newId;
 				handBiddings[i].PlayerId = players[i].Id;
-				handBiddings[i].Bidding = newBiddings[i].Item1;
+				handBiddings[i].Biddings = newBiddings[i].Item1;
 				handBiddings[i].Poignee = newBiddings[i].Item2;
 			}
 			
@@ -242,7 +242,7 @@ public class UT_HandEntity
 			var handBiddings = hand.Biddings.ToList();
 			for (var i = 0; i < newBiddings.Length; ++i)
 			{
-				Assert.Equal(newBiddings[i].Item1, handBiddings[i].Bidding);
+				Assert.Equal(newBiddings[i].Item1, handBiddings[i].Biddings);
 				Assert.Equal(newBiddings[i].Item2, handBiddings[i].Poignee);
 			}
 		}
@@ -269,8 +269,8 @@ public class UT_HandEntity
 			Assert.Equal(210, hand.TakerScore);
 			Assert.Equal(false, hand.TwentyOne);
 			Assert.Equal(true, hand.Excuse);
-			Assert.Equal(PetitResultDB.Lost, hand.Petit);
-			Assert.Equal(ChelemDB.Unknown, hand.Chelem);
+			Assert.Equal(PetitResultsDb.Lost, hand.Petit);
+			Assert.Equal(ChelemDb.Unknown, hand.Chelem);
 			Assert.Equal(await context.Games.FindAsync(1UL), hand.Game);
 
 			Assert.Equal(3, hand.Biddings.Count);

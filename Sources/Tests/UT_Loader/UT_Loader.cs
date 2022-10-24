@@ -1,6 +1,7 @@
-﻿using Model;
-using Model.data;
-using Model.games;
+﻿using Model.Rules;
+using Model.Data;
+using Model.Games;
+using Model.Players;
 using StubLib;
 using Xunit;
 
@@ -170,8 +171,7 @@ public class UT_Loader
     [MemberData(nameof(GameTestData.Data_TestLoadAllGames), MemberType = typeof(GameTestData))]
     public async Task TestLoadAllGames(ILoader loader, Game[] games, int page, int pageSize)
     {
-        var stub = new Stub();
-        var gamesFound = (await stub.LoadAllGames(page, pageSize)).ToList();
+	    var gamesFound = (await loader.LoadAllGames(page, pageSize)).ToList();
 
         Assert.Equal(gamesFound.Count, games.Length);
         Assert.Equal(gamesFound, games);

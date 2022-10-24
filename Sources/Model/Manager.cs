@@ -1,9 +1,10 @@
-using Model.data;
-using Model.enums;
-using Model.games;
+using Model.Data;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using NLog;
 
-namespace Model;
+namespace Model.Rules;
 
 public class Manager
 {
@@ -33,21 +34,6 @@ public class Manager
         var playerSaved = await _dataManager.SavePlayer(player);
         _logger.Info("Player saved : {arguments}", player.ToString());
         return playerSaved;
-    }
-
-    /// <summary>
-    /// Method to create a player
-    /// </summary>
-    /// <param name="firstName">FirstName of the player</param>
-    /// <param name="lastName">LastName of the player</param>
-    /// <param name="nickname">Nickname of the player</param>
-    /// <param name="avatar">Avatar of the player</param>
-    /// <returns>The player created</returns>
-    public async Task<Player?> SavePlayer(string firstName, string lastName, string nickname, string avatar)
-    {
-        var player = new Player(firstName, lastName, nickname, avatar);
-        _logger.Info("Player saved: {arguments}", player.ToString());
-        return await _dataManager.SavePlayer(player);
     }
 
     /// <summary>
@@ -182,20 +168,6 @@ public class Manager
     }
 
     /// <summary>
-    /// Method to create a game
-    /// </summary>
-    /// <param name="name">Name of the game</param>
-    /// <param name="rules">Rules of the game</param>
-    /// <param name="startDate">Start date of the game</param>
-    /// <returns>The game created</returns>
-    public async Task<Game?> SaveGame(string name, IRules rules, DateTime startDate)
-    {
-        var game = new Game(name, rules, startDate);
-        _logger.Info("Game saved : {arguments}", name);
-        return await _dataManager.SaveGame(game);
-    }
-
-    /// <summary>
     /// Method to load a game by name
     /// </summary>
     /// <param name="name">Name of the game</param>
@@ -327,6 +299,7 @@ public class Manager
         return games;
     }
     /*========== End game ==========*/
+    
 
     /*========== Group ==========*/
     /// <summary>
@@ -338,18 +311,6 @@ public class Manager
         var groupSave = await _dataManager.SaveGroup(group);
         _logger.Info("Group saved : {arguments}", group.ToString());
         return groupSave;
-    }
-
-    /// <summary>
-    /// Method to create a group
-    /// </summary>
-    /// <param name="name">Name of the group</param>
-    /// <returns>The group created</returns>
-    public async Task<Group?> SaveGroup(string name)
-    {
-        var group = new Group(name);
-        _logger.Info("Group saved : {arguments}", name);
-        return await _dataManager.SaveGroup(group);
     }
 
     /// <summary>
@@ -408,7 +369,7 @@ public class Manager
     /// <param name="biddings"> Players bidding details </param>
     /// <returns>The hand created</returns>
     public Hand CreateHand(ulong id, int handNumber, IRules rules, DateTime date, int takerScore, bool? twentyOne,
-        bool? excuse, PetitResult petit, Chelem chelem, params KeyValuePair<Player, (Bidding, Poignee)>[] biddings)
+        bool? excuse, PetitResults petit, Chelem chelem, params KeyValuePair<Player, (Biddings, Poignee)>[] biddings)
     {
         var hand = new Hand(id, handNumber, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings);
         _logger.Info("Hand created : {arguments}", hand.ToString());

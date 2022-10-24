@@ -1,4 +1,4 @@
-using Model;
+using Model.Rules;
 using Xunit;
 
 namespace UT_Model;

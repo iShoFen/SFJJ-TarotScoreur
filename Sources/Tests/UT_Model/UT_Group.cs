@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Model.Players;
 using Xunit;
 
 namespace UT_Model;
@@ -102,7 +102,7 @@ public class UT_Group
     [Fact]
     public void TestEqualsNullRef()
     {
-        Group group = new Group(4, "partie1",
+        var group = new Group(4, "partie1",
             new("Florent", "Marques", "Flo", "avatar"),
             new("Samuel", "Sirven", "Sam", "avatar"),
             new("Jordan", "Artzet", "Jo", "avatar")

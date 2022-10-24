@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Model.Players;
+using Model.Rules;
 using Tarot2B2Model;
 
 // Création du manager
@@ -7,49 +8,62 @@ var manager = new Manager(new DbLoader(), new DbSaver());
 
 // Ajout de joueurs
 Console.WriteLine("\nAjout de joueurs");
-await manager.SavePlayer("Florent", "Marques", "Flo", "avatar");
+await manager.SavePlayer(new Player("Florent", "Marques", "Flo", "avatar"));
 await manager.SavePlayer(new Player("Samuel", "Sirven", "Sam", "avatar"));
-await manager.SavePlayer("Jordan", "Artzet", "Jo", "avatar");
-await manager.SavePlayer("Julien", "Theme", "Ju", "avatar");
+await manager.SavePlayer(new Player("Jordan", "Artzet", "Jo", "avatar"));
+await manager.SavePlayer(new Player("Julien", "Theme", "Ju", "avatar"));
 
-await manager.SavePlayer("Marveille", "Champagne", "Marv", "avatar");
-await manager.SavePlayer("Fanchon", "Tétrault", "Fan", "avatar");
-await manager.SavePlayer("Jeanne", "Fecteau", "Jean", "avatar");
-await manager.SavePlayer("Auda", "Faucher", "Auda", "avatar");
+await manager.SavePlayer(new Player("Marveille", "Champagne", "Marv", "avatar"));
+await manager.SavePlayer(new Player("Fanchon", "Tétrault", "Fan", "avatar"));
+await manager.SavePlayer(new Player("Jeanne", "Fecteau", "Jean", "avatar"));
+await manager.SavePlayer(new Player("Auda", "Faucher", "Auda", "avatar"));
 
-await manager.SavePlayer("Lundy", "Marquis", "Lun", "avatar");
-await manager.SavePlayer("Royce", "Lapresse", "Roy", "avatar");
-await manager.SavePlayer("Karel", "Lagrange", "Kar", "avatar");
-await manager.SavePlayer("Pierpont", "Carignan", "Pier", "avatar");
+await manager.SavePlayer(new Player("Lundy", "Marquis", "Lun", "avatar"));
+await manager.SavePlayer(new Player("Royce", "Lapresse", "Roy", "avatar"));
+await manager.SavePlayer(new Player("Karel", "Lagrange", "Kar", "avatar"));
+await manager.SavePlayer(new Player("Pierpont", "Carignan", "Pier", "avatar"));
 
 // Recherche des 100 joueurs de la page 1
 Console.WriteLine("\nRecherche des 100 joueurs de la page 1");
-var players = (await manager.LoadAllPlayer(1, 100)).ToArray();
+var players = (await manager.LoadAllPlayer(1, 100))?.ToArray();
 // Affichage des joueurs
 Console.WriteLine("\nAffichage des joueurs trouvés");
-foreach (var player in players)
+if (players != null)
 {
-    Console.WriteLine(player);
+    foreach (var player in players)
+    {
+        Console.WriteLine(player);
+    }
+
+    Console.WriteLine("\nRecherche des 12 joueurs de la page 1");
 }
 
-Console.WriteLine("\nRecherche des 12 joueurs de la page 1");
-players = (await manager.LoadAllPlayer(1, 12)).ToArray();
-for (var i = 0; i < 3; i++)
+players = (await manager.LoadAllPlayer(1, 12))?.ToArray();
+if (players != null)
 {
-    var group = new Group($"Un super groupe {i}", players[4 * i], players[4 * i + 1], players[4 * i + 2],
-        players[4 * i + 3]);
-    Console.WriteLine("Ajout d'un groupe");
-    await manager.SaveGroup(group);
+    for (var i = 0; i < 3; i++)
+    {
+        var group = new Group($"Un super groupe {i}", players[4 * i], players[4 * i + 1], players[4 * i + 2],
+            players[4 * i + 3]);
+        Console.WriteLine("Ajout d'un groupe");
+        await manager.SaveGroup(group);
+    }
 }
 
 Console.WriteLine("\nRecherche des 20 groupes de la page 1");
 var groups = await manager.LoadAllGroups(1, 20);
-foreach (var group in groups)
+if (groups != null)
 {
-    Console.WriteLine($"{group.Name} ({group.Id})");
-    var groupPlayers = await manager.LoadPlayersByGroup(group, 1, 100);
-    foreach (var groupPlayer in groupPlayers)
+    foreach (var group in groups)
     {
-        Console.WriteLine($"\t{groupPlayer}");
+        Console.WriteLine($"{group.Name} ({group.Id})");
+        var groupPlayers = await manager.LoadPlayersByGroup(group, 1, 100);
+        if (groupPlayers != null)
+        {
+            foreach (var groupPlayer in groupPlayers)
+            {
+                Console.WriteLine($"\t{groupPlayer}");
+            }
+        }
     }
 }

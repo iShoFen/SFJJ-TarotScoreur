@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Model.Players;
 
 namespace UT_Model;
 

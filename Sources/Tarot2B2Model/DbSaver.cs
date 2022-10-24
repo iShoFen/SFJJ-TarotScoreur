@@ -1,9 +1,8 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Model;
-using Model.data;
-using Model.games;
+using Model.Players;
+using Model.Data;
+using Model.Games;
 using TarotDB;
 
 namespace Tarot2B2Model;
@@ -16,12 +15,12 @@ public class DbSaver : ISaver
 	/// <summary>
 	/// The options for the database
 	/// </summary>
-	private readonly DbContextOptions<TarotDbContext> _options;
+	internal readonly DbContextOptions<TarotDbContext> Options;
 	
 	/// <summary>
 	/// The type of the database context
 	/// </summary>
-	private readonly Type _dbContextType;
+	internal readonly Type DbContextType;
 
 	/// <summary>
 	/// Default constructor
@@ -41,8 +40,8 @@ public class DbSaver : ISaver
 
         var connection = new SqliteConnection(connectionString);
         connection.Open();
-        _options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
-        _dbContextType = contextType;
+        Options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
+        DbContextType = contextType;
 
         var context = InitContext();
         context.Database.EnsureCreated();
@@ -52,7 +51,7 @@ public class DbSaver : ISaver
 	/// Initialize the database context
 	/// </summary>
 	/// <returns> The database context </returns>
-    private TarotDbContext InitContext() => (TarotDbContext)Activator.CreateInstance(_dbContextType, _options)!;
+    private TarotDbContext InitContext() => (TarotDbContext)Activator.CreateInstance(DbContextType, Options)!;
 
     /// <summary>
     ///Save a player
@@ -61,16 +60,16 @@ public class DbSaver : ISaver
     /// <returns>The player saved</returns>
     public async Task<Player?> SavePlayer(Player player)
     {
-        Mapper.Reset();
+	    Mapper.Reset();
 
         await using var context = InitContext();
         var playerEntity = player.ToEntity();
         
-        if (await context.Players.FindAsync(playerEntity.Id) != null) return null;
+        if (await context.Players.FindAsync(playerEntity.Id) != null || player.Id != 0UL) return null;
         var result = await context.AddAsync(playerEntity);
-        if (result.State != EntityState.Added) return null;
 
         await context.SaveChangesAsync();
+        
         return result.Entity.ToModel();
     }
 
@@ -85,10 +84,12 @@ public class DbSaver : ISaver
 
         await using var context = InitContext();
         var gameEntity = game.ToEntity();
+        
+        if (await context.Games.FindAsync(game.Id) != null || game.Id != 0UL) return null;
         var result = await context.AddAsync(gameEntity);
-        if (result.State != EntityState.Added) return null;
 
         await context.SaveChangesAsync();
+        
         return result.Entity.ToModel();
     }
 
@@ -103,11 +104,13 @@ public class DbSaver : ISaver
 
         await using var context = InitContext();
         var groupEntity = group.ToEntity();
-        groupEntity.Players = groupEntity.Players.Select(p => p.Id == 0 ? p : context.Players.Find(p.Id)!).ToHashSet();
+        
+        if (await context.Groups.FindAsync(group.Id) != null || group.Id != 0UL) return null;
+        groupEntity.Players = groupEntity.Players.Select(p => context.Players.Find(p.Id)!).ToHashSet();
         var result = await context.AddAsync(groupEntity);
-        if (result.State != EntityState.Added) return null;
 
         await context.SaveChangesAsync();
+        
         return result.Entity.ToModel();
     }
 }

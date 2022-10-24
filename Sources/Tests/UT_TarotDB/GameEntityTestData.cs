@@ -1,5 +1,5 @@
 ﻿using TarotDB;
-using TarotDB.enums;
+using TarotDB.Enums;
 
 namespace UT_TarotDB;
 
@@ -111,12 +111,12 @@ public static class GameEntityTestData
                 new HandEntity
                 {
                     Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 10, 10), TakerScore = 80,
-                    TwentyOne = false, Excuse = true, Petit = PetitResultDB.Lost, Chelem = ChelemDB.Success
+                    TwentyOne = false, Excuse = true, Petit = PetitResultsDb.Lost, Chelem = ChelemDb.Success
                 },
                 new HandEntity
                 {
                     Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 10, 20), TakerScore = 155,
-                    TwentyOne = true, Excuse = true, Petit = PetitResultDB.AuBoutOwned, Chelem = ChelemDB.Fail
+                    TwentyOne = true, Excuse = true, Petit = PetitResultsDb.AuBoutOwned, Chelem = ChelemDb.Fail
                 }
             }
         };
@@ -160,12 +160,12 @@ public static class GameEntityTestData
                 new HandEntity
                 {
                     Number = 1, Rules = "FrenchTarotRules", Date = new DateTime(2022, 10, 10), TakerScore = 80,
-                    TwentyOne = false, Excuse = true, Petit = PetitResultDB.Lost, Chelem = ChelemDB.Success
+                    TwentyOne = false, Excuse = true, Petit = PetitResultsDb.Lost, Chelem = ChelemDb.Success
                 },
                 new HandEntity
                 {
                     Number = 2, Rules = "FrenchTarotRules", Date = new DateTime(2022, 10, 20), TakerScore = 155,
-                    TwentyOne = true, Excuse = true, Petit = PetitResultDB.AuBoutOwned, Chelem = ChelemDB.Fail
+                    TwentyOne = true, Excuse = true, Petit = PetitResultsDb.AuBoutOwned, Chelem = ChelemDb.Fail
                 }
             }
         };

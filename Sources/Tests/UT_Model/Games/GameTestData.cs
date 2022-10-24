@@ -1,7 +1,8 @@
 using System.Globalization;
-using Model;
-using Model.enums;
-using Model.games;
+using Model.Rules;
+using Model.Enums;
+using Model.Games;
+using Model.Players;
 using TestUtils;
 
 namespace UT_Model.Games;
@@ -228,48 +229,48 @@ public static class GameTestData
             true,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown))
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown))
             },
             new  Game("good", new FrenchTarotRules(), DateTime.Now),
-            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
         };
         yield return new object[]
         {
             true,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-                KeyValuePair.Create(2, new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-                KeyValuePair.Create(3, new Hand(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(2, new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(3, new Hand(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
             },
             GameTestUtils.CreateGameWithHands("good", new FrenchTarotRules(), DateTime.Now, 
-                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-            new Hand(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+            new Hand(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
         };
         yield return new object[]
         {
             false,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
             },
             GameTestUtils.CreateGameWithHands("good", new FrenchTarotRules(), DateTime.Now,
-                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
         };
         yield return new object[]
         {
             false,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-                KeyValuePair.Create(2, new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(2, new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
             },
             GameTestUtils.CreateGameWithHands("good", new FrenchTarotRules(), DateTime.Now,
-                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+            new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
         };
     }
     
@@ -280,12 +281,12 @@ public static class GameTestData
             true,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown))
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown))
             },
             new Game("good", new FrenchTarotRules(), DateTime.Now),
             new Hand[]
             {
-                new (1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new (1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
             }
         };
         yield return new object[]
@@ -294,17 +295,17 @@ public static class GameTestData
             new[]
             {
                 KeyValuePair.Create(1,
-                    new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                    new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                         Chelem.Unknown)),
                 KeyValuePair.Create(2,
-                    new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                    new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                         Chelem.Unknown)),
             },
             new Game("good", new FrenchTarotRules(), DateTime.Now),
             new Hand[]
             {
-                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
             }
         };
         yield return new object[]
@@ -312,16 +313,16 @@ public static class GameTestData
             true,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-                KeyValuePair.Create(2, new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
-                KeyValuePair.Create(3, new Hand(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(2, new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(3, new Hand(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
             },
             GameTestUtils.CreateGameWithHands("good", new FrenchTarotRules(), DateTime.Now, 
-                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
+                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
             new Hand[]
             {
-                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
             }
         };
         yield return new object[]
@@ -329,13 +330,13 @@ public static class GameTestData
             false,
             new[]
             {
-                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)),
+                KeyValuePair.Create(1, new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)),
             },
             new Game("good", new FrenchTarotRules(), DateTime.Now),
             new Hand[]
             {
-                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
             }
         };
         yield return new object[]
@@ -344,21 +345,21 @@ public static class GameTestData
             new[]
             {
                 KeyValuePair.Create(1,
-                    new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                    new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                         Chelem.Unknown)),
                 KeyValuePair.Create(2,
-                    new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                    new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                         Chelem.Unknown)),
             },
             GameTestUtils.CreateGameWithHands("good", new FrenchTarotRules(), DateTime.Now,
-                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                     Chelem.Unknown),
-                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                     Chelem.Unknown)),
             new Hand[]
             {
-                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown)
+                new(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown)
             }
         };
         yield return new object[]
@@ -367,21 +368,21 @@ public static class GameTestData
             new[]
             {
                 KeyValuePair.Create(1,
-                    new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                    new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                         Chelem.Unknown)),
                 KeyValuePair.Create(2,
-                    new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                    new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                         Chelem.Unknown))
             },
             GameTestUtils. CreateGameWithHands("good", new FrenchTarotRules(), DateTime.Now,
-                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                new Hand(1L, 1, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                     Chelem.Unknown),
-                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown,
+                new Hand(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown,
                     Chelem.Unknown)),
             new Hand[]
             {
-                new(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
-                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResult.Unknown, Chelem.Unknown),
+                new(3L, 3, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
+                new(2L, 2, new FrenchTarotRules(), DateTime.Now, 1, null, null, PetitResults.Unknown, Chelem.Unknown),
             }
         };
     }
@@ -405,10 +406,10 @@ public static class GameTestData
             true,
             GameTestUtils.CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "JuJu", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResults.Unknown, Chelem.Unknown)}),
             GameTestUtils.CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/24/2022", CultureInfo.InvariantCulture), DateTime.MaxValue, 
                 new Player[] { new("Samuel", "Sirven", "Sam", "  ")}, 
-                new Hand[]{new(25L, 125, new FrenchTarotRules(), DateTime.Parse("12/24/2022", CultureInfo.InvariantCulture), 25, true, true, PetitResult.Owned, Chelem.Announced)})
+                new Hand[]{new(25L, 125, new FrenchTarotRules(), DateTime.Parse("12/24/2022", CultureInfo.InvariantCulture), 25, true, true, PetitResults.Owned, Chelem.Announced)})
         };
         yield return new object[]
         {
@@ -443,10 +444,10 @@ public static class GameTestData
             true,
             GameTestUtils.CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResults.Unknown, Chelem.Unknown)}),
             GameTestUtils.CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)})
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResults.Unknown, Chelem.Unknown)})
         };
         yield return new object[]
         {
@@ -477,17 +478,17 @@ public static class GameTestData
             false,
             GameTestUtils.CreateGameWithPlayersAndHands(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), DateTime.MaxValue, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResults.Unknown, Chelem.Unknown)}),
             GameTestUtils.CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022"), DateTime.MaxValue, 
                 Array.Empty<Player>(), 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)})
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResults.Unknown, Chelem.Unknown)})
         };
         yield return new object[]
         {
             false,
             GameTestUtils.CreateGameWithPlayersAndHands(45L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
-                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResult.Unknown, Chelem.Unknown)}),
+                new Hand[]{new(1L, 1, new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), 1, null, null, PetitResults.Unknown, Chelem.Unknown)}),
             GameTestUtils.CreateGameWithPlayersAndHands(0L, "good", new FrenchTarotRules(), DateTime.Parse("12/12/2022", CultureInfo.InvariantCulture), null, 
                 new Player[] { new("Julien", "Theme", "Nickname", "")}, 
                 Array.Empty<Hand>())

@@ -1,5 +1,5 @@
-using Model;
-using Model.games;
+using Model.Players;
+using Model.Games;
 using TarotDB;
 
 namespace Tarot2B2Model;

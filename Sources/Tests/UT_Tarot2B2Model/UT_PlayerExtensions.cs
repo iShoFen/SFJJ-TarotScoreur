@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Model.Players;
 using Tarot2B2Model;
 using TarotDB;
 using Xunit;
