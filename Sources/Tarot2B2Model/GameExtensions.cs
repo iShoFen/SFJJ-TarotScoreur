@@ -20,15 +20,15 @@ internal static class GameExtensions
         var gameEntity = GamesMapper.GetEntity(model);
         
         if (gameEntity is not null) return gameEntity;
-        gameEntity = new GameEntity() 
+        gameEntity = new GameEntity
         {
             Id = model.Id,
             Name = model.Name,
             Rules = model.Rules.Name,
             StartDate = model.StartDate,
             EndDate = model.EndDate,
-            Players = model.Players.Select(p => p.ToEntity()).ToHashSet(),
-            Hands = model.Hands.Select(kv => kv.Value.ToEntity()).ToHashSet()
+            Players = model.Players.ToEntities().ToHashSet(),
+            Hands = model.Hands.Select(kv => kv.Value).ToEntities().ToHashSet()
         };
 
         GamesMapper.Map(model, gameEntity);
