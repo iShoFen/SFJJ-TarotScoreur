@@ -15,15 +15,10 @@
 
 
 <!-- Présentation -->
-<div style="text-align: justify">
-    <p>
-    </br>
-        The Tarot Scoreur application allows during your tarot games to automatically count the points of all the players in the game. With this application you can play online with your friend or play locally at your home !
-    </br>
-    </p>
-</div>
+\
+The Tarot Scoreur application allows during your tarot games to automatically count the points of all the players in the game. With this application you can play online with your friend or play locally at your home !
 
-## **Installation**
+## Installation
 
 ### Launch console app
 
@@ -48,8 +43,23 @@
 ## **Examples**
 
 <!-- Mettre des images de l'application par le future -->
+<img src="./Documentation/images/Accueil_Connecte.svg" height="400">
+<img src="./Documentation/images/Lancer_Partie.svg" height="400">
+<img src="./Documentation/images/Ajouter_Manche.svg" height="400">
+<img src="./Documentation/images/Classement_Joueurs.svg" height="400">
+<img src="./Documentation/images/Profil.svg" height="400">
 
-## **Features**
+Here is some examples of what you can do with the application.  
+- You can see who you are and your current games 
+- You can start or create a new game.
+- You can add a new hand to your game.
+- You can see the ranking of all the players.
+- You can see your profile.
+
+For more examples, please refer to the [Wiki](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur)
+
+
+## Features
 
 <!-- Qu'est ce que l'on peut faire avec l'application
      Présentation de toutes les fontionnalités -->
@@ -62,23 +72,23 @@ This mode allow you to play online and share your scores and achievements of all
 
 This mode allow you to play at your home and add your friends on your phone. Enjoy playing your tarot games with your friends at home !
 
-## **Usage**
+## Usage
 
 To learn how to use our application you can read the [user manual](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur-en) on the wiki.
  
 
-## **Questions**
+## Questions
 
 For questions and support ask [here](#).
 
-## **Contributors**
+## Contributors
 
-| Name | Role |
-|------|------|
-|Samuel Sirven | Best manager of all times |
-|Florent Marques | Developer who develop the player, user and ranking features (like the football) |
-|Julien Themes | Developer who develop the management of the games|
-|Jordan Artzet | Best developer of all times |
+| Name            | Role                                                                            |
+|-----------------|---------------------------------------------------------------------------------|
+| Samuel Sirven   | Best manager of all times                                                       |
+| Florent Marques | Developer who develop the player, user and ranking features (like the football) |
+| Julien Themes   | Developer who develop the management of the games                               |
+| Jordan Artzet   | Best developer of all times                                                     |
 
 
 
