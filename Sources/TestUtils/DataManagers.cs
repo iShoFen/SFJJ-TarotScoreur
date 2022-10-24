@@ -3,9 +3,9 @@ using StubContext;
 using StubLib;
 using Tarot2B2Model;
 
-namespace UT_Loader;
+namespace TestUtils;
 
-public class DataManagers
+internal static class DataManagers
 {
 	public static readonly ILoader[] Loaders = {
 		new Stub(),

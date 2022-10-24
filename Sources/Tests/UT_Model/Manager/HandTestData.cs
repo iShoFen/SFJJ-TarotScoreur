@@ -1,11 +1,12 @@
 ﻿using Model;
 using Model.enums;
 using Model.games;
-using static TestUtils.DataManagers;
+using static UT_Model.Manager.DataManagers;
 
-namespace UT_Loader;
+namespace UT_Model.Manager;
 
 public static class HandTestData
+
 {
     public static IEnumerable<object[]> Data_TestLoadHandByGame()
     {
