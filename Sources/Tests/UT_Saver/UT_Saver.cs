@@ -59,6 +59,12 @@ public class UT_Saver
 			Assert.NotNull(entity);
 			Assert.Equal(expEntity.Id, entity!.Id);
 			Assert.Equal(expEntity.Name, entity.Name);
+			
+			var players = expEntity.Players.Select(p => context.Players.Find(p.Id)!).ToList();
+			foreach (var player in entity.Players)
+			{
+				Assert.Contains(player, players);
+			}
 		}
 	}
 

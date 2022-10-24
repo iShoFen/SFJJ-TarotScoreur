@@ -298,6 +298,7 @@ public class Manager
         return games;
     }
     /*========== End game ==========*/
+    
 
     /*========== Group ==========*/
     /// <summary>
