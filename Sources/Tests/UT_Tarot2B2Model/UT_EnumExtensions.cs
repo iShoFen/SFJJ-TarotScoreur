@@ -1,5 +1,6 @@
 ﻿using Model.Enums;
 using Tarot2B2Model;
+using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB.Enums;
 using Xunit;
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
