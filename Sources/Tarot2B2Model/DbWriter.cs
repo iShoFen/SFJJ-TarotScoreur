@@ -10,7 +10,7 @@ namespace Tarot2B2Model;
 /// <summary>
 /// The database Loader manager
 /// </summary>
-public class DbSaver : ISaver
+public class DbWriter : IWriter
 {
 	/// <summary>
 	/// The options for the database
@@ -25,7 +25,7 @@ public class DbSaver : ISaver
 	/// <summary>
 	/// Default constructor
 	/// </summary>
-    public DbSaver() : this(typeof(TarotDbContext), @"Data Source=TarotScoreur.db")
+    public DbWriter() : this(typeof(TarotDbContext), @"Data Source=TarotScoreur.db")
     {
     }
     
@@ -34,7 +34,7 @@ public class DbSaver : ISaver
 	/// </summary>
 	/// <param name="contextType"> The type of the database context</param>
 	/// <param name="connectionString"> The connection string</param>
-    public DbSaver(Type contextType, string connectionString)
+    public DbWriter(Type contextType, string connectionString)
     {
         Mapper.Reset();
 

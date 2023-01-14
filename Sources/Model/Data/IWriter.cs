@@ -3,7 +3,7 @@ using Model.Players;
 
 namespace Model.Data;
 
-public interface ISaver
+public interface IWriter
 {
     /// <summary>
     ///Save a player

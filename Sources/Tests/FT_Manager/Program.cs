@@ -1,10 +1,10 @@
-﻿using Model.Players;
-using Model.Rules;
+﻿using Model;
+using Model.Players;
 using Tarot2B2Model;
 
 // Création du manager
 Console.WriteLine("Création du manager");
-var manager = new Manager(new DbLoader(), new DbSaver());
+var manager = new Manager(new DbReader(), new DbWriter());
 
 // Ajout de joueurs
 Console.WriteLine("\nAjout de joueurs");

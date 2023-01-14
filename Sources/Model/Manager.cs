@@ -2,26 +2,62 @@ using Model.Data;
 using Model.Enums;
 using Model.Games;
 using Model.Players;
+using Model.Rules;
 using NLog;
 
-namespace Model.Rules;
+namespace Model;
 
-public class Manager
+public partial class Manager
 {
-    private readonly DataManager _dataManager;
+    /// <summary>
+    /// IReader from read methods (select)
+    /// </summary>
+    private IReader _reader;
+    
+    /// <summary>
+    /// IWriter for write methods (create, update, delete)
+    /// </summary>
+    private IWriter _writer;
+    
+    /// <summary>
+    /// 
+    /// </summary>
     private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-    public Manager(ILoader iLoader, ISaver iSaver)
+    /// <summary>
+    /// Instantiate a new Manager with IReader and IWriter interfaces 
+    /// </summary>
+    /// <param name="reader">IReader to use in the Manager</param>
+    /// <param name="writer">IWriter to use in the Manager</param>
+    public Manager(IReader reader, IWriter writer)
     {
-        _dataManager = new DataManager(iLoader, iSaver);
-        _logger.Info("Manager created");
+        _reader = reader;
+        _writer = writer;
+        _logger.Info("Instantiate Manager");
     }
 
-    public void SetDataManager(ILoader iLoader, ISaver iSaver)
+    /// <summary>
+    /// Set the new Reader to use when read methods (select) are called.
+    /// </summary>
+    /// <param name="reader">New reader</param>
+    /// <returns>Instance of Manager for chaining methods</returns>
+    public Manager SetReader(IReader reader)
     {
-        _dataManager.Loader = iLoader;
-        _dataManager.Saver = iSaver;
-        _logger.Info("DataManager set");
+        _reader = reader;
+        _logger.Info("Set Loader in DataManager");
+        return this;
+    }
+
+    /// <summary>
+    /// Set the new Writer to use when write methods (create, update, delete) are called.
+    /// </summary>
+    /// <param name="writer">New writer</param>
+    /// <returns>Instance of Manager for chaining methods</returns>
+    public Manager SetWriter(IWriter writer)
+    {
+        _writer = writer;
+        _logger.Info("Set Saver in DataManager");
+        return this;
     }
 
     /*========== Player ==========*/
@@ -31,7 +67,7 @@ public class Manager
     /// <param name="player">Player to register</param>
     public async Task<Player?> SavePlayer(Player player)
     {
-        var playerSaved = await _dataManager.SavePlayer(player);
+        var playerSaved = await _writer.SavePlayer(player);
         _logger.Info("Player saved : {arguments}", player.ToString());
         return playerSaved;
     }

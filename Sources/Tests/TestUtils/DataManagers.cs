@@ -7,12 +7,12 @@ namespace TestUtils;
 
 internal static class DataManagers
 {
-	public static readonly ILoader[] Loaders = {
+	public static readonly IReader[] Loaders = {
 		new Stub(),
-		new DbLoader(typeof(TarotDbContextStub), "DataSource=:memory:")
+		new DbReader(typeof(TarotDbContextStub), "DataSource=:memory:")
 	};
 	
-	public static readonly ISaver[] Savers = {
-		new DbSaver(typeof(TarotDbContextStub), "DataSource=:memory:")
+	public static readonly IWriter[] Savers = {
+		new DbWriter(typeof(TarotDbContextStub), "DataSource=:memory:")
 	};
 }

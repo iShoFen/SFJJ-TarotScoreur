@@ -12,14 +12,14 @@ public class UT_Saver
 {
 	[Theory]
 	[MemberData(nameof(SaverTestData.Data_TestSavePlayer), MemberType = typeof(SaverTestData))]
-	internal async Task TestSavePlayer(ISaver saver, Player player, Player? expPlayer, PlayerEntity? expEntity)
+	internal async Task TestSavePlayer(IWriter writer, Player player, Player? expPlayer, PlayerEntity? expEntity)
 	{
-		var result = await saver.SavePlayer(player);
+		var result = await writer.SavePlayer(player);
 		Assert.Equal(expPlayer, result);
 
 		if (expEntity != null)
 		{
-			if (saver is not DbSaver dbSaver) return;
+			if (writer is not DbWriter dbSaver) return;
 
 			await using var context =
 				(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
@@ -41,14 +41,14 @@ public class UT_Saver
 
 	[Theory]
 	[MemberData(nameof(SaverTestData.Data_TestSaveGroup), MemberType = typeof(SaverTestData))]
-	internal async Task TestSaveGroup(ISaver saver, Group group, Group? expGroup, GroupEntity? expEntity)
+	internal async Task TestSaveGroup(IWriter writer, Group group, Group? expGroup, GroupEntity? expEntity)
 	{
-		var result = await saver.SaveGroup(group);
+		var result = await writer.SaveGroup(group);
 		Assert.Equal(expGroup, result);
 
 		if (expEntity != null)
 		{
-			if (saver is not DbSaver dbSaver) return;
+			if (writer is not DbWriter dbSaver) return;
 
 			await using var context =
 				(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
@@ -70,14 +70,14 @@ public class UT_Saver
 
 	[Theory]
 	[MemberData(nameof(SaverTestData.Data_TestSaveGame), MemberType = typeof(SaverTestData))]
-	internal async Task TestSaveGame(ISaver saver, Game game, Game? expGame, GameEntity? expEntity)
+	internal async Task TestSaveGame(IWriter writer, Game game, Game? expGame, GameEntity? expEntity)
 	{
-		var result = await saver.SaveGame(game);
+		var result = await writer.SaveGame(game);
 		Assert.Equal(expGame, result);
 
 		if (expEntity != null)
 		{
-			if (saver is not DbSaver dbSaver) return;
+			if (writer is not DbWriter dbSaver) return;
 
 			await using var context =
 				(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
