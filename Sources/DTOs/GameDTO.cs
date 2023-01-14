@@ -33,7 +33,7 @@ public class GameDTO
     public ICollection<UserDTO> Users { get; set; } = new HashSet<UserDTO>();
     
     /// <summary>
-    /// The rounds in the Game
+    /// The Hands in the Game
     /// </summary>
-    public ICollection<UserDTO> Hands { get; set; } = new HashSet<UserDTO>();
+    public ICollection<HandDTO> Hands { get; set; } = new HashSet<HandDTO>();
 }

@@ -18,7 +18,7 @@ public class HandDTO
     public int Number { get; set; }
     
     /// <summary>
-    /// The of the rules applied to this Hand
+    /// The name of the rules applied to this Hand
     /// </summary>
     public string Rules { get; set; } = null!;
     

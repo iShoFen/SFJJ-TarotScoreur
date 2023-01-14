@@ -27,7 +27,7 @@ public class BiddingPoigneeDTO
     /// <summary>
     /// The unique identifier of the User
     /// </summary>
-    public ulong PlayerId { get; set; }
+    public ulong UserId { get; set; }
     
     /// <summary>
     /// The User
