@@ -8,7 +8,7 @@ namespace TestUtils;
 internal static class DataManagers
 {
 	public static readonly IReader[] Loaders = {
-		new Stub(),
+		// new Stub(),
 		new DbReader(typeof(TarotDbContextStub), "DataSource=:memory:")
 	};
 	

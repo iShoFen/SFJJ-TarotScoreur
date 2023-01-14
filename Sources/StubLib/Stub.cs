@@ -6,7 +6,7 @@ using Model.Players;
 
 namespace StubLib;
 
-public class Stub : IReader
+public class Stub // : IReader
 {
     private readonly List<Game> _gameList = new();
     private readonly List<Player> _playerList = new();

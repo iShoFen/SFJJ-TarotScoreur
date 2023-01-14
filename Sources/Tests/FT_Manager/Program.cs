@@ -57,7 +57,7 @@ if (groups != null)
     foreach (var group in groups)
     {
         Console.WriteLine($"{group.Name} ({group.Id})");
-        var groupPlayers = await manager.LoadPlayersByGroup(group, 1, 100);
+        var groupPlayers = await manager.LoadPlayersByGroup(group);
         if (groupPlayers != null)
         {
             foreach (var groupPlayer in groupPlayers)

@@ -13,12 +13,12 @@ public partial class Manager
     /// IReader from read methods (select)
     /// </summary>
     private IReader _reader;
-    
+
     /// <summary>
     /// IWriter for write methods (create, update, delete)
     /// </summary>
     private IWriter _writer;
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -75,12 +75,12 @@ public partial class Manager
     /// <summary>
     /// Method to load all players
     /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"> Number of the page to load</param>
+    /// <param name="count">Size of the page</param>
     /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadAllPlayer(int page, int pageSize)
+    public async Task<IEnumerable<Player>?> LoadAllPlayer(int start, int count)
     {
-        var players = await _dataManager.LoadAllPlayer(page, pageSize);
+        var players = await _reader.GetPlayers(start, count);
         _logger.Info("All players loaded");
         return players;
     }
@@ -89,54 +89,31 @@ public partial class Manager
     /// Method to load a player by group
     /// </summary>
     /// <param name="group">Group to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
     /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayersByGroup(Group group, int page, int pageSize)
+    public async Task<IEnumerable<Player>?> LoadPlayersByGroup(Group group)
     {
-        var players = await _dataManager.LoadPlayersByGroup(group, page, pageSize);
+        var players = await _reader.GetPlayersByGroup(group.Id);
         _logger.Info("Players loaded by group : {arguments}", group.ToString());
         return players;
     }
 
-    /// <summary>
-    /// Method to load a player by firstname
-    /// </summary>
-    /// <param name="firstName">Firstname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayerByFirstName(string firstName, int page, int pageSize)
+    public async Task<IEnumerable<Player>> LoadPlayersByPattern(string pattern, int start, int count)
     {
-        var players = await _dataManager.LoadPlayerByFirstName(firstName, page, pageSize);
-        _logger.Info("Player loaded by FirstName : {arguments}", firstName);
+        var players = await _reader.GetPlayersByPattern(pattern, start, count);
+        _logger.Info("Player loaded by pattern: {arguments}", pattern);
         return players;
-    }
-
-    /// <summary>
-    /// Method to load a player by lastname
-    /// </summary>
-    /// <param name="lastName">Lastname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayerByLastName(string lastName, int page, int pageSize)
-    {
-         var players = await _dataManager.LoadPlayerByLastName(lastName, page, pageSize);
-         _logger.Info("Player loaded by LastName : {arguments}", lastName);
-         return players;
     }
 
     /// <summary>
     /// Method to load a player by nickname
     /// </summary>
     /// <param name="nickname">nickname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayerByNickname(string nickname, int page, int pageSize)
+    public async Task<IEnumerable<Player>> LoadPlayerByNickname(string nickname, int start, int count)
     {
-        var players = await _dataManager.LoadPlayerByNickname(nickname, page, pageSize);
+        var players = await _reader.GetPlayersByNickname(nickname, start, count);
         _logger.Info("Player loaded by Nickname : {arguments}", nickname);
         return players;
     }
@@ -144,50 +121,18 @@ public partial class Manager
     /// <summary>
     /// Method to load a player by firstname and lastname
     /// </summary>
-    /// <param name="firstName">Firstname to search</param>
-    /// <param name="lastName">Lastname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="pattern">Pattern to search</param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
-        int pageSize)
+    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndLastName(string pattern, int start,
+        int count)
     {
-        var players = await _dataManager.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize);
-        _logger.Info("Player loaded by FirstName and LastName : {arguments} {arguments}", firstName, lastName);
+        var players = await _reader.GetPlayersByFirstNameAndLastName(pattern, start, count);
+        _logger.Info("Player loaded by Pattern : {arguments} {arguments}");
         return players;
     }
 
-    /// <summary>
-    /// Method to load a player by firstname and nickname
-    /// </summary>
-    /// <param name="firstName">Firstname to search</param>
-    /// <param name="nickname">nickname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
-        int pageSize)
-    {
-        var players = await _dataManager.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize);
-        _logger.Info("Player loaded by FirstName and Nickname : {arguments} {arguments}", firstName, nickname);
-        return players;
-    }
-
-    /// <summary>
-    /// Method to load a player by lastname and nickname
-    /// </summary>
-    /// <param name="lastName">Lastname to search</param>
-    /// <param name="nickname">nickname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
-        int pageSize)
-    {
-        var players = await _dataManager.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize);
-        _logger.Info("Player loaded by LastName and Nickname : {arguments} {arguments}", lastName, nickname);
-        return players;
-    }
     /*========== End player ==========*/
 
 
@@ -198,7 +143,7 @@ public partial class Manager
     /// <param name="game">Game to register</param>
     public async Task<Game?> SaveGame(Game game)
     {
-        var gameSaved = await _dataManager.SaveGame(game);
+        var gameSaved = await _writer.SaveGame(game);
         _logger.Info("Game saved : {arguments}", game.ToString());
         return gameSaved;
     }
@@ -206,40 +151,14 @@ public partial class Manager
     /// <summary>
     /// Method to load a game by name
     /// </summary>
-    /// <param name="name">Name of the game</param>
+    /// <param name="pattern">Name of the game</param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>A game</returns>
-    public async Task<Game?> LoadGameByName(string name)
+    public async Task<IEnumerable<Game>> LoadGameByName(string pattern, int start, int count)
     {
-        var games = await _dataManager.LoadGameByName(name);
-        _logger.Info("Game loaded by name : {arguments}", name);
-        return games;
-    }
-
-    /// <summary>
-    /// Method to load games by start date
-    /// </summary>
-    /// <param name="startDate">Start date of games</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
-    {
-        var games = await _dataManager.LoadGameByStartDate(startDate, page, pageSize);
-        _logger.Info("Game loaded by start date : {arguments}", startDate);
-        return games;
-    }
-
-    /// <summary>
-    /// Method to load games by end date
-    /// </summary>
-    /// <param name="endDate">End date of games</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByEndDate(DateTime endDate, int page, int pageSize)
-    {
-        var games = await _dataManager.LoadGameByEndDate(endDate, page, pageSize);
-        _logger.Info("Game loaded by end date : {arguments}", endDate);
+        var games = await _reader.GetGamesByName(pattern, start, count);
+        _logger.Info("Game loaded by name : {arguments}", pattern);
         return games;
     }
 
@@ -248,49 +167,14 @@ public partial class Manager
     /// </summary>
     /// <param name="startDate">Start date of the interval</param>
     /// <param name="endDate">End date of the interval</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page,
-        int pageSize)
-    { 
-        var games = await _dataManager.LoadGameByDateInterval(startDate, endDate, page, pageSize);
+    public async Task<IEnumerable<Game>?> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int start,
+        int count)
+    {
+        var games = await _reader.GetGamesByDate(startDate, endDate, start, count);
         _logger.Info("Game loaded by date interval : {arguments} {arguments}", startDate, endDate);
-        return games;
-    }
-
-    /// <summary>
-    /// Method to load games by an interval of dates and a group
-    /// </summary>
-    /// <param name="startDate">Start date of the interval</param>
-    /// <param name="endDate">End date of the interval</param>
-    /// <param name="group">Group to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,
-        Group group, int page,
-        int pageSize)
-    {
-        var games = await _dataManager.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize);
-        _logger.Info("Game loaded by date interval and group : {arguments} {arguments} {arguments}", group.ToString(), startDate, endDate);
-        return games;
-    }
-
-    /// <summary>
-    /// Method to load games by an interval of dates and a player
-    /// </summary>
-    /// <param name="startDate">Start date of the interval</param>
-    /// <param name="endDate">End date of the interval</param>
-    /// <param name="player">Player to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,
-        Player player, int page, int pageSize)
-    {
-        var games = await _dataManager.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize);
-        _logger.Info("Game loaded by date interval and player : {arguments} {arguments} {arguments}", player.ToString(), startDate, endDate);
         return games;
     }
 
@@ -298,44 +182,30 @@ public partial class Manager
     /// Method to load games by player
     /// </summary>
     /// <param name="player">Player to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByPlayer(Player player, int page, int pageSize)
+    public async Task<IEnumerable<Game>?> LoadGameByPlayer(Player player, int start, int count)
     {
-        var games = await _dataManager.LoadGameByPlayer(player, page, pageSize);
+        var games = await _reader.GetGamesByPlayer(player.Id, start, count);
         _logger.Info("Game loaded by player : {arguments}", player.ToString());
-        return games;
-    }
-
-    /// <summary>
-    /// Method to load games by a group
-    /// </summary>
-    /// <param name="group">Group to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadGameByGroup(Group group, int page, int pageSize)
-    {
-        var games = await _dataManager.LoadGameByGroup(group, page, pageSize);
-        _logger.Info("Game loaded by group : {arguments}", group.ToString());
         return games;
     }
 
     /// <summary>
     /// Method to load all games
     /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"> Number of the page to load</param>
+    /// <param name="count">Size of the page</param>
     /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>?> LoadAllGames(int page, int pageSize)
+    public async Task<IEnumerable<Game>?> LoadAllGames(int start, int count)
     {
-        var games = await _dataManager.LoadAllGames(page, pageSize);
+        var games = await _reader.GetGames(start, count);
         _logger.Info("All games loaded");
         return games;
     }
     /*========== End game ==========*/
-    
+
 
     /*========== Group ==========*/
     /// <summary>
@@ -344,7 +214,7 @@ public partial class Manager
     /// <param name="group">Group to register</param>
     public async Task<Group?> SaveGroup(Group group)
     {
-        var groupSave = await _dataManager.SaveGroup(group);
+        var groupSave = await _writer.SaveGroup(group);
         _logger.Info("Group saved : {arguments}", group.ToString());
         return groupSave;
     }
@@ -353,10 +223,12 @@ public partial class Manager
     /// Method to load a group by name
     /// </summary>
     /// <param name="name">Name to search</param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>A group</returns>
-    public async Task<Group?> LoadGroupsByName(string name)
+    public async Task<IEnumerable<Group>> LoadGroupsByName(string name, int start, int count)
     {
-        var group = await _dataManager.LoadGroupsByName(name);
+        var group = await _reader.GetGroupsByName(name, start, count);
         _logger.Info("Group loaded by name : {arguments}", name);
         return group;
     }
@@ -364,12 +236,12 @@ public partial class Manager
     /// <summary>
     /// Method to load all groups
     /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"> Number of the page to load</param>
+    /// <param name="count">Size of the page</param>
     /// <returns>List of groups</returns>
-    public async Task<IEnumerable<Group>?> LoadAllGroups(int page, int pageSize)
+    public async Task<IEnumerable<Group>?> LoadAllGroups(int start, int count)
     {
-        var games = await _dataManager.LoadAllGroups(page, pageSize);
+        var games = await _reader.GetGroups(start, count);
         _logger.Info("All groups loaded");
         return games;
     }
@@ -378,12 +250,12 @@ public partial class Manager
     /// Method to load a group by player
     /// </summary>
     /// <param name="player">Player to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
+    /// <param name="start"> Number of the page to load</param>
+    /// <param name="count">Size of the page</param>
     /// <returns>List of groups</returns>
-    public async Task<IEnumerable<Group>?> LoadGroupsByPlayer(Player player, int page, int pageSize)
+    public async Task<IEnumerable<Group>?> LoadGroupsByPlayer(Player player, int start, int count)
     {
-        var groups = await _dataManager.LoadGroupsByPlayer(player, page, pageSize);
+        var groups = await _reader.GetGroupsByPlayer(player.Id, start, count);
         _logger.Info("Groups loaded by player : {arguments}", player.ToString());
         return groups;
     }
@@ -416,12 +288,12 @@ public partial class Manager
     /// Method to load hands by game
     /// </summary>
     /// <param name="game"></param>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
+    /// <param name="start"></param>
+    /// <param name="count"></param>
     /// <returns>List of hands</returns>
-    public async Task<IEnumerable<KeyValuePair<int, Hand>>?> LoadHandByGame(Game game, int page, int pageSize)
+    public async Task<IEnumerable<KeyValuePair<int, Hand>>?> LoadHandByGame(Game game, int start, int count)
     {
-        var hands = await _dataManager.LoadHandByGame(game, page, pageSize);
+        var hands = await _reader.GetHandsByGame(game.Id, start, count);
         _logger.Info("Hands loaded by game : {arguments}", game.ToString());
         return hands;
     }
