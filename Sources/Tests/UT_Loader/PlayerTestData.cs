@@ -12,7 +12,7 @@ internal static class PlayerTestData
         {
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 1,
                 10,
                 new Player[]
@@ -31,7 +31,7 @@ internal static class PlayerTestData
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 2,
                 10,
                 new[]
@@ -46,7 +46,7 @@ internal static class PlayerTestData
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 2,
                 4,
                 new Player[]
@@ -59,7 +59,7 @@ internal static class PlayerTestData
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 1,
                 4,
                 new Player[]
@@ -72,21 +72,21 @@ internal static class PlayerTestData
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 0,
                 10,
                 Array.Empty<Player>()
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 0,
                 0,
                 Array.Empty<Player>()
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 2,
                 0,
                 Array.Empty<Player>()
@@ -100,19 +100,19 @@ internal static class PlayerTestData
         {
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 1UL,
                 new Player(1, "Jean", "BON", "JEBO", "avatar1")
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 0UL,
                 null
             };
             yield return new object?[]
             {
-                loader,
+                loader.Get(),
                 55UL,
                 null
             };
@@ -125,7 +125,7 @@ internal static class PlayerTestData
         {
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "Jea",
                 1,
                 10,
@@ -139,7 +139,7 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "Toto",
                 1,
                 10,
@@ -147,7 +147,7 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "Toto",
                 2,
                 10,
@@ -155,7 +155,7 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "Jea",
                 2,
                 10,
@@ -163,7 +163,7 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "",
                 1,
                 10,
@@ -183,7 +183,22 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
+                "M",
+                1,
+                10,
+                new Player[]
+                {
+                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                    new("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                    new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                    new("Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                    new("Marine", "TABLETTE", "LOLO", "avatar14")
+                }
+            };
+            yield return new object[]
+            {
+                loader.Get(),
                 "Jea",
                 0,
                 10,
@@ -191,7 +206,7 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "Jea",
                 2,
                 0,
@@ -199,136 +214,11 @@ internal static class PlayerTestData
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "Jea",
                 0,
                 0,
                 Array.Empty<Player>()
-            };
-        }
-    }
-
-    public static IEnumerable<object[]> Data_TestPlayersByLastName()
-    {
-        foreach (var loader in Loaders)
-        {
-            yield return new object[]
-            {
-                loader,
-                "BON",
-                new Player[]
-                {
-                    new("Jean", "BON", "JEBO", "avatar1")
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "PETIT",
-                new Player[]
-                {
-                    new("Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new("Anne", "PETIT", "FRIPOUILLES", "avatar13")
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "GOL",
-                Array.Empty<Player>(),
-                0,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "TABLETTE",
-                Array.Empty<Player>(),
-                1,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "LE CHANTEUR",
-                Array.Empty<Player>(),
-                0,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "",
-                Array.Empty<Player>(),
-                1,
-                10
-            };
-        }
-    }
-
-    public static IEnumerable<object[]> Data_TestPlayersByFirstName()
-    {
-        foreach (var loader in Loaders)
-        {
-            yield return new object[]
-            {
-                loader,
-                "Jean",
-                new Player[]
-                {
-                    new("Jean", "BON", "JEBO", "avatar1"),
-                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
-                    new("Jean", "MOYEN", "KIKOU7", "avatar3")
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "Simon",
-                new Player[]
-                {
-                    new("Simon", "SEBAT", "SEBATA", "avatar7")
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "Samuel",
-                Array.Empty<Player>(),
-                0,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "Marine",
-                Array.Empty<Player>(),
-                1,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "Alizee",
-                Array.Empty<Player>(),
-                0,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "",
-                Array.Empty<Player>(),
-                1,
-                10
             };
         }
     }
@@ -339,57 +229,78 @@ internal static class PlayerTestData
         {
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "JEBO",
+                1,
+                10,
                 new Player[]
                 {
                     new("Jean", "BON", "JEBO", "avatar1")
-                },
-                1,
-                10
+                }
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "THEGIANT",
+                1,
+                10,
                 new Player[]
                 {
                     new("Julien", "PETIT", "THEGIANT", "avatar6"),
-                },
+                    new("Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"),
+                }
+            };
+            yield return new object[]
+            {
+                loader.Get(),
+                "TOTO",
                 1,
-                10
+                10,
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
-                "JEMAA",
-                Array.Empty<Player>(),
+                loader.Get(),
+                "JEMA",
                 0,
-                10
+                10,
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "KIKOU7",
-                Array.Empty<Player>(),
                 1,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "LOLO",
-                Array.Empty<Player>(),
                 0,
-                0
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
+                "LOLO",
+                0,
+                0,
+                Array.Empty<Player>()
+            };
+            yield return new object[]
+            {
+                loader.Get(),
                 "",
-                Array.Empty<Player>(),
                 1,
-                10
+                10,
+                new Player[]
+                {
+                    new("Jean", "BON", "JEBO", "avatar1"),
+                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                    new("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                    new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                    new("Albert", "GOL", "LOLA", "avatar5"),
+                    new("Julien", "PETIT", "THEGIANT", "avatar6"),
+                    new("Simon", "SEBAT", "SEBATA", "avatar7"),
+                    new("Jordan", "LEG", "BIGBRAIN", "avatar8"),
+                    new("Samuel", "LE CHANTEUR", "LOL", "avatar9"),
+                    new("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10")
+                }
             };
         }
     }
@@ -400,224 +311,83 @@ internal static class PlayerTestData
         {
             yield return new object[]
             {
-                loader,
-                "Jean",
-                "BON",
+                loader.Get(),
+                "Je",
+                1,
+                10,
                 new Player[]
                 {
-                    new("Jean", "BON", "JEBO", "avatar1")
-                },
-                1,
-                10
+                    new("Jean", "BON", "JEBO", "avatar1"),
+                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                    new("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                    new("Jeanne", "LERICHE", "JEMAA", "avatar11")
+                }
             };
             yield return new object[]
             {
-                loader,
-                "Julien",
-                "PETIT",
-                new Player[]
-                {
-                    new("Julien", "PETIT", "THEGIANT", "avatar6"),
-                },
-                1,
-                10
+                loader.Get(),
+                "Je",
+                2,
+                10,
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
+                "M",
+                1,
+                10,
+                new Player[]
+                {
+                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                    new("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                    new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                    new("Marine", "TABLETTE", "LOLO", "avatar14")
+                }
+            };
+            yield return new object[]
+            {
+                loader.Get(),
                 "Jeanne",
-                "LERICHE",
-                Array.Empty<Player>(),
                 0,
-                10
+                10,
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
-                "Eliaz",
-                "DU JARDIN",
-                Array.Empty<Player>(),
-                1,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "Simon",
-                "SEBAT",
-                Array.Empty<Player>(),
-                0,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "",
-                "SEBAT",
-                Array.Empty<Player>(),
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "Alizee",
-                "",
-                Array.Empty<Player>(),
-                1,
-                10
-            };
-        }
-    }
-
-    public static IEnumerable<object[]> Data_TestPlayerByFirstNameAndNickname()
-    {
-        foreach (var loader in Loaders)
-        {
-            yield return new object[]
-            {
-                loader,
-                "Jean",
-                "JEBO",
-                new Player[]
-                {
-                    new("Jean", "BON", "JEBO", "avatar1")
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "Julien",
-                "THEGIANT",
-                new Player[]
-                {
-                    new("Julien", "PETIT", "THEGIANT", "avatar6"),
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
+                loader.Get(),
                 "Jeanne",
-                "JEMAA",
-                Array.Empty<Player>(),
+                1,
                 0,
-                10
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
-                "Eliaz",
-                "THEGIANTE",
-                Array.Empty<Player>(),
-                1,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "Simon",
-                "SEBATA",
-                Array.Empty<Player>(),
+                loader.Get(),
+                "Jeanne",
                 0,
-                0
+                0,
+                Array.Empty<Player>()
             };
             yield return new object[]
             {
-                loader,
+                loader.Get(),
                 "",
-                "SEBAT",
-                Array.Empty<Player>(),
                 1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "Alizee",
-                "",
-                Array.Empty<Player>(),
-                1,
-                10
-            };
-        }
-    }
-
-    public static IEnumerable<object[]> Data_TestPlayerByLastNameAndNickname()
-    {
-        foreach (var loader in Loaders)
-        {
-            yield return new object[]
-            {
-                loader,
-                "BON",
-                "JEBO",
+                10,
                 new Player[]
                 {
-                    new("Jean", "BON", "JEBO", "avatar1")
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "PETIT",
-                "THEGIANT",
-                new Player[]
-                {
+                    new("Jean", "BON", "JEBO", "avatar1"),
+                    new("Jean", "MAUVAIS", "JEMA", "avatar2"),
+                    new("Jean", "MOYEN", "KIKOU7", "avatar3"),
+                    new("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
+                    new("Albert", "GOL", "LOLA", "avatar5"),
                     new("Julien", "PETIT", "THEGIANT", "avatar6"),
-                },
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "LERICHE",
-                "JEMAA",
-                Array.Empty<Player>(),
-                0,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "DU JARDIN",
-                "THEGIANTE",
-                Array.Empty<Player>(),
-                1,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "SEBAT",
-                "SEBATA",
-                Array.Empty<Player>(),
-                0,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                "",
-                "SEBAT",
-                Array.Empty<Player>(),
-                1,
-                10
-            };
-            yield return new object[]
-            {
-                loader,
-                "SEBAT",
-                "",
-                Array.Empty<Player>(),
-                1,
-                10
+                    new("Simon", "SEBAT", "SEBATA", "avatar7"),
+                    new("Jordan", "LEG", "BIGBRAIN", "avatar8"),
+                    new("Samuel", "LE CHANTEUR", "LOL", "avatar9"),
+                    new("Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10")
+                }
             };
         }
     }
@@ -628,14 +398,8 @@ internal static class PlayerTestData
         {
             yield return new object[]
             {
-                loader,
-                new Group(1UL, "Group 1",
-                    new Player(1UL, "Jean", "BON", "JEBO", "avatar1"),
-                    new Player(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5")
-                ),
+                loader.Get(),
+                1UL,
                 new Player[]
                 {
                     new(1UL, "Jean", "BON", "JEBO", "avatar1"),
@@ -644,126 +408,12 @@ internal static class PlayerTestData
                     new(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
                     new(5UL, "Albert", "GOL", "LOLA", "avatar5")
                 },
-                1,
-                10
             };
             yield return new object[]
             {
-                loader,
-                new Group(1UL, "Group 1",
-                    new Player(1UL, "Jean", "BON", "JEBO", "avatar1"),
-                    new Player(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5")
-                ),
-                new Player[]
-                {
-                    new(1UL, "Jean", "BON", "JEBO", "avatar1"),
-                    new(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
-                    new(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4")
-                },
-                1,
-                4
-            };
-            yield return new object[]
-            {
-                loader,
-                new Group(1UL, "Group 1",
-                    new Player(1UL, "Jean", "BON", "JEBO", "avatar1"),
-                    new Player(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5")
-                ),
-                new Player[]
-                {
-                    new(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new(5UL, "Albert", "GOL", "LOLA", "avatar5")
-                },
-                2,
-                3
-            };
-            yield return new object[]
-            {
-                loader,
-                new Group(3UL, "Group 3",
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
-                    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                ),
-                new Player[]
-                {
-                    new(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new(5UL, "Albert", "GOL", "LOLA", "avatar5"),
-                    new(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                },
-                1,
-                5
-            };
-            yield return new object[]
-            {
-                loader,
-                new Group(3UL, "Group 3",
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
-                    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                ),
-                new Player[]
-                {
-                    new(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                },
-                2,
-                4
-            };
-            yield return new object[]
-            {
-                loader,
-                new Group(3UL, "Group 3",
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
-                    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                ),
-                Array.Empty<Player>(),
-                0,
-                1
-            };
-            yield return new object[]
-            {
-                loader,
-                new Group(3UL, "Group 3",
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
-                    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                ),
-                Array.Empty<Player>(),
-                0,
-                0
-            };
-            yield return new object[]
-            {
-                loader,
-                new Group(3UL, "Group 3",
-                    new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"),
-                    new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                    new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
-                    new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
-                    new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7")
-                ),
-                Array.Empty<Player>(),
-                1,
-                0
+                loader.Get(),
+                20UL,
+                Array.Empty<Player>()
             };
         }
     }

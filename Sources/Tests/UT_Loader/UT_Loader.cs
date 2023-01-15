@@ -9,12 +9,12 @@ namespace UT_Loader;
 
 public class UT_Loader
 {
-    /*========== Players test ==========*/
+    /*========== Players ==========*/
     [Theory]
     [MemberData(nameof(PlayerTestData.Data_TestAllPlayers), MemberType = typeof(PlayerTestData))]
-    public async Task TestGetAllPlayer(IReader reader, int page, int pageSize, Player[] players)
+    public async Task TestGetPlayers(IReader reader, int start, int count, Player[] players)
     {
-        var playersFound = (await reader.GetPlayers(page, pageSize)).ToList();
+        var playersFound = (await reader.GetPlayers(start, count)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
         Assert.Equal(playersFound, players);
@@ -26,6 +26,8 @@ public class UT_Loader
     {
         var player = await reader.GetPlayerById(playerId);
         Assert.Equal(expectedPlayer, player);
+
+        reader.Dispose();
     }
 
     [Theory]
@@ -36,85 +38,47 @@ public class UT_Loader
         var foundPlayers = (await reader.GetPlayersByPattern(pattern, start, count)).ToList();
         Assert.Equal(expectedPlayers.Length, foundPlayers.Count);
         Assert.Equal(expectedPlayers, foundPlayers);
+
+        reader.Dispose();
     }
 
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstName), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayersByFirstName(IReader reader, string firstName, Player[] players, int page, int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayerByFirstName(firstName, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayersByLastName), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayerByLastName(IReader reader, string lastName, Player[] players, int page, int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayerByLastName(lastName, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayersByNickname), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayerByNickname(IReader reader, string nickname, Player[] players, int page, int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayerByNickname(nickname, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayerByFirstNameAndLastName(IReader reader, string firstName, string lastName, Player[] players,
-    //     int page,
-    //     int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayerByFirstNameAndNickname), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayerByFirstNameAndNickname(IReader reader, string firstName, string nickname, Player[] players,
-    //     int page,
-    //     int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayerByLastNameAndNickname), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayerByLastNameAndNickname(IReader reader, string lastName, string nickname, Player[] players, int page,
-    //     int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(PlayerTestData.Data_TestPlayersByGroup), MemberType = typeof(PlayerTestData))]
-    // public async Task TestLoadPlayersByGroup(IReader reader, Group group, Player[] players, int page, int pageSize)
-    // {
-    //  var playersFound = (await reader.LoadPlayersByGroup(group, page, pageSize)).ToList();
-    //
-    //     Assert.Equal(playersFound.Count, players.Length);
-    //     Assert.Equal(playersFound, players);
-    // }
-    // /*========== End players test ==========*/
-    //
-    //
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayersByNickname), MemberType = typeof(PlayerTestData))]
+    public async Task TestGetPlayersByNickname(IReader reader, string nickname, int start, int count,
+        Player[] expectedPlayers)
+    {
+        var playersFound = (await reader.GetPlayersByNickname(nickname, start, count)).ToList();
+
+        Assert.Equal(expectedPlayers.Length, playersFound.Count);
+        Assert.Equal(expectedPlayers, playersFound);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
+    public async Task TestGetPlayerByFirstNameAndLastName(IReader reader, string pattern, int start, int count,
+        Player[] expectedPlayers)
+    {
+        var playersFound = (await reader.GetPlayersByFirstNameAndLastName(pattern, start, count)).ToList();
+
+        Assert.Equal(expectedPlayers.Length, playersFound.Count);
+        Assert.Equal(expectedPlayers, playersFound);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(PlayerTestData.Data_TestPlayersByGroup), MemberType = typeof(PlayerTestData))]
+    public async Task TestGetPlayersByGroup(IReader reader, ulong groupId, Player[] expectedPlayers)
+    {
+        var playersFound = (await reader.GetPlayersByGroup(groupId)).ToList();
+
+        Assert.Equal(expectedPlayers.Length, playersFound.Count);
+        Assert.Equal(expectedPlayers, playersFound);
+    }
+    /*========== End Players ==========*/
+    
     // /*========== Group test ==========*/
     // [Theory]
     // [MemberData(nameof(GroupTestData.Data_TestGroupsByName), MemberType = typeof(GroupTestData))]

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Model.Players;
-using Model.Data;
-using NLog.Targets.Wrappers;
 using TarotDB;
 
 namespace Tarot2B2Model;
