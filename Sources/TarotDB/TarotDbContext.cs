@@ -5,32 +5,32 @@ namespace TarotDB;
 /// <summary>
 /// Database context of the TarotScoreur app
 /// </summary>
-internal class TarotDbContext : DbContext
+public class TarotDbContext : DbContext
 {
     /// <summary>
     /// Table of Players
     /// </summary>
-    public DbSet<PlayerEntity> Players { get; set; } = null!;
+    internal DbSet<PlayerEntity> Players { get; set; } = null!;
 
     /// <summary>
     /// Table of Users
     /// </summary>
-    public DbSet<UserEntity> Users { get; set; } = null!;
+    internal DbSet<UserEntity> Users { get; set; } = null!;
 
     /// <summary>
     /// Table of Groups
     /// </summary>
-    public DbSet<GroupEntity> Groups { get; set; } = null!;
+    internal DbSet<GroupEntity> Groups { get; set; } = null!;
 
     /// <summary>
     /// Table of Games
     /// </summary>
-    public DbSet<GameEntity> Games { get; set; } = null!;
+    internal DbSet<GameEntity> Games { get; set; } = null!;
 
     /// <summary>
     /// Table of Hands
     /// </summary>
-    public DbSet<HandEntity> Hands { get; set; } = null!;
+    internal DbSet<HandEntity> Hands { get; set; } = null!;
 
     /// <summary>
     /// Default constructor

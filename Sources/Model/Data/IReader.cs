@@ -3,7 +3,7 @@ using Model.Players;
 
 namespace Model.Data;
 
-public partial interface IReader
+public partial interface IReader: IDisposable
 {
     /*========== Hands ==========*/
 

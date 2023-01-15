@@ -1,6 +1,6 @@
 ﻿namespace Tarot2B2Model;
 
-internal interface IUnitOfWork : IDisposable
+public interface IUnitOfWork : IDisposable
 {
 	/// <summary>
 	/// Return the repository for the specified type

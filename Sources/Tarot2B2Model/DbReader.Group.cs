@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Model.Players;
+using TarotDB;
 
 namespace Tarot2B2Model;
 
@@ -9,21 +10,17 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Group>());
 
-        await using var context = GetContext();
-        return context.Groups
-            .Skip((start - 1) * count)
+        return Set<GroupEntity>()
+            .Paginate(start, count)
             .Include(g => g.Players)
-            .Take(count)
-            .AsEnumerable()
             .ToModels();
     }
 
     public async Task<Group?> GetGroupById(ulong groupId)
     {
-        await using var context = GetContext();
-        return context.Groups
-            .Include(g => g.Players)
-            .FirstOrDefault(g => g.Id == groupId)
+        return (await Set<GroupEntity>()
+                .Include(g => g.Players)
+                .FirstOrDefaultAsync(g => g.Id == groupId))
             ?.ToModel();
     }
 
@@ -31,12 +28,10 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Group>());
 
-        await using var context = GetContext();
-        return context.Groups
+        return Set<GroupEntity>()
             .Where(g => g.Name.Contains(pattern))
-            .Skip((start - 1) * count)
+            .Paginate(start, count)
             .Include(g => g.Players)
-            .Take(count)
             .AsEnumerable()
             .ToModels();
     }
@@ -45,12 +40,11 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Group>());
 
-        await using var context = GetContext();
-        return context.Players
+        return (await Set<PlayerEntity>()
                    .Include(p => p.Groups)
-                   .FirstOrDefault(p => p.Id == playerId)
-                   ?.Groups
-                   .ToModels()
+                   .FirstOrDefaultAsync(p => p.Id == playerId))
+               ?.Groups
+               .ToModels()
                ?? new List<Group>();
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Model.Games;
+using TarotDB;
 
 namespace Tarot2B2Model;
 
@@ -9,30 +10,29 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Game>());
 
-        await using var context = GetContext();
-        return context.Games
-            .Skip((start - 1) * count)
-            .Include(g => g.Players)
-            .Include(g => g.Hands)
-            .Take(count)
-            .AsEnumerable()
-            .ToModels();
+        Mapper.Reset();
+        return (await _unitOfWork.Repository<GameEntity>().GetItems(start, count)).ToModels();
     }
 
     public async Task<Game?> GetGameById(ulong gameId)
     {
-        await using var context = GetContext();
-        return context.Games.FirstOrDefault(g => g.Id == gameId)?.ToModel();
+        Mapper.Reset();
+        return (await Set<GameEntity>()
+                .Include(g => g.Players)
+                .Include(g => g.Hands)
+                .FirstOrDefaultAsync(g => g.Id == gameId))
+            ?.ToModel();
     }
 
     public async Task<IEnumerable<Game>> GetGamesByName(string pattern, int start, int count)
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Game>());
 
-        await using var context = GetContext();
-        return context.Games
+        Mapper.Reset();
+        return Set<GameEntity>()
             .Where(g => g.Name.Contains(pattern))
             .Paginate(start, count)
+            .AsEnumerable()
             .ToModels();
     }
 
@@ -40,8 +40,8 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Game>());
 
-        await using var context = GetContext();
-        return context.Players
+        Mapper.Reset();
+        return Set<PlayerEntity>()
                    .Include(p => p.Games)
                    .FirstOrDefault(p => p.Id == playerId)
                    ?.Games
@@ -54,11 +54,12 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Game>());
 
-        await using var context = GetContext();
-        return context.Games
+        Mapper.Reset();
+        return Set<GameEntity>()
             .Where(g => g.StartDate.CompareTo(startDate) >= 0
                         && endDate.CompareTo(g.EndDate) >= 0)
             .Paginate(start, count)
+            .AsEnumerable()
             .ToModels();
     }
 }

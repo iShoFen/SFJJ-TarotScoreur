@@ -1,23 +1,23 @@
 using Microsoft.EntityFrameworkCore;
-using TarotDB;
 
 namespace Tarot2B2Model;
 
-internal class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
 	/// <summary>
 	/// The database context
 	/// </summary>
-	private readonly TarotDbContext _dbContext;
+	private readonly DbContext _dbContext;
 
 	/// <summary>
 	/// Initializes a new instance of UnitOfWork
 	/// </summary>
 	/// <param name="dbContext"> The DbContext to use </param>
 	/// <param name="noTracking"> Whether to use NoTracking queries </param>
-	public UnitOfWork(TarotDbContext dbContext, bool noTracking = true)
+	public UnitOfWork(DbContext dbContext, bool noTracking = true)
 	{
 		_dbContext = dbContext;
+		_dbContext.Database.EnsureCreated();
 		
 		if (noTracking) _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 	}
@@ -68,7 +68,7 @@ internal class UnitOfWork : IUnitOfWork
 	{
 		if (disposing)
 		{
-			_dbContext?.Dispose();
+			_dbContext.Dispose();
 		}
 	}
 }
