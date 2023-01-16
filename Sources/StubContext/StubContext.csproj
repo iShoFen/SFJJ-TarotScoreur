@@ -24,5 +24,6 @@
         <InternalsVisibleTo Include="UT_Saver" />
         <InternalsVisibleTo Include="TestUtils" />
         <InternalsVisibleTo Include="UT_Model" />
+        <InternalsVisibleTo Include="RestController" />
     </ItemGroup>
 </Project>
