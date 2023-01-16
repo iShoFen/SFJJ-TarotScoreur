@@ -15,7 +15,7 @@ internal class DbReaderForTest: IReaderForTest
     public IReader Get() => new DbReader(new UnitOfWork(new TarotDbContextStub(TestInitializer.InitDb())));
 }
 
-// internal class StubForTest : IReaderForTest
-// {
-    // public IReader Get() => new Stub();
-// }
+internal class StubForTest : IReaderForTest
+{
+    public IReader Get() => new Stub();
+}

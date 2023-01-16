@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Model.Players;
 using TarotDB;
+using Utils;
 
 namespace Tarot2B2Model;
 

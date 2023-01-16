@@ -13,6 +13,7 @@
         <InternalsVisibleTo Include="UT_Tarot2B2Model" />
         <InternalsVisibleTo Include="UT_Saver" />
         <InternalsVisibleTo Include="UT_Model" />
+        <ProjectReference Include="..\Utils\Utils.csproj" />
     </ItemGroup>
 
 </Project>

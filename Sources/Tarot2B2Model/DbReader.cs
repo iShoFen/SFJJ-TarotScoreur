@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Model.Data;
 using Model.Games;
 using TarotDB;
+using Utils;
 
 namespace Tarot2B2Model;
 

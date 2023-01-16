@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Model.Players;
+﻿using Model.Players;
 using static TestUtils.DataManagers;
 
 namespace UT_Loader;
