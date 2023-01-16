@@ -1,3 +1,4 @@
+using DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Model.Players;
@@ -9,27 +10,56 @@ namespace RestController.Controllers;
 
 [Route("user/")]
 [ApiController]
-public class UserController
+public class UserController : ControllerBase
 {
-    private TarotDbContext _context;
+    private readonly TarotDbContext _context;
     public UserController(TarotDbContext context)
     {
         _context = context;
+
     }
 
     [HttpGet]
-    public async Task<IEnumerable<User>> GetAllUser()
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
     {
-        var userEntities = _context.Users.ToList();
-        var users = userEntities.ToModels();
-        return users;
+        return await _context.Users
+            .Select(x => UserToDTO(x.ToModel()))
+            .ToListAsync();
 
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(ulong id)
+    [ActionName(nameof(GetUser))]
+    public async Task<ActionResult<UserDTO>> GetUser(ulong id)
     {
         var userEntity = _context.Users.FindAsync(id);
-        return userEntity.Result!.ToModel();
+        return UserToDTO(userEntity.Result.ToModel());
     }
+
+    [HttpPost]
+    public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDto)
+    {
+        var user = new User(userDto.FirstName, userDto.LastName, userDto.Nickname, userDto.Avatar, "email", "password");
+        _context.Users.Add(user.ToEntity());
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(
+            nameof(GetUser),
+            new { id = user.Id },
+            UserToDTO(user));
+
+    }
+
+
+
+    private static UserDTO UserToDTO(User user) =>
+        new ()
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Nickname = user.NickName,
+            Avatar = user.Avatar,
+            Email = user.Email
+        };
 }
