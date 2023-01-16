@@ -2,7 +2,7 @@ namespace UT_Tarot2B2Model;
 
 public class TestEntity
 {
-	public long Id { get; set; }
+	public ulong Id { get; set; }
 	public string Name { get; set; } = null!;
 	public string Description { get; set; } = null!;
 	public DateTime Created { get; set; }

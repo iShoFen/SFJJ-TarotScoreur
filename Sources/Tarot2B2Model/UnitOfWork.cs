@@ -68,7 +68,7 @@ internal class UnitOfWork : IUnitOfWork
 	{
 		if (disposing)
 		{
-			_dbContext?.Dispose();
+			_dbContext.Dispose();
 		}
 	}
 }

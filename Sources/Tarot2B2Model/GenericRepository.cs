@@ -62,7 +62,6 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TE
 	public virtual async Task<bool> Delete(TEntity item)
 	{
 		await Task.Run(() => _dbSet.Remove(item));
-
 		return true;
 	}
 
@@ -71,12 +70,12 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TE
 
 
 	public virtual async Task<IEnumerable<TEntity>> GetItems(int start, int count)
-		=> start <= 0 && count <= 0
+		=> start <= 0 || count <= 0
 			? await Task.Run(Enumerable.Empty<TEntity>)
 			: await _dbSet.Skip((start - 1) * count).Take(count).ToListAsync();
 
 	public virtual async Task Clear()
-		=> await Task.Run(() => _dbSet.RemoveRange(_dbSet));
+		=> await _dbSet.ForEachAsync(item => _dbSet.Remove(item));
 
 	public virtual async Task<int> Count()
 		=> await _dbSet.CountAsync();
