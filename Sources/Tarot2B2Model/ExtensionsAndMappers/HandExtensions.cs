@@ -1,5 +1,6 @@
 using Model.Games;
 using Model.Rules;
+using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB;
 using static Tarot2B2Model.Mapper;
 

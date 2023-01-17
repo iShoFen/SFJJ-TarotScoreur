@@ -1,7 +1,7 @@
 using Model.Enums;
 using TarotDB.Enums;
 
-namespace Tarot2B2Model;
+namespace Tarot2B2Model.ExtensionsAndMappers;
 
 /// <summary>
 /// A static class to hold all extension methods for the enums in the model
