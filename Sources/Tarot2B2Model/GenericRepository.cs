@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using TarotDB;
+using Utils;
 
 namespace Tarot2B2Model;
 
@@ -73,7 +74,7 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TE
     public virtual async Task<IEnumerable<TEntity>> GetItems(int start, int count)
         => start <= 0 && count <= 0
             ? await Task.Run(Enumerable.Empty<TEntity>)
-            : await _dbSet.Skip((start - 1) * count).Take(count).ToListAsync();
+            : await _dbSet.PaginateAsync(start, count);
 
     public virtual async Task Clear()
         => await Task.Run(() => _dbSet.RemoveRange(_dbSet));

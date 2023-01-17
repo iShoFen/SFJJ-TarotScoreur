@@ -60,16 +60,11 @@ public partial class Stub : IReader
         _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], new DateTime(2022, 09, 21), null));
         _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], new DateTime(2022, 09, 21), null));
         _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], new DateTime(2022, 09, 21), null));
-        _gameList.Add(new Game(6UL, "Game 6", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
-        _gameList.Add(new Game(7UL, "Game 7", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
-        _gameList.Add(new Game(8UL, "Game 8", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
-        _gameList.Add(new Game(9UL, "Game 9", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
-        _gameList.Add(new Game(10UL, "Game 10", _rulesList[0],
-            new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
+        _gameList.Add(new Game(6UL, "Game 6", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
+        _gameList.Add(new Game(7UL, "Game 7", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
+        _gameList.Add(new Game(8UL, "Game 8", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
+        _gameList.Add(new Game(9UL, "Game 9", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
+        _gameList.Add(new Game(10UL, "Game 10", _rulesList[0],new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
 
         _gameList[0].AddPlayer(_playerList[0]);
         _gameList[0].AddPlayer(_playerList[1]);
