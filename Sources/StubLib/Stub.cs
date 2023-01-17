@@ -398,18 +398,8 @@ public partial class Stub : IReader
         _gameList[9].AddHand(_handList[30]);
         _gameList[9].AddHand(_handList[31]);
     }
-
-    public async Task<IEnumerable<KeyValuePair<int, Hand>>> GetHandsByGame(ulong gameId, int start, int count)
-    {
-        if (start == 0 || count == 0) return new List<KeyValuePair<int, Hand>>();
-        return await Task.FromResult(
-            _gameList.FirstOrDefault(g => g.Id == gameId)
-                ?.Hands
-                .AsEnumerable()
-                .Paginate(start, count)
-            ?? new List<KeyValuePair<int, Hand>>()
-        );
-    }
+    
+    // add a get Hand by Id method
 
     public void Dispose()
     {

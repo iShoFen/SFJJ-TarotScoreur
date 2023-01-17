@@ -41,11 +41,11 @@ public partial class DbReader
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Group>());
 
-        return (await Set<PlayerEntity>()
-                   .Include(p => p.Groups)
-                   .FirstOrDefaultAsync(p => p.Id == playerId))
-               ?.Groups
-               .ToModels()
-               ?? new List<Group>();
+        return (await Set<GroupEntity>()
+		        .Where(g => g.Players.Any(p => p.Id == playerId))
+		        .Paginate(start, count)	                
+		        .Include(g => g.Players)
+		        .ToListAsync())
+	        .ToModels();
     }
 }

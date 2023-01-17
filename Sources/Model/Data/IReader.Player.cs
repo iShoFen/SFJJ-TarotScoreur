@@ -45,11 +45,4 @@ public partial interface IReader
     /// <param name="count">Number of players to return</param>
     /// <returns>List of players filtered with the pattern and pagination</returns>
     Task<IEnumerable<Player>> GetPlayersByFirstNameAndLastName(string pattern, int start, int count);
-
-    /// <summary>
-    /// Get players in the group of the id parameter.
-    /// </summary>
-    /// <param name="groupId">Id of the group</param>
-    /// <returns>List of players in the group</returns>
-    Task<IEnumerable<Player>> GetPlayersByGroup(ulong groupId);
 }

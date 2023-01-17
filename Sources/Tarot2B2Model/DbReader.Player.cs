@@ -63,15 +63,4 @@ public partial class DbReader
             .AsEnumerable()
             .ToModels();
     }
-
-    public async Task<IEnumerable<Player>> GetPlayersByGroup(ulong groupId)
-    {
-        Mapper.Reset();
-        return (await Set<GroupEntity>()
-                   .Include(g => g.Players)
-                   .FirstOrDefaultAsync(g => g.Id == groupId))
-               ?.Players
-               .ToModels()
-               ?? new List<Player>();
-    }
 }

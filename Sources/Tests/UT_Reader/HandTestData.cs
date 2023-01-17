@@ -4,7 +4,7 @@ using Model.Games;
 using Model.Players;
 using static TestUtils.DataManagers;
 
-namespace UT_Loader;
+namespace UT_Reader;
 
 public static class HandTestData
 {
