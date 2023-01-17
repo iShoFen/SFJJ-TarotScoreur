@@ -1,116 +1,37 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Model.Players;
-using Model.Data;
-using Model.Games;
-using TarotDB;
+﻿using Model.Data;
 
 namespace Tarot2B2Model;
 
 /// <summary>
 /// The database Loader manager
 /// </summary>
-public class DbWriter : IWriter
+public partial class DbWriter : IWriter
 {
-	/// <summary>
-	/// The options for the database
-	/// </summary>
-	internal readonly DbContextOptions<TarotDbContext> Options;
-	
-	/// <summary>
-	/// The type of the database context
-	/// </summary>
-	internal readonly Type DbContextType;
-
-	/// <summary>
-	/// Default constructor
-	/// </summary>
-    public DbWriter() : this(typeof(TarotDbContext), @"Data Source=TarotScoreur.db")
-    {
-    }
-    
-	/// <summary>
-	/// Constructor type and connection string
-	/// </summary>
-	/// <param name="contextType"> The type of the database context</param>
-	/// <param name="connectionString"> The connection string</param>
-    public DbWriter(Type contextType, string connectionString)
-    {
-        Mapper.Reset();
-
-        var connection = new SqliteConnection(connectionString);
-        connection.Open();
-        Options = new DbContextOptionsBuilder<TarotDbContext>().UseSqlite(connection).Options;
-        DbContextType = contextType;
-
-        var context = InitContext();
-        context.Database.EnsureCreated();
-    }
-	
-	/// <summary>
-	/// Initialize the database context
-	/// </summary>
-	/// <returns> The database context </returns>
-    private TarotDbContext InitContext() => (TarotDbContext)Activator.CreateInstance(DbContextType, Options)!;
+    /// <summary>
+    /// UnitOfWork for processing with data.
+    /// </summary>
+    private IUnitOfWork UnitOfWork { get; }
 
     /// <summary>
-    ///Save a player
+    /// Instantiate a DbWriter with IUnitIOfWork implementation.
     /// </summary>
-    /// <param name="player">Player to register</param>
-    /// <returns>The player saved</returns>
-    public async Task<Player?> SavePlayer(Player player)
+    /// <param name="unitOfWork">Implementation of IUnitOfWork to use</param>
+    public DbWriter(IUnitOfWork unitOfWork)
     {
-	    Mapper.Reset();
-
-        await using var context = InitContext();
-        var playerEntity = player.ToEntity();
-        
-        if (await context.Players.FindAsync(playerEntity.Id) != null || player.Id != 0UL) return null;
-        var result = await context.AddAsync(playerEntity);
-
-        await context.SaveChangesAsync();
-        
-        return result.Entity.ToModel();
+        UnitOfWork = unitOfWork;
     }
 
-    /// <summary>
-    ///Save a game
-    /// </summary>
-    /// <param name="game">Game to register</param>
-    /// <returns>The game saved</returns>
-    public async Task<Game?> SaveGame(Game game)
+    public void Dispose()
     {
-        Mapper.Reset();
-
-        await using var context = InitContext();
-        var gameEntity = game.ToEntity();
-        
-        if (await context.Games.FindAsync(game.Id) != null || game.Id != 0UL) return null;
-        var result = await context.AddAsync(gameEntity);
-
-        await context.SaveChangesAsync();
-        
-        return result.Entity.ToModel();
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    ///Save a group
-    /// </summary>
-    /// <param name="group">Group to register</param>
-    /// <returns>The group saved</returns>
-    public async Task<Group?> SaveGroup(Group group)
+    protected virtual void Dispose(bool disposing)
     {
-        Mapper.Reset();
-
-        await using var context = InitContext();
-        var groupEntity = group.ToEntity();
-        
-        if (await context.Groups.FindAsync(group.Id) != null || group.Id != 0UL) return null;
-        groupEntity.Players = groupEntity.Players.Select(p => context.Players.Find(p.Id)!).ToHashSet();
-        var result = await context.AddAsync(groupEntity);
-
-        await context.SaveChangesAsync();
-        
-        return result.Entity.ToModel();
+        if (disposing)
+        {
+            UnitOfWork.Dispose();
+        }
     }
 }

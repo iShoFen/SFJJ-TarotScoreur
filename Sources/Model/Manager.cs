@@ -67,7 +67,7 @@ public partial class Manager
     /// <param name="player">Player to register</param>
     public async Task<Player?> SavePlayer(Player player)
     {
-        var playerSaved = await _writer.SavePlayer(player);
+        var playerSaved = await _writer.InsertPlayer(player);
         _logger.Info("Player saved : {arguments}", player.ToString());
         return playerSaved;
     }
@@ -143,7 +143,7 @@ public partial class Manager
     /// <param name="game">Game to register</param>
     public async Task<Game?> SaveGame(Game game)
     {
-        var gameSaved = await _writer.SaveGame(game);
+        var gameSaved = await _writer.InsertGame(game);
         _logger.Info("Game saved : {arguments}", game.ToString());
         return gameSaved;
     }
@@ -214,7 +214,7 @@ public partial class Manager
     /// <param name="group">Group to register</param>
     public async Task<Group?> SaveGroup(Group group)
     {
-        var groupSave = await _writer.SaveGroup(group);
+        var groupSave = await _writer.InsertGroup(group);
         _logger.Info("Group saved : {arguments}", group.ToString());
         return groupSave;
     }

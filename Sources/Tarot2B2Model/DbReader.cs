@@ -8,8 +8,15 @@ namespace Tarot2B2Model;
 
 public partial class DbReader : IReader
 {
+    /// <summary>
+    /// UnitOfWork for processing with data.
+    /// </summary>
     private readonly IUnitOfWork _unitOfWork;
 
+    /// <summary>
+    /// Instantiate a DbReader with IUnitIOfWork implementation.
+    /// </summary>
+    /// <param name="unitOfWork">Implementation of IUnitOfWork to use</param>
     public DbReader(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
@@ -34,8 +41,8 @@ public partial class DbReader : IReader
 
     private IQueryable<TEntity> Set<TEntity>() where TEntity : class => _unitOfWork.Repository<TEntity>().Set;
 
-    private IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class =>
-        _unitOfWork.Repository<TEntity>();
+    private IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class
+        => _unitOfWork.Repository<TEntity>();
 
     public void Dispose()
     {

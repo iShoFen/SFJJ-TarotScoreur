@@ -16,7 +16,7 @@ public class SaverTestData
 
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Player("Pedro", "Machin", "Pema", "avatar28"),
 				new Player(17UL, "Pedro", "Machin", "Pema", "avatar28"),
 				new PlayerEntity
@@ -30,7 +30,7 @@ public class SaverTestData
 			};
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
 				null,
 				new PlayerEntity
@@ -44,7 +44,7 @@ public class SaverTestData
 			};
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Player(17UL, "Pedro", "Machin", "Pema", "avatar28"),
 				null,
 				null
@@ -59,7 +59,7 @@ public class SaverTestData
 
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Group("Group 13"),
 				new Group(13UL, "Group 13"),
 				new GroupEntity
@@ -70,7 +70,7 @@ public class SaverTestData
 			};
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Group(12UL, "Group 12"),
 				null,
 				new GroupEntity
@@ -81,7 +81,7 @@ public class SaverTestData
 			};
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Group(13UL, "Group 13"),
 				null,
 				null
@@ -95,7 +95,7 @@ public class SaverTestData
 		{
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Game("Game 11", new FrenchTarotRules(), new DateTime(2022, 09, 23)),
 				new Game(11UL, "Game 11", new FrenchTarotRules(), new DateTime(2022, 09, 23), null),
 				new GameEntity
@@ -109,7 +109,7 @@ public class SaverTestData
 			};
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Game(10UL, "Game 10", new FrenchTarotRules(), new DateTime(2022, 09, 18), 
 					new DateTime(2022, 09, 23)),
 				null,
@@ -124,7 +124,7 @@ public class SaverTestData
 			};
 			yield return new object?[]
 			{
-				saver,
+				saver.Get(),
 				new Game(11UL,"Game 11", new FrenchTarotRules(), new DateTime(2022, 09, 23), null),
 				null,
 				null

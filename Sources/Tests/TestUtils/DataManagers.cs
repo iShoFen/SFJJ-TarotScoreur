@@ -1,7 +1,3 @@
-using Model.Data;
-using StubContext;
-using Tarot2B2Model;
-
 namespace TestUtils;
 
 internal static class DataManagers
@@ -12,8 +8,8 @@ internal static class DataManagers
         new DbReaderForTest()
     };
 
-    public static readonly IWriter[] Savers =
+    public static readonly IWriterForTest[] Savers =
     {
-        new DbWriter(typeof(TarotDbContextStub), "DataSource=:memory:")
+        new DbWriterForTest()
     };
 }

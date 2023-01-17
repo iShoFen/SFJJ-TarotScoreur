@@ -5,7 +5,8 @@ using TarotDB;
 
 // Création du manager
 Console.WriteLine("Création du manager");
-var manager = new Manager(new DbReader(new UnitOfWork(new TarotDbContext())), new DbWriter());
+var unitOfWork = new UnitOfWork(new TarotDbContext());
+var manager = new Manager(new DbReader(unitOfWork), new DbWriter(unitOfWork));
 
 // Ajout de joueurs
 Console.WriteLine("\nAjout de joueurs");
