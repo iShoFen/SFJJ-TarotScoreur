@@ -8,121 +8,54 @@ namespace UT_Reader;
 
 public static class HandTestData
 {
-    public static IEnumerable<object[]> Data_TestLoadHandByGame()
+    public static IEnumerable<object?[]> Data_TestGetHandById()
     {
-	    foreach (var loader in Loaders)
-	    {
-		    yield return new object[]
-		    {
-			    loader,
-			    new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-			    new List<KeyValuePair<int, Hand>>
-			    {
-				    new(1, new Hand(1UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 210,
-					    false, true, PetitResults.Lost, Chelem.Unknown,
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Biddings.Garde, Poignee.Simple)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(
-						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Biddings.Opponent, Poignee.None)))),
-
-				    new(2, new Hand(2UL, 2, new FrenchTarotRules(), new DateTime(2022, 09, 22), 256,
-					    true, true, PetitResults.Lost, Chelem.AnnouncedSuccess,
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Biddings.Petite, Poignee.Simple)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(
-						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Biddings.Opponent, Poignee.None)))),
-				    new(3, new Hand(3UL, 3, new FrenchTarotRules(), new DateTime(2022, 09, 23), 151,
-					    false, false, PetitResults.Lost, Chelem.Success,
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Biddings.Garde, Poignee.Simple)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(
-						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Biddings.Opponent, Poignee.None))))
-			    },
-			    1,
-			    10
-		    };
-		    yield return new object[]
-		    {
-			    loader,
-			    new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-			    new List<KeyValuePair<int, Hand>>(),
-			    0,
-			    1
-		    };
-		    yield return new object[]
-		    {
-			    loader,
-			    new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-			    new List<KeyValuePair<int, Hand>>(),
-			    1,
-			    0
-		    };
-		    yield return new object[]
-		    {
-			    loader,
-			    new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-			    new List<KeyValuePair<int, Hand>>(),
-			    0,
-			    0
-		    };
-		    yield return new object[]
-		    {
-			    loader,
-			    new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 01), null),
-			    new List<KeyValuePair<int, Hand>>
-			    {
-				    new(1, new Hand(1UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 210,
-					    false, true, PetitResults.Lost, Chelem.Unknown,
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Biddings.Garde, Poignee.Simple)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(
-						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Biddings.Opponent, Poignee.None)))),
-
-				    new(2, new Hand(2UL, 2, new FrenchTarotRules(), new DateTime(2022, 09, 22), 256,
-					    true, true, PetitResults.Lost, Chelem.AnnouncedSuccess,
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-						    (Biddings.Petite, Poignee.Simple)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(
-						    new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-						    (Biddings.Opponent, Poignee.None)),
-					    new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-						    (Biddings.Opponent, Poignee.None))))
-			    },
-			    1,
-			    2
-		    };
-	    }
+        foreach (var loader in Loaders)
+        {
+            yield return new object?[]
+            {
+                loader.Get(),
+                29UL,
+                new Hand(29UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 18), 567,
+                    false, true, PetitResults.LostAuBout, Chelem.Unknown,
+                    KeyValuePair.Create(new Player(9UL, "Samuel", "LE CHANTEUR", "LOL", "avatar9"),
+                        (Biddings.Garde, Poignee.None)),
+                    KeyValuePair.Create(new Player(10UL, "Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"),
+                        (Biddings.Opponent, Poignee.None)),
+                    KeyValuePair.Create(new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                        (Biddings.Opponent, Poignee.None)),
+                    KeyValuePair.Create(new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"),
+                        (Biddings.Opponent, Poignee.None)),
+                    KeyValuePair.Create(new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
+                        (Biddings.King, Poignee.None)))
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                14UL,
+                new Hand(14UL, 2, new FrenchTarotRules(), new DateTime(2022, 09, 21), 567,
+                    false, false, PetitResults.Lost, Chelem.AnnouncedSuccess,
+                    KeyValuePair.Create(new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"),
+                        (Biddings.GardeContreLeChien, Poignee.None)),
+                    KeyValuePair.Create(new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"),
+                        (Biddings.Opponent, Poignee.None)),
+                    KeyValuePair.Create(new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7"),
+                        (Biddings.Opponent, Poignee.None)),
+                    KeyValuePair.Create(new Player(8UL, "Jordan", "LEG", "BIGBRAIN", "avatar8"),
+                        (Biddings.Opponent, Poignee.None)))
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                100UL,
+                null
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                0UL,
+                null
+            };
+        }
     }
 }
