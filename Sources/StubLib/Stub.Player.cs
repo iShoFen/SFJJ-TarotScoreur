@@ -40,13 +40,4 @@ public partial class Stub
                         || p.LastName.Contains(pattern))
             .Paginate(start, count));
     }
-
-    public async Task<IEnumerable<Player>> GetPlayersByGroup(ulong groupId)
-        => await Task.FromResult(
-            _groupList
-                .FirstOrDefault(g => g.Id == groupId)
-                ?.Players
-                .AsEnumerable()
-            ?? new List<Player>()
-        );
 }

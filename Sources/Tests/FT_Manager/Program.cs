@@ -55,16 +55,12 @@ Console.WriteLine("\nRecherche des 20 groupes de la page 1");
 var groups = await manager.LoadAllGroups(1, 20);
 if (groups != null)
 {
-    foreach (var group in groups)
-    {
-        Console.WriteLine($"{group.Name} ({group.Id})");
-        var groupPlayers = await manager.LoadPlayersByGroup(group);
-        if (groupPlayers != null)
-        {
-            foreach (var groupPlayer in groupPlayers)
-            {
-                Console.WriteLine($"\t{groupPlayer}");
-            }
-        }
-    }
+	foreach (var group in groups)
+	{
+		Console.WriteLine($"{group.Name} ({group.Id})");
+		foreach (var player in group.Players)
+		{
+			Console.WriteLine($"\t{player}");
+		}
+	}
 }

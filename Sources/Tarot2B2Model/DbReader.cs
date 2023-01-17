@@ -15,23 +15,6 @@ public partial class DbReader : IReader
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<KeyValuePair<int, Hand>>> GetHandsByGame(ulong gameId, int start, int count)
-    {
-        if (start <= 0 || count <= 0) return await Task.FromResult(new List<KeyValuePair<int, Hand>>());
-
-        Mapper.Reset();
-
-        return (Set<GameEntity>()
-                    .Where(g => g.Id == gameId)
-                    .Include(g => g.Hands)
-                    .FirstOrDefault()
-                    ?.Hands
-                ?? new List<HandEntity>())
-            .Paginate(start, count)
-            .ToModels()
-            .ToDictionary(h => h.Number);
-    }
-
     private IQueryable<TEntity> Set<TEntity>() where TEntity : class => _unitOfWork.Repository<TEntity>().Set;
 
     private IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class =>

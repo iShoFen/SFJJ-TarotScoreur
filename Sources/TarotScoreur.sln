@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StubContext", "StubContext\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUtils", "Tests\TestUtils\TestUtils.csproj", "{ED5CD102-998D-4260-8D47-352E33B55303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Loader", "Tests\UT_Loader\UT_Loader.csproj", "{85C791BF-1182-460D-9EC5-DD1E984BE9BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Reader", "Tests\UT_Reader\UT_Reader.csproj", "{85C791BF-1182-460D-9EC5-DD1E984BE9BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarotDB", "TarotDB\TarotDB.csproj", "{E0F4BA78-B56F-4D4D-9753-FC84D86D5578}"
 EndProject

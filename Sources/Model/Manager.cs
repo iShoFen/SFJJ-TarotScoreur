@@ -84,19 +84,7 @@ public partial class Manager
         _logger.Info("All players loaded");
         return players;
     }
-
-    /// <summary>
-    /// Method to load a player by group
-    /// </summary>
-    /// <param name="group">Group to search</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>?> LoadPlayersByGroup(Group group)
-    {
-        var players = await _reader.GetPlayersByGroup(group.Id);
-        _logger.Info("Players loaded by group : {arguments}", group.ToString());
-        return players;
-    }
-
+    
     public async Task<IEnumerable<Player>> LoadPlayersByPattern(string pattern, int start, int count)
     {
         var players = await _reader.GetPlayersByPattern(pattern, start, count);
@@ -283,19 +271,8 @@ public partial class Manager
         _logger.Info("Hand created : {arguments}", hand.ToString());
         return hand;
     }
-
-    /// <summary>
-    /// Method to load hands by game
-    /// </summary>
-    /// <param name="game"></param>
-    /// <param name="start"></param>
-    /// <param name="count"></param>
-    /// <returns>List of hands</returns>
-    public async Task<IEnumerable<KeyValuePair<int, Hand>>?> LoadHandByGame(Game game, int start, int count)
-    {
-        var hands = await _reader.GetHandsByGame(game.Id, start, count);
-        _logger.Info("Hands loaded by game : {arguments}", game.ToString());
-        return hands;
-    }
+    
+    // add a get hand by id
+    
     /*========== End hand ==========*/
 }
