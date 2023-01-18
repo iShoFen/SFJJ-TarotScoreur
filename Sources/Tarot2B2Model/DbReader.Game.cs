@@ -42,13 +42,16 @@ public partial class DbReader
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Game>());
 
         Mapper.Reset();
-        return Set<PlayerEntity>()
-                   .Include(p => p.Games)
-                   .FirstOrDefault(p => p.Id == playerId)
-                   ?.Games
-                   .Paginate(start, count)
-                   .ToModels()
-               ?? new List<Game>();
+        var games = Set<PlayerEntity>()
+                    .Include(p => p.Games)
+                    .FirstOrDefault(p => p.Id == playerId)
+                    ?.Games
+                    .Paginate(start, count)
+                    .ToList()
+                    ?? new List<GameEntity>();
+        games.ForEach(g => g.Players.Clear());
+        
+        return games.ToModels();
     }
 
     public async Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime endDate, int start, int count)

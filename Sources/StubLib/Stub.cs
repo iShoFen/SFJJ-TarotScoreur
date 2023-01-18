@@ -307,7 +307,7 @@ public partial class Stub : IReader
         _gameList[6].AddHand(_handList[20]);
         _gameList[6].AddHand(_handList[21]);
 
-        _handList.Add(new Hand(23UL, 4, _rulesList[0], new DateTime(2022, 09, 30), 567,
+        _handList.Add(new Hand(23UL, 1, _rulesList[0], new DateTime(2022, 09, 30), 567,
             true, false, PetitResults.Lost, Chelem.Unknown,
             KeyValuePair.Create(_playerList[7], (Biddings.Petite, Poignee.None)),
             KeyValuePair.Create(_playerList[8], (Biddings.Opponent, Poignee.None)),
