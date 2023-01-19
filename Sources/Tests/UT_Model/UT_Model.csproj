@@ -21,12 +21,10 @@
         </PackageReference>
     </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Model\Model.csproj" />
-    <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
-    <ProjectReference Include="..\..\StubLib\StubLib.csproj" />
-    <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
-    <ProjectReference Include="..\TestUtils\TestUtils.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\TestUtils\TestUtils.csproj" />
+      <ProjectReference Include="..\UT_Reader\UT_Reader.csproj" />
+      <ProjectReference Include="..\UT_Writer\UT_Writer.csproj" />
+    </ItemGroup>
 
 </Project>

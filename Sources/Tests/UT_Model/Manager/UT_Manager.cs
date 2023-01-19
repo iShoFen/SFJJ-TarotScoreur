@@ -13,14 +13,12 @@ namespace UT_Model.Manager;
 
 public class UT_Manager
 {
- //    /*========== Constructor test ==========*/
- //    
- //    [Fact]
- //    public void ConstructorTest()
- //    {
- //        var manager = new Model.Manager(new DbReader(), new DbWriter());
- //        Assert.NotNull(manager);
- //    }
+    /*[Fact]
+    public void ConstructorTest()
+    {
+        var manager = new Model.Manager();
+        Assert.NotNull(manager);
+    }*/
  //    
  //    /*========== Set Manager Reader/Writer test ==========*/
  //    [Fact]

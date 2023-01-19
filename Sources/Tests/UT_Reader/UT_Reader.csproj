@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -24,11 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Model\Model.csproj" />
-        <ProjectReference Include="..\..\StubLib\StubLib.csproj" />
-        <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
-        <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
-        <ProjectReference Include="..\..\Tests\TestUtils\TestUtils.csproj" />
+      <ProjectReference Include="..\TestUtils\TestUtils.csproj" />
     </ItemGroup>
 
 </Project>
