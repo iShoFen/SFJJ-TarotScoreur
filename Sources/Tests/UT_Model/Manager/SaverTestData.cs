@@ -11,7 +11,7 @@ public class SaverTestData
 {
 	public static IEnumerable<object?[]> Data_TestSavePlayer()
 	{
-		foreach (var saver in Savers)
+		foreach (var saver in Writers)
 		{
 
 			yield return new object?[]
@@ -54,7 +54,7 @@ public class SaverTestData
 	
 	public static IEnumerable<object?[]> Data_TestSaveGroup()
 	{
-		foreach (var saver in Savers)
+		foreach (var saver in Writers)
 		{
 
 			yield return new object?[]
@@ -91,7 +91,7 @@ public class SaverTestData
 	
 	public static IEnumerable<object?[]> Data_TestSaveGame()
 	{
-		foreach (var saver in Savers)
+		foreach (var saver in Writers)
 		{
 			yield return new object?[]
 			{

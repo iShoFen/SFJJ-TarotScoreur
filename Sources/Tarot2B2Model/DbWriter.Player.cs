@@ -18,7 +18,8 @@ public partial class DbWriter
 
         await UnitOfWork.SaveChangesAsync();
 
-        return result.MapToModel();
+        Mapper.Reset();
+        return result.ToModel();
     }
 
     public async Task<Player?> UpdatePlayer(Player player)
@@ -39,7 +40,7 @@ public partial class DbWriter
 
         await UnitOfWork.SaveChangesAsync();
 
-        return result.MapToModel();
+        return result.ToModel();
     }
 
     public async Task<bool> DeletePlayer(ulong playerId)

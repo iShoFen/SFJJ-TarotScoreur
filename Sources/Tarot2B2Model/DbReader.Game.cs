@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Model.Games;
+using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB;
 using Utils;
 
@@ -43,25 +44,27 @@ public partial class DbReader
 
         Mapper.Reset();
         var games = Set<PlayerEntity>()
-                    .Include(p => p.Games)
-                    .FirstOrDefault(p => p.Id == playerId)
-                    ?.Games
-                    .Paginate(start, count)
-                    .ToList()
+                        .Include(p => p.Games)
+                        .FirstOrDefault(p => p.Id == playerId)
+                        ?.Games
+                        .Paginate(start, count)
+                        .ToList()
                     ?? new List<GameEntity>();
         games.ForEach(g => g.Players.Clear());
-        
+
         return games.ToModels();
     }
 
-    public async Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime endDate, int start, int count)
+    public async Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime? endDate, int start, int count)
     {
         if (start <= 0 || count <= 0) return await Task.FromResult(new List<Game>());
 
         Mapper.Reset();
         return Set<GameEntity>()
             .Where(g => g.StartDate.CompareTo(startDate) >= 0
-                        && endDate.CompareTo(g.EndDate) >= 0)
+                        && (endDate == null
+                            || (g.EndDate != null
+                                && g.EndDate.Value.CompareTo(endDate.Value) <= 0)))
             .Paginate(start, count)
             .AsEnumerable()
             .ToModels();

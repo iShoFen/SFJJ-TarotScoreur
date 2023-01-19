@@ -8,7 +8,7 @@ internal static class DataManagers
         new DbReaderForTest()
     };
 
-    public static readonly IWriterForTest[] Savers =
+    public static readonly IWriterForTest[] Writers =
     {
         new DbWriterForTest()
     };

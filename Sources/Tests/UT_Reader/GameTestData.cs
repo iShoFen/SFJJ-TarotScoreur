@@ -231,15 +231,28 @@ public static class GameTestData
         }
     }
 
-    public static IEnumerable<object[]> Data_TestGetGameByDate()
+    public static IEnumerable<object?[]> Data_TestGetGameByDate()
     {
         foreach (var loader in Loaders)
         {
-            yield return new object[]
+            yield return new object?[]
             {
                 loader.Get(),
                 new DateTime(2022, 09, 21),
                 new DateTime(2022, 09, 29),
+                1,
+                10,
+                new Game[]
+                {
+                    new(6UL, "Game 6", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)),
+                    new(7UL, "Game 7", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29))
+                }
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 21),
+                null,
                 1,
                 10,
                 new Game[]
@@ -250,51 +263,31 @@ public static class GameTestData
                     new(4UL, "Game 4", new FrenchTarotRules(), new DateTime(2022, 09, 21), null),
                     new(5UL, "Game 5", new FrenchTarotRules(), new DateTime(2022, 09, 21), null),
                     new(6UL, "Game 6", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)),
-                    new(7UL, "Game 7", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29))
+                    new(7UL, "Game 7", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)),
+                    new(8UL, "Game 8", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)),
+                    new(9UL, "Game 9", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 30))
                 }
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 21),
+                new DateTime(2022, 09, 22),
+                1,
+                10,
+                Array.Empty<Game>()
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 23),
+                new DateTime(2022, 09, 26),
+                1,
+                10,
+                Array.Empty<Game>()
             };
         }
     }
-
-    /*
-new Game(1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 21), null)
-new Game(2UL, "Game 2", new FrenchTarotRules(), new DateTime(2022, 09, 21), null)
-new Game(3UL, "Game 3", new FrenchTarotRules(), new DateTime(2022, 09, 21), null)
-new Game(4UL, "Game 4", new FrenchTarotRules(), new DateTime(2022, 09, 21), null)
-new Game(5UL, "Game 5", new FrenchTarotRules(), new DateTime(2022, 09, 21), null)
-new Game(6UL, "Game 6", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)
-new Game(7UL, "Game 7", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)
-new Game(8UL, "Game 8", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)
-new Game(9UL, "Game 9", new FrenchTarotRules(), new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)
-new Game(10UL, "Game 10", new FrenchTarotRules(),new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)
-*/
-
-    /*_playerList.Add(new Player(1UL, "Jean", "BON", "JEBO", "avatar1"));
-    _playerList.Add(new Player(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"));
-    _playerList.Add(new Player(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3"));
-    _playerList.Add(new Player(4UL, "Michel", "BELIN", "FRIPOUILLE", "avatar4"));
-    _playerList.Add(new Player(5UL, "Albert", "GOL", "LOLA", "avatar5"));
-    _playerList.Add(new Player(6UL, "Julien", "PETIT", "THEGIANT", "avatar6"));
-    _playerList.Add(new Player(7UL, "Simon", "SEBAT", "SEBATA", "avatar7"));
-    _playerList.Add(new Player(8UL, "Jordan", "LEG", "BIGBRAIN", "avatar8"));
-    _playerList.Add(new Player(9UL, "Samuel", "LE CHANTEUR", "LOL", "avatar9"));
-    _playerList.Add(new Player(10UL, "Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"));
-    _playerList.Add(new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"));
-    _playerList.Add(new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"));
-    _playerList.Add(new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"));
-    _playerList.Add(new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"));
-    _playerList.Add(new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"));
-    _playerList.Add(new Player(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16"));*/
-
-    /*        _handList.Add(new Hand(23UL, 4, _rulesList[0], new DateTime(2022, 09, 30), 567,
-            true, false, PetitResults.Lost, Chelem.Unknown,
-            KeyValuePair.Create(_playerList[7], (Biddings.Petite, Poignee.None)),
-            KeyValuePair.Create(_playerList[8], (Biddings.Opponent, Poignee.None)),
-            KeyValuePair.Create(_playerList[1], (Biddings.Opponent, Poignee.None)),
-            KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
-            KeyValuePair.Create(_playerList[1], (Biddings.King, Poignee.None))));*/
-
-    // The hands for the game 8
 
     public static IEnumerable<object?[]> Data_TestGetGameById()
     {
@@ -305,49 +298,49 @@ new Game(10UL, "Game 10", new FrenchTarotRules(),new DateTime(2022, 09, 18), new
                 loader.Get(),
                 1UL,
                 CreateGameWithPlayersAndHands(1UL,
-                                              "Game 1",
-                                              new FrenchTarotRules(),
-                                              new DateTime(2022, 09, 21),
-                                              null,
-                                              new Player[]
-                                              {
-                                                  new(1UL, "Jean", "BON", "JEBO", "avatar1"),
-                                                  new(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
-                                                  new(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3")
-                                              },
-                                              new Hand[]
-                                              {
-                                                  new(1UL,
-                                                      1,
-                                                      new FrenchTarotRules(),
-                                                      new DateTime(2022, 09, 21),
-                                                      210,
-                                                      false,
-                                                      true,
-                                                      PetitResults.Lost,
-                                                      Chelem.Unknown
-                                                  ),
-                                                  new(2UL,
-                                                      2,
-                                                      new FrenchTarotRules(),
-                                                      new DateTime(2022, 09, 22),
-                                                      256,
-                                                      true,
-                                                      true,
-                                                      PetitResults.Lost,
-                                                      Chelem.AnnouncedSuccess
-                                                  ),
-                                                  new(3UL,
-                                                      3,
-                                                      new FrenchTarotRules(),
-                                                      new DateTime(2022, 09, 23),
-                                                      151,
-                                                      false,
-                                                      false,
-                                                      PetitResults.Lost,
-                                                      Chelem.Success
-                                                  )
-                                              }
+                    "Game 1",
+                    new FrenchTarotRules(),
+                    new DateTime(2022, 09, 21),
+                    null,
+                    new Player[]
+                    {
+                        new(1UL, "Jean", "BON", "JEBO", "avatar1"),
+                        new(2UL, "Jean", "MAUVAIS", "JEMA", "avatar2"),
+                        new(3UL, "Jean", "MOYEN", "KIKOU7", "avatar3")
+                    },
+                    new Hand[]
+                    {
+                        new(1UL,
+                            1,
+                            new FrenchTarotRules(),
+                            new DateTime(2022, 09, 21),
+                            210,
+                            false,
+                            true,
+                            PetitResults.Lost,
+                            Chelem.Unknown
+                        ),
+                        new(2UL,
+                            2,
+                            new FrenchTarotRules(),
+                            new DateTime(2022, 09, 22),
+                            256,
+                            true,
+                            true,
+                            PetitResults.Lost,
+                            Chelem.AnnouncedSuccess
+                        ),
+                        new(3UL,
+                            3,
+                            new FrenchTarotRules(),
+                            new DateTime(2022, 09, 23),
+                            151,
+                            false,
+                            false,
+                            PetitResults.Lost,
+                            Chelem.Success
+                        )
+                    }
                 )
             };
 
@@ -356,31 +349,31 @@ new Game(10UL, "Game 10", new FrenchTarotRules(),new DateTime(2022, 09, 18), new
                 loader.Get(),
                 8UL,
                 CreateGameWithPlayersAndHands(8UL,
-                                              "Game 8",
-                                              new FrenchTarotRules(),
-                                              new DateTime(2022, 09, 21),
-                                              new DateTime(2022, 09, 30),
-                                              new Player[]
-                                              {
-                                                  new(8UL, "Jordan", "LEG", "BIGBRAIN", "avatar8"),
-                                                  new(9UL, "Samuel", "LE CHANTEUR", "LOL", "avatar9"),
-                                                  new(10UL, "Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"),
-                                                  new(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
-                                                  new(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12")
-                                              },
-                                              new Hand[]
-                                              {
-                                                  new(23UL,
-                                                      1,
-                                                      new FrenchTarotRules(),
-                                                      new DateTime(2022, 09, 30),
-                                                      567,
-                                                      true,
-                                                      false,
-                                                      PetitResults.Lost,
-                                                      Chelem.Unknown
-                                                  )
-                                              }
+                    "Game 8",
+                    new FrenchTarotRules(),
+                    new DateTime(2022, 09, 21),
+                    new DateTime(2022, 09, 30),
+                    new Player[]
+                    {
+                        new(8UL, "Jordan", "LEG", "BIGBRAIN", "avatar8"),
+                        new(9UL, "Samuel", "LE CHANTEUR", "LOL", "avatar9"),
+                        new(10UL, "Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"),
+                        new(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                        new(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12")
+                    },
+                    new Hand[]
+                    {
+                        new(23UL,
+                            1,
+                            new FrenchTarotRules(),
+                            new DateTime(2022, 09, 30),
+                            567,
+                            true,
+                            false,
+                            PetitResults.Lost,
+                            Chelem.Unknown
+                        )
+                    }
                 )
             };
 

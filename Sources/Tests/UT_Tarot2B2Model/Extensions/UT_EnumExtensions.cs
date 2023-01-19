@@ -1,11 +1,11 @@
 ﻿using Model.Enums;
-using Tarot2B2Model;
 using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB.Enums;
 using Xunit;
+
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
-namespace UT_Tarot2B2Model;
+namespace UT_Tarot2B2Model.Extensions;
 
 public class UT_EnumExtensions
 {

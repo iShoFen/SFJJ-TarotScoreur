@@ -47,5 +47,5 @@ public partial interface IReader
     /// <param name="start">Index of the page</param>
     /// <param name="count">Number of groups to return</param>
     /// <returns>List of games filtered and paginated</returns>
-    Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime endDate, int start, int count);
+    Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime? endDate, int start, int count);
 }

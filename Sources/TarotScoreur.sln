@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Reader", "Tests\UT_Reade
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarotDB", "TarotDB\TarotDB.csproj", "{E0F4BA78-B56F-4D4D-9753-FC84D86D5578}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Saver", "Tests\UT_Saver\UT_Saver.csproj", "{261A74BC-7B03-4351-BFC5-C48E4676EEC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Writer", "Tests\UT_Writer\UT_Writer.csproj", "{261A74BC-7B03-4351-BFC5-C48E4676EEC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT_Manager", "Tests\FT_Manager\FT_Manager.csproj", "{29455D8F-D783-4907-8FA0-59867D51523C}"
 EndProject

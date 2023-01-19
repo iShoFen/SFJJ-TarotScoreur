@@ -1,30 +1,27 @@
-﻿using Model.Players;
-using Tarot2B2Model;
+using Model.Players;
 using TarotDB;
-using Xunit;
 
+namespace UT_Tarot2B2Model.Extensions.DataTest;
 
-namespace UT_Tarot2B2Model;
-
-public class UT_GroupExtensions
+internal static class GroupExtensionsDataTest
 {
-    public static IEnumerable<object[]> Data_AddGroupAndGroupEntity()
+    public static IEnumerable<object[]> GroupAndGroupEntity()
     {
         yield return new object[]
         {
-            new Group(1UL,"Group1",
+            new Group(1UL, "Group1",
                 new Player(0UL, "Jean", "BON", "JEBO", "avatar1"),
                 new Player(1UL, "Pierre", "DURAND", "PIER", "avatar2"),
                 new Player(2UL, "Paul", "MARTIN", "PAUL", "avatar3")),
             new GroupEntity
-            { 
+            {
                 Id = 1UL,
                 Name = "Group1",
                 Players = new List<PlayerEntity>
                 {
                     new PlayerEntity
-                    { 
-                        Id = 0UL, 
+                    {
+                        Id = 0UL,
                         FirstName = "Jean",
                         LastName = "BON",
                         Nickname = "JEBO",
@@ -33,9 +30,9 @@ public class UT_GroupExtensions
                     new PlayerEntity
                     {
                         Id = 1UL,
-                        FirstName = "Pierre", 
+                        FirstName = "Pierre",
                         LastName = "DURAND",
-                        Nickname = "PIER", 
+                        Nickname = "PIER",
                         Avatar = "avatar2"
                     },
                     new PlayerEntity
@@ -51,26 +48,26 @@ public class UT_GroupExtensions
         };
     }
 
-    public static IEnumerable<object[]> Data_AddGroupsAndGroupEntities()
+    public static IEnumerable<object[]> GroupsAndGroupEntities()
     {
         yield return new object[]
         {
-            new List<Group>()
+            new List<Group>
             {
-                new Group(1UL, "Group1",
+                new(1UL, "Group1",
                     new Player(0UL, "Jean", "BON", "JEBO", "avatar1"),
                     new Player(1UL, "Pierre", "DURAND", "PIER", "avatar2"),
                     new Player(2UL, "Paul", "MARTIN", "PAUL", "avatar3")),
-                new Group(2UL, "Group2",
+                new(2UL, "Group2",
                     new Player(0UL, "Jean", "BON", "JEBO", "avatar1"),
                     new Player(1UL, "Pierre", "DURAND", "PIER", "avatar2"),
                     new Player(2UL, "Paul", "MARTIN", "PAUL", "avatar3")),
-                new Group(3UL, "Group3",
+                new(3UL, "Group3",
                     new Player(0UL, "Jean", "BON", "JEBO", "avatar1"),
                     new Player(1UL, "Pierre", "DURAND", "PIER", "avatar2"),
                     new Player(2UL, "Paul", "MARTIN", "PAUL", "avatar3")),
             },
-            new List<GroupEntity>()
+            new List<GroupEntity>
             {
                 new GroupEntity
                 {
@@ -79,8 +76,8 @@ public class UT_GroupExtensions
                     Players = new List<PlayerEntity>
                     {
                         new PlayerEntity
-                        { 
-                            Id = 0UL, 
+                        {
+                            Id = 0UL,
                             FirstName = "Jean",
                             LastName = "BON",
                             Nickname = "JEBO",
@@ -89,9 +86,9 @@ public class UT_GroupExtensions
                         new PlayerEntity
                         {
                             Id = 1UL,
-                            FirstName = "Pierre", 
+                            FirstName = "Pierre",
                             LastName = "DURAND",
-                            Nickname = "PIER", 
+                            Nickname = "PIER",
                             Avatar = "avatar2"
                         },
                         new PlayerEntity
@@ -104,15 +101,15 @@ public class UT_GroupExtensions
                         }
                     }
                 },
-                new GroupEntity
+                new()
                 {
                     Id = 2UL,
                     Name = "Group2",
                     Players = new List<PlayerEntity>
                     {
                         new PlayerEntity
-                        { 
-                            Id = 0UL, 
+                        {
+                            Id = 0UL,
                             FirstName = "Jean",
                             LastName = "BON",
                             Nickname = "JEBO",
@@ -121,9 +118,9 @@ public class UT_GroupExtensions
                         new PlayerEntity
                         {
                             Id = 1UL,
-                            FirstName = "Pierre", 
+                            FirstName = "Pierre",
                             LastName = "DURAND",
-                            Nickname = "PIER", 
+                            Nickname = "PIER",
                             Avatar = "avatar2"
                         },
                         new PlayerEntity
@@ -143,8 +140,8 @@ public class UT_GroupExtensions
                     Players = new List<PlayerEntity>
                     {
                         new PlayerEntity
-                        { 
-                            Id = 0UL, 
+                        {
+                            Id = 0UL,
                             FirstName = "Jean",
                             LastName = "BON",
                             Nickname = "JEBO",
@@ -153,9 +150,9 @@ public class UT_GroupExtensions
                         new PlayerEntity
                         {
                             Id = 1UL,
-                            FirstName = "Pierre", 
+                            FirstName = "Pierre",
                             LastName = "DURAND",
-                            Nickname = "PIER", 
+                            Nickname = "PIER",
                             Avatar = "avatar2"
                         },
                         new PlayerEntity
@@ -170,108 +167,5 @@ public class UT_GroupExtensions
                 }
             }
         };
-    }
-
-    [Theory] 
-    [MemberData(nameof(Data_AddGroupAndGroupEntity))] 
-    internal void TestGroupEntityToModel(Group group, GroupEntity groupEntity)
-    {
-        Mapper.Reset();
-        var groupEntityToModel = groupEntity.ToModel();
-        Assert.Equal(group, groupEntityToModel);
-        //Use the mapper
-        Assert.Same(groupEntity.ToModel(), groupEntityToModel);
-        Mapper.Reset();
-        Assert.NotSame(groupEntity.ToModel(), groupEntityToModel);
-
-    }
-
-    [Theory]
-    [MemberData(nameof(Data_AddGroupAndGroupEntity))]
-    internal void TestGroupToEntity(Group group, GroupEntity groupEntity)
-    {
-        Mapper.Reset();
-        var groupToEntity = group.ToEntity();
-        Assert.Equal(groupEntity.Id, groupToEntity.Id);
-        Assert.Equal(groupEntity.Name, groupToEntity.Name);
-        var i = 0;
-        foreach (var player in group.Players)
-        {
-            Assert.Equal(player.Id, groupToEntity.Players.ElementAt(i).Id);
-            Assert.Equal(player.FirstName, groupToEntity.Players.ElementAt(i).FirstName);
-            Assert.Equal(player.LastName, groupToEntity.Players.ElementAt(i).LastName);
-            Assert.Equal(player.NickName, groupToEntity.Players.ElementAt(i).Nickname);
-            Assert.Equal(player.Avatar, groupToEntity.Players.ElementAt(i).Avatar);
-            i++;
-        }
-        //Use the mapper
-        Assert.Same(group.ToEntity(), groupToEntity);
-        Mapper.Reset();
-        Assert.NotSame(group.ToEntity(), groupToEntity);
-    }
-
-    [Theory]
-    [MemberData(nameof(Data_AddGroupsAndGroupEntities))]
-    internal void TestGroupEntitiesToModels(List<Group> groups, List<GroupEntity> groupEntities)
-    {
-        Mapper.Reset();
-        var groupEntitiesToModels = groupEntities.ToModels().ToList();
-        Assert.Equal(groups, groupEntitiesToModels);
-        //Use the mapper
-        var i = 0;
-        foreach (var groupEntity in groupEntities)
-        {
-            Assert.Same(groupEntity.ToModel(), groupEntitiesToModels.ElementAt(i));
-            ++i;
-        }
-        
-        Mapper.Reset();
-        i = 0;
-        foreach (var groupEntity in groupEntities)
-        {
-            Assert.NotSame(groupEntity.ToModel(), groupEntitiesToModels.ElementAt(i));
-            ++i;
-        }
-    }
-
-    [Theory]
-    [MemberData(nameof(Data_AddGroupsAndGroupEntities))]
-    internal void TestGroupsToEntities(List<Group> groups, List<GroupEntity> groupEntities)
-    {
-        Mapper.Reset();
-        var groupsToEntities = groups.ToEntities().ToList();
-        Assert.Equal(groupEntities.Count, groupsToEntities.Count);
-        var i = 0;
-        foreach (var group in groups)
-        {
-            Assert.Equal(group.Id, groupsToEntities.ElementAt(i).Id);
-            Assert.Equal(group.Name, groupsToEntities.ElementAt(i).Name);
-            var j = 0;
-            foreach (var player in group.Players)
-            {
-                Assert.Equal(player.Id, groupsToEntities.ElementAt(i).Players.ElementAt(j).Id);
-                Assert.Equal(player.FirstName, groupsToEntities.ElementAt(i).Players.ElementAt(j).FirstName);
-                Assert.Equal(player.LastName, groupsToEntities.ElementAt(i).Players.ElementAt(j).LastName);
-                Assert.Equal(player.NickName, groupsToEntities.ElementAt(i).Players.ElementAt(j).Nickname);
-                Assert.Equal(player.Avatar, groupsToEntities.ElementAt(i).Players.ElementAt(j).Avatar);
-                ++j;
-            }
-            ++i;
-        }
-        //Use the mapper
-        i = 0;
-        foreach (var group in groups)
-        {
-            Assert.Same(group.ToEntity(), groupsToEntities.ElementAt(i));
-            ++i;
-        }
-        
-        Mapper.Reset();
-        i = 0;
-        foreach (var group in groups)
-        {
-            Assert.NotSame(group.ToEntity(), groupsToEntities.ElementAt(i));
-            ++i;
-        }
     }
 }

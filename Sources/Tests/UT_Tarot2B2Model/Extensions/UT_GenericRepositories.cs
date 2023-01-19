@@ -1,13 +1,12 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Model.Games;
 using StubContext;
 using Tarot2B2Model;
 using TarotDB;
 using Xunit;
 using static TestUtils.TestInitializer;
 
-namespace UT_Tarot2B2Model;
+namespace UT_Tarot2B2Model.Extensions;
 
 public class UT_GenericRepositories
 {

@@ -54,12 +54,14 @@ public partial class Stub
 			.Select(game => new Game(game.Id, game.Name, game.Rules, game.StartDate, game.EndDate)));
 	}
 
-	public async Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime endDate, int start, int count)
+	public async Task<IEnumerable<Game>> GetGamesByDate(DateTime startDate, DateTime? endDate, int start, int count)
 	{
 		if (start <= 0 || count <= 0) return new List<Game>();
 		return await Task.FromResult(_gameList
-			.Where(g => g.StartDate.CompareTo(startDate) >= 0 
-			            && endDate.CompareTo(g.EndDate) >= 0)
+			.Where(g => g.StartDate.CompareTo(startDate) >= 0
+			            && (endDate == null
+			                || (g.EndDate != null
+			                    && g.EndDate.Value.CompareTo(endDate.Value) <= 0)))
 			.Paginate(start, count)
 			.Select(game => new Game(game.Id, game.Name, game.Rules, game.StartDate, game.EndDate)));
 	}

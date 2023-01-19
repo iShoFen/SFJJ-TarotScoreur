@@ -1,46 +1,47 @@
 using Model.Players;
-using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB;
 
-namespace Tarot2B2Model;
+namespace Tarot2B2Model.ExtensionsAndMappers;
 
 internal static class GroupExtensions
 {
     /// <summary>
-    /// Converts a Group to a GroupEntity thanks to extension method
+    /// Converts a Group to a GroupEntity thanks to extension method.
     /// </summary>
     /// <param name="group">Group to convert into GroupEntity</param>
     /// <returns>GroupEntity converted</returns>
     public static GroupEntity ToEntity(this Group group)
     {
-        var groupEntity = Mapper.GroupsMapper.GetEntity(group);
-        if (groupEntity is not null) return groupEntity;
-        groupEntity = new GroupEntity
+        var entity = Mapper.GroupsMapper.GetEntity(group);
+        if (entity is not null) return entity;
+
+        entity = new GroupEntity
         {
             Id = group.Id,
             Name = group.Name,
             Players = group.Players.ToEntities().ToHashSet()
         };
 
-        Mapper.GroupsMapper.Map(group, groupEntity);
+        Mapper.GroupsMapper.Map(group, entity);
 
-        return groupEntity;
+        return entity;
     }
 
     /// <summary>
-    /// Converts a PlayerEntity to a Player thanks to extension method
+    /// Converts a GroupEntity to a Group thanks to extension method
     /// </summary>
-    /// <param name="groupEntity">GroupEntity to convert into Group</param>
+    /// <param name="entity">GroupEntity to convert into Group</param>
     /// <returns>Group converted</returns>
-    public static Group ToModel(this GroupEntity groupEntity)
+    public static Group ToModel(this GroupEntity entity)
     {
-        var groupModel = Mapper.GroupsMapper.GetModel(groupEntity);
-        if (groupModel is not null) return groupModel;
-        groupModel = new Group(groupEntity.Id, groupEntity.Name, groupEntity.Players.ToModels().ToArray());
+        var model = Mapper.GroupsMapper.GetModel(entity);
+        if (model is not null) return model;
 
-        Mapper.GroupsMapper.Map(groupModel, groupEntity);
+        model = new Group(entity.Id, entity.Name, entity.Players.ToModels().ToArray());
 
-        return groupModel;
+        Mapper.GroupsMapper.Map(model, entity);
+
+        return model;
     }
 
     /// <summary>
@@ -48,14 +49,14 @@ internal static class GroupExtensions
     /// </summary>
     /// <param name="groups">Collection of Group to convert</param>
     /// <returns>Collection of GroupEntity converted</returns>
-    public static IEnumerable<GroupEntity> ToEntities(this IEnumerable<Group> groups)
-        => groups.Select(g => g.ToEntity());
-    
+    public static IEnumerable<GroupEntity> ToEntities(this IEnumerable<Group> groups) =>
+        groups.Select(g => g.ToEntity());
+
     /// <summary>
     /// Converts a collection of GroupEntity to a collection of Group thanks to extension method
     /// </summary>
     /// <param name="entities">Collection of GroupEntity to convert</param>
     /// <returns>Collection of Group converted</returns>
-    public static IEnumerable<Group> ToModels(this IEnumerable<GroupEntity> entities)
-        => entities.Select(e => e.ToModel());
+    public static IEnumerable<Group> ToModels(this IEnumerable<GroupEntity> entities) =>
+        entities.Select(e => e.ToModel());
 }

@@ -195,9 +195,9 @@ public class UT_Reader
         reader.Dispose();
     }
 
-    // [Theory]
+    [Theory]
     [MemberData(nameof(GameTestData.Data_TestGetGameByDate), MemberType = typeof(GameTestData))]
-    public async Task TestGetGamesByDate(IReader reader, DateTime startDate, DateTime endDate, int start, int count,
+    public async Task TestGetGamesByDate(IReader reader, DateTime startDate, DateTime? endDate, int start, int count,
         Game[] games)
     {
         var gamesFound = (await reader.GetGamesByDate(startDate, endDate, start, count)).ToList();

@@ -1,199 +1,15 @@
-using Model.Rules;
-using Model.Enums;
 using Model.Games;
-using Model.Players;
-using Tarot2B2Model;
+using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB;
-using TarotDB.Enums;
-using TestUtils;
+using UT_Tarot2B2Model.Extensions.DataTest;
 using Xunit;
 
-
-namespace UT_Tarot2B2Model;
+namespace UT_Tarot2B2Model.Extensions;
 
 public class UT_GameExtensions
 {
-    public static IEnumerable<object[]> Data_AddGameAndGameEntity()
-    {
-        yield return new object[]
-        {
-            new Game(1UL, "Game1", RulesFactory.Rules["FrenchTarotRules"], new DateTime(2022, 09, 21), null),
-            new GameEntity
-            {
-                Id = 1UL,
-                Name = "Game1",
-                Rules = new FrenchTarotRules().Name,
-                StartDate = new DateTime(2022, 09, 21),
-                EndDate = null
-
-            }
-        };
-    }
-
-    public static IEnumerable<object[]> Data_AddGameWithPlayerAndGameEntity()
-    {
-        yield return new object[]
-        {
-            GameTestUtils.CreateGameWithIdAndPlayers(1UL, "Game1", RulesFactory.Rules["FrenchTarotRules"],
-                new DateTime(2022, 09, 21), null,
-                new Player(0UL, "Jean", "BON", "JEBO", "avatar1"),
-                new Player(1UL, "Pierre", "DURAND", "PIER", "avatar2"),
-                new Player(2UL, "Paul", "MARTIN", "PAUL", "avatar3")
-            ),
-            new GameEntity
-            {
-                Id = 1UL,
-                Name = "Game1",
-                Rules = new FrenchTarotRules().Name,
-                StartDate = new DateTime(2022, 09, 21),
-                EndDate = null,
-                Players = new List<PlayerEntity>
-                {
-                    new PlayerEntity
-                    {
-                        Id = 0UL,
-                        FirstName = "Jean",
-                        LastName = "BON",
-                        Nickname = "JEBO",
-                        Avatar = "avatar1"
-                    },
-                    new PlayerEntity
-                    {
-                        Id = 1UL,
-                        FirstName = "Pierre",
-                        LastName = "DURAND",
-                        Nickname = "PIER",
-                        Avatar = "avatar2"
-                    },
-                    new PlayerEntity
-                    {
-                        Id = 2UL,
-                        FirstName = "Paul",
-                        LastName = "MARTIN",
-                        Nickname = "PAUL",
-                        Avatar = "avatar3"
-                    }
-                }
-            }
-        };
-    }
-
-    public static IEnumerable<object[]> Data_AddGameAndGameEntityWithPlayerAndHands()
-    {
-        yield return new object[]
-        {
-            GameTestUtils.CreateGameWithPlayersAndHands(1UL, "Game1", RulesFactory.Rules["FrenchTarotRules"],
-                new DateTime(2022, 09, 21), null,
-                new[]
-                {
-                    new Player(0UL, "Jean", "BON", "JEBO", "avatar1"),
-                    new Player(1UL, "Pierre", "DURAND", "PIER", "avatar2"),
-                    new Player(2UL, "Paul", "MARTIN", "PAUL", "avatar3")
-                },
-                new[]
-                {
-                    new Hand(1L, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 25, true, true,
-                        PetitResults.Owned, Chelem.Announced)
-                }
-
-            ),
-            new GameEntity
-            {
-                Id = 1UL,
-                Name = "Game1",
-                Rules = new FrenchTarotRules().Name,
-                StartDate = new DateTime(2022, 09, 21),
-                EndDate = null,
-                Players = new List<PlayerEntity>
-                {
-                    new PlayerEntity
-                    {
-                        Id = 0UL,
-                        FirstName = "Jean",
-                        LastName = "BON",
-                        Nickname = "JEBO",
-                        Avatar = "avatar1"
-                    },
-                    new PlayerEntity
-                    {
-                        Id = 1UL,
-                        FirstName = "Pierre",
-                        LastName = "DURAND",
-                        Nickname = "PIER",
-                        Avatar = "avatar2"
-                    },
-                    new PlayerEntity
-                    {
-                        Id = 2UL,
-                        FirstName = "Paul",
-                        LastName = "MARTIN",
-                        Nickname = "PAUL",
-                        Avatar = "avatar3"
-                    }
-                },
-                Hands = new List<HandEntity>
-                {
-                    new HandEntity
-                    {
-                        Id = 1L,
-                        Number = 1,
-                        Rules = new FrenchTarotRules().Name,
-                        Date = new DateTime(2022, 09, 21),
-                        TakerScore = 25,
-                        TwentyOne = true,
-                        Excuse = true,
-                        Petit = PetitResultsDb.Owned,
-                        Chelem = ChelemDb.Announced
-                    }
-                }
-
-            }
-        };
-    }
-
-    public static IEnumerable<object[]> Data_AddGamesAndGamesEntities()
-    {
-        yield return new object[]
-        {
-            new List<Game>
-            {
-                new (1UL, "Game1", RulesFactory.Rules["FrenchTarotRules"], new DateTime(2022, 09, 21), null),
-                new (2UL, "Game2", RulesFactory.Rules["FrenchTarotRules"], new DateTime(2022, 09, 21), null),
-                new (3UL, "Game3", RulesFactory.Rules["FrenchTarotRules"], new DateTime(2022, 09, 21), null)
-            },
-            new List<GameEntity>
-            {
-                new GameEntity
-                {
-                    Id = 1UL,
-                    Name = "Game1",
-                    Rules = new FrenchTarotRules().Name,
-                    StartDate = new DateTime(2022, 09, 21),
-                    EndDate = null
-                },
-                new GameEntity
-                {
-                    Id = 2UL,
-                    Name = "Game2",
-                    Rules = new FrenchTarotRules().Name,
-                    StartDate = new DateTime(2022, 09, 21),
-                    EndDate = null
-                },
-                new GameEntity
-                {
-                    Id = 3UL,
-                    Name = "Game3",
-                    Rules = new FrenchTarotRules().Name,
-                    StartDate = new DateTime(2022, 09, 21),
-                    EndDate = null
-                }
-            }
-
-        };
-    }
-
     [Theory]
-    [MemberData(nameof(Data_AddGameAndGameEntity))]
+    [MemberData(nameof(GameExtensionsDataTest.GameAndGameEntity), MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameEntityToModel(Game game, GameEntity gameEntity)
     {
         Mapper.Reset();
@@ -208,7 +24,7 @@ public class UT_GameExtensions
     }
 
     [Theory]
-    [MemberData(nameof(Data_AddGameAndGameEntity))]
+    [MemberData(nameof(GameExtensionsDataTest.GameAndGameEntity), MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameToEntity(Game game, GameEntity gameEntity)
     {
         Mapper.Reset();
@@ -222,14 +38,14 @@ public class UT_GameExtensions
 
         //To verify if the mapper work
         Assert.Same(game.ToEntity(), gameToEntity);
-        
+
         //to verify if the mapper reset work
         Mapper.Reset();
         Assert.NotSame(game.ToEntity(), gameToEntity);
     }
 
     [Theory]
-    [MemberData(nameof(Data_AddGamesAndGamesEntities))]
+    [MemberData(nameof(GameExtensionsDataTest.GamesAndGameEntities), MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameEntitiesToModels(List<Game> games, List<GameEntity> gameEntities)
     {
         Mapper.Reset();
@@ -242,6 +58,7 @@ public class UT_GameExtensions
             Assert.Same(game, gameEntities.ElementAt(i).ToModel());
             ++i;
         }
+
         //to verify if the mapper reset work
         Mapper.Reset();
         i = 0;
@@ -253,7 +70,7 @@ public class UT_GameExtensions
     }
 
     [Theory]
-    [MemberData(nameof(Data_AddGamesAndGamesEntities))]
+    [MemberData(nameof(GameExtensionsDataTest.GamesAndGameEntities), MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGamesToEntities(List<Game> games, List<GameEntity> gameEntities)
     {
         Mapper.Reset();
@@ -275,7 +92,7 @@ public class UT_GameExtensions
             Assert.Same(gameEntity, games.ElementAt(i).ToEntity());
             ++i;
         }
-        
+
         //to verify if the mapper reset work
         Mapper.Reset();
         i = 0;
@@ -284,12 +101,12 @@ public class UT_GameExtensions
             Assert.NotSame(gameEntity, games.ElementAt(i).ToEntity());
             ++i;
         }
-
     }
 
 
     [Theory]
-    [MemberData(nameof(Data_AddGameWithPlayerAndGameEntity))]
+    [MemberData(nameof(GameExtensionsDataTest.GameAndGameEntityWithPlayer),
+        MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameEntityToModelWithPlayers(Game game, GameEntity gameEntity)
     {
         Mapper.Reset();
@@ -304,18 +121,19 @@ public class UT_GameExtensions
     }
 
     [Theory]
-    [MemberData(nameof(Data_AddGameWithPlayerAndGameEntity))]
+    [MemberData(nameof(GameExtensionsDataTest.GameAndGameEntityWithPlayer),
+        MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameToEntityWithPlayers(Game game, GameEntity gameEntity)
     {
         Mapper.Reset();
         var gameToEntity = game.ToEntity();
-        
+
         Assert.Equal(gameEntity.Id, gameToEntity.Id);
         Assert.Equal(gameEntity.Name, gameToEntity.Name);
         Assert.Equal(gameEntity.Rules, gameToEntity.Rules);
         Assert.Equal(gameEntity.StartDate, gameToEntity.StartDate);
         Assert.Equal(gameEntity.EndDate, gameToEntity.EndDate);
-        
+
         var i = 0;
         var players = gameToEntity.Players.ToList();
         foreach (var player in gameEntity.Players)
@@ -337,7 +155,8 @@ public class UT_GameExtensions
 
 
     [Theory]
-    [MemberData(nameof(Data_AddGameAndGameEntityWithPlayerAndHands))]
+    [MemberData(nameof(GameExtensionsDataTest.GameAndGameEntityWithPlayerAndHands),
+        MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameEntityToModelWithPlayersAndHands(Game game, GameEntity gameEntity)
     {
         Mapper.Reset();
@@ -352,7 +171,8 @@ public class UT_GameExtensions
     }
 
     [Theory]
-    [MemberData(nameof(Data_AddGameAndGameEntityWithPlayerAndHands))]
+    [MemberData(nameof(GameExtensionsDataTest.GameAndGameEntityWithPlayerAndHands),
+        MemberType = typeof(GameExtensionsDataTest))]
     internal void TestGameToEntityWithPlayersAndHands(Game game, GameEntity gameEntity)
     {
         Mapper.Reset();
@@ -362,7 +182,7 @@ public class UT_GameExtensions
         Assert.Equal(gameEntity.Rules, gameToEntity.Rules);
         Assert.Equal(gameEntity.StartDate, gameToEntity.StartDate);
         Assert.Equal(gameEntity.EndDate, gameToEntity.EndDate);
-        
+
         var i = 0;
         var players = gameToEntity.Players.ToList();
         foreach (var player in gameEntity.Players)
@@ -396,7 +216,5 @@ public class UT_GameExtensions
         //to verify if the mapper reset work
         Mapper.Reset();
         Assert.NotSame(game.ToEntity(), gameToEntity);
-        
-
     }
 }

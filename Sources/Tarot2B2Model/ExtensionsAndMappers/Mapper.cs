@@ -1,8 +1,8 @@
-using Model.Players;
 using Model.Games;
+using Model.Players;
 using TarotDB;
 
-namespace Tarot2B2Model;
+namespace Tarot2B2Model.ExtensionsAndMappers;
 
 /// <summary>
 /// A generic Mapper for Model to Database Entities
