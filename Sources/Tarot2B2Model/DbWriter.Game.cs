@@ -11,9 +11,6 @@ public partial class DbWriter
         if (game.Id != 0) return null;
         Mapper.Reset();
 
-        var gameFound = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
-        if (gameFound != null) return null;
-
         var gameToInsert = game.ToEntity();
         gameToInsert.Players =
             gameToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!)

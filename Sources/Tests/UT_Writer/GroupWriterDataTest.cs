@@ -27,6 +27,12 @@ internal static class GroupWriterDataTest
                 new Group("Group 13"),
                 new Group(13UL, "Group 13")
             };
+            yield return new object?[]
+            {
+                writer.Get(),
+                new Group(50UL, "Group 51"),
+                null
+            };
         }
     }
 

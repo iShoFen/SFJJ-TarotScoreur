@@ -11,9 +11,6 @@ public partial class DbWriter
         if (group.Id != 0) return null;
         Mapper.Reset();
 
-        var groupFound = await UnitOfWork.Repository<GroupEntity>().GetById(group.Id);
-        if (groupFound != null) return null;
-
         var groupToInsert = group.ToEntity();
         groupToInsert.Players =
             groupToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!).ToHashSet();
@@ -62,20 +59,5 @@ public partial class DbWriter
         return false;
     }
 
-    public async Task<bool> DeleteGroup(Group group)
-    {
-        var groupToDelete = await UnitOfWork.Repository<GroupEntity>().GetById(group.Id);
-        if (groupToDelete == null) return false;
-        
-        var result = await UnitOfWork.Repository<GroupEntity>().Delete(groupToDelete);
-
-        if (result)
-        {
-            await UnitOfWork.SaveChangesAsync();
-            return true;
-        }
-
-        await UnitOfWork.RejectChangesAsync();
-        return false;
-    }
+    public async Task<bool> DeleteGroup(Group group) => await DeleteGroup(group.Id);
 }

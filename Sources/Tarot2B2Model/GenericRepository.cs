@@ -58,10 +58,7 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TE
         => await _dbSet.FindAsync(id) is { } item && await Delete(item);
 
     public virtual async Task<bool> Delete(TEntity item)
-    {
-        await Task.Run(() => _dbSet.Remove(item));
-        return true;
-    }
+        => await Task.Run(() => _dbSet.Remove(item).State == EntityState.Deleted);
 
     public virtual async Task<TEntity?> GetById(object id)
         => await _dbSet.FindAsync(id);

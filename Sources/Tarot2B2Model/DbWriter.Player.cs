@@ -11,9 +11,6 @@ public partial class DbWriter
         if (player.Id != 0) return null;
         Mapper.Reset();
 
-        var playerFound = await UnitOfWork.Repository<PlayerEntity>().GetById(player.Id);
-        if (playerFound != null) return null;
-
         var result = await UnitOfWork.Repository<PlayerEntity>().Insert(player.ToEntity());
 
         await UnitOfWork.SaveChangesAsync();
@@ -57,20 +54,5 @@ public partial class DbWriter
         return false;
     }
 
-    public async Task<bool> DeletePlayer(Player player)
-    {
-        var playerToDelete = await UnitOfWork.Repository<PlayerEntity>().GetById(player.Id);
-        if (playerToDelete == null) return false;
-        
-        var result = await UnitOfWork.Repository<PlayerEntity>().Delete(playerToDelete);
-
-        if (result)
-        {
-            await UnitOfWork.SaveChangesAsync();
-            return true;
-        }
-
-        await UnitOfWork.RejectChangesAsync();
-        return false;
-    }
+    public async Task<bool> DeletePlayer(Player player) => await DeletePlayer(player.Id);
 }

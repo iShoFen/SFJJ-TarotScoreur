@@ -11,8 +11,6 @@ namespace UT_Tarot2B2Model;
 
 public class UT_GenericRepositories
 {
-	
-
 	public static IEnumerable<object[]> InsertData()
 		=> GenericData.Data()
 			.Select(item => new[] {item[0], item[1], item[2], GenericData.CreateEntity((Type) item[2], 1UL)});
