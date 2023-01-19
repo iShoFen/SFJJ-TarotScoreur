@@ -3,6 +3,14 @@
 public interface IUnitOfWork : IDisposable
 {
 	/// <summary>
+	/// Set the query tracking mode of entities.
+	/// True => Enable the tracking.
+	/// False => Disable the tracking.
+	/// </summary>
+	/// <param name="tracking">Enable/Disable tracking</param>
+	void SetTracking(bool tracking);
+	
+	/// <summary>
 	/// Return the repository for the specified type
 	/// </summary>
 	/// <typeparam name="TEntity"> The type of the entity </typeparam>

@@ -19,6 +19,7 @@ public partial class DbWriter : IWriter
     public DbWriter(IUnitOfWork unitOfWork)
     {
         UnitOfWork = unitOfWork;
+        unitOfWork.SetTracking(true);
     }
 
     public void Dispose()

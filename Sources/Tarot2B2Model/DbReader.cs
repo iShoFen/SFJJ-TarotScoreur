@@ -20,6 +20,7 @@ public partial class DbReader : IReader
     public DbReader(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+        unitOfWork.SetTracking(false);
     }
 
     private IQueryable<TEntity> Set<TEntity>() where TEntity : class => _unitOfWork.Repository<TEntity>().Set;
