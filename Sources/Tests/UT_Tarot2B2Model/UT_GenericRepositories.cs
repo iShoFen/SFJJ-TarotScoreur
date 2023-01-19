@@ -6,7 +6,7 @@ using TarotDB;
 using Xunit;
 using static TestUtils.TestInitializer;
 
-namespace UT_Tarot2B2Model.Extensions;
+namespace UT_Tarot2B2Model;
 
 public class UT_GenericRepositories
 {
