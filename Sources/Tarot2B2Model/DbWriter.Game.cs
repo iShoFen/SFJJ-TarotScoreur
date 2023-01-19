@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Model.Games;
 using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB;
@@ -12,12 +13,12 @@ public partial class DbWriter
         Mapper.Reset();
 
         var gameToInsert = game.ToEntity();
+
         gameToInsert.Players =
             gameToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!)
                 .ToHashSet();
 
-        gameToInsert.Hands = gameToInsert.Hands
-            .Select(h => UnitOfWork.Repository<HandEntity>().GetById(h.Id).Result!).ToHashSet();
+        gameToInsert.Hands = gameToInsert.Hands.Where(h => h.Id == 0).ToHashSet();
 
         var result = await UnitOfWork.Repository<GameEntity>().Insert(gameToInsert);
 
@@ -30,23 +31,26 @@ public partial class DbWriter
     public async Task<Game?> UpdateGame(Game game)
     {
         Mapper.Reset();
-        var gameToUpdate = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
+        var gameToUpdate = await UnitOfWork.Repository<GameEntity>()
+            .Set
+            .Include(g => g.Players)
+            .Include(g => g.Hands)
+            .FirstOrDefaultAsync(g => g.Id == game.Id);
         if (gameToUpdate == null) return null;
 
         var gameEntitySource = game.ToEntity();
 
         foreach (var property in typeof(GameEntity).GetProperties()
-                     .Where(p => p.CanWrite && p.Name != nameof(GameEntity.Id)))
+                     .Where(p => p is
+                     {
+                         CanWrite: true,
+                         Name: not (nameof(GameEntity.Id)
+                         or nameof(GameEntity.Players)
+                         or nameof(GameEntity.Hands))
+                     }))
         {
             property.SetValue(gameToUpdate, property.GetValue(gameEntitySource));
         }
-
-        gameToUpdate.Players =
-            gameToUpdate.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!)
-                .ToHashSet();
-
-        gameToUpdate.Hands = gameToUpdate.Hands
-            .Select(h => UnitOfWork.Repository<HandEntity>().GetById(h.Id).Result!).ToHashSet();
 
         var result = await UnitOfWork.Repository<GameEntity>().Update(gameToUpdate);
 
@@ -70,19 +74,5 @@ public partial class DbWriter
     }
 
     public async Task<bool> DeleteGame(Game game)
-    {
-        var gameToDelete = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
-        if (gameToDelete == null) return false;
-
-        var result = await UnitOfWork.Repository<GameEntity>().Delete(gameToDelete);
-
-        if (result)
-        {
-            await UnitOfWork.SaveChangesAsync();
-            return true;
-        }
-
-        await UnitOfWork.RejectChangesAsync();
-        return false;
-    }
+        => await DeleteGame(game.Id);
 }

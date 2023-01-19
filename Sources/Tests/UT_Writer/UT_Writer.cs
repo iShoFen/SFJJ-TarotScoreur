@@ -1,9 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using Model.Data;
 using Model.Games;
 using Model.Players;
-using Tarot2B2Model.ExtensionsAndMappers;
-using TarotDB;
 using Xunit;
 
 namespace UT_Writer;
@@ -108,6 +105,34 @@ public class UT_Writer
 
         if (expectedGame is null) Assert.Null(result);
         else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(GameWriterDataTest.UpdateGameData), MemberType = typeof(GameWriterDataTest))]
+    public async Task GameUpdateTest(IWriter writer, Game game, Game? expectedGame)
+    {
+        var result = await writer.UpdateGame(game);
+
+        if (expectedGame is null) Assert.Null(result);
+        else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(GameWriterDataTest.DeleteGameWithObjectData), MemberType = typeof(GameWriterDataTest))]
+    public async Task GameDeleteWithObjectTest(IWriter writer, Game game, bool expectedResult)
+    {
+        var result = await writer.DeleteGame(game);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(GameWriterDataTest.DeleteGameWithIdData), MemberType = typeof(GameWriterDataTest))]
+    public async Task GameDeleteWithIdTest(IWriter writer, ulong gameId, bool expectedResult)
+    {
+        var result = await writer.DeleteGame(gameId);
+        
+        Assert.Equal(expectedResult, result);
     }
 
     #endregion
