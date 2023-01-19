@@ -263,6 +263,42 @@ public static class GameTestData
                 10,
                 Array.Empty<Game>()
             };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 21),
+                new DateTime(2022, 09, 29),
+                0,
+                0,
+                Array.Empty<Game>()
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 21),
+                new DateTime(2022, 09, 29),
+                -1,
+                -1,
+                Array.Empty<Game>()
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 21),
+                new DateTime(2022, 09, 29),
+                int.MaxValue,
+                int.MaxValue,
+                Array.Empty<Game>()
+            };
+            yield return new object?[]
+            {
+                loader.Get(),
+                new DateTime(2022, 09, 21),
+                new DateTime(2022, 09, 29),
+                int.MinValue,
+                int.MinValue,
+                Array.Empty<Game>()
+            };
         }
     }
 
