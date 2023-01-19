@@ -55,29 +55,26 @@ internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TE
     public virtual async Task<TEntity> Update(TEntity item)
         => (await Task.Run(() => _dbSet.Update(item))).Entity;
 
-
-    // is { } == is TEntity
-    public virtual async Task<bool> Delete(object id)
+    // Is { } == TEntity
+	public virtual async Task<bool> Delete(object id) 
         => await _dbSet.FindAsync(id) is { } item && await Delete(item);
 
     public virtual async Task<bool> Delete(TEntity item)
     {
         await Task.Run(() => _dbSet.Remove(item));
-
         return true;
     }
 
     public virtual async Task<TEntity?> GetById(object id)
         => await _dbSet.FindAsync(id);
 
+	public virtual async Task<IEnumerable<TEntity>> GetItems(int start, int count)
+		=> start <= 0 || count <= 0
+			? await Task.Run(Enumerable.Empty<TEntity>)
+			: await _dbSet.PaginateAsync(start, count);
 
-    public virtual async Task<IEnumerable<TEntity>> GetItems(int start, int count)
-        => start <= 0 && count <= 0
-            ? await Task.Run(Enumerable.Empty<TEntity>)
-            : await _dbSet.PaginateAsync(start, count);
-
-    public virtual async Task Clear()
-        => await Task.Run(() => _dbSet.RemoveRange(_dbSet));
+	public virtual async Task Clear()
+		=> await _dbSet.ForEachAsync(item => _dbSet.Remove(item));
 
     public virtual async Task<int> Count()
         => await _dbSet.CountAsync();

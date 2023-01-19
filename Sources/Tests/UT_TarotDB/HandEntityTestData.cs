@@ -88,7 +88,7 @@ public static class HandEntityTestData
 			}
 		};
 	}
-	
+
 	public static IEnumerable<object?[]> Data_TestAdd()
 	{
 		yield return new object?[]
@@ -203,7 +203,7 @@ public static class HandEntityTestData
 			"TestRules",
 			new DateTime(2022, 09, 21),
 			new DateTime(2022, 10, 22),
-			210, 
+			210,
 			512,
 			false,
 			true,
@@ -239,7 +239,7 @@ public static class HandEntityTestData
 			"TestRules2",
 			new DateTime(2022, 09, 21),
 			new DateTime(2022, 10, 24),
-			210, 
+			210,
 			350,
 			false,
 			null,
@@ -270,7 +270,7 @@ public static class HandEntityTestData
 			"TestRules",
 			new DateTime(2022, 09, 21),
 			new DateTime(2022, 10, 22),
-			210, 
+			210,
 			512,
 			false,
 			true,
