@@ -11,10 +11,18 @@ public partial class DbWriter
         if (game.Id != 0) return null;
         Mapper.Reset();
 
-        var groupFound = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
-        if (groupFound != null) return null;
+        var gameFound = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
+        if (gameFound != null) return null;
 
-        var result = await UnitOfWork.Repository<GameEntity>().Insert(game.ToEntity());
+        var gameToInsert = game.ToEntity();
+        gameToInsert.Players =
+            gameToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!)
+                .ToHashSet();
+
+        gameToInsert.Hands = gameToInsert.Hands
+            .Select(h => UnitOfWork.Repository<HandEntity>().GetById(h.Id).Result!).ToHashSet();
+
+        var result = await UnitOfWork.Repository<GameEntity>().Insert(gameToInsert);
 
         await UnitOfWork.SaveChangesAsync();
 
@@ -24,16 +32,60 @@ public partial class DbWriter
 
     public async Task<Game?> UpdateGame(Game game)
     {
-        throw new NotImplementedException();
+        Mapper.Reset();
+        var gameToUpdate = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
+        if (gameToUpdate == null) return null;
+
+        var gameEntitySource = game.ToEntity();
+
+        foreach (var property in typeof(GameEntity).GetProperties()
+                     .Where(p => p.CanWrite && p.Name != nameof(GameEntity.Id)))
+        {
+            property.SetValue(gameToUpdate, property.GetValue(gameEntitySource));
+        }
+
+        gameToUpdate.Players =
+            gameToUpdate.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!)
+                .ToHashSet();
+
+        gameToUpdate.Hands = gameToUpdate.Hands
+            .Select(h => UnitOfWork.Repository<HandEntity>().GetById(h.Id).Result!).ToHashSet();
+
+        var result = await UnitOfWork.Repository<GameEntity>().Update(gameToUpdate);
+
+        await UnitOfWork.SaveChangesAsync();
+
+        return result.ToModel();
     }
 
     public async Task<bool> DeleteGame(ulong gameId)
     {
-        throw new NotImplementedException();
+        var result = await UnitOfWork.Repository<GameEntity>().Delete(gameId);
+
+        if (result)
+        {
+            await UnitOfWork.SaveChangesAsync();
+            return true;
+        }
+
+        await UnitOfWork.RejectChangesAsync();
+        return false;
     }
 
     public async Task<bool> DeleteGame(Game game)
     {
-        throw new NotImplementedException();
+        var gameToDelete = await UnitOfWork.Repository<GameEntity>().GetById(game.Id);
+        if (gameToDelete == null) return false;
+
+        var result = await UnitOfWork.Repository<GameEntity>().Delete(gameToDelete);
+
+        if (result)
+        {
+            await UnitOfWork.SaveChangesAsync();
+            return true;
+        }
+
+        await UnitOfWork.RejectChangesAsync();
+        return false;
     }
 }

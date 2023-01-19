@@ -3,36 +3,13 @@ using Model.Rules;
 using Model.Games;
 using Model.Players;
 using static TestUtils.DataManagers;
+using static TestUtils.GameTestUtils;
 
 namespace UT_Reader;
 
 public static class GameTestData
 {
 // 1UL, "Game 1", new FrenchTarotRules(), new DateTime(2022, 09, 21), null)
-    private static Game CreateGameWithPlayersAndHands(
-        ulong id,
-        string name,
-        IRules rules,
-        DateTime startDate,
-        DateTime? endate,
-        IEnumerable<Player> players,
-        IEnumerable<Hand> hands
-    )
-    {
-        var game = new Game(id, name, rules, startDate, endate);
-        foreach (var player in players)
-        {
-            game.AddPlayer(player);
-        }
-
-        foreach (var hand in hands)
-        {
-            game.AddHand(hand);
-        }
-
-        return game;
-    }
-
     public static IEnumerable<object[]> Data_TestGetGames()
     {
         foreach (var loader in Loaders)

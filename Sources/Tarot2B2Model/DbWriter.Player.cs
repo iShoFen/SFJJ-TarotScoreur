@@ -59,7 +59,10 @@ public partial class DbWriter
 
     public async Task<bool> DeletePlayer(Player player)
     {
-        var result = await UnitOfWork.Repository<PlayerEntity>().Delete(player);
+        var playerToDelete = await UnitOfWork.Repository<PlayerEntity>().GetById(player.Id);
+        if (playerToDelete == null) return false;
+        
+        var result = await UnitOfWork.Repository<PlayerEntity>().Delete(playerToDelete);
 
         if (result)
         {

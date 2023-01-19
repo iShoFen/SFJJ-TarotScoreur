@@ -1,16 +1,17 @@
 using Model.Data;
+using Model.Games;
 using Model.Players;
 using Xunit;
 
 namespace UT_Writer;
 
-public class UT_Saver
+public class UT_Writer
 {
     #region Player
 
     [Theory]
-    [MemberData(nameof(PlayerWriterDataTest.Data_TestInsertPlayer), MemberType = typeof(PlayerWriterDataTest))]
-    public async Task TestInsertPlayer(IWriter writer, Player player, Player? expectedPlayer)
+    [MemberData(nameof(PlayerWriterDataTest.InsertPlayerData), MemberType = typeof(PlayerWriterDataTest))]
+    public async Task PlayerInsertTest(IWriter writer, Player player, Player? expectedPlayer)
     {
         var result = await writer.InsertPlayer(player);
 
@@ -18,10 +19,76 @@ public class UT_Saver
         else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
     }
 
+    [Theory]
+    [MemberData(nameof(PlayerWriterDataTest.UpdatePlayerData), MemberType = typeof(PlayerWriterDataTest))]
+    public async Task PlayerUpdateTest(IWriter writer, Player player, Player? expectedPlayer)
+    {
+        var result = await writer.UpdatePlayer(player);
+
+        if (expectedPlayer is null) Assert.Null(result);
+        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(PlayerWriterDataTest.DeletePlayerWithObjectData), MemberType = typeof(PlayerWriterDataTest))]
+    public async Task PlayerDeleteWithObjectTest(IWriter writer, Player player, bool expectedResult)
+    {
+        var result = await writer.DeletePlayer(player);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(PlayerWriterDataTest.DeletePlayerWithIdData), MemberType = typeof(PlayerWriterDataTest))]
+    public async Task PlayerDeleteWithIdTest(IWriter writer, ulong playerId, bool expectedResult)
+    {
+        var result = await writer.DeletePlayer(playerId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
     #endregion
 
     #region Group
+    
+    [Theory]
+    [MemberData(nameof(GroupWriterDataTest.InsertGroupData), MemberType = typeof(GroupWriterDataTest))]
+    public async Task GroupInsertTest(IWriter writer, Group group, Group? expectedGroup)
+    {
+        var result = await writer.InsertGroup(group);
 
+        if (expectedGroup is null) Assert.Null(result);
+        else Assert.Equal(expectedGroup, result!, Group.GroupFullComparer);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GroupWriterDataTest.UpdateGroupData), MemberType = typeof(GroupWriterDataTest))]
+    public async Task GroupUpdateTest(IWriter writer, Group group, Group? expectedGroup)
+    {
+        var result = await writer.UpdateGroup(group);
+
+        if (expectedGroup is null) Assert.Null(result);
+        else Assert.Equal(expectedGroup, result!, Group.GroupFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(GroupWriterDataTest.DeleteGroupWithObjectData), MemberType = typeof(GroupWriterDataTest))]
+    public async Task GroupDeleteWithObjectTest(IWriter writer, Group group, bool expectedResult)
+    {
+        var result = await writer.DeleteGroup(group);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(GroupWriterDataTest.DeleteGroupWithIdData), MemberType = typeof(GroupWriterDataTest))]
+    public async Task GroupDeleteWithIdTest(IWriter writer, ulong groupId, bool expectedResult)
+    {
+        var result = await writer.DeleteGroup(groupId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
     #endregion
 
     #region Hand
@@ -29,92 +96,16 @@ public class UT_Saver
     #endregion
 
     #region Game
+    
+    [Theory]
+    [MemberData(nameof(GameWriterDataTest.InsertGameData), MemberType = typeof(GameWriterDataTest))]
+    public async Task GameInsertTest(IWriter writer, Game game, Game? expectedGame)
+    {
+        var result = await writer.InsertGame(game);
+
+        if (expectedGame is null) Assert.Null(result);
+        else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
 
     #endregion
-
-    // [Theory]
-    // [MemberData(nameof(SaverTestData.Data_TestSavePlayer), MemberType = typeof(SaverTestData))]
-    // internal async Task TestSavePlayer(IWriter writer, Player player, Player? expPlayer, PlayerEntity? expEntity)
-    // {
-    // 	var result = await writer.InsertPlayer(player);
-    // 	Assert.Equal(expPlayer, result);
-    //
-    // 	if (expEntity != null)
-    // 	{
-    // 		if (writer is not DbWriter dbSaver) return;
-    //
-    // 		await using var context =
-    // 			(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
-    // 		var entity = await context.Players
-    // 			.Include(p => p.Games)
-    // 			.Include(p => p.Groups)
-    // 			.Include(p => p.Biddings)
-    // 			.FirstOrDefaultAsync(p => p.Id == expEntity.Id);
-    //
-    //
-    // 		Assert.NotNull(entity);
-    // 		Assert.Equal(expEntity.Id, entity!.Id);
-    // 		Assert.Equal(expEntity.FirstName, entity.FirstName);
-    // 		Assert.Equal(expEntity.LastName, entity.LastName);
-    // 		Assert.Equal(expEntity.Nickname, entity.Nickname);
-    // 		Assert.Equal(expEntity.Avatar, entity.Avatar);
-    // 	}
-    // }
-    
-    // [Theory]
-    // [MemberData(nameof(SaverTestData.Data_TestSaveGroup), MemberType = typeof(SaverTestData))]
-    // internal async Task TestSaveGroup(IWriter writer, Group group, Group? expGroup, GroupEntity? expEntity)
-    // {
-    // 	var result = await writer.SaveGroup(group);
-    // 	Assert.Equal(expGroup, result);
-    //
-    // 	if (expEntity != null)
-    // 	{
-    // 		if (writer is not DbWriter dbSaver) return;
-    //
-    // 		await using var context =
-    // 			(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
-    // 		var entity = await context.Groups
-    // 			.Include(g => g.Players)
-    // 			.FirstOrDefaultAsync(g => g.Id == expEntity.Id);
-    // 		
-    // 		Assert.NotNull(entity);
-    // 		Assert.Equal(expEntity.Id, entity!.Id);
-    // 		Assert.Equal(expEntity.Name, entity.Name);
-    // 		
-    // 		var players = expEntity.Players.Select(p => context.Players.Find(p.Id)!).ToList();
-    // 		foreach (var player in entity.Players)
-    // 		{
-    // 			Assert.Contains(player, players);
-    // 		}
-    // 	}
-    // }
-    //
-    // [Theory]
-    // [MemberData(nameof(SaverTestData.Data_TestSaveGame), MemberType = typeof(SaverTestData))]
-    // internal async Task TestSaveGame(IWriter writer, Game game, Game? expGame, GameEntity? expEntity)
-    // {
-    // 	var result = await writer.SaveGame(game);
-    // 	Assert.Equal(expGame, result);
-    //
-    // 	if (expEntity != null)
-    // 	{
-    // 		if (writer is not DbWriter dbSaver) return;
-    //
-    // 		await using var context =
-    // 			(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
-    // 		var entity = await context.Games
-    // 			.Include(g => g.Players)
-    // 			.Include(g => g.Hands)
-    // 			.Include(g => g.Players)
-    // 			.FirstOrDefaultAsync(g => g.Id == expEntity.Id);
-    // 		
-    // 		Assert.NotNull(entity);
-    // 		Assert.Equal(expEntity.Id, entity!.Id);
-    // 		Assert.Equal(expEntity.Name, entity.Name);
-    // 		Assert.Equal(expEntity.Rules, entity.Rules);
-    // 		Assert.Equal(expEntity.StartDate, entity.StartDate);
-    // 		Assert.Equal(expEntity.EndDate, entity.EndDate);
-    // 	}
-    // }
 }

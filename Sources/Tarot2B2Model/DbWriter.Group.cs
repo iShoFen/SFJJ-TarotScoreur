@@ -14,7 +14,11 @@ public partial class DbWriter
         var groupFound = await UnitOfWork.Repository<GroupEntity>().GetById(group.Id);
         if (groupFound != null) return null;
 
-        var result = await UnitOfWork.Repository<GroupEntity>().Insert(group.ToEntity());
+        var groupToInsert = group.ToEntity();
+        groupToInsert.Players =
+            groupToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!).ToHashSet();
+
+        var result = await UnitOfWork.Repository<GroupEntity>().Insert(groupToInsert);
 
         await UnitOfWork.SaveChangesAsync();
 
@@ -33,6 +37,9 @@ public partial class DbWriter
         foreach (var property in typeof(GroupEntity).GetProperties()
                      .Where(p => p.CanWrite && p.Name != nameof(GroupEntity.Id)))
             property.SetValue(groupToUpdate, property.GetValue(groupEntitySource));
+
+        groupToUpdate.Players =
+            groupToUpdate.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!).ToHashSet();
 
         var result = await UnitOfWork.Repository<GroupEntity>().Update(groupToUpdate);
 
@@ -57,7 +64,10 @@ public partial class DbWriter
 
     public async Task<bool> DeleteGroup(Group group)
     {
-        var result = await UnitOfWork.Repository<GroupEntity>().Delete(group);
+        var groupToDelete = await UnitOfWork.Repository<GroupEntity>().GetById(group.Id);
+        if (groupToDelete == null) return false;
+        
+        var result = await UnitOfWork.Repository<GroupEntity>().Delete(groupToDelete);
 
         if (result)
         {
