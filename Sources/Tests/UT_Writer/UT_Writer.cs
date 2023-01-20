@@ -93,6 +93,44 @@ public class UT_Writer
 
     #region Hand
 
+    [Theory]
+    [MemberData(nameof(HandWriterDataTest.InsertHandData), MemberType = typeof(HandWriterDataTest))]
+    public async Task HandInsertTest(IWriter writer, Game game, Hand hand, Hand? expectedHand)
+    {
+        var result = await writer.InsertHand(game, hand);
+
+        if (expectedHand is null) Assert.Null(result);
+        else Assert.Equal(expectedHand, result!, Hand.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(HandWriterDataTest.UpdateHandData), MemberType = typeof(HandWriterDataTest))]
+    public async Task HandUpdateTest(IWriter writer, Player player, Player? expectedPlayer)
+    {
+        var result = await writer.UpdatePlayer(player);
+
+        if (expectedPlayer is null) Assert.Null(result);
+        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(HandWriterDataTest.DeleteHandWithObjectData), MemberType = typeof(HandWriterDataTest))]
+    public async Task HandDeleteWithObjectTest(IWriter writer, Player player, bool expectedResult)
+    {
+        var result = await writer.DeletePlayer(player);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(HandWriterDataTest.DeleteHandWithIdData), MemberType = typeof(HandWriterDataTest))]
+    public async Task HandDeleteWithIdTest(IWriter writer, ulong playerId, bool expectedResult)
+    {
+        var result = await writer.DeletePlayer(playerId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
     #endregion
 
     #region Game
