@@ -46,9 +46,9 @@ internal class BiddingPoigneeEntityComparer : EqualityComparer<BiddingPoigneeEnt
     public override bool Equals(BiddingPoigneeEntity? x, BiddingPoigneeEntity? y)
     {
         if (x == null || y == null) return false;
-        if (x.Player.Id == 0 || y.Player.Id == 0 || x.Hand.Id == 0 || y.Hand.Id == 0) return false;
+        if (x.PlayerId == 0 || y.PlayerId == 0 || x.HandId == 0 || y.HandId == 0) return false;
 
-        return x.Player.Id == y.Player.Id && x.Hand.Id == y.Hand.Id;
+        return x.PlayerId == y.PlayerId && x.HandId == y.HandId;
     }
 
     public override int GetHashCode(BiddingPoigneeEntity obj) => obj.Hand.GetHashCode();
