@@ -3,7 +3,7 @@ using static TestUtils.DataManagers;
 
 namespace UT_Reader;
 
-internal static class PlayerTestData
+public static class PlayerTestData
 {
     public static IEnumerable<object?[]> Data_TestAllPlayers()
     {

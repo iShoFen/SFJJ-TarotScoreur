@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -7,21 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Model\Model.csproj"/>
-        <ProjectReference Include="..\..\StubContext\StubContext.csproj"/>
-        <ProjectReference Include="..\..\StubLib\StubLib.csproj"/>
-        <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj"/>
-        <ProjectReference Include="..\..\TarotDB\TarotDB.csproj"/>
-        <InternalsVisibleTo Include="UT_Tarot2B2Model"/>
-        <InternalsVisibleTo Include="UT_Model"/>
-        <InternalsVisibleTo Include="UT_TarotDB"/>
-        <InternalsVisibleTo Include="UT_Reader"/>
-        <InternalsVisibleTo Include="UT_Writer"/>
+        <InternalsVisibleTo Include="UT_Tarot2B2Model" />
+        <InternalsVisibleTo Include="UT_Model" />
+        <InternalsVisibleTo Include="UT_TarotDB" />
+        <InternalsVisibleTo Include="UT_Reader" />
+        <InternalsVisibleTo Include="UT_Writer" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.10"/>
+      <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
+      <ProjectReference Include="..\..\StubLib\StubLib.csproj" />
+      <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
     </ItemGroup>
 
 </Project>
