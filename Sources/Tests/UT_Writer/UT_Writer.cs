@@ -95,9 +95,9 @@ public class UT_Writer
 
     [Theory]
     [MemberData(nameof(HandWriterDataTest.InsertHandData), MemberType = typeof(HandWriterDataTest))]
-    public async Task HandInsertTest(IWriter writer, Game game, Hand hand, Hand? expectedHand)
+    public async Task HandInsertTest(IWriter writer, ulong gameId, Hand hand, Hand? expectedHand)
     {
-        var result = await writer.InsertHand(game, hand);
+        var result = await writer.InsertHand(gameId, hand);
 
         if (expectedHand is null) Assert.Null(result);
         else Assert.Equal(expectedHand, result!, Hand.FullComparer);
@@ -105,28 +105,28 @@ public class UT_Writer
 
     [Theory]
     [MemberData(nameof(HandWriterDataTest.UpdateHandData), MemberType = typeof(HandWriterDataTest))]
-    public async Task HandUpdateTest(IWriter writer, Player player, Player? expectedPlayer)
+    public async Task HandUpdateTest(IWriter writer, Hand hand, Hand? expectedHand)
     {
-        var result = await writer.UpdatePlayer(player);
+        var result = await writer.UpdateHand(hand);
 
-        if (expectedPlayer is null) Assert.Null(result);
-        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
+        if (expectedHand is null) Assert.Null(result);
+        else Assert.Equal(expectedHand, result!, Hand.FullComparer);
     }
 
     [Theory]
     [MemberData(nameof(HandWriterDataTest.DeleteHandWithObjectData), MemberType = typeof(HandWriterDataTest))]
-    public async Task HandDeleteWithObjectTest(IWriter writer, Player player, bool expectedResult)
+    public async Task HandDeleteWithObjectTest(IWriter writer, Hand hand, bool expectedResult)
     {
-        var result = await writer.DeletePlayer(player);
+        var result = await writer.DeleteHand(hand);
         
         Assert.Equal(expectedResult, result);
     }
 
     [Theory]
     [MemberData(nameof(HandWriterDataTest.DeleteHandWithIdData), MemberType = typeof(HandWriterDataTest))]
-    public async Task HandDeleteWithIdTest(IWriter writer, ulong playerId, bool expectedResult)
+    public async Task HandDeleteWithIdTest(IWriter writer, ulong handId, bool expectedResult)
     {
-        var result = await writer.DeletePlayer(playerId);
+        var result = await writer.DeleteHand(handId);
         
         Assert.Equal(expectedResult, result);
     }

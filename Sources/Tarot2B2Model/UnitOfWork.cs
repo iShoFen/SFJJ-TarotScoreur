@@ -4,10 +4,7 @@ namespace Tarot2B2Model;
 
 public class UnitOfWork : IUnitOfWork
 {
-    /// <summary>
-    /// The database context
-    /// </summary>
-    private readonly DbContext _dbContext;
+    public DbContext Context { get; }
 
     /// <summary>
     /// Initializes a new instance of UnitOfWork
@@ -16,26 +13,26 @@ public class UnitOfWork : IUnitOfWork
     /// <param name="noTracking"> Whether to use NoTracking queries </param>
     public UnitOfWork(DbContext dbContext, bool noTracking = true)
     {
-        _dbContext = dbContext;
-        _dbContext.Database.EnsureCreated();
+        Context = dbContext;
+        Context.Database.EnsureCreated();
 
-        if (noTracking) _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        if (noTracking) Context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
     public void SetTracking(bool tracking)
     {
-        if (tracking) _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-        else _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        if (tracking) Context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+        else Context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
 
     public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class
-        => new GenericRepository<TEntity>(_dbContext);
+        => new GenericRepository<TEntity>(Context);
 
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var result = await _dbContext.SaveChangesAsync(cancellationToken);
+        var result = await Context.SaveChangesAsync(cancellationToken);
 
-        _dbContext.ChangeTracker.Entries()
+        Context.ChangeTracker.Entries()
             .Where(e => e.State != EntityState.Detached).ToList()
             .ForEach(e => e.State = EntityState.Detached);
 
@@ -46,7 +43,7 @@ public class UnitOfWork : IUnitOfWork
     {
         await Task.Run(() =>
         {
-            foreach (var entry in _dbContext.ChangeTracker.Entries()
+            foreach (var entry in Context.ChangeTracker.Entries()
                          .Where(e => e.State != EntityState.Unchanged))
             {
                 switch (entry.State)
@@ -74,7 +71,7 @@ public class UnitOfWork : IUnitOfWork
     {
         if (disposing)
         {
-            _dbContext.Dispose();
+            Context.Dispose();
         }
     }
 }

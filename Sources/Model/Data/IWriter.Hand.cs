@@ -10,7 +10,7 @@ public partial interface IWriter
     /// <param name="game">Game that will receive the hand</param>
     /// <param name="hand">Hand to insert</param>
     /// <returns>The inserted hand or null of the hand has an id not equals to 0</returns>
-    Task<Hand?> InsertHand(Game game, Hand hand);
+    Task<Hand?> InsertHand(ulong gameId, Hand hand);
 
     /// <summary>
     /// Update a hand.
