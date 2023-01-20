@@ -4,6 +4,8 @@ public static class Extensions
 {
     public static IQueryable<T> Paginate<T>(this IQueryable<T> list, int start, int count)
     {
+        if (start <= 0 || count <= 0) return Enumerable.Empty<T>().AsQueryable();
+
         var skipNumber = (start - 1) * count;
         if (start > 1 && skipNumber < count) return Enumerable.Empty<T>().AsQueryable();
 
