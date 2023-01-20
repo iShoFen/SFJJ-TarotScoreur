@@ -21,8 +21,9 @@ public class UnitOfWork : IUnitOfWork
 
     public void SetTracking(bool tracking)
     {
-        if (tracking) Context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-        else Context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        Context.ChangeTracker.QueryTrackingBehavior = tracking 
+            ? QueryTrackingBehavior.TrackAll 
+            : QueryTrackingBehavior.NoTracking;
     }
 
     public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class

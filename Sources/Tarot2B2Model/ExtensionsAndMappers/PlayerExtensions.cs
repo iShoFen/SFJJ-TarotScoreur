@@ -38,8 +38,12 @@ internal static class PlayerExtensions
         var model = Mapper.PlayersMapper.GetModel(entity);
         if (model is not null) return model;
 
-        model = new Player(entity.Id, entity.FirstName, entity.LastName, entity.Nickname,
-            entity.Avatar);
+        model = new Player(entity.Id,
+                           entity.FirstName,
+                           entity.LastName,
+                           entity.Nickname,
+                           entity.Avatar
+        );
 
         Mapper.PlayersMapper.Map(model, entity);
 
@@ -52,9 +56,7 @@ internal static class PlayerExtensions
     /// <param name="players">Collection of Player to convert</param>
     /// <returns>Collection of PlayerEntity converted</returns>
     public static IEnumerable<PlayerEntity> ToEntities(this IEnumerable<Player> players)
-    {
-        return players.Select(e => e.ToEntity());
-    }
+        => players.Select(e => e.ToEntity());
 
     /// <summary>
     /// Converts a collection of PlayerEntity to a collection of Player thanks to extension method
@@ -62,7 +64,5 @@ internal static class PlayerExtensions
     /// <param name="players">Collection of PlayerEntity to convert</param>
     /// <returns>Collection of Player converted</returns>
     public static IEnumerable<Player> ToModels(this IEnumerable<PlayerEntity> players)
-    {
-        return players.Select(e => e.ToModel());
-    }
+        => players.Select(e => e.ToModel());
 }
