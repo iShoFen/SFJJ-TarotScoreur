@@ -5,7 +5,7 @@ public class GameDTO
     /// <summary>
     /// The unique identifier for the Game
     /// </summary>
-    public ulong Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// The name of the Rules used for the Game

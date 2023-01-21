@@ -17,7 +17,7 @@ public class BiddingPoigneeDTO
     /// <summary>
     /// The unique identifier of the Hand
     /// </summary>
-    public ulong HandId { get; set; }
+    public long HandId { get; set; }
     
     /// <summary>
     /// The Hand
@@ -27,7 +27,7 @@ public class BiddingPoigneeDTO
     /// <summary>
     /// The unique identifier of the User
     /// </summary>
-    public ulong UserId { get; set; }
+    public long UserId { get; set; }
     
     /// <summary>
     /// The User

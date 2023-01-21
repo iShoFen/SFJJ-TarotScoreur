@@ -10,7 +10,7 @@ public class HandDTO
     /// <summary>
     /// The unique identifier for the Hand
     /// </summary>
-    public ulong Id { get; set; }
+    public long Id { get; set; }
     
     /// <summary>
     /// The number of the Hand
