@@ -4,7 +4,7 @@ namespace UT_Writer;
 
 using static TestUtils.DataManagers;
 
-internal static class GroupWriterDataTest
+public static class GroupWriterDataTest
 {
     public static IEnumerable<object?[]> InsertGroupData()
     {
@@ -31,6 +31,14 @@ internal static class GroupWriterDataTest
             {
                 writer.Get(),
                 new Group(50UL, "Group 51"),
+                null
+            };
+            yield return new object?[]
+            {
+                writer.Get(),
+                new Group("Group 13",
+                          new Player(25UL, "Michel", "SARDOU", "coucou", "avatar25")
+                ),
                 null
             };
         }

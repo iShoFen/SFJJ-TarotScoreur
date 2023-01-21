@@ -12,8 +12,15 @@ public partial class DbWriter
         Mapper.Reset();
 
         var groupToInsert = group.ToEntity();
-        groupToInsert.Players =
-            groupToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!).ToHashSet();
+        
+        List<PlayerEntity> players = new();
+        foreach (var playerEntity in groupToInsert.Players)
+        {
+            var entity = await UnitOfWork.Repository<PlayerEntity>().GetById(playerEntity.Id);
+            if (entity is null) return null;
+            players.Add(entity);
+        }
+        groupToInsert.Players = players.ToHashSet();
 
         var result = await UnitOfWork.Repository<GroupEntity>().Insert(groupToInsert);
 

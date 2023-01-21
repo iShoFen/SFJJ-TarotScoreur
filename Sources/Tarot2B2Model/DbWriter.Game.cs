@@ -14,12 +14,18 @@ public partial class DbWriter
 
         var gameToInsert = game.ToEntity();
 
-        gameToInsert.Players =
-            gameToInsert.Players.Select(p => UnitOfWork.Repository<PlayerEntity>().GetById(p.Id).Result!)
-                .ToHashSet();
+        List<PlayerEntity> players = new();
+        foreach (var playerEntity in gameToInsert.Players)
+        {
+            var entity = await UnitOfWork.Repository<PlayerEntity>().GetById(playerEntity.Id);
+            if (entity is null) return null;
 
+            players.Add(entity);
+        }
+        gameToInsert.Players = players.ToHashSet();
+        
         gameToInsert.Hands = gameToInsert.Hands.Where(h => h.Id == 0).ToHashSet();
-
+        
         var result = await UnitOfWork.Repository<GameEntity>().Insert(gameToInsert);
 
         await UnitOfWork.SaveChangesAsync();

@@ -8,7 +8,7 @@ namespace UT_Writer;
 using static TestUtils.DataManagers;
 using static TestUtils.GameTestUtils;
 
-internal static class GameWriterDataTest
+public static class GameWriterDataTest
 {
     public static IEnumerable<object?[]> InsertGameData()
     {
@@ -178,6 +178,48 @@ internal static class GameWriterDataTest
                         )
                     }
                 )
+            };
+            yield return new object?[]
+            {
+                writer.Get(),
+                CreateGameWithPlayersAndHands(0UL,
+                    "Game 8",
+                    new FrenchTarotRules(),
+                    new DateTime(2022, 09, 21),
+                    new DateTime(2022, 09, 30),
+                    new Player[]
+                    {
+                        new(25UL, "Michel", "SARDOU", "coucou", "avatar25"),
+                        new(9UL, "Samuel", "LE CHANTEUR", "LOL", "avatar9"),
+                        new(10UL, "Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"),
+                        new(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"),
+                        new(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12")
+                    },
+                    new Hand[]
+                    {
+                        new(0UL,
+                            1,
+                            new FrenchTarotRules(),
+                            new DateTime(2022, 09, 30),
+                            567,
+                            true,
+                            false,
+                            PetitResults.Lost,
+                            Chelem.Unknown
+                        ),
+                        new(23UL,
+                            2,
+                            new FrenchTarotRules(),
+                            new DateTime(2022, 09, 30),
+                            567,
+                            true,
+                            false,
+                            PetitResults.Lost,
+                            Chelem.Unknown
+                        )
+                    }
+                ),
+                null
             };
         }
     }

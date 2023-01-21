@@ -4,7 +4,7 @@ namespace UT_Writer;
 
 using static TestUtils.DataManagers;
 
-internal static class PlayerWriterDataTest
+public static class PlayerWriterDataTest
 {
     public static IEnumerable<object?[]> InsertPlayerData()
     {

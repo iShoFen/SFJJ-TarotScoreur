@@ -7,7 +7,7 @@ namespace UT_Writer;
 
 using static TestUtils.DataManagers;
 
-internal static class HandWriterDataTest
+public static class HandWriterDataTest
 {
     public static IEnumerable<object?[]> InsertHandData()
     {

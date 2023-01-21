@@ -1,3 +1,4 @@
+using Model.Enums;
 using Model.Games;
 using Model.Players;
 using Model.Rules;
@@ -17,14 +18,13 @@ public partial class Manager
     /// <param name="nickName">The nick name of the player</param>
     /// <param name="avatar">The avatar of the player</param>
     /// <returns>The player inserted or null if the player has an id not equals to 0</returns>
-    public async Task<Player?> InsertPlayer(string firstName, string lastName, string nickName, string avatar)
+    public async Task<Player> InsertPlayer(string firstName, string lastName, string nickName, string avatar)
     {
         Player playerToInsert = new (firstName, lastName, nickName, avatar);
         
-        var result = await _writer.InsertPlayer(playerToInsert);
+        var result =  (await _writer.InsertPlayer(playerToInsert))!;
 
-        if (result is null) _logger.Error("Error while updating game {Player}", playerToInsert);
-        else _logger.Info("Player {Player} inserted", result);
+        _logger.Info("Player {Player} inserted", result);
         
         return result;
     }
@@ -142,8 +142,44 @@ public partial class Manager
     }
     
     #endregion
-    
+
     #region Hand
+
+    /// <summary>
+    /// Insert a new hand.
+    /// </summary>
+    /// <param name="gameId">The id of the game</param>
+    /// <param name="number">The number of the hand</param>
+    /// <param name="rules">The Rules of the game applied to this hand </param>
+    /// <param name="date">The date of the hand</param>
+    /// <param name="takerScore">The score of the taker</param>
+    /// <param name="twentyOne">Indicates if the taker as the twenty one oudler</param>
+    /// <param name="excuse">Indicates if the taker as the excuse oudler</param>
+    /// <param name="petit">Indicates the state of the Petit related to the taker</param>
+    /// <param name="chelem">Indicates the state of the Chelem related to the taker</param>
+    /// <param name="biddings">Players bidding details</param>
+    /// <returns>The inserted hand or null of the hand has an id not equals to 0</returns>
+    public async Task<Hand?> InsertHand(
+        ulong gameId,
+        int number,
+        IRules rules,
+        DateTime date,
+        int takerScore,
+        bool? twentyOne,
+        bool? excuse,
+        PetitResults petit,
+        Chelem chelem,
+        params KeyValuePair<Player, (Biddings, Poignee)>[] biddings
+    )
+    {
+        var hand = new Hand(number, rules, date, takerScore, twentyOne, excuse, petit, chelem, biddings);
+        var result = await _writer.InsertHand(gameId, hand);
+
+        if (result is null) _logger.Error("Error while inserting hand {Hand}", hand);
+        else _logger.Info("Hand {Hand} inserted", result);
+
+        return result;
+    }
 
     /// <summary>
     /// Update a hand.

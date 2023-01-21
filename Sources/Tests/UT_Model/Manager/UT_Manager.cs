@@ -143,6 +143,56 @@ public class UT_Manager
     
     #endregion
     
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.InsertPlayerData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerInsertTest(IWriter writer, Player player, Player? expectedPlayer)
+    {
+        if (player.Id != 0) return;
+
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.InsertPlayer(player.FirstName, player.LastName, player.NickName, player.Avatar);
+
+        if (expectedPlayer is null) Assert.Null(result);
+        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.UpdatePlayerData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerUpdateTest(IWriter writer, Player player, Player? expectedPlayer)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+
+        var result = await manager.UpdatePlayer(player);
+
+        if (expectedPlayer is null) Assert.Null(result);
+        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.DeletePlayerWithObjectData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerDeleteWithObjectTest(IWriter writer, Player player, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+
+        var result = await manager.DeletePlayer(player);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.DeletePlayerWithIdData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerDeleteWithIdTest(IWriter writer, ulong playerId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeletePlayer(playerId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
+    #endregion
+    
     #endregion
     
     #region Group
@@ -209,6 +259,54 @@ public class UT_Manager
     
     #endregion
     
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.InsertGroupData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupInsertTest(IWriter writer, Group group, Group? expectedGroup)
+    {
+        if (group.Id != 0) return;
+        
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.InsertGroup(group.Name, group.Players.ToArray());
+
+        if (expectedGroup is null) Assert.Null(result);
+        else Assert.Equal(expectedGroup, result!, Group.GroupFullComparer);
+    }
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.UpdateGroupData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupUpdateTest(IWriter writer, Group group, Group? expectedGroup)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.UpdateGroup(group);
+
+        if (expectedGroup is null) Assert.Null(result);
+        else Assert.Equal(expectedGroup, result!, Group.GroupFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.DeleteGroupWithObjectData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupDeleteWithObjectTest(IWriter writer, Group group, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGroup(group);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.DeleteGroupWithIdData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupDeleteWithIdTest(IWriter writer, ulong groupId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGroup(groupId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
+    #endregion
+    
     #endregion
     
     #region Hand
@@ -234,10 +332,68 @@ public class UT_Manager
 
     #endregion
     
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.InsertHandData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandInsertTest(IWriter writer, ulong gameId, Hand hand, Hand? expectedHand)
+    {
+        if (hand.Id != 0) return;
+        
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result =
+            await manager.InsertHand(gameId,
+                                     hand.Number,
+                                     hand.Rules,
+                                     hand.Date,
+                                     hand.TakerScore,
+                                     hand.TwentyOne,
+                                     hand.Excuse,
+                                     hand.Petit,
+                                     hand.Chelem,
+                                     hand.Biddings.ToArray()
+            );
+
+        if (expectedHand is null) Assert.Null(result);
+        else Assert.Equal(expectedHand, result!, Hand.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.UpdateHandData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandUpdateTest(IWriter writer, Hand hand, Hand? expectedHand)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.UpdateHand(hand);
+
+        if (expectedHand is null) Assert.Null(result);
+        else Assert.Equal(expectedHand, result!, Hand.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.DeleteHandWithObjectData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandDeleteWithObjectTest(IWriter writer, Hand hand, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteHand(hand);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.DeleteHandWithIdData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandDeleteWithIdTest(IWriter writer, ulong handId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteHand(handId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
+    #endregion
+    
     #endregion
     
     #region Game
-    
     
     #region Reader
     
@@ -245,7 +401,8 @@ public class UT_Manager
     [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGames), MemberType = typeof(UT_Reader.GameTestData))]
     public async Task TestGetGames(IReader reader, int start, int count, Game[] games)
     {
-        var gamesFound = (await reader.GetGames(start, count)).ToList();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gamesFound = (await manager.GetGames(start, count)).ToList();
 
         Assert.Equal(games.Length, gamesFound.Count);
         Assert.Equal(games, gamesFound, Game.FullComparer);
@@ -257,7 +414,8 @@ public class UT_Manager
     [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGameByPlayer), MemberType = typeof(UT_Reader.GameTestData))]
     public async Task TestGetGameByPlayer(IReader reader, ulong playerId, int start, int count, Game[] games)
     {
-        var gamesFound = (await reader.GetGamesByPlayer(playerId, start, count)).ToList();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gamesFound = (await manager.GetGamesByPlayer(playerId, start, count)).ToList();
 
         Assert.Equal(games.Length, gamesFound.Count);
         Assert.Equal(games, gamesFound, Game.FullComparer);
@@ -269,7 +427,8 @@ public class UT_Manager
     [MemberData(nameof(UT_Reader.GameTestData.GetGameByName), MemberType = typeof(UT_Reader.GameTestData))]
     public async Task TestGetGameByName(IReader reader, string name, int start, int count, Game[] game)
     {
-        var gameFound = (await reader.GetGamesByName(name, start, count)).ToList();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gameFound = (await manager.GetGamesByName(name, start, count)).ToList();
 
         Assert.Equal(game.Length, gameFound.Count);
         Assert.Equal(game, gameFound, Game.FullComparer);
@@ -282,7 +441,8 @@ public class UT_Manager
     public async Task TestGetGamesByDate(IReader reader, DateTime startDate, DateTime? endDate, int start, int count,
         Game[] games)
     {
-        var gamesFound = (await reader.GetGamesByDate(startDate, endDate, start, count)).ToList();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gamesFound = (await manager.GetGamesByDate(startDate, endDate, start, count)).ToList();
 
         Assert.Equal(games.Length, gamesFound.Count);
         Assert.Equal(games, gamesFound, Game.FullComparer);
@@ -294,7 +454,8 @@ public class UT_Manager
     [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGameById), MemberType = typeof(UT_Reader.GameTestData))]
     public async Task TestGetGameById(IReader reader, ulong gameId, Game? game)
     {
-        var gameFound = await reader.GetGameById(gameId);
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gameFound = await manager.GetGameById(gameId);
 
         if (game is null)
         {
@@ -306,6 +467,54 @@ public class UT_Manager
         }
 
         reader.Dispose();
+    }
+    
+    #endregion
+
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(GameInsertData.InsertGameData), MemberType = typeof(GameInsertData))]
+    public async Task GameInsertTest(IWriter writer, Game game, Game? expectedGame)
+    {
+        if (game.Id != 0) return;
+        
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.InsertGame(game.Name, game.Rules, game.StartDate, game.Players.ToArray());
+
+        if (expectedGame is null) Assert.Null(result);
+        else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GameWriterDataTest.UpdateGameData), MemberType = typeof(UT_Writer.GameWriterDataTest))]
+    public async Task GameUpdateTest(IWriter writer, Game game, Game? expectedGame)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.UpdateGame(game);
+
+        if (expectedGame is null) Assert.Null(result);
+        else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GameWriterDataTest.DeleteGameWithObjectData), MemberType = typeof(UT_Writer.GameWriterDataTest))]
+    public async Task GameDeleteWithObjectTest(IWriter writer, Game game, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGame(game);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GameWriterDataTest.DeleteGameWithIdData), MemberType = typeof(UT_Writer.GameWriterDataTest))]
+    public async Task GameDeleteWithIdTest(IWriter writer, ulong gameId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGame(gameId);
+        
+        Assert.Equal(expectedResult, result);
     }
     
     #endregion

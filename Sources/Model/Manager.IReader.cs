@@ -189,7 +189,7 @@ public partial class Manager
     /// <param name="gameId">Id of the game to search</param>
     /// <returns>Game corresponding to the id or null if it does not exist</returns>
     public async Task<Game?> GetGameById(ulong gameId)
-    { 
+    {
         var game = await _reader.GetGameById(gameId);
         
         if(game is null) _logger.Warn($"Game with id {gameId} not found");
