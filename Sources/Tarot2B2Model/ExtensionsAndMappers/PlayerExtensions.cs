@@ -1,9 +1,9 @@
 ﻿using Model.Players;
 using TarotDB;
 
-namespace Tarot2B2Model;
+namespace Tarot2B2Model.ExtensionsAndMappers;
 
-internal static class PlayerExtension
+internal static class PlayerExtensions
 {
     /// <summary>
     /// Converts a Player to a PlayerEntity thanks to extension method
@@ -31,18 +31,23 @@ internal static class PlayerExtension
     /// <summary>
     /// Converts a PlayerEntity to a Player thanks to extension method
     /// </summary>
-    /// <param name="playerEntity">PlayerEntity to convert into Player</param>
+    /// <param name="entity">PlayerEntity to convert into Player</param>
     /// <returns>Player converted</returns>
-    public static Player ToModel(this PlayerEntity playerEntity)
+    public static Player ToModel(this PlayerEntity entity)
     {
-        var playerModel = Mapper.PlayersMapper.GetModel(playerEntity);
-        if (playerModel is not null) return playerModel;
-        playerModel = new Player(playerEntity.Id, playerEntity.FirstName, playerEntity.LastName, playerEntity.Nickname,
-            playerEntity.Avatar);
+        var model = Mapper.PlayersMapper.GetModel(entity);
+        if (model is not null) return model;
 
-        Mapper.PlayersMapper.Map(playerModel, playerEntity);
+        model = new Player(entity.Id,
+                           entity.FirstName,
+                           entity.LastName,
+                           entity.Nickname,
+                           entity.Avatar
+        );
 
-        return playerModel;
+        Mapper.PlayersMapper.Map(model, entity);
+
+        return model;
     }
 
     /// <summary>

@@ -1,422 +1,523 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Model.Rules;
-using Model.Data;
-using Model.Enums;
+﻿using Model.Data;
 using Model.Games;
 using Model.Players;
-using StubLib;
-using Tarot2B2Model;
-using TarotDB;
 using Xunit;
+using static TestUtils.DataManagers;
 
 namespace UT_Model.Manager;
 
 public class UT_Manager
-
 {
-    /*========== Constructor test ==========*/
-    
-    [Fact]
-    public void ConstructorTest()
+    public static IEnumerable<object[]> Data_TestConstructor()
+        => Loaders.SelectMany(reader => Writers.Select(writer => new object[] {reader.Get(), writer.Get()}));
+
+    public static IEnumerable<object[]> Data_TestReader()
+        => Loaders.Select(reader => new object[] {reader.Get()});
+
+    public static IEnumerable<object[]> Data_TestWriter()
+        => Writers.Select(writer => new object[] {writer.Get()});
+
+    [Theory]
+    [MemberData(nameof(Data_TestConstructor))]
+    public void ConstructorTest(IReader reader, IWriter writer)
     {
-        var manager = new Model.Rules.Manager(new DbLoader(), new DbSaver());
+        var manager = new Model.Manager(reader, writer);
         Assert.NotNull(manager);
     }
-    
-    /*========== Set DataManager test ==========*/
-    [Fact]
-    public void SetDataManagerTest()
+
+    [Theory]
+    [MemberData(nameof(Data_TestReader))]
+    public void SetManagerReaderTest(IReader reader)
     {
-        var manager = new Model.Rules.Manager(new DbLoader(), new DbSaver());
-        manager.SetDataManager(new DbLoader(), new DbSaver());
+        var manager = new Model.Manager(Loaders[0].Get(), Writers[0].Get());
+        manager.SetReader(reader);
         Assert.NotNull(manager);
     }
-    /*========== Players test ==========*/
+
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestAllPlayers), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadAllPlayer(ILoader loader, int page, int pageSize, Player[] players)
+    [MemberData(nameof(Data_TestWriter))]
+    public void SetManagerWriterTest(IWriter writer)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadAllPlayer(page, pageSize))?.ToList() ?? new List<Player>();
+        var manager = new Model.Manager(Loaders[0].Get(), Writers[0].Get());
+        manager.SetWriter(writer);
+        Assert.NotNull(manager);
+    }
+
+    #region Player
+    
+    #region Reader
+    
+    [Theory]
+    [MemberData(nameof(UT_Reader.PlayerTestData.Data_TestAllPlayers), MemberType = typeof(UT_Reader.PlayerTestData))]
+    public async Task TestGetPlayers(IReader reader, int start, int count, Player[] players)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var playersFound = (await manager.GetPlayers(start, count)).ToList();
 
         Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
+        Assert.Equal(playersFound, players, Player.PlayerFullComparer);
+
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstName), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayersByFirstName(ILoader loader, string firstName, Player[] players, int page, int pageSize)
+    [MemberData(nameof(UT_Reader.PlayerTestData.Data_TestPlayerById), MemberType = typeof(UT_Reader.PlayerTestData))]
+    public async Task TestGetPlayerById(IReader reader, ulong playerId, Player? expectedPlayer)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayerByFirstName(firstName, page, pageSize))?.ToList() ?? new List<Player>();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var playerFound = await manager.GetPlayerById(playerId);
 
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
+        if (expectedPlayer is null)
+        {
+            Assert.Null(playerFound);
+        }
+        else
+        {
+            Assert.Equal(expectedPlayer, playerFound, Player.PlayerFullComparer!);
+        }
+
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayersByLastName), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByLastName(ILoader loader, string lastName, Player[] players, int page, int pageSize)
+    [MemberData(nameof(UT_Reader.PlayerTestData.Data_TestPlayersByPattern),
+                MemberType = typeof(UT_Reader.PlayerTestData)
+    )]
+    public async Task TestGetPlayersByPattern(
+        IReader reader,
+        string pattern,
+        int start,
+        int count,
+        Player[] expectedPlayers
+    )
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayerByLastName(lastName, page, pageSize))?.ToList() ?? new List<Player>();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var foundPlayers = (await manager.GetPlayersByPattern(pattern, start, count)).ToList();
+        Assert.Equal(expectedPlayers.Length, foundPlayers.Count);
+        Assert.Equal(expectedPlayers, foundPlayers, Player.PlayerFullComparer);
 
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayersByNickname), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByNickname(ILoader loader, string nickname, Player[] players, int page, int pageSize)
+    [MemberData(nameof(UT_Reader.PlayerTestData.Data_TestPlayersByNickname),
+                MemberType = typeof(UT_Reader.PlayerTestData)
+    )]
+    public async Task TestGetPlayersByNickname(
+        IReader reader,
+        string nickname,
+        int start,
+        int count,
+        Player[] expectedPlayers
+    )
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayerByNickname(nickname, page, pageSize))?.ToList() ?? new List<Player>();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var playersFound = (await manager.GetPlayersByNickname(nickname, start, count)).ToList();
 
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
+        Assert.Equal(expectedPlayers.Length, playersFound.Count);
+        Assert.Equal(expectedPlayers, playersFound, Player.PlayerFullComparer);
+
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayersByFirstNameAndLastName), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByFirstNameAndLastName(ILoader loader, string firstName, string lastName, Player[] players,
-        int page,
-        int pageSize)
+    [MemberData(nameof(UT_Reader.PlayerTestData.Data_TestPlayersByFirstNameAndLastName),
+                MemberType = typeof(UT_Reader.PlayerTestData)
+    )]
+    public async Task TestGetPlayerByFirstNameAndLastName(
+        IReader reader,
+        string pattern,
+        int start,
+        int count,
+        Player[] expectedPlayers
+    )
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayerByFirstNameAndLastName(firstName, lastName, page, pageSize))?.ToList() ?? new List<Player>();
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var playersFound = (await manager.GetPlayersByFirstNameAndLastName(pattern, start, count)).ToList();
+
+        Assert.Equal(expectedPlayers.Length, playersFound.Count);
+        Assert.Equal(expectedPlayers, playersFound, Player.PlayerFullComparer);
+
+        reader.Dispose();
+    }
+    
+    #endregion
+    
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.InsertPlayerData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerInsertTest(IWriter writer, Player player, Player? expectedPlayer)
+    {
+        if (player.Id != 0) return;
+
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.InsertPlayer(player.FirstName, player.LastName, player.NickName, player.Avatar);
+
+        if (expectedPlayer is null) Assert.Null(result);
+        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
     }
 
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayerByFirstNameAndNickname), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByFirstNameAndNickname(ILoader loader, string firstName, string nickname, Player[] players,
-        int page,
-        int pageSize)
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.UpdatePlayerData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerUpdateTest(IWriter writer, Player player, Player? expectedPlayer)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayerByFirstNameAndNickname(firstName, nickname, page, pageSize))?.ToList() ?? new List<Player>();
+        Model.Manager manager = new(Loaders[0].Get(), writer);
 
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
+        var result = await manager.UpdatePlayer(player);
+
+        if (expectedPlayer is null) Assert.Null(result);
+        else Assert.Equal(expectedPlayer, result!, Player.PlayerFullComparer);
     }
 
     [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayerByLastNameAndNickname), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayerByLastNameAndNickname(ILoader loader, string lastName, string nickname, Player[] players, int page,
-        int pageSize)
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.DeletePlayerWithObjectData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerDeleteWithObjectTest(IWriter writer, Player player, bool expectedResult)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayerByLastNameAndNickname(lastName, nickname, page, pageSize))?.ToList() ?? new List<Player>();
+        Model.Manager manager = new(Loaders[0].Get(), writer);
 
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
-    }
-
-    [Theory]
-    [MemberData(nameof(PlayerTestData.Data_TestPlayersByGroup), MemberType = typeof(PlayerTestData))]
-    public async Task TestLoadPlayersByGroup(ILoader loader, Group group, Player[] players, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var playersFound = (await manager.LoadPlayersByGroup(group, page, pageSize))?.ToList() ?? new List<Player>();
-
-        Assert.Equal(playersFound.Count, players.Length);
-        Assert.Equal(playersFound, players);
-    }
-    /*========== End players test ==========*/
-
-
-    /*========== Group test ==========*/
-    [Theory]
-    [MemberData(nameof(GroupTestData.Data_TestGroupsByName), MemberType = typeof(GroupTestData))]
-    public async Task TestLoadGroupsByName(ILoader loader, string name, Group group)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var groupFound = (await manager.LoadGroupsByName(name));
-
-        Assert.Equal(groupFound, group);
-    }
-
-    [Theory]
-    [MemberData(nameof(GroupTestData.Data_TestLoadGroupsByPlayer), MemberType = typeof(GroupTestData))]
-    public async Task TestLoadGroupsByPlayer(ILoader loader, Player player, Group[] groups, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var groupFound = (await manager.LoadGroupsByPlayer(player, page, pageSize))?.ToList() ?? new List<Group>();
-
-        Assert.Equal(groupFound.Count, groups.Length);
-        Assert.Equal(groupFound, groups);
-    }
-
-    [Theory]
-    [MemberData(nameof(GroupTestData.Data_TestLoadAllGroups), MemberType = typeof(GroupTestData))]
-    public async Task TestLoadAllGroups(ILoader loader, Group[] groups, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var groupFound = (await manager.LoadAllGroups(page, pageSize))?.ToList() ?? new List<Group>();
-
-        Assert.Equal(groupFound.Count, groups.Length);
-        Assert.Equal(groupFound, groups);
-    }
-    /*========== End group test ==========*/
-
-
-    /*========== Rule test ==========*/
-    [Theory]
-    [MemberData(nameof(RuleTestData.Data_TestLoadRule), MemberType = typeof(RuleTestData))]
-    public async Task TestLoadRule(string name, IRules rule)
-    {
-        var stub = new Stub();
-        var ruleFound = await stub.LoadRule(name);
-
-        Assert.Equal(ruleFound, rule);
-    }
-
-    [Theory]
-    [MemberData(nameof(RuleTestData.Data_TestLoadAllRules), MemberType = typeof(RuleTestData))]
-    public async Task TestLoadAllRules(IRules[] rules, int page, int pageSize)
-    {
-        var stub = new Stub();
-        var rulesFound = (await stub.LoadAllRules(page, pageSize)).ToList();
-
-        Assert.Equal(rulesFound.Count, rules.Length);
-        Assert.Equal(rulesFound, rules);
-    }
-    /*========== End rule test ==========*/
-
-
-    /*========== Hand test ==========*/
-    [Theory]
-    [MemberData(nameof(HandTestData.Data_TestLoadHandByGame), MemberType = typeof(HandTestData))]
-    public async Task TestLoadHandByGame(ILoader loader, Game game, List<KeyValuePair<int, Hand>> hands, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var handsFound = (await manager.LoadHandByGame(game, page, pageSize))?.ToList() ?? new List<KeyValuePair<int, Hand>>();
-
-        Assert.Equal(handsFound.Count, hands.Count);
-        Assert.Equal(handsFound, hands);
-    }
-
-    [Fact]
-    public void TestCreateHand()
-    {
-        var manager = new Model.Rules.Manager(new DbLoader(), new DbSaver());
-        var hand = new Hand(1UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 210,
-            false, true, PetitResults.Lost, Chelem.Unknown,
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-                (Biddings.Garde, Poignee.Simple)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-                (Biddings.Opponent, Poignee.None)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-                (Biddings.Opponent, Poignee.None)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(
-                new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                (Biddings.Opponent, Poignee.None)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-                (Biddings.Opponent, Poignee.None)));
-        var handCreateByManager = manager.CreateHand(1UL, 1, new FrenchTarotRules(), new DateTime(2022, 09, 21), 210,
-            false, true, PetitResults.Lost, Chelem.Unknown,
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "BON", "JEBO", "avatar1"),
-                (Biddings.Garde, Poignee.Simple)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MAUVAIS", "JEMA", "avatar2"),
-                (Biddings.Opponent, Poignee.None)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Jean", "MOYEN", "KIKOU7", "avatar3"),
-                (Biddings.Opponent, Poignee.None)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(
-                new Player("Michel", "BELIN", "FRIPOUILLE", "avatar4"),
-                (Biddings.Opponent, Poignee.None)),
-            new KeyValuePair<Player, (Biddings, Poignee)>(new Player("Albert", "GOL", "LOLA", "avatar1"),
-                (Biddings.Opponent, Poignee.None)));
+        var result = await manager.DeletePlayer(player);
         
-        Assert.Equal(hand, handCreateByManager);
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.PlayerWriterDataTest.DeletePlayerWithIdData), MemberType = typeof(UT_Writer.PlayerWriterDataTest))]
+    public async Task PlayerDeleteWithIdTest(IWriter writer, ulong playerId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeletePlayer(playerId);
+        
+        Assert.Equal(expectedResult, result);
     }
     
-    /*========== End hand test ==========*/
+    #endregion
+    
+    #endregion
+    
+    #region Group
 
+    #region Reader
 
-    /*========== Game test ==========*/
     [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadAllGames), MemberType = typeof(GameTestData))]
-    public async Task TestLoadAllGames(ILoader loader, Game[] games, int page, int pageSize)
+    [MemberData(nameof(UT_Reader.GroupTestData.Data_TestGroupsByName), MemberType = typeof(UT_Reader.GroupTestData))]
+    public async Task TestGetGroupsByName(IReader reader, string pattern, int start, int count, Group[] groups)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-        var gamesFound = (await manager.LoadAllGames(page, pageSize))?.ToList() ?? new List<Game>();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var groupFound = (await manager.GetGroupsByName(pattern, start, count)).ToList();
 
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
+        Assert.Equal(groups.Length, groupFound.Count);
+        Assert.Equal(groups, groupFound, Group.GroupFullComparer);
+
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByGroup), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByGroup(ILoader loader, Group group, Game[] games, int page, int pageSize)
+    [MemberData(nameof(UT_Reader.GroupTestData.Data_TestGetGroupsByPlayer), MemberType = typeof(UT_Reader.GroupTestData))]
+    public async Task TestGetGroupsByPlayer(IReader reader, ulong playerId, int start, int count, Group[] groups)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound = (await manager.LoadGameByGroup(group, page, pageSize))?.ToList() ?? new List<Game>();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var groupFound = (await manager.GetGroupsByPlayer(playerId, start, count)).ToList();
 
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
+        Assert.Equal(groups.Length, groupFound.Count);
+        Assert.Equal(groups, groupFound, Group.GroupFullComparer);
+
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByPlayer), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByPlayer(ILoader loader, Player player, Game[] games, int page, int pageSize)
+    [MemberData(nameof(UT_Reader.GroupTestData.Data_TestLoadAllGroups), MemberType = typeof(UT_Reader.GroupTestData))]
+    public async Task TestGetGroups(IReader reader, int start, int count, Group[] groups)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound = (await manager.LoadGameByPlayer(player, page, pageSize))?.ToList() ?? new List<Game>();
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var groupFound = (await manager.GetGroups(start, count)).ToList();
 
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
+        Assert.Equal(groups.Length, groupFound.Count);
+        Assert.Equal(groups, groupFound, Group.GroupFullComparer);
+
+        reader.Dispose();
     }
 
     [Theory]
-    [MemberData(nameof(GameTestData.LoadGameByName), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByName(ILoader loader, string name, Game? game)
+    [MemberData(nameof(UT_Reader.GroupTestData.Data_TestGetGroupById), MemberType = typeof(UT_Reader.GroupTestData))]
+    public async Task TestGetGroupById(IReader reader, ulong groupId, Group? group)
     {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gameFound = await manager.LoadGameByName(name);
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var groupFound = await manager.GetGroupById(groupId);
 
-        Assert.Equal(gameFound, game);
-    }
+        if (group is null)
+        {
+            Assert.Null(groupFound);
+        }
+        else
+        {
+            Assert.Equal(group, groupFound, Group.GroupFullComparer!);
+        }
 
-    [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByStartDate), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByStartDate(ILoader loader, DateTime startDate, Game[] games, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound = (await manager.LoadGameByStartDate(startDate, page, pageSize))?.ToList() ?? new List<Game>();
-
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
-    }
-
-    [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByEndDate), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByEndDate(ILoader loader, DateTime endDate, Game[] games, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound = (await manager.LoadGameByEndDate(endDate, page, pageSize))?.ToList() ?? new List<Game>();
-
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
-    }
-
-    [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByDateInterval), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByDateInterval(ILoader loader, DateTime startDate, DateTime endDate, Game[] games, int page,
-        int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound = (await manager.LoadGameByDateInterval(startDate, endDate, page, pageSize))?.ToList() ?? new List<Game>();
-
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
-    }
-
-    [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndGroup), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByDateIntervalAndGroup(ILoader loader, DateTime startDate, DateTime endDate, Group group,
-        Game[] games, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound = (await manager.LoadGameByDateIntervalAndGroup(startDate, endDate, group, page, pageSize))
-            ?.ToList() ?? new List<Game>();
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
-    }
-
-    [Theory]
-    [MemberData(nameof(GameTestData.Data_TestLoadGameByDateIntervalAndPlayer), MemberType = typeof(GameTestData))]
-    public async Task TestLoadGameByDateIntervalAndPlayer(ILoader loader, DateTime startDate, DateTime endDate, Player player,
-        Game[] games, int page, int pageSize)
-    {
-        var manager = new Model.Rules.Manager(loader, new DbSaver());
-	    var gamesFound =
-            (await manager.LoadGameByDateIntervalAndPlayer(startDate, endDate, player, page, pageSize))?.ToList() ?? new List<Game>();
-
-        Assert.Equal(gamesFound.Count, games.Length);
-        Assert.Equal(gamesFound, games);
+        reader.Dispose();
     }
     
-    	[Theory]
-	[MemberData(nameof(SaverTestData.Data_TestSavePlayer), MemberType = typeof(SaverTestData))]
-	internal async Task TestSavePlayer(ISaver saver, Player player, Player? expPlayer, PlayerEntity? expEntity)
-	{
-        var manager = new Model.Rules.Manager(new DbLoader(), saver);
-		var result = await manager.SavePlayer(player);
-		Assert.Equal(expPlayer, result);
-
-		if (expEntity != null)
-		{
-			if (saver is not DbSaver dbSaver) return;
-
-			await using var context =
-				(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
-			var entity = await context.Players
-				.Include(p => p.Games)
-				.Include(p => p.Groups)
-				.Include(p => p.Biddings)
-				.FirstOrDefaultAsync(p => p.Id == expEntity.Id);
-
-
-			Assert.NotNull(entity);
-			Assert.Equal(expEntity.Id, entity.Id);
-			Assert.Equal(expEntity.FirstName, entity.FirstName);
-			Assert.Equal(expEntity.LastName, entity.LastName);
-			Assert.Equal(expEntity.Nickname, entity.Nickname);
-			Assert.Equal(expEntity.Avatar, entity.Avatar);
-		}
-	}
-
-	[Theory]
-	[MemberData(nameof(SaverTestData.Data_TestSaveGroup), MemberType = typeof(SaverTestData))]
-	internal async Task TestSaveGroup(ISaver saver, Group group, Group? expGroup, GroupEntity? expEntity)
+    #endregion
+    
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.InsertGroupData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupInsertTest(IWriter writer, Group group, Group? expectedGroup)
     {
-        var manager = new Model.Rules.Manager(new DbLoader(), saver);
-		var result = await manager.SaveGroup(group);
-		Assert.Equal(expGroup, result);
+        if (group.Id != 0) return;
+        
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.InsertGroup(group.Name, group.Players.ToArray());
 
-		if (expEntity != null)
-		{
-			if (saver is not DbSaver dbSaver) return;
+        if (expectedGroup is null) Assert.Null(result);
+        else Assert.Equal(expectedGroup, result!, Group.GroupFullComparer);
+    }
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.UpdateGroupData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupUpdateTest(IWriter writer, Group group, Group? expectedGroup)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.UpdateGroup(group);
 
-			await using var context =
-				(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
-			var entity = await context.Groups
-				.Include(g => g.Players)
-				.FirstOrDefaultAsync(g => g.Id == expEntity.Id);
-			
-			Assert.NotNull(entity);
-			Assert.Equal(expEntity.Id, entity.Id);
-			Assert.Equal(expEntity.Name, entity.Name);
-		}
-	}
+        if (expectedGroup is null) Assert.Null(result);
+        else Assert.Equal(expectedGroup, result!, Group.GroupFullComparer);
+    }
 
-	[Theory]
-	[MemberData(nameof(SaverTestData.Data_TestSaveGame), MemberType = typeof(SaverTestData))]
-	internal async Task TestSaveGame(ISaver saver, Game game, Game? expGame, GameEntity? expEntity)
-	{
-        var manager = new Model.Rules.Manager(new DbLoader(), saver);
-		var result = await manager.SaveGame(game);
-		Assert.Equal(expGame, result);
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.DeleteGroupWithObjectData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupDeleteWithObjectTest(IWriter writer, Group group, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGroup(group);
+        
+        Assert.Equal(expectedResult, result);
+    }
 
-		if (expEntity != null)
-		{
-			if (saver is not DbSaver dbSaver) return;
+    [Theory]
+    [MemberData(nameof(UT_Writer.GroupWriterDataTest.DeleteGroupWithIdData), MemberType = typeof(UT_Writer.GroupWriterDataTest))]
+    public async Task GroupDeleteWithIdTest(IWriter writer, ulong groupId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGroup(groupId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
+    #endregion
+    
+    #endregion
+    
+    #region Hand
 
-			await using var context =
-				(TarotDbContext) Activator.CreateInstance(dbSaver.DbContextType, dbSaver.Options)!;
-			var entity = await context.Games
-				.Include(g => g.Players)
-				.Include(g => g.Hands)
-				.Include(g => g.Players)
-				.FirstOrDefaultAsync(g => g.Id == expEntity.Id);
-			
-			Assert.NotNull(entity);
-			Assert.Equal(expEntity.Id, entity.Id);
-			Assert.Equal(expEntity.Name, entity.Name);
-			Assert.Equal(expEntity.Rules, entity.Rules);
-			Assert.Equal(expEntity.StartDate, entity.StartDate);
-			Assert.Equal(expEntity.EndDate, entity.EndDate);
-		}
-	}
+    #region Reader
+
+    [Theory]
+    [MemberData(nameof(UT_Reader.HandTestData.Data_TestGetHandById), MemberType = typeof(UT_Reader.HandTestData))]
+    public async Task TestGetHandById(IReader reader, ulong handId, Hand? expectedHand)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var handFound = await manager.GetHandById(handId);
+
+        if (expectedHand is null)
+        {
+            Assert.Null(handFound);
+        }
+        else
+        {
+            Assert.Equal(expectedHand, handFound!, Hand.FullComparer);
+        }
+    }
+
+    #endregion
+    
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.InsertHandData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandInsertTest(IWriter writer, ulong gameId, Hand hand, Hand? expectedHand)
+    {
+        if (hand.Id != 0) return;
+        
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result =
+            await manager.InsertHand(gameId,
+                                     hand.Number,
+                                     hand.Rules,
+                                     hand.Date,
+                                     hand.TakerScore,
+                                     hand.TwentyOne,
+                                     hand.Excuse,
+                                     hand.Petit,
+                                     hand.Chelem,
+                                     hand.Biddings.ToArray()
+            );
+
+        if (expectedHand is null) Assert.Null(result);
+        else Assert.Equal(expectedHand, result!, Hand.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.UpdateHandData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandUpdateTest(IWriter writer, Hand hand, Hand? expectedHand)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.UpdateHand(hand);
+
+        if (expectedHand is null) Assert.Null(result);
+        else Assert.Equal(expectedHand, result!, Hand.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.DeleteHandWithObjectData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandDeleteWithObjectTest(IWriter writer, Hand hand, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteHand(hand);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.HandWriterDataTest.DeleteHandWithIdData), MemberType = typeof(UT_Writer.HandWriterDataTest))]
+    public async Task HandDeleteWithIdTest(IWriter writer, ulong handId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteHand(handId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
+    #endregion
+    
+    #endregion
+    
+    #region Game
+    
+    #region Reader
+    
+    [Theory]
+    [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGames), MemberType = typeof(UT_Reader.GameTestData))]
+    public async Task TestGetGames(IReader reader, int start, int count, Game[] games)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gamesFound = (await manager.GetGames(start, count)).ToList();
+
+        Assert.Equal(games.Length, gamesFound.Count);
+        Assert.Equal(games, gamesFound, Game.FullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGameByPlayer), MemberType = typeof(UT_Reader.GameTestData))]
+    public async Task TestGetGameByPlayer(IReader reader, ulong playerId, int start, int count, Game[] games)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gamesFound = (await manager.GetGamesByPlayer(playerId, start, count)).ToList();
+
+        Assert.Equal(games.Length, gamesFound.Count);
+        Assert.Equal(games, gamesFound, Game.FullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Reader.GameTestData.GetGameByName), MemberType = typeof(UT_Reader.GameTestData))]
+    public async Task TestGetGameByName(IReader reader, string name, int start, int count, Game[] game)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gameFound = (await manager.GetGamesByName(name, start, count)).ToList();
+
+        Assert.Equal(game.Length, gameFound.Count);
+        Assert.Equal(game, gameFound, Game.FullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGameByDate), MemberType = typeof(UT_Reader.GameTestData))]
+    public async Task TestGetGamesByDate(IReader reader, DateTime startDate, DateTime? endDate, int start, int count,
+        Game[] games)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gamesFound = (await manager.GetGamesByDate(startDate, endDate, start, count)).ToList();
+
+        Assert.Equal(games.Length, gamesFound.Count);
+        Assert.Equal(games, gamesFound, Game.FullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Reader.GameTestData.Data_TestGetGameById), MemberType = typeof(UT_Reader.GameTestData))]
+    public async Task TestGetGameById(IReader reader, ulong gameId, Game? game)
+    {
+        Model.Manager manager = new(reader, Writers[0].Get());
+        var gameFound = await manager.GetGameById(gameId);
+
+        if (game is null)
+        {
+            Assert.Null(gameFound);
+        }
+        else
+        {
+            Assert.Equal(game, gameFound, Game.FullComparer!);
+        }
+
+        reader.Dispose();
+    }
+    
+    #endregion
+
+    #region Writer
+    
+    [Theory]
+    [MemberData(nameof(GameInsertData.InsertGameData), MemberType = typeof(GameInsertData))]
+    public async Task GameInsertTest(IWriter writer, Game game, Game? expectedGame)
+    {
+        if (game.Id != 0) return;
+        
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.InsertGame(game.Name, game.Rules, game.StartDate, game.Players.ToArray());
+
+        if (expectedGame is null) Assert.Null(result);
+        else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GameWriterDataTest.UpdateGameData), MemberType = typeof(UT_Writer.GameWriterDataTest))]
+    public async Task GameUpdateTest(IWriter writer, Game game, Game? expectedGame)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.UpdateGame(game);
+
+        if (expectedGame is null) Assert.Null(result);
+        else Assert.Equal(expectedGame, result!, Game.FullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GameWriterDataTest.DeleteGameWithObjectData), MemberType = typeof(UT_Writer.GameWriterDataTest))]
+    public async Task GameDeleteWithObjectTest(IWriter writer, Game game, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGame(game);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UT_Writer.GameWriterDataTest.DeleteGameWithIdData), MemberType = typeof(UT_Writer.GameWriterDataTest))]
+    public async Task GameDeleteWithIdTest(IWriter writer, ulong gameId, bool expectedResult)
+    {
+        Model.Manager manager = new(Loaders[0].Get(), writer);
+        var result = await manager.DeleteGame(gameId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+    
+    #endregion
+    
+    #endregion
 }

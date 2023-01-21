@@ -231,11 +231,8 @@ public class UserTestData
 
     internal class UserTest : User
     {
-        public UserTest(string firstName, string lastName, string nickName, string avatar, string email, string password) : base(firstName, lastName, nickName, avatar, email, password)
-        {
-        }
-
-        public UserTest(ulong id, string firstName, string lastName, string nickName, string avatar, string email, string password) : base(id, firstName, lastName, nickName, avatar, email, password)
+        public UserTest(ulong id, string firstName, string lastName, string nickName, string avatar, string email,
+            string password) : base(id, firstName, lastName, nickName, avatar, email, password)
         {
         }
     }

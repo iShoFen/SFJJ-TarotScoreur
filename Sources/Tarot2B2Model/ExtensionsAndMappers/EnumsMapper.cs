@@ -1,7 +1,7 @@
 using Model.Enums;
 using TarotDB.Enums;
 
-namespace Tarot2B2Model;
+namespace Tarot2B2Model.ExtensionsAndMappers;
 
 /// <summary>
 /// A generic mapper for Model enums to Database enums

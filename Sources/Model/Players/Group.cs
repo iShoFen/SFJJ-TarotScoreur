@@ -113,4 +113,6 @@ public partial class Group : IEquatable<Group>
     {
         return Id == 0 ? GroupFullComparer.GetHashCode(this) : Id.GetHashCode();
     }
+
+    public override string ToString() => $"({Id}) {Name}";
 }

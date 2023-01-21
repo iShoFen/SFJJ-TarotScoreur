@@ -3,10 +3,11 @@ using Model.Data;
 using Model.Enums;
 using Model.Games;
 using Model.Players;
+using Utils;
 
 namespace StubLib;
 
-public class Stub : ILoader
+public partial class Stub : IReader
 {
     private readonly List<Game> _gameList = new();
     private readonly List<Player> _playerList = new();
@@ -59,16 +60,11 @@ public class Stub : ILoader
         _gameList.Add(new Game(3UL, "Game 3", _rulesList[0], new DateTime(2022, 09, 21), null));
         _gameList.Add(new Game(4UL, "Game 4", _rulesList[0], new DateTime(2022, 09, 21), null));
         _gameList.Add(new Game(5UL, "Game 5", _rulesList[0], new DateTime(2022, 09, 21), null));
-        _gameList.Add(new Game(6UL, "Game 6", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
-        _gameList.Add(new Game(7UL, "Game 7", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
-        _gameList.Add(new Game(8UL, "Game 8", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
-        _gameList.Add(new Game(9UL, "Game 9", _rulesList[0],
-            new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
-        _gameList.Add(new Game(10UL, "Game 10", _rulesList[0],
-            new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
+        _gameList.Add(new Game(6UL, "Game 6", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
+        _gameList.Add(new Game(7UL, "Game 7", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 29)));
+        _gameList.Add(new Game(8UL, "Game 8", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
+        _gameList.Add(new Game(9UL, "Game 9", _rulesList[0], new DateTime(2022, 09, 21), new DateTime(2022, 09, 30)));
+        _gameList.Add(new Game(10UL, "Game 10", _rulesList[0],new DateTime(2022, 09, 18), new DateTime(2022, 09, 23)));
 
         _gameList[0].AddPlayer(_playerList[0]);
         _gameList[0].AddPlayer(_playerList[1]);
@@ -114,7 +110,7 @@ public class Stub : ILoader
         _gameList[8].AddPlayer(_playerList[10]);
         _gameList[8].AddPlayer(_playerList[11]);
         _gameList[8].AddPlayer(_playerList[12]);
-        
+
         _gameList[9].AddPlayer(_playerList[8]);
         _gameList[9].AddPlayer(_playerList[9]);
         _gameList[9].AddPlayer(_playerList[10]);
@@ -306,49 +302,49 @@ public class Stub : ILoader
             KeyValuePair.Create(_playerList[8], (Biddings.Opponent, Poignee.None)),
             KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.None)),
             KeyValuePair.Create(_playerList[10], (Biddings.King, Poignee.None))));
-        
+
         _gameList[6].AddHand(_handList[19]);
         _gameList[6].AddHand(_handList[20]);
         _gameList[6].AddHand(_handList[21]);
 
-        _handList.Add(new Hand(23UL, 4, _rulesList[0], new DateTime(2022, 09, 30), 567,
-	        true, false, PetitResults.Lost, Chelem.Unknown,
-	        KeyValuePair.Create(_playerList[7], (Biddings.Petite, Poignee.None)),
-	        KeyValuePair.Create(_playerList[8], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[1], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[1], (Biddings.King, Poignee.None))));
-        
+        _handList.Add(new Hand(23UL, 1, _rulesList[0], new DateTime(2022, 09, 30), 567,
+            true, false, PetitResults.Lost, Chelem.Unknown,
+            KeyValuePair.Create(_playerList[7], (Biddings.Petite, Poignee.None)),
+            KeyValuePair.Create(_playerList[8], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[1], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[1], (Biddings.King, Poignee.None))));
+
         _gameList[7].AddHand(_handList[22]);
 
         _handList.Add(new Hand(24UL, 1, _rulesList[0], new DateTime(2022, 09, 21), 567,
-	        false, false, PetitResults.Lost, Chelem.Unknown,
-	        KeyValuePair.Create(_playerList[8], (Biddings.GardeSansLeChien, Poignee.None)),
-	        KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.None))));
+            false, false, PetitResults.Lost, Chelem.Unknown,
+            KeyValuePair.Create(_playerList[8], (Biddings.GardeSansLeChien, Poignee.None)),
+            KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.None))));
         _handList.Add(new Hand(25UL, 2, _rulesList[0], new DateTime(2022, 09, 25), 567,
-	        false, true, PetitResults.LostAuBout, Chelem.AnnouncedSuccess,
-	        KeyValuePair.Create(_playerList[8], (Biddings.Garde, Poignee.None)),
-	        KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.Triple)),
-	        KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.None))));
+            false, true, PetitResults.LostAuBout, Chelem.AnnouncedSuccess,
+            KeyValuePair.Create(_playerList[8], (Biddings.Garde, Poignee.None)),
+            KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.Triple)),
+            KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.None))));
         _handList.Add(new Hand(26UL, 3, _rulesList[0], new DateTime(2022, 09, 27), 567,
-	        true, true, PetitResults.Owned, Chelem.Success,
-	        KeyValuePair.Create(_playerList[8], (Biddings.GardeSansLeChien, Poignee.None)),
-	        KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
-	        KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.Simple))));
+            true, true, PetitResults.Owned, Chelem.Success,
+            KeyValuePair.Create(_playerList[8], (Biddings.GardeSansLeChien, Poignee.None)),
+            KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.Simple))));
         _handList.Add(new Hand(27UL, 1, _rulesList[0], new DateTime(2022, 09, 29), 567,
             true, false, PetitResults.Lost, Chelem.Unknown,
             KeyValuePair.Create(_playerList[8], (Biddings.Garde, Poignee.None)),
             KeyValuePair.Create(_playerList[9], (Biddings.Opponent, Poignee.Double)),
             KeyValuePair.Create(_playerList[10], (Biddings.Opponent, Poignee.None)),
-			KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
-			KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.None))));
+            KeyValuePair.Create(_playerList[11], (Biddings.Opponent, Poignee.None)),
+            KeyValuePair.Create(_playerList[12], (Biddings.King, Poignee.None))));
         _handList.Add(new Hand(28UL, 2, _rulesList[0], new DateTime(2022, 09, 30), 567,
             false, false, PetitResults.Lost, Chelem.AnnouncedSuccess,
             KeyValuePair.Create(_playerList[8], (Biddings.GardeSansLeChien, Poignee.None)),
@@ -397,352 +393,17 @@ public class Stub : ILoader
         _gameList[9].AddHand(_handList[30]);
         _gameList[9].AddHand(_handList[31]);
     }
+    
+    // add a get Hand by Id method
 
-    /*========== Games ==========*/
-    /// <summary>
-    /// Method to load a game by name
-    /// </summary>
-    /// <param name="name">Name of the game</param>
-    /// <returns>A game</returns>
-    public async Task<Game?> LoadGameByName(string name)
-        => await Task.FromResult(_gameList.FirstOrDefault(game => name.Equals(game.Name)));
-
-    /// <summary>
-    /// Method to load games by player
-    /// </summary>
-    /// <param name="player">Player to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByPlayer(Player player, int page, int pageSize)
+    public void Dispose()
     {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(game => game.Players.Contains(player))
-            .Skip((page - 1) * pageSize).Take(pageSize));
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    /// Method to load games by start date
-    /// </summary>
-    /// <param name="startDate">Start date of games</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByStartDate(DateTime startDate, int page, int pageSize)
+    protected virtual void Dispose(bool disposing)
     {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(game => game.StartDate == startDate)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize));
+        // Method intentionally left empty.
     }
-
-
-    /// <summary>
-    /// Method to load games by end date
-    /// </summary>
-    /// <param name="endDate">End date of games</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByEndDate(DateTime? endDate, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(game => game.EndDate == endDate)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load games by an interval of dates
-    /// </summary>
-    /// <param name="startDate">Start date of the interval</param>
-    /// <param name="endDate">End date of the interval</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateInterval(DateTime startDate, DateTime endDate, int page,
-        int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(game => game.StartDate >= startDate && game.EndDate <= endDate)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load games by an interval of dates and a group
-    /// </summary>
-    /// <param name="startDate">Start date of the interval</param>
-    /// <param name="endDate">End date of the interval</param>
-    /// <param name="group">Group to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndGroup(DateTime startDate, DateTime endDate,
-        Group group, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(game => game.StartDate >= startDate && game.EndDate <= endDate &&
-                           game.Players.Count == group.Players.Count &&
-                           game.Players.All(player => group.Players.Contains(player)))
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load games by an interval of dates and a player
-    /// </summary>
-    /// <param name="startDate">Start date of the interval</param>
-    /// <param name="endDate">End date of the interval</param>
-    /// <param name="player">Player to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByDateIntervalAndPlayer(DateTime startDate, DateTime endDate,
-        Player player, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(game => game.StartDate >= startDate && game.EndDate <= endDate && game.Players.Contains(player))
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load games by a group
-    /// </summary>
-    /// <param name="group">Group to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadGameByGroup(Group group, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList
-            .Where(g => g.Players.All(p => group.Players.Contains(p)))
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load all games
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of games</returns>
-    public async Task<IEnumerable<Game>> LoadAllGames(int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Game>();
-        return await Task.FromResult(_gameList.Skip((page - 1) * pageSize).Take(pageSize));
-    }
-    /*========== End Games ==========*/
-
-
-    /*========== Players ==========*/
-    /// <summary>
-    /// Method to load a player by lastname and nickname
-    /// </summary>
-    /// <param name="lastName">Lastname to search</param>
-    /// <param name="nickname">nickname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByLastNameAndNickname(string lastName, string nickname, int page,
-        int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => player.LastName == lastName && player.NickName == nickname)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load a player by firstname and nickname
-    /// </summary>
-    /// <param name="firstName">Firstname to search</param>
-    /// <param name="nickname">nickname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndNickname(string firstName, string nickname, int page,
-        int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => player.FirstName == firstName && player.NickName == nickname)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load a player by firstname and lastname
-    /// </summary>
-    /// <param name="firstName">Firstname to search</param>
-    /// <param name="lastName">Lastname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByFirstNameAndLastName(string firstName, string lastName, int page,
-        int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => player.FirstName == firstName && player.LastName == lastName)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-
-    /// <summary>
-    /// Method to load a player by nickname
-    /// </summary>
-    /// <param name="nickname">nickname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByNickname(string nickname, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => player.NickName == nickname)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load a player by lastname
-    /// </summary>
-    /// <param name="lastName">Lastname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByLastName(string lastName, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => player.LastName == lastName)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load a player by firstname
-    /// </summary>
-    /// <param name="firstName">Firstname to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayerByFirstName(string firstName, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => player.FirstName == firstName)
-            .Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load all players
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadAllPlayer(int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList.Skip((page - 1) * pageSize).Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load a player by group
-    /// </summary>
-    /// <param name="group">Group to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of players</returns>
-    public async Task<IEnumerable<Player>> LoadPlayersByGroup(Group group, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Player>();
-        return await Task.FromResult(_playerList
-            .Where(player => group.Players.Contains(player))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize));
-    }
-    /*========== End Players ==========*/
-
-
-    /*========== Groups ==========*/
-    /// <summary>
-    /// Method to load a group by name
-    /// </summary>
-    /// <param name="name">Name to search</param>
-    /// <returns>A group</returns>
-    public async Task<Group?> LoadGroupsByName(string name)
-        => await Task.FromResult(_groupList.FirstOrDefault(g => g.Name == name));
-
-    /// <summary>
-    /// Method to load all groups
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of groups</returns>
-    public async Task<IEnumerable<Group>> LoadAllGroups(int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Group>();
-        return await Task.FromResult(_groupList
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize));
-    }
-
-    /// <summary>
-    /// Method to load a group by player
-    /// </summary>
-    /// <param name="player">Player to search</param>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of groups</returns>
-    public async Task<IEnumerable<Group>> LoadGroupsByPlayer(Player player, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<Group>();
-        return await Task.FromResult(_groupList
-            .Where(g => g.Players.Contains(player))
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize));
-    }
-    /*========== End Groups ==========*/
-
-
-    /*========== Rules ==========*/
-    /// <summary>
-    /// Method to load a rule by name
-    /// </summary>
-    /// <param name="name">Name of the rule to search</param>
-    /// <returns>A IRules</returns>
-    public async Task<IRules?> LoadRule(string name)
-        => await Task.FromResult(_rulesList.FirstOrDefault(r => r.Name.Equals(name)));
-
-    /// <summary>
-    /// Method to load all rules
-    /// </summary>
-    /// <param name="page"> Number of the page to load</param>
-    /// <param name="pageSize">Size of the page</param>
-    /// <returns>List of rules</returns>
-    public async Task<IEnumerable<IRules>> LoadAllRules(int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<IRules>();
-        return await Task.FromResult(_rulesList.Skip((page - 1) * pageSize).Take(pageSize));
-    }
-    /*========== End Rules ==========*/
-
-
-    /*========== Hand ==========*/
-    /// <summary>
-    /// Method to load hands by game
-    /// </summary>
-    /// <param name="game"></param>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
-    /// <returns>List of hands</returns>
-    public async Task<IEnumerable<KeyValuePair<int, Hand>>> LoadHandByGame(Game game, int page, int pageSize)
-    {
-        if (page == 0 || pageSize == 0) return new List<KeyValuePair<int, Hand>>();
-        return await Task.FromResult(_gameList.First(g => g.Equals(game)).Hands.Skip((page - 1) * pageSize)
-            .Take(pageSize));
-    }
-    /*========== End hand ==========*/
 }

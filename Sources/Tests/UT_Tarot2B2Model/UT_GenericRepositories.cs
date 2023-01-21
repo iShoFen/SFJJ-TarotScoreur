@@ -11,8 +11,6 @@ namespace UT_Tarot2B2Model;
 
 public class UT_GenericRepositories
 {
-	
-
 	public static IEnumerable<object[]> InsertData()
 		=> GenericData.Data()
 			.Select(item => new[] {item[0], item[1], item[2], GenericData.CreateEntity((Type) item[2], 1UL)});
@@ -130,7 +128,7 @@ public class UT_GenericRepositories
 
 		var set = repository.GetType().GetProperty("Set")!.GetValue(repository);
 
-		var dbSet = dbContext.GetType().GetProperty(entity.Name.Replace("Entity", "s"))!.GetValue(dbContext);
+		var dbSet = dbContext.GetType().GetProperty(entity.Name.Replace("Entity", "s"), BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(dbContext);
 
 		Assert.Equal(dbSet, set);
 
@@ -249,7 +247,7 @@ public class UT_GenericRepositories
 
 		if (isDeleted)
 		{
-			var dbSet = dbContext.GetType().GetProperty(entityType.Name.Replace("Entity", "s"))!.GetValue(dbContext)!;
+			var dbSet = dbContext.GetType().GetProperty(entityType.Name.Replace("Entity", "s"), BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(dbContext)!;
 
 			var findMethod = dbSet.GetType().GetMethod("Find", new[] {typeof(object?[])})!;
 			var resultEntity = findMethod.Invoke(dbSet,
@@ -321,7 +319,7 @@ public class UT_GenericRepositories
 		var method = repository.GetType().GetMethod("Clear")!;
 		method.Invoke(repository, null);
 		var dbSet =
-			(IEnumerable) dbContext.GetType().GetProperty(entityType.Name.Replace("Entity", "s"))!.GetValue(dbContext)!;
+			(IEnumerable) dbContext.GetType().GetProperty(entityType.Name.Replace("Entity", "s"), BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(dbContext)!;
 		foreach (var item in dbSet)
 		{
 			Assert.Equal(EntityState.Deleted, dbContext.Entry(item).State);
@@ -343,7 +341,7 @@ public class UT_GenericRepositories
 		var result = await (Task<int>) method.Invoke(repository, null)!;
 
 		var dbSet =
-			(IEnumerable) dbContext.GetType().GetProperty(entityType.Name.Replace("Entity", "s"))!.GetValue(dbContext)!;
+			(IEnumerable) dbContext.GetType().GetProperty(entityType.Name.Replace("Entity", "s"), BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(dbContext)!;
 		Assert.Equal(dbSet.Cast<object>().Count(), result);
 
 		await dbContext.Database.EnsureDeletedAsync();

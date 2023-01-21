@@ -1,7 +1,22 @@
-﻿namespace Tarot2B2Model;
+﻿using Microsoft.EntityFrameworkCore;
 
-internal interface IUnitOfWork : IDisposable
+namespace Tarot2B2Model;
+
+public interface IUnitOfWork : IDisposable
 {
+	/// <summary>
+	/// The database context
+	/// </summary>
+	public DbContext Context { get; }
+	
+	/// <summary>
+	/// Set the query tracking mode of entities.
+	/// True => Enable the tracking.
+	/// False => Disable the tracking.
+	/// </summary>
+	/// <param name="tracking">Enable/Disable tracking</param>
+	void SetTracking(bool tracking);
+	
 	/// <summary>
 	/// Return the repository for the specified type
 	/// </summary>

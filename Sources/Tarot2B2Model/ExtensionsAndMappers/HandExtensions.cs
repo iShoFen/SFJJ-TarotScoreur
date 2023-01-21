@@ -1,10 +1,8 @@
 using Model.Games;
 using Model.Rules;
-using Tarot2B2Model.ExtensionsAndMappers;
 using TarotDB;
-using static Tarot2B2Model.Mapper;
 
-namespace Tarot2B2Model;
+namespace Tarot2B2Model.ExtensionsAndMappers;
 
 /// <summary>
 /// Extension methods for the Hand and HandEntity classes.
@@ -18,10 +16,10 @@ internal static class HandExtensions
     /// <returns> The HandEntity </returns>
     public static HandEntity ToEntity(this Hand model)
     {
-        var handEntity = HandsMapper.GetEntity(model);
+        var entity = Mapper.HandsMapper.GetEntity(model);
 
-        if (handEntity is not null) return handEntity;
-        handEntity = new HandEntity
+        if (entity is not null) return entity;
+        entity = new HandEntity
         {
             Id = model.Id,
             Number = model.Number,
@@ -34,19 +32,19 @@ internal static class HandExtensions
             Chelem = model.Chelem.ToEntity()
         };
 
-        handEntity.Biddings = model.Biddings.Select(kv => new BiddingPoigneeEntity
+        entity.Biddings = model.Biddings.Select(kv => new BiddingPoigneeEntity
         {
             Biddings = kv.Value.Item1.ToEntity(),
             Poignee = kv.Value.Item2.ToEntity(),
-            Hand = handEntity,
+            Hand = entity,
             Player = kv.Key.ToEntity()
         }).ToHashSet();
-        HandsMapper.Map(model, handEntity);
-        
 
-        return handEntity;
+        Mapper.HandsMapper.Map(model, entity);
+
+        return entity;
     }
-    
+
     /// <summary>
     /// Converts a HandEntity to a Hand.
     /// </summary>
@@ -54,7 +52,7 @@ internal static class HandExtensions
     /// <returns> The Hand </returns>
     public static Hand ToModel(this HandEntity entity)
     {
-        var hand = HandsMapper.GetModel(entity);
+        var hand = Mapper.HandsMapper.GetModel(entity);
 
         if (hand is not null) return hand;
         hand = new Hand(
@@ -72,23 +70,23 @@ internal static class HandExtensions
                 bidding => (bidding.Biddings.ToModel(), bidding.Poignee.ToModel())
             ).ToArray()
         );
-        HandsMapper.Map(hand, entity);
-        
+
+        Mapper.HandsMapper.Map(hand, entity);
+
         return hand;
     }
-    
+
     /// <summary>
     /// Converts a collections of Hand to a collections of HandEntity.
     /// </summary>
     /// <param name="models"> The collections of Hand </param>
     /// <returns> The collections of HandEntity </returns>
     public static IEnumerable<HandEntity> ToEntities(this IEnumerable<Hand> models) => models.Select(ToEntity);
-    
+
     /// <summary>
     /// Converts a collections of HandEntity to a collections of Hand.
     /// </summary>
     /// <param name="entities"> The collections of HandEntity </param>
     /// <returns> The collections of Hand </returns>
     public static IEnumerable<Hand> ToModels(this IEnumerable<HandEntity> entities) => entities.Select(ToModel);
-    
 }
