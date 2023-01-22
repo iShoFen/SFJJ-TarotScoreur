@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -9,9 +9,10 @@
     <ItemGroup>
         <ProjectReference Include="..\Model\Model.csproj" />
         <ProjectReference Include="..\TarotDB\TarotDB.csproj" />
+        <ProjectReference Include="..\Utils\Utils.csproj" />
         <InternalsVisibleTo Include="FT_TarotDB" />
         <InternalsVisibleTo Include="UT_Tarot2B2Model" />
-        <InternalsVisibleTo Include="UT_Saver" />
+        <InternalsVisibleTo Include="UT_Writer" />
         <InternalsVisibleTo Include="UT_Model" />
         <InternalsVisibleTo Include="RestController" />
     </ItemGroup>

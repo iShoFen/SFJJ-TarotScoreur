@@ -44,6 +44,10 @@ steps:
       # accessible en ligne de commande par ${PLUGIN_SONAR_TOKEN}
       sonar_token:
         from_secret: SECRET_SONAR_LOGIN
+    when:
+      branch:
+        - master
+        - develop
     depends_on: [tests]
 
   - name: generate-and-deploy-docs
