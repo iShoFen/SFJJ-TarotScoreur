@@ -1,9 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+    <ItemGroup>
+      <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
+      <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
+      <ProjectReference Include="..\..\TarotDB\TarotDB.csproj" />
+      <ProjectReference Include="..\DTOs\DTOs.csproj" />
+    </ItemGroup>
 </Project>
