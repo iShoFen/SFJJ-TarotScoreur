@@ -1,10 +1,15 @@
-using DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Model.Players;
-using StubContext;
 using Tarot2B2Model;
 using TarotDB;
+using DTOs;
+using DTOs.Extensions;
+using Tarot2B2Model.ExtensionsAndMappers;
+using Model.Data;
+using Model;
+using System.Linq;
+using RestController.Filter;
 
 namespace RestController.Controllers;
 
@@ -12,54 +17,50 @@ namespace RestController.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly TarotDbContext _context;
-    public UserController(TarotDbContext context)
+    private readonly Manager _manager;
+    public UserController(Manager manager)
     {
-        _context = context;
+        _manager = manager;
 
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
+    public async Task<ActionResult> GetUsers([FromQuery] PaginationFilter paginationFilter)
     {
-        return await _context.Users
-            .Select(x => UserToDTO(x.ToModel()))
-            .ToListAsync();
+        var users = (await _manager.GetPlayers(paginationFilter.Page, paginationFilter.Count)).ToList();
+
+        return Ok(users.Select(x => x.PlayerToDTO()).ToList());
+
 
     }
-    
+
     [HttpGet("{id}")]
     [ActionName(nameof(GetUser))]
     public async Task<ActionResult<UserDTO>> GetUser(ulong id)
     {
-        var userEntity = _context.Users.FindAsync(id);
-        return UserToDTO(userEntity.Result.ToModel());
+        var user = await _manager.GetPlayerById(id);
+        if (user is null) return NotFound();
+        return Ok(user.PlayerToDTO());
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutUser(ulong id, UserDTO userDTO)
+    {
+        if (id != userDTO.Id) return BadRequest();
+        var user = await _manager.UpdatePlayer(userDTO.DTOToPlayer());
+        if (user is null) return NotFound();
+        return NoContent();
     }
 
     [HttpPost]
     public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDto)
     {
-        var user = new User(userDto.FirstName, userDto.LastName, userDto.Nickname, userDto.Avatar, "email", "password");
-        _context.Users.Add(user.ToEntity());
-        await _context.SaveChangesAsync();
+        var user = await _manager.InsertPlayer(userDto.FirstName, userDto.LastName, userDto.Nickname, userDto.Avatar);
 
         return CreatedAtAction(
             nameof(GetUser),
             new { id = user.Id },
-            UserToDTO(user));
+            user.PlayerToDTO());
 
     }
-
-
-
-    private static UserDTO UserToDTO(User user) =>
-        new ()
-        {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Nickname = user.NickName,
-            Avatar = user.Avatar,
-            Email = user.Email
-        };
 }
