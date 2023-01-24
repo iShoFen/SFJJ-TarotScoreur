@@ -24,11 +24,11 @@ public class UT_UnitOfWork
 
 	public static IEnumerable<object?[]> ChangesAsyncData()
 		=> GenericData.Data()
-			.Select(item => new[] {item[0], item[1], item[2], Array.Empty<object?>(), false})
+			.Select(item => new[] {item[0], item[1], Array.Empty<object?>(), false})
 			.Concat(GenericData.Data()
 				.Select(item => new[]
 				{
-					item[0], item[1], item[2],
+					item[0], item[1],
 					new[]
 					{
 						GenericData.CreateEntity((Type) item[2], (Type) item[2] != typeof(UserEntity) ? 1UL : 11UL),
@@ -112,7 +112,7 @@ public class UT_UnitOfWork
 	
 	[Theory]
 	[MemberData(nameof(ChangesAsyncData))]
-	public async Task TestSavesChangesAsync(bool isValid, Type context, Type entityType, IEnumerable<object> iEntities,
+	public async Task TestSavesChangesAsync(bool isValid, Type context, IEnumerable<object> iEntities,
 		bool asForeignKey)
 	{
 		if (!isValid) return;
@@ -143,7 +143,7 @@ public class UT_UnitOfWork
 	
 	[Theory]
 	[MemberData(nameof(ChangesAsyncData))]
-	public async Task TestRejectChangesAsync(bool isValid, Type context, Type entityType, IEnumerable<object> iEntities,
+	public async Task TestRejectChangesAsync(bool isValid, Type context, IEnumerable<object> iEntities,
 		bool asForeignKey)
 	{
 		if (!isValid) return;
