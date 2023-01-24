@@ -33,13 +33,19 @@ public class UT_GenericRepositories
 					}
 				}));
 
-	public static IEnumerable<object[]> DeleteData()
+	public static IEnumerable<object[]> DeleteDataId()
 		=> GenericData.Data()
 			.Select(item => new[] {item[0], item[1], item[2], 
 				GenericData.CreateEntity((Type) item[2], (Type) item[2] == typeof(UserEntity) ? 11UL : 1UL ), true})
 			.Concat(GenericData.Data()
 				.Select(item => new[]
 					{item[0], item[1], item[2], GenericData.CreateEntity((Type) item[2], 150UL), false}));
+    
+    // bool isValid, Type context, Type entityType, object entity, bool isDeleted
+    public static IEnumerable<object[]> DeleteDataItem()
+        => DeleteDataId().Select(item => new []{item[0], item[1], item[2], item[3]});
+    
+    
 	public static IEnumerable<object[]> GetItemsData()
 		=> GenericData.Data().SelectMany(item => new[]
 		{
@@ -213,8 +219,8 @@ public class UT_GenericRepositories
 	}
 
 	[Theory]
-	[MemberData(nameof(DeleteData))]
-	public async Task TestDeleteItem(bool isValid, Type context, Type entityType, object entity, bool isDeleted)
+	[MemberData(nameof(DeleteDataItem))]
+	public async Task TestDeleteItem(bool isValid, Type context, Type entityType, object entity)
 	{
 		if (!isValid) return;
 
@@ -231,7 +237,7 @@ public class UT_GenericRepositories
 	}
 
 	[Theory]
-	[MemberData(nameof(DeleteData))]
+	[MemberData(nameof(DeleteDataId))]
 	public async Task TestDeleteId(bool isValid, Type context, Type entityType, object entity, bool isDeleted)
 	{
 		if (!isValid) return;
@@ -264,7 +270,7 @@ public class UT_GenericRepositories
 	}
 
 	[Theory]
-	[MemberData(nameof(DeleteData))]
+	[MemberData(nameof(DeleteDataId))]
 	public async Task TestGetById(bool isValid, Type context, Type entityType, object entity, bool isExists)
 	{
 		if (!isValid) return;
