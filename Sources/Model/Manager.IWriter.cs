@@ -76,6 +76,76 @@ public partial class Manager
     
     #endregion
     
+    #region User
+
+    /// <summary>
+    /// Insert a new user.
+    /// </summary>
+    /// <param name="firstName">The first name of the user</param>
+    /// <param name="lastName">The last name of the user</param>
+    /// <param name="nickName">The nick name of the user</param>
+    /// <param name="avatar">The avatar of the user</param>
+    /// <param name="email">The email of the user</param>
+    /// <param name="password">The password of the user</param>
+    /// <returns>The user inserted or null if the user has an id not equals to 0</returns>
+    public async Task<User> InsertUser(string firstName, string lastName, string nickName, string avatar, string email, string password)
+    {
+        User userToInsert = new (firstName, lastName, nickName, avatar, email, password);
+        
+        var result =  (await _writer.InsertUser(userToInsert))!;
+
+        _logger.Info("User {User} inserted", result);
+        
+        return result;
+    }
+
+    /// <summary>
+    /// Update a user.
+    /// </summary>
+    /// <param name="user">User to update</param>
+    /// <returns>User updated or null if the user does not exist</returns>
+    public async Task<User?> UpdateUser(User user)
+    {
+        var result = await _writer.UpdateUser(user);
+
+        if (result is null) _logger.Error("Error while updating user {User}", user);
+        else _logger.Info("User {User} updated", result);
+        
+        return result;
+    }
+
+    /// <summary>
+    /// Delete a user with id.
+    /// </summary>
+    /// <param name="userId">Id of the user to delete</param>
+    /// <returns>True if deleted otherwise false</returns>
+    public async Task<bool> DeleteUser(ulong userId)
+    {
+        var result = await _writer.DeleteUser(userId);
+
+        if (result) _logger.Info("User {UserId} deleted", userId);
+        else _logger.Error("Error while deleting user {UserId}", userId);
+        
+        return result;
+    }
+
+    /// <summary>
+    /// Delete a user with object.
+    /// </summary>
+    /// <param name="user">User to delete</param>
+    /// <returns>True if deleted otherwise false</returns>
+    public async Task<bool> DeleteUser(User user)
+    {
+        var result = await _writer.DeleteUser(user);
+
+        if (result) _logger.Info("User {User} deleted", user);
+        else _logger.Error("Error while deleting user {User}", user);
+        
+        return result;
+    }
+    
+    #endregion
+    
     #region Group
     
     /// <summary>

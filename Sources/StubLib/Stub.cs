@@ -42,12 +42,12 @@ public partial class Stub : IReader
         _playerList.Add(new Player(8UL, "Jordan", "LEG", "BIGBRAIN", "avatar8"));
         _playerList.Add(new Player(9UL, "Samuel", "LE CHANTEUR", "LOL", "avatar9"));
         _playerList.Add(new Player(10UL, "Brigitte", "PUECH", "XXFRIPOUILLEXX", "avatar10"));
-        _playerList.Add(new Player(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11"));
-        _playerList.Add(new Player(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12"));
-        _playerList.Add(new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"));
-        _playerList.Add(new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"));
-        _playerList.Add(new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"));
-        _playerList.Add(new Player(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16"));
+        _playerList.Add(new User(11UL, "Jeanne", "LERICHE", "JEMAA", "avatar11", "email11", "password11"));
+        _playerList.Add(new User(12UL, "Jules", "INFANTE", "KIKOU77", "avatar12", "email12", "password12"));
+        _playerList.Add(new User(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13", "email13", "password13"));
+        _playerList.Add(new User(14UL, "Marine", "TABLETTE", "LOLO", "avatar14", "email14", "password14"));
+        _playerList.Add(new User(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15", "email15", "password15"));
+        _playerList.Add(new User(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16", "email16", "password16"));
     }
 
     /// <summary>
