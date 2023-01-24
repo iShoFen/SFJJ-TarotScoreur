@@ -1,7 +1,6 @@
 ﻿namespace DTOs.Enums;
 
-[Flags]
-public enum BiddingsDTO : byte
+public enum BiddingsDto : byte
 {    
     /// <summary>
     /// Unknown bidding

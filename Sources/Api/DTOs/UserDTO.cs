@@ -38,12 +38,12 @@ public class UserDTO
     /// <summary>
     /// All the Biddings done by the User
     /// </summary>
-    public ICollection<BiddingPoigneeDTO> Biddings { get; set; } = new HashSet<BiddingPoigneeDTO>();
+    public ICollection<BiddingPoigneeDto> Biddings { get; set; } = new HashSet<BiddingPoigneeDto>();
 
     /// <summary>
     /// All the Groups of the User
     /// </summary>
-    public ICollection<GroupDTO> Groups { get; set; } = new HashSet<GroupDTO>();
+    public ICollection<GroupDto> Groups { get; set; } = new HashSet<GroupDto>();
     
     /// <summary>
     /// Email of the User

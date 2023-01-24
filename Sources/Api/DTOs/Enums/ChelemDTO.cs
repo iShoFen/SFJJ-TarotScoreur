@@ -1,6 +1,6 @@
 ﻿namespace DTOs.Enums;
 
-public enum ChelemDTO : byte
+public enum ChelemDto : byte
 {
     /// <summary>
     /// Unknown ChelemDB
