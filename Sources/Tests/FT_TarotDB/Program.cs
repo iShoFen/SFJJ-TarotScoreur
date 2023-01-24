@@ -80,9 +80,9 @@ await using (var context = new TarotDbContext())
     Console.WriteLine("--- Ouverture du contexte ---\n");
     context.Database.EnsureCreated();
 
-    Console.WriteLine("Recherche de tous les joueurs possédant un 'e' dans leur prénom");
+    Console.WriteLine("Recherche de tous les joueurs possédant 'en' dans leur prénom");
     var selectedPlayers = context.Players
-        .Where(e => e.FirstName.Contains("e"))
+        .Where(e => e.FirstName.Contains("en"))
         .OrderBy(e => e.LastName);
 
     Console.WriteLine($"Nombre de joueurs trouvés: {selectedPlayers.Count()}");
