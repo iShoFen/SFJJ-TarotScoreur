@@ -49,6 +49,48 @@ public class UT_Writer
 
     #endregion
 
+    #region User
+
+    [Theory]
+    [MemberData(nameof(UserWriterDataTest.InsertUserData), MemberType = typeof(UserWriterDataTest))]
+    public async Task UserInsertTest(IWriter writer, User user, User? expectedUser)
+    {
+        var result = await writer.InsertUser(user);
+
+        if (expectedUser is null) Assert.Null(result);
+        else Assert.Equal(expectedUser, result!, User.UserFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UserWriterDataTest.UpdateUserData), MemberType = typeof(UserWriterDataTest))]
+    public async Task UserUpdateTest(IWriter writer, User user, User? expectedUser)
+    {
+        var result = await writer.UpdateUser(user);
+
+        if (expectedUser is null) Assert.Null(result);
+        else Assert.Equal(expectedUser, result!, User.UserFullComparer);
+    }
+
+    [Theory]
+    [MemberData(nameof(UserWriterDataTest.DeleteUserWithObjectData), MemberType = typeof(UserWriterDataTest))]
+    public async Task UserDeleteWithObjectTest(IWriter writer, User user, bool expectedResult)
+    {
+        var result = await writer.DeleteUser(user);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(UserWriterDataTest.DeleteUserWithIdData), MemberType = typeof(UserWriterDataTest))]
+    public async Task UserDeleteWithIdTest(IWriter writer, ulong userId, bool expectedResult)
+    {
+        var result = await writer.DeleteUser(userId);
+        
+        Assert.Equal(expectedResult, result);
+    }
+
+    #endregion
+    
     #region Group
     
     [Theory]

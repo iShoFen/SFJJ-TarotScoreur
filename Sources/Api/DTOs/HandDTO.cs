@@ -5,7 +5,7 @@ namespace DTOs;
 /**
  * DTO for the Hand table
  */
-public class HandDTO
+public class HandDto
 {
     /// <summary>
     /// The unique identifier for the Hand
@@ -45,17 +45,17 @@ public class HandDTO
     /// <summary>
     /// Indicates the state of the Petit related to the taker
     /// </summary>
-    public PetitResultsDTO Petit { get; set; }
+    public PetitResultDto Petit { get; set; }
     
     /// <summary>
     /// Indicates the state of the ChelemDB related to the taker
     /// </summary>
-    public ChelemDTO Chelem { get; set; }
+    public ChelemDto Chelem { get; set; }
     
     /// <summary>
     /// Users bidding details
     /// </summary>
-    public ICollection<BiddingPoigneeDTO> Biddings { get; set; } = new HashSet<BiddingPoigneeDTO>();
+    public ICollection<BiddingPoigneeDto> Biddings { get; set; } = new HashSet<BiddingPoigneeDto>();
     
     /// <summary>
     /// The game to which the Hand belongs

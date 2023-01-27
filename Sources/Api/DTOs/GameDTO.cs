@@ -35,5 +35,5 @@ public class GameDTO
     /// <summary>
     /// The Hands in the Game
     /// </summary>
-    public ICollection<HandDTO> Hands { get; set; } = new HashSet<HandDTO>();
+    public ICollection<HandDto> Hands { get; set; } = new HashSet<HandDto>();
 }

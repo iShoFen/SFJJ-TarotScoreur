@@ -3,7 +3,7 @@
 /**
  * DTO for the Group table.
  */
-public class GroupDTO
+public class GroupDto
 {
     /// <summary>
     /// Id of the Group.

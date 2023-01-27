@@ -1,6 +1,6 @@
 ﻿namespace DTOs.Enums
 {
-    public enum PoigneeDTO : byte
+    public enum PoigneeDto : byte
     {
         /// <summary>
         /// If the player has no poignee

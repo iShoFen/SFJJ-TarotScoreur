@@ -1,7 +1,6 @@
 ﻿namespace DTOs.Enums;
 
-[Flags]
-public enum PetitResultsDTO : byte
+public enum PetitResultDto : byte
 {
     /// <summary>
     /// Unknown status of the Petit

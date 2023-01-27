@@ -85,6 +85,84 @@ public partial class Manager
 
     #endregion
     
+    #region User
+    
+    /// <summary>
+    /// Get users with the pagination.
+    /// </summary>
+    /// <param name="start">Index of the page</param>
+    /// <param name="count">Number of users to return</param>
+    /// <returns>List of users paginated</returns>
+    public async Task<IEnumerable<User>> GetUsers(int start, int count)
+    {
+        var users = await _reader.GetUsers(start, count);
+        _logger.Info("All users loaded");
+        
+        return users;
+    }
+
+    /// <summary>
+    /// Get the user corresponding to the id.
+    /// </summary>
+    /// <param name="userId">Id of the user to search</param>
+    /// <returns>User corresponding to the id or null it does not exist.</returns>
+    public async Task<User?> GetUserById(ulong userId)
+    {
+        var user = await _reader.GetUserById(userId);
+        
+        if(user is null) _logger.Warn($"User with id {userId} not found");
+        else _logger.Info($"User with id {userId} loaded");
+
+        return user;
+    }
+
+    /// <summary>
+    /// Get users by searching on firstname, lastname, and nickname fields with pagination.
+    /// </summary>
+    /// <param name="pattern">Pattern to search</param>
+    /// <param name="start">Index of the page</param>
+    /// <param name="count">Number of users to return</param>
+    /// <returns>List of users filtered with the pattern and pagination</returns>
+    public async Task<IEnumerable<User>> GetUsersByPattern(string pattern, int start, int count)
+    {
+        var users = await _reader.GetUsersByPattern(pattern, start, count);
+        _logger.Info($"Users filtered with pattern {pattern} loaded");
+        
+        return users;
+    }
+
+    /// <summary>
+    /// Get users by searching on nickname field with pagination.
+    /// </summary>
+    /// <param name="pattern">Pattern to search</param>
+    /// <param name="start">Index of the page</param>
+    /// <param name="count">Number of users to return</param>
+    /// <returns>List of users filtered with the pattern and pagination</returns>
+    public async Task<IEnumerable<User>> GetUsersByNickname(string pattern, int start, int count)
+    {
+        var users = await _reader.GetUsersByNickname(pattern, start, count);
+        _logger.Info($"Users filtered with nickname {pattern} loaded");
+        
+        return users;
+    }
+
+    /// <summary>
+    /// Get users by searching on firstname and lastname fields with pagination.
+    /// </summary>
+    /// <param name="pattern">Pattern to search</param>
+    /// <param name="start">Index of the page</param>
+    /// <param name="count">Number of users to return</param>
+    /// <returns>List of users filtered with the pattern and pagination</returns>
+    public async Task<IEnumerable<User>> GetUsersByFirstNameAndLastName(string pattern, int start, int count)
+    {
+        var users = await _reader.GetUsersByFirstNameAndLastName(pattern, start, count);
+        _logger.Info($"Users filtered with firstname and lastname {pattern} loaded");
+        
+        return users;
+    }
+    
+    #endregion
+    
     #region Group
 
     /// <summary>
