@@ -8,7 +8,7 @@ public class GroupDto
     /// <summary>
     /// Id of the Group.
     /// </summary>
-    public ulong Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary>
     /// Name of the Group.
