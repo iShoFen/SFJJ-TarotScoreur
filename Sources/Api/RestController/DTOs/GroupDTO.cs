@@ -1,4 +1,4 @@
-﻿namespace DTOs;
+﻿namespace RestController.DTOs;
 
 /**
  * DTO for the Group table.
@@ -18,5 +18,5 @@ public class GroupDTO
     /// <summary>
     /// Users of the Group.
     /// </summary>
-    public ICollection<UserDTO> Users { get; set; } = new HashSet<UserDTO>();
+    public ICollection<ulong> Users { get; set; } = new HashSet<ulong>();
 }

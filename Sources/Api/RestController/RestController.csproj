@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\..\StubContext\StubContext.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
@@ -23,8 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Filter\" />
+    <None Remove="DTOs\" />
+    <None Remove="DTOs\Enums\" />
+    <None Remove="DTOs\Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Filter\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\Enums\" />
+    <Folder Include="DTOs\Extensions\" />
   </ItemGroup>
 </Project>

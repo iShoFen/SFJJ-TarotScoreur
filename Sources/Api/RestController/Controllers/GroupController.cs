@@ -1,9 +1,9 @@
 ﻿using System;
-using DTOs;
-using DTOs.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Players;
+using RestController.DTOs;
+using RestController.DTOs.Extensions;
 using RestController.Filter;
 
 namespace RestController.Controllers;
@@ -28,7 +28,7 @@ public class GroupController : ControllerBase
 	public async Task<ActionResult> GetGroups([FromQuery] PaginationFilter paginationFilter)
 	{
 		var groups = _manager.GetGroups(paginationFilter.Page, paginationFilter.Count).Result;
-		return Ok(groups.Select(x => x.GroupToDTO()));
+		return Ok(groups.Select(x => x.ToGroupDTO()));
 	}
 
 	/// <summary>
@@ -42,7 +42,7 @@ public class GroupController : ControllerBase
 	{
 		var group = _manager.GetGroupById(id).Result;
 		if (group == null) return NotFound();
-		return Ok(group.GroupToDTO());
+		return Ok(group.ToGroupDTO());
 	}
 
 	/// <summary>
@@ -88,7 +88,7 @@ public class GroupController : ControllerBase
 		return CreatedAtAction(
 			nameof(GetGroup),
 			new { id = group.Id },
-			group.GroupToDTO());
+			group.ToGroupDTO());
 
 	}
 
@@ -102,7 +102,7 @@ public class GroupController : ControllerBase
 	public async Task<IActionResult> PutGroup(ulong id, GroupDTO groupDTO)
 	{
 		if (id != groupDTO.Id) return BadRequest();
-		var group = await _manager.UpdateGroup(groupDTO.GroupDTOTOGroup());
+		var group = await _manager.UpdateGroup(groupDTO.ToGroup());
 		if (group == null) return NotFound();
 		return NoContent();
 	}

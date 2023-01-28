@@ -7,14 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Extensions\" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Extensions\" />
-    </ItemGroup>
-    <ItemGroup>
       <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
 
       <InternalsVisibleTo Include="RestController" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
     </ItemGroup>
 </Project>

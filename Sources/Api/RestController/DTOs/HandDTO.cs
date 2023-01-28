@@ -1,6 +1,9 @@
-﻿using DTOs.Enums;
+﻿
+using System.Collections.ObjectModel;
+using Model.Rules;
+using RestController.DTOs.Enums;
 
-namespace DTOs;
+namespace RestController.DTOs;
 
 /**
  * DTO for the Hand table
@@ -20,7 +23,7 @@ public class HandDTO
     /// <summary>
     /// The name of the rules applied to this Hand
     /// </summary>
-    public string Rules { get; set; } = null!;
+    public IRules Rules { get; set; } = null!;
     
     /// <summary>
     /// The date of the Hand
@@ -51,7 +54,7 @@ public class HandDTO
     /// Indicates the state of the ChelemDB related to the taker
     /// </summary>
     public ChelemDTO Chelem { get; set; }
-    
+
     /// <summary>
     /// Users bidding details
     /// </summary>
@@ -59,6 +62,6 @@ public class HandDTO
     
     /// <summary>
     /// The game to which the Hand belongs
-    /// </summary>
-    public GameDTO Game { get; set; } = null!;
+    /// </summary> 
+    public ulong GameId { get; set; }
 }

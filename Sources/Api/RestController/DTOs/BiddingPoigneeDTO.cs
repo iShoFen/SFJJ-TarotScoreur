@@ -1,6 +1,8 @@
-﻿using DTOs.Enums;
+﻿
 
-namespace DTOs;
+using RestController.DTOs.Enums;
+
+namespace RestController.DTOs;
 
 public class BiddingPoigneeDTO
 {
@@ -20,17 +22,8 @@ public class BiddingPoigneeDTO
     public ulong HandId { get; set; }
     
     /// <summary>
-    /// The Hand
-    /// </summary>
-    public HandDTO Hand { get; set; } = null!;
-    
-    /// <summary>
     /// The unique identifier of the User
     /// </summary>
     public ulong UserId { get; set; }
-    
-    /// <summary>
-    /// The User
-    /// </summary>
-    public UserDTO User { get; set; } = null!;
+   
 }

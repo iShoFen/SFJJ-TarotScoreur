@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Model.Players;
 using Tarot2B2Model;
 using TarotDB;
-using DTOs;
-using DTOs.Extensions;
 using Tarot2B2Model.ExtensionsAndMappers;
 using Model.Data;
 using Model;
 using System.Linq;
 using RestController.Filter;
+using RestController.DTOs.Extensions;
+using RestController.DTOs;
 
 namespace RestController.Controllers;
 

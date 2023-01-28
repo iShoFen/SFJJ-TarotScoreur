@@ -1,4 +1,4 @@
-﻿namespace DTOs;
+﻿namespace RestController.DTOs;
 
 /**
  * DTO for the User table
@@ -33,17 +33,12 @@ public class UserDTO
     /// <summary>
     /// All the Games the User has played
     /// </summary>
-    public ICollection<GameDTO> Games { get; set; } = new HashSet<GameDTO>();
-
-    /// <summary>
-    /// All the Biddings done by the User
-    /// </summary>
-    public ICollection<BiddingPoigneeDTO> Biddings { get; set; } = new HashSet<BiddingPoigneeDTO>();
+    public ICollection<ulong> Games { get; set; } = new HashSet<ulong>();
 
     /// <summary>
     /// All the Groups of the User
     /// </summary>
-    public ICollection<GroupDTO> Groups { get; set; } = new HashSet<GroupDTO>();
+    public ICollection<ulong> Groups { get; set; } = new HashSet<ulong>();
     
     /// <summary>
     /// Email of the User

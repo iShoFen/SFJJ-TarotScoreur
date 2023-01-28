@@ -1,4 +1,4 @@
-﻿namespace DTOs;
+﻿namespace RestController.DTOs;
 
 public class GameDTO
 {
@@ -30,10 +30,10 @@ public class GameDTO
     /// <summary>
     /// The Users in the Game
     /// </summary>
-    public ICollection<UserDTO> Users { get; set; } = new HashSet<UserDTO>();
+    public ICollection<ulong> Users { get; set; } = new HashSet<ulong>();
     
     /// <summary>
     /// The Hands in the Game
     /// </summary>
-    public ICollection<HandDTO> Hands { get; set; } = new HashSet<HandDTO>();
+    public ICollection<ulong> Hands { get; set; } = new HashSet<ulong>();
 }

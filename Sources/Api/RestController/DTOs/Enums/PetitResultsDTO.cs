@@ -1,4 +1,4 @@
-﻿namespace DTOs.Enums;
+﻿namespace RestController.DTOs.Enums;
 
 [Flags]
 public enum PetitResultsDTO : byte

@@ -1,5 +1,5 @@
-﻿namespace DTOs.Enums
-{
+﻿namespace RestController.DTOs.Enums;
+
     public enum PoigneeDTO : byte
     {
         /// <summary>
@@ -22,4 +22,3 @@
         /// </summary>
         Triple = 3  // 0000 0011
     }
-}

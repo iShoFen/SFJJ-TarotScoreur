@@ -1,4 +1,4 @@
-﻿namespace DTOs.Enums;
+﻿namespace RestController.DTOs.Enums;
 
 public enum ChelemDTO : byte
 {
