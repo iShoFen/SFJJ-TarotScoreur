@@ -1,16 +1,8 @@
-﻿using System;
-using DTOs;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using StubContext;
-using Tarot2B2Model;
-using TarotDB;
+﻿using DTOs;
+using DTOs.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Games;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RestControllers
 {
@@ -19,43 +11,79 @@ namespace RestControllers
     {
         private readonly Manager _manager;
         
+        /// <summary>
+        /// Constructor for the HandController
+        /// </summary>
+        /// <param name="manager">The manger to use</param>
         public HandController(Manager manager)
         {
             _manager = manager;
-
         }
 
-        // GET hand/5
+        /// <summary>
+        /// Get the hand of a player with the given id
+        /// </summary>
+        /// <param name="id"> The id of the hand </param>
+        /// <returns>
+        /// Return NotFound if the hand is not found
+        /// Returns the hand of the player with the given id
+        /// </returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<HandDTO>> Get(ulong id)
         {
             var hand = await _manager.GetHandById(id);
             if (hand == null) return NotFound();
-            return Ok(hand.HandToDTO());
+            return Ok(HandDTOExtensions.ToHandDTO(hand));
         }
         
-        // POST api/values
+        /// <summary>
+        /// Post a new hand to the database
+        /// </summary>
+        /// <param name="gameId">The id of the game the hand belongs to</param>
+        /// <param name="handDTO">The hand to be posted</param>
+        /// <returns>
+        /// Return a BadRequest if the hand is invalid, 
+        /// Return a NoContent if the hand is valid and posted
+        /// </returns>
         [HttpPost]
-        public async Task<ActionResult<HandDTO>> Post(ulong gameId, [FromBody] HandDTO handDTO)
+        public async Task<IActionResult> Post(ulong gameId, [FromBody] HandDTO handDTO)
         {
-            var hands = handDTO.hand;
-            if (hands is null) return BadRequest();
-            var hand = await _manager.InsertHand(gameId, hands.Number, hands.Rules, hands.Date, hands.TakerScore, hands.TwentyOne, hands.Excuse, hands.Petit, hands.Chelem, hands.Biddings); // a completer
-
-            /*return */
+            Hand hand = HandDTOExtensions.ToHand(handDTO);
+            if (hand is null) return BadRequest();
+            var biddingsROD = hand.Biddings;
+            var keyValuePairs = biddingsROD.AsEnumerable().ToArray();
+            var handInsert = await _manager.InsertHand(gameId, hand.Number, hand.Rules, hand.Date, hand.TakerScore, hand.TwentyOne, hand.Excuse, hand.Petit, hand.Chelem, keyValuePairs); // a completer
+            if (handInsert is null) return BadRequest();
+            return NoContent();
         }
         
-        // PUT hand/5
+        /// <summary>
+        /// Update a Hand in the database by its id.
+        /// </summary>
+        /// <param name="id">The id of the Hand to be updated.</param>
+        /// <param name="handDTO">The DTO containing the updated information for the Hand.</param>
+        /// <returns>
+        /// Returns a BadRequest result if the id in the request does not match the id in the DTO. 
+        /// Returns a NotFound result if the hand is not found. 
+        /// Returns a NoContent result if the update is successful.
+        /// </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(ulong id, [FromBody] HandDTO handDTO)
         {
             if(id != handDTO.Id) return BadRequest();
-            var hand = await _manager.UpdateHand(handDTO.HandDTOToHand());
-            if (hand == null) return NotFound();
+            var hand = await _manager.UpdateHand(HandDTOExtensions.ToHand(handDTO));
+            if (hand is null) return NotFound();
             return NoContent();
         }
 
-        // DELETE hand/5
+        /// <summary>
+        /// Delete a Hand from the database by its id.
+        /// </summary>
+        /// <param name="id">The id of the Hand to be deleted.</param>
+        /// <returns>
+        /// Returns a NotFound result if the hand is not found. 
+        /// Returns a NoContent result if the deletion is successful.
+        /// </returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(ulong id)
         {
@@ -65,7 +93,14 @@ namespace RestControllers
             return NoContent();
         }
         
-        // DELETE hand/5
+        /// <summary>
+        /// Delete a Hand from the database.
+        /// </summary>
+        /// <param name="hand">The Hand to be deleted.</param>
+        /// <returns>
+        /// Returns a NotFound result if the hand object is null. 
+        /// Returns a NoContent result if the deletion is successful.
+        /// </returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Hand hand)
         { 

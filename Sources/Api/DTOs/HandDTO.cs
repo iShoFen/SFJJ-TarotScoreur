@@ -1,4 +1,5 @@
 ﻿using DTOs.Enums;
+using Model.Rules;
 
 namespace DTOs;
 
@@ -20,7 +21,7 @@ public class HandDTO
     /// <summary>
     /// The name of the rules applied to this Hand
     /// </summary>
-    public string Rules { get; set; } = null!;
+    public IRules Rules { get; set; } = null!;
     
     /// <summary>
     /// The date of the Hand
