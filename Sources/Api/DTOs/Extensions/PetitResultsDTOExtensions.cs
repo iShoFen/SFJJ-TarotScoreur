@@ -24,17 +24,17 @@ namespace DTOs.Extensions
         }
 
         /// <summary>
-        /// This method maps a PetitResultsDTO to a PetitResults
+        /// This method maps a PetitResults to a PetitResultsDTO
         /// </summary>
         /// <param name="petitResults">The PetitResults to map</param>
-        /// <returns>The mapped PetitResults</returns>
+        /// <returns>The mapped PetitResultsDTO</returns>
         public static PetitResultsDTO ToPetitResultsDTO(this PetitResults petitResults) => _mapper.Map<PetitResults, PetitResultsDTO>(petitResults);
         
         /// <summary>
-        /// Ths method maps a PetitResults to a PetitResultsDTO
+        /// Ths method maps a PetitResultsDTO to a PetitResults
         /// </summary>
         /// <param name="petitResultsDTO">The PetitResultsDTO to map</param>
-        /// <returns>The mapped PetitResultsDTO</returns>
+        /// <returns>The mapped PetitResults</returns>
         public static PetitResults ToPetitResults(this PetitResultsDTO petitResultsDTO) => _mapper.Map<PetitResultsDTO, PetitResults>(petitResultsDTO);
 
     }

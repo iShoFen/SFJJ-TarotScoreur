@@ -1,4 +1,4 @@
-﻿using DTOs;
+using DTOs;
 using DTOs.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Model;
