@@ -1,6 +1,8 @@
 using Model.Games;
-using System;
 using AutoMapper;
+using System;
+using DTOs.Enums;
+using Model.Enums;
 
 namespace DTOs.Extensions
 {
@@ -16,8 +18,10 @@ namespace DTOs.Extensions
         {
             _mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Hand, HandDTO>();
-                cfg.CreateMap<HandDTO, Hand>();
+                cfg.CreateMap<Hand, HandDTO>()
+                    .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResultsDTO()));
+                cfg.CreateMap<HandDTO, Hand>()
+                    .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResults()));
             });
             _mapper = new Mapper(_mapperConfig);
         }
