@@ -8,7 +8,6 @@ using RestController.DTOs.Extensions;
 namespace RestControllers
 {
     [Route("hand/")]
-    [ApiController]
     public class HandController : ControllerBase
     {
         private readonly Manager _manager;
@@ -90,6 +89,22 @@ namespace RestControllers
         public async Task<IActionResult> Delete(ulong id)
         {
             var hand = await _manager.GetHandById(id);
+            if (hand is null) return NotFound();
+            await _manager.DeleteHand(hand);
+            return NoContent();
+        }
+        
+        /// <summary>
+        /// Delete a Hand from the database.
+        /// </summary>
+        /// <param name="hand">The Hand to be deleted.</param>
+        /// <returns>
+        /// Returns a NotFound result if the hand object is null. 
+        /// Returns a NoContent result if the deletion is successful.
+        /// </returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Hand hand)
+        { 
             if (hand is null) return NotFound();
             await _manager.DeleteHand(hand);
             return NoContent();
