@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "Protos/utils.proto";
+
+option csharp_namespace = "GrpcService";
+
+package tarot;
+
+service Group {
+  rpc GetGroup (GroupIdRequest) returns (GroupReply);
+  rpc GetGroups (Pagination) returns (GroupsReply);
+}
+
+message GroupIdRequest {
+  uint64 id = 1;
+}
+
+message GroupsReply {
+  repeated GroupReply groups = 1;
+}
+
+message GroupReply {
+  uint64 id = 1;
+}
