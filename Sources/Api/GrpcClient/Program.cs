@@ -1,7 +1,7 @@
 ﻿using Grpc.Net.Client;
 using GrpcServiceClient;
 
-using var channel = GrpcChannel.ForAddress("http://localhost:7268");
+using var channel = GrpcChannel.ForAddress("https://localhost:7268");
 
 var userClient = new User.UserClient(channel);
 
