@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Games;
 using RestController.DTOs;
@@ -35,7 +34,7 @@ namespace RestControllers
         {
             var hand = await _manager.GetHandById(id);
             if (hand == null) return NotFound();
-            return Ok(HandDTOExtensions.ToHandDTO(hand));
+            return Ok(hand.ToHandDTO());
         }
         
         /// <summary>

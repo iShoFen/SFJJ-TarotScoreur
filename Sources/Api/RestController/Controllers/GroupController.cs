@@ -27,8 +27,8 @@ public class GroupController : ControllerBase
 	[HttpGet]
 	public async Task<ActionResult> GetGroups([FromQuery] PaginationFilter paginationFilter)
 	{
-		var groups = _manager.GetGroups(paginationFilter.Page, paginationFilter.Count).Result;
-		return Ok(groups.Select(x => x.ToGroupDTO()));
+		var groups = await _manager.GetGroups(paginationFilter.Page, paginationFilter.Count);
+		return Ok(groups.Select(x => x.ToGroupDTO()).ToList());
 	}
 
 	/// <summary>
@@ -40,7 +40,7 @@ public class GroupController : ControllerBase
     [ActionName(nameof(GetGroup))]
     public async Task<ActionResult> GetGroup(ulong id)
 	{
-		var group = _manager.GetGroupById(id).Result;
+		var group = await _manager.GetGroupById(id);
 		if (group == null) return NotFound();
 		return Ok(group.ToGroupDTO());
 	}
@@ -81,7 +81,7 @@ public class GroupController : ControllerBase
 	public async Task<ActionResult> PostGroup(GroupDTO groupDTO)
 	{
 		var users = groupDTO.Users ;
-		if (users is null) return BadRequest();
+		if (users.Count == 0) return BadRequest();
 
 		var group = await _manager.InsertGroup(groupDTO.Name, (Player) users);
 
@@ -120,7 +120,5 @@ public class GroupController : ControllerBase
 		await _manager.DeleteGroup(group);
 
 		return NoContent();
-
-
 	}
 }
