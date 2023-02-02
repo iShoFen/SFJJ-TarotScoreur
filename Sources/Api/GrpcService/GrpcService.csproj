@@ -7,16 +7,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\tarot.proto" GrpcServices="Server" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="Google.Protobuf" Version="3.21.12" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.51.0">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\StubContext\StubContext.csproj" />
       <ProjectReference Include="..\..\Tarot2B2Model\Tarot2B2Model.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Protobuf Include="Protos\*.proto" GrpcServices="Server" />
     </ItemGroup>
 
 </Project>
