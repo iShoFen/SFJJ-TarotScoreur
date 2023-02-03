@@ -2,7 +2,7 @@
 using Grpc.Net.Client;
 using GrpcClient;
 
-using var channel = GrpcChannel.ForAddress("https://localhost:7268");
+using var channel = GrpcChannel.ForAddress("http://localhost:5028");
 
 var userClient = new User.UserClient(channel);
 
@@ -24,16 +24,38 @@ try
     Console.WriteLine($"Error: {e.Status.Detail}");
 }
 
-/*var groupClient = new Group.GroupClient(channel);
+// var groupReply = await groupClient.GetGroupsAsync(new Pagination
+// {
+//     Page = 1,
+//     PageSize = 10
+// });
+//
+// var groups = groupReply.Groups.ToList();
+// groups.ForEach(g => Console.WriteLine($"Group: {g}"));
 
-var groupReply = await groupClient.GetGroupsAsync(new Pagination
+var gameClient = new Game.GameClient(channel);
+
+var reply1 = await gameClient.GetGameAsync(new IdRequest
 {
-    Page = 1,
-    PageSize = 10
+    Id = 3
 });
 
-var groups = groupReply.Groups.ToList();
-groups.ForEach(g => Console.WriteLine($"Group: {g}"));*/
+Console.WriteLine($"Game(3): {reply1}");
+
+try
+{
+    var reply2 = await gameClient.GetGameAsync(new IdRequest
+    {
+        Id = 150
+    });
+    Console.WriteLine($"Game(150): {reply2}");
+}
+catch (RpcException e)
+{
+    Console.Error.WriteLine("The game was not found");
+    Console.WriteLine(e);
+}
+
 
 Console.WriteLine("Press any key to continue...");
 Console.ReadKey();

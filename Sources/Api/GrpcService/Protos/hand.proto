@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "Protos/utils.proto";
+
+option csharp_namespace = "GrpcService";
+
+package tarot;
