@@ -17,6 +17,8 @@ internal static class GameExtensions
                 opt.MapFrom(g => g.Players.Select(p => p.Id)))
             .ForMember(dest => dest.Hands, opt =>
                 opt.MapFrom(g => g.Hands.Select(kvp => kvp.Value.Id)))
+            .ForMember(dest => dest.Rules, opt =>
+                opt.MapFrom(src => src.Rules.Name))
             .ReverseMap();
         // For DateTime? to Timestamp?
         cfg.CreateMap<DateTime?, Timestamp?>()

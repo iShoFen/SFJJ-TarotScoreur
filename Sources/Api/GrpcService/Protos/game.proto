@@ -23,7 +23,7 @@ message GameInsertRequest {
   string name = 1;
   string rules = 2;
   google.protobuf.Timestamp startDate = 3;
-  repeated UserReply players = 5;
+  repeated uint64 players = 5;
 }
 
 message GamePatternRequest {

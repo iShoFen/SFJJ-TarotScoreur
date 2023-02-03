@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "Protos/utils.proto";
+import "Protos/user.proto";
 import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "GrpcClient";
@@ -22,7 +23,6 @@ message GameInsertRequest {
   string name = 1;
   string rules = 2;
   google.protobuf.Timestamp startDate = 3;
-  google.protobuf.Timestamp endDate = 4;
   repeated uint64 players = 5;
 }
 
@@ -51,7 +51,7 @@ message GameReply {
   string name = 2;
   string rules = 3;
   google.protobuf.Timestamp startDate = 4;
-  google.protobuf.Timestamp endDate = 5;
+  optional google.protobuf.Timestamp endDate = 5;
   repeated uint64 players = 6;
   repeated uint64 hands = 7;
 }

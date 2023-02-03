@@ -2,6 +2,7 @@ using Grpc.Core;
 using GrpcService.extensions;
 using GrpcService.Extensions;
 using Model;
+using Model.Players;
 using Model.Rules;
 
 namespace GrpcService.Services;
@@ -69,6 +70,18 @@ public class GameService : Game.GameBase
 
     public override async Task<GameReply> InsertGame(GameInsertRequest request, ServerCallContext context)
     {
+        var players = new List<Player>();
+        foreach (var playerId in request.Players)
+        {
+            var player = await _manager.GetPlayerById(playerId);
+
+            if (player == null)
+                throw new RpcException(new Status(StatusCode.InvalidArgument,
+                    $"The user with id {playerId} does not exist"));
+
+            players.Add(player);
+        }
+
         var rules = RulesFactory.Create(request.Rules);
         if (rules is null)
         {
@@ -77,13 +90,19 @@ public class GameService : Game.GameBase
                 $"Rules {request.Rules} does not correspond to any rules"));
         }
 
-        var game = await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(),
-            request.Players.ToUsers().ToArray());
+        try
+        {
+            var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(),
+                players.ToArray()))!;
 
-        if (game is not null) return game.ToGameReply();
-        
-        _logger.Log(LogLevel.Warning, $"An error occurred while inserting the new game with request {request}");
-        throw new RpcException(new Status(StatusCode.Aborted, "An error occurred while inserting the new game"));
+            _logger.Log(LogLevel.Information, $"The game with id {game.Id} has been successfully inserted");
+            return game.ToGameReply();
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Warning, $"An error occurred while inserting the new game with request {request}");
+            throw new RpcException(new Status(StatusCode.Internal, $"An error occurred while inserted the game"));
+        }
     }
 
     public override async Task<GameReply> UpdateGame(GameReply request, ServerCallContext context)
@@ -92,16 +111,17 @@ public class GameService : Game.GameBase
         if (convertedGame is null)
         {
             _logger.Log(LogLevel.Warning, $"Converted game from request {request} is null");
-            throw new RpcException(new Status(StatusCode.InvalidArgument, "The arguments passed cannot be used to update the game"));
+            throw new RpcException(new Status(StatusCode.InvalidArgument,
+                "The arguments passed cannot be used to update the game"));
         }
 
         var game = await _manager.UpdateGame(convertedGame);
 
         if (game is not null) return game.ToGameReply();
-        
-        _logger.Log(LogLevel.Warning, $"An error occurred while updating the game with request {request}");
-        throw new RpcException(new Status(StatusCode.Aborted, $"An error occurred while updating the game with {request.Id}"));
 
+        _logger.Log(LogLevel.Warning, $"An error occurred while updating the game with request {request}");
+        throw new RpcException(new Status(StatusCode.Aborted,
+            $"An error occurred while updating the game with {request.Id}"));
     }
 
     public override async Task<BoolResponse> DeleteGame(IdRequest request, ServerCallContext context)

@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient;
 
@@ -19,7 +20,8 @@ try
 {
     var user = userClient.GetUser(new IdRequest { Id = 1UL });
     Console.WriteLine($"User: {user}");
-} catch (RpcException e)
+}
+catch (RpcException e)
 {
     Console.WriteLine($"Error: {e.Status.Detail}");
 }
@@ -56,6 +58,39 @@ catch (RpcException e)
     Console.WriteLine(e);
 }
 
+var reply3 = await gameClient.DeleteGameAsync(new IdRequest
+{
+    Id = 4
+});
+
+Console.WriteLine($"result of deleting game(4): {reply3.Result}");
+
+var reply4 = await gameClient.DeleteGameAsync(new IdRequest
+{
+    Id = 4
+});
+
+Console.WriteLine($"result of deleting game(4): {reply4.Result}");
+
+var reply5 = await gameClient.InsertGameAsync(new GameInsertRequest
+{
+    Name = "La partie de folie",
+    Rules = "FrenchTarotRules",
+    StartDate = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
+    Players = { 14, 15 }
+});
+
+Console.WriteLine($"Insert game result: {reply5}");
+
+var reply6 = await gameClient.InsertGameAsync(new GameInsertRequest
+{
+    Name = "La partie de folie",
+    Rules = "FrenchTarotRules",
+    StartDate = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
+    Players = { 14, 150 }
+});
+
+Console.WriteLine($"Insert game result: {reply6}");
 
 Console.WriteLine("Press any key to continue...");
 Console.ReadKey();
