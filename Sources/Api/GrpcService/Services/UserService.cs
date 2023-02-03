@@ -1,5 +1,5 @@
 using Grpc.Core;
-using GrpcService.extensions;
+using GrpcService.Extensions;
 using Model;
 
 namespace GrpcService.Services;

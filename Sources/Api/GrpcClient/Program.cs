@@ -14,7 +14,8 @@ var userReply = await userClient.GetUsersAsync(new Pagination
 var users = userReply.Users.ToList();
 users.ForEach(u => Console.WriteLine($"User: {u}"));
 
-var groupClient = new Group.GroupClient(channel);
+
+/*var groupClient = new Group.GroupClient(channel);
 
 var groupReply = await groupClient.GetGroupsAsync(new Pagination
 {
@@ -23,7 +24,7 @@ var groupReply = await groupClient.GetGroupsAsync(new Pagination
 });
 
 var groups = groupReply.Groups.ToList();
-groups.ForEach(g => Console.WriteLine($"Group: {g}"));
+groups.ForEach(g => Console.WriteLine($"Group: {g}"));*/
 
 Console.WriteLine("Press any key to continue...");
 Console.ReadKey();
