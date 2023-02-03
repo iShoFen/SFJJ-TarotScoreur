@@ -1,7 +1,6 @@
 using Grpc.Core;
 using GrpcService.Extensions;
 using Model;
-using Model.Data;
 
 namespace GrpcService.Services;
 
@@ -48,7 +47,7 @@ public class GroupService : Group.GroupBase
     {
         var group = await _manager.InsertGroup(request.Name, request.Players.ToUsers().ToArray());
 
-        if (group == null) throw new RpcException(new Status(StatusCode.NotFound, "Group not found"));
+        if (group == null) throw new RpcException(new Status(StatusCode.Aborted, "Group not created"));
         
         return group.ToGroupReply();
     }

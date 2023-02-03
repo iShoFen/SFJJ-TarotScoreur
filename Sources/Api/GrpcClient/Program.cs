@@ -1,4 +1,5 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
 using GrpcClient;
 
 using var channel = GrpcChannel.ForAddress("https://localhost:7268");
@@ -14,6 +15,14 @@ var userReply = await userClient.GetUsersAsync(new Pagination
 var users = userReply.Users.ToList();
 users.ForEach(u => Console.WriteLine($"User: {u}"));
 
+try
+{
+    var user = userClient.GetUser(new IdRequest { Id = 1UL });
+    Console.WriteLine($"User: {user}");
+} catch (RpcException e)
+{
+    Console.WriteLine($"Error: {e.Status.Detail}");
+}
 
 /*var groupClient = new Group.GroupClient(channel);
 

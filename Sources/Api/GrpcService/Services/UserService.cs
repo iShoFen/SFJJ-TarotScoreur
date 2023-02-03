@@ -23,8 +23,11 @@ public class UserService : User.UserBase
     public override async Task<UserReply> GetUser(IdRequest request, ServerCallContext context)
     {
         var user = await _manager.GetUserById(request.Id);
-        
-        if (user == null) throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
+
+        if (user == null)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found"));
+        }
         
         return user.ToUserReply();
     }
@@ -53,7 +56,7 @@ public class UserService : User.UserBase
     public override async Task<UserReply> InsertUser(UserInsertRequest request, ServerCallContext context)
     {
         var user = await _manager.InsertUser(request.FirstName, request.LastName, request.Nickname, request.Avatar, request.Email, request.Password);
-
+        
         return user.ToUserReply();
     }
 
@@ -61,7 +64,7 @@ public class UserService : User.UserBase
     {
         var user = await _manager.UpdateUser(request.ToUser());
         
-        if (user == null) throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
+        if (user == null) throw new RpcException(new Status(StatusCode.NotFound, $"User {request.Id} not found"));
 
         return user.ToUserReply();
     }
