@@ -1,36 +1,75 @@
 using Grpc.Core;
-using Model.Data;
+using GrpcService.extensions;
+using Model;
 
 namespace GrpcService.Services;
 
 public class UserService : User.UserBase
 {
-    private readonly IReader _reader;
+    private readonly Manager _manager;
 
-    public UserService(IReader reader)
+    public UserService(Manager reader)
     {
-        _reader = reader;
-    }
-
-    public override Task<UserReply> GetUser(UserIdRequest request, ServerCallContext context)
-    {
-        return Task.FromResult(new UserReply
-        {
-            Id = 4
-        });
+        _manager = reader;
     }
 
     public override async Task<UsersReply> GetUsers(Pagination request, ServerCallContext context)
     {
-        var users = await _reader.GetUsers(request.Page, request.PageSize);
+        var users = await _manager.GetUsers(request.Page, request.PageSize);
+        
+        return users.ToUsersReply();
+    }
+    
+    public override async Task<UserReply> GetUser(IdRequest request, ServerCallContext context)
+    {
+        var user = await _manager.GetUserById(request.Id);
+        
+        if (user == null) throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
+        
+        return user.ToUserReply();
+    }
+    
+    public override async Task<UsersReply> GetUsersByPattern(UserPatternRequest request, ServerCallContext context)
+    {
+        var users = await _manager.GetUsersByPattern(request.Pattern, request.Pagination.Page, request.Pagination.PageSize);
+        
+        return users.ToUsersReply();
+    }
 
-        var userReplies = users.Select(u => new UserReply
-        {
-            Id = u.Id
-        });
+    public override async Task<UsersReply> GetUsersByNickname(UserPatternRequest request, ServerCallContext context)
+    {
+        var users = await _manager.GetUsersByNickname(request.Pattern, request.Pagination.Page, request.Pagination.PageSize);
+        
+        return users.ToUsersReply();
+    }
 
-        var reply = new UsersReply();
-        reply.Users.AddRange(userReplies);
-        return await Task.FromResult(reply);
+    public override async Task<UsersReply> GetUsersByFirstNameAndLastName(UserPatternRequest request, ServerCallContext context)
+    {
+        var users = await _manager.GetUsersByFirstNameAndLastName(request.Pattern, request.Pagination.Page, request.Pagination.PageSize);
+        
+        return users.ToUsersReply();
+    }
+
+    public override async Task<UserReply> InsertUser(UserInsertRequest request, ServerCallContext context)
+    {
+        var user = await _manager.InsertUser(request.FirstName, request.LastName, request.Nickname, request.Avatar, request.Email, request.Password);
+
+        return user.ToUserReply();
+    }
+
+    public override async Task<UserReply> UpdateUser(UserUpdateRequest request, ServerCallContext context)
+    {
+        var user = await _manager.UpdateUser(request.ToUser());
+        
+        if (user == null) throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
+
+        return user.ToUserReply();
+    }
+
+    public override async Task<BoolResponse> DeleteUser(IdRequest request, ServerCallContext context)
+    {
+        var result = await _manager.DeleteUser(request.Id);
+        
+        return new BoolResponse {Result = result};
     }
 }

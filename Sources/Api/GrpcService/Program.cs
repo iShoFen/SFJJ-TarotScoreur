@@ -1,5 +1,6 @@
 using GrpcService.Services;
 using Microsoft.EntityFrameworkCore;
+using Model;
 using Model.Data;
 using StubContext;
 using Tarot2B2Model;
@@ -17,6 +18,7 @@ builder.Services.AddTransient<DbContext, TarotDbContextStub>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IReader, DbReader>();
 builder.Services.AddTransient<IWriter, DbWriter>();
+builder.Services.AddTransient<Manager>();
 
 var app = builder.Build();
 
