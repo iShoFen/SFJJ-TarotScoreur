@@ -15,9 +15,9 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
-
+    
     <ItemGroup>
-        <Protobuf Include="Protos\tarot.proto" GrpcService="Client" />
+        <ProtoBuf Include="Protos\*.proto" GrpcServices="Client" />
     </ItemGroup>
 
 </Project>
