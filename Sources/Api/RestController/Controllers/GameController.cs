@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Rules;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
 using RestController.Filter;
@@ -33,7 +34,7 @@ public class GameController : ControllerBase
     {
         var game = await _manager.GetGameById(id);
         if (game == null) return NotFound();
-        return Ok(game.ToGameDTO());
+        return Ok(game.ToGameDetailDTO());
     }
     
     // USER
@@ -58,22 +59,24 @@ public class GameController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostGame(GameDTO gameDto)
+    public async Task<ActionResult> PostGame(GameDTOPostRequest gameDtoPostRequest)
     {
-        if (gameDto.Hands.Count == 0 || gameDto.Users.Count == 0)
-        {
-            return BadRequest();
-        }
+        if (gameDtoPostRequest.Users.Count == 0) return BadRequest();
+        var players = gameDtoPostRequest.Users.Select(x => _manager.GetPlayerById(x).Result).ToList();
+        if (!players.TrueForAll(player => player != null)) return BadRequest();
+        var game = await _manager.InsertGame(gameDtoPostRequest.Name, RulesFactory.Create(gameDtoPostRequest.Rules), gameDtoPostRequest.StartDate, players.ToArray()) ;
 
-        //var game = _manager.InsertGame(gameDto.);
-        throw new NotImplementedException();
+        return CreatedAtAction(
+            nameof(GetGame),
+            new { id = game.Id },
+            game.ToGameDetailDTO());
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutGame(ulong id, GameDTO gameDto)
+    public async Task<IActionResult> PutGame(ulong id, GameDetailDTO gameDetailDto)
     {
-        if (id != gameDto.Id) return BadRequest();
-        var game = await _manager.UpdateGame(gameDto.ToGameModel());
+        if (id != gameDetailDto.Id) return BadRequest();
+        var game = await _manager.UpdateGame(gameDetailDto.ToGameModel());
         if (game is null) return NotFound();
         return NoContent();
     }

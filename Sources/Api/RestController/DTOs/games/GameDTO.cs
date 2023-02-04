@@ -1,4 +1,4 @@
-﻿namespace RestController.DTOs;
+﻿namespace RestController.DTOs.games;
 
 public class GameDTO
 {
@@ -26,14 +26,4 @@ public class GameDTO
     /// The end date of the Game
     /// </summary>
     public DateTime? EndDate { get; set; }
-    
-    /// <summary>
-    /// The Users in the Game
-    /// </summary>
-    public ICollection<ulong> Users { get; set; } = new HashSet<ulong>();
-    
-    /// <summary>
-    /// The Hands in the Game
-    /// </summary>
-    public ICollection<ulong> Hands { get; set; } = new HashSet<ulong>();
 }

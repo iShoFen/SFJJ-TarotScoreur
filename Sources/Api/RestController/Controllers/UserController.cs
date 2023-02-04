@@ -37,13 +37,13 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{userId}/game")]
-    public async Task<ActionResult<GameDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter paginationFilter)
+    public async Task<ActionResult<GameDetailDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter paginationFilter)
     {
         var user = await _manager.GetUserById(userId);
         if (user is null) return NotFound();
         var games = await _manager.GetGamesByPlayer(userId, paginationFilter.Page * paginationFilter.Count,
             paginationFilter.Count);
-        return Ok(games.Select(x => x.ToGameDTO()).ToList());
+        return Ok(games.Select(x => x.ToGameDetailDTO()).ToList());
     }
 /*
     [HttpGet("{userId}/game/{gameId}")]

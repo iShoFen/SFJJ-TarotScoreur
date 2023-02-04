@@ -1,24 +1,21 @@
 using AutoMapper;
 using Model.Games;
+using RestController.DTOs.games;
 
 namespace RestController.DTOs.Extensions;
 
 internal static class GameDTOExtensions
 {
-    private static MapperConfiguration _mapperConfiguration;
-    private static Mapper _mapper;
-
-    static GameDTOExtensions()
+    private static readonly MapperConfiguration MapperConfiguration = new(config =>
     {
-        _mapperConfiguration = new MapperConfiguration(config =>
-            config.CreateMap<Game, GameDTO>()
-                .ForMember(dest => dest.Users, act => act.MapFrom(src => src.Players.Select(p => p.Id))).ReverseMap()
+        config.CreateMap<Game, GameDTO>().ReverseMap();
+        config.CreateMap<Game, GameDetailDTO>()
+            .ForMember(dest => dest.Users, act => act.MapFrom(src => src.Players.Select(p => p.Id))).ReverseMap();
+    });
+    private static readonly Mapper Mapper =new(MapperConfiguration);
 
-        );
-        _mapper = new Mapper(_mapperConfiguration);
-    }
+    public static GameDTO ToGameDTO(this Game game) => Mapper.Map<Game, GameDTO>(game);
+    public static GameDetailDTO ToGameDetailDTO(this Game game) => Mapper.Map<Game, GameDetailDTO>(game);
 
-    public static GameDTO ToGameDTO(this Game game) => _mapper.Map<Game, GameDTO>(game);
-
-    public static Game ToGameModel(this GameDTO gameDto) => _mapper.Map<GameDTO, Game>(gameDto);
+    public static Game ToGameModel(this GameDetailDTO gameDetailDto) => Mapper.Map<GameDetailDTO, Game>(gameDetailDto);
 }
