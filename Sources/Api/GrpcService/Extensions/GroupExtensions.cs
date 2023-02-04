@@ -3,26 +3,42 @@ using Model.Players;
 
 namespace GrpcService.Extensions;
 
+/// <summary>
+/// Group extensions for mapping
+/// </summary>
 public static class GroupExtensions
 {
+    /// <summary>
+    /// Mapper configuration for automapper
+    /// </summary>
     private static readonly MapperConfiguration Config = new (cfg =>
     {
         cfg.CreateMap<Model.Players.Group, GroupReply>()
            .ForMember(dest => dest.Players, opt 
                           => opt.MapFrom(src => src.Players.ToUsersReply().Users));
-        cfg.CreateMap<GroupReply, Model.Players.Group>()
-           .ForMember(dest => dest.Players, opt 
-                          => opt.MapFrom(src => src.Players.ToUsers()));
         cfg.CreateMap<GroupUpdateRequest, Model.Players.Group>()
            .ForMember(dest => dest.Players, opt 
                           => opt.MapFrom(src => Array.Empty<Player>()));
     });
 
+    /// <summary>
+    /// Mapper for automapper
+    /// </summary>
     private static readonly Mapper Mapper = new (Config);
     
+    /// <summary>
+    /// Map Group to GroupReply
+    /// </summary>
+    /// <param name="group">The group to map</param>
+    /// <returns>The GroupReply</returns>
     public static GroupReply ToGroupReply(this Model.Players.Group group) 
         => Mapper.Map<GroupReply>(group);
 
+    /// <summary>
+    /// Map Group to GroupReply
+    /// </summary>
+    /// <param name="groups">The List of groups to map</param>
+    /// <returns>The GroupsReply</returns>
     public static GroupsReply ToGroupsReply(this IEnumerable<Model.Players.Group> groups)
     {
         var groupsReply = new GroupsReply();
@@ -31,10 +47,11 @@ public static class GroupExtensions
         return groupsReply;
     }
     
-    public static Model.Players.Group ToGroup(this GroupReply groupRequest)
-        => Mapper.Map<Model.Players.Group>(groupRequest);
-    
-    
+    /// <summary>
+    /// Map GroupUpdateRequest to Group
+    /// </summary>
+    /// <param name="groupRequest">The GroupUpdateRequest to map</param>
+    /// <returns>The Group</returns>
     public static Model.Players.Group ToGroup(this GroupUpdateRequest groupRequest)
         => Mapper.Map<Model.Players.Group>(groupRequest);
     
