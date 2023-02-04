@@ -19,11 +19,12 @@ namespace RestController.DTOs.Extensions
             {
                 cfg.CreateMap<Hand, HandDTO>()
                     .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResultsDTO()))
-                    .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelemDTO()))
-                    .ForMember(h => h.Biddings, opt => opt.MapFrom(h => h.Biddings.ToBiddingPoigneeDTO()));
+                    .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelemDTO()));
                 cfg.CreateMap<Hand, HandDTOGetRequest>()
                     .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResultsDTO()))
-                    .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelemDTO()));
+                    .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelemDTO()))
+                    .ForMember(h => h.Biddings, opt => 
+                        opt.MapFrom(h => h.Biddings.Select(b => b.ToBiddingPoigneeDTO())));
                 cfg.CreateMap<HandDTO, Hand>()
                     .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResults()))
                     .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelem()));

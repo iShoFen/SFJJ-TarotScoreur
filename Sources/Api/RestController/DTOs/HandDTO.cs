@@ -56,11 +56,6 @@ public class HandDTO
     public ChelemDTO Chelem { get; set; }
 
     /// <summary>
-    /// Users bidding details
-    /// </summary>
-    public ICollection<BiddingPoigneeDTO> Biddings { get; set; } = new HashSet<BiddingPoigneeDTO>();
-    
-    /// <summary>
     /// The game to which the Hand belongs
     /// </summary> 
     public ulong GameId { get; set; }

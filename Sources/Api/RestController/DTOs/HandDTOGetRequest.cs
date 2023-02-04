@@ -50,6 +50,8 @@ public class HandDTOGetRequest
     /// </summary>
     public ChelemDTO Chelem { get; set; }
     
+    public ICollection<BiddingPoigneeDTO> Biddings { get; set; } = new HashSet<BiddingPoigneeDTO>();
+    
     /// <summary>
     /// The game to which the Hand belongs
     /// </summary> 
