@@ -47,7 +47,7 @@ public class GroupService : Group.GroupBase
     {
         var group = await _manager.InsertGroup(request.Name, request.Players.ToUsers().ToArray());
 
-        if (group == null) throw new RpcException(new Status(StatusCode.Aborted, "Group not created"));
+        if (group == null) throw new RpcException(new Status(StatusCode.Aborted, "Group not created, at least one player not found"));
         
         return group.ToGroupReply();
     }
