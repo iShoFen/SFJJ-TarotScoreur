@@ -1,12 +1,21 @@
 ﻿{
   "profiles": {
-    "GrpcService": {
+    "GrpcServiceDev": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
       "applicationUrl": "http://localhost:5028;https://localhost:7268",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "GrpcServiceProduction": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-grpc-service;https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-grpc-service",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }
