@@ -76,6 +76,16 @@ steps:
         from_secret: SECRET_REGISTRY_PASSWORD
     depends_on: [build]
 
+  - name: deploy-grpc-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      CONTAINERNAME: tarot-grpc-service
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: florentmarques,samuelsirven,julientheme
+    depends_on: [build-docker-grpc-service]
+
 volumes:
   - name: docs
     temp: {}
