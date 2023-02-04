@@ -1,9 +1,8 @@
 using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
 using Model.Rules;
 
-namespace GrpcService.extensions;
+namespace GrpcService.Extensions;
 
 internal static class GameExtensions
 {

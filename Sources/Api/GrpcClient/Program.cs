@@ -82,15 +82,32 @@ var reply5 = await gameClient.InsertGameAsync(new GameInsertRequest
 
 Console.WriteLine($"Insert game result: {reply5}");
 
-var reply6 = await gameClient.InsertGameAsync(new GameInsertRequest
+try
 {
-    Name = "La partie de folie",
-    Rules = "FrenchTarotRules",
-    StartDate = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
-    Players = { 14, 150 }
-});
+    var reply6 = await gameClient.InsertGameAsync(new GameInsertRequest
+    {
+        Name = "La partie de folie",
+        Rules = "FrenchTarotRules",
+        StartDate = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
+        Players = { 14, 150 }
+    });
 
-Console.WriteLine($"Insert game result: {reply6}");
+    Console.WriteLine($"Insert game result: {reply6}");
+}
+catch (RpcException e)
+{
+    Console.WriteLine(e);
+}
+
+var handClient = new Hand.HandClient(channel);
+
+var reply7 = await handClient.GetHandByIdAsync(new IdRequest { Id = 15 });
+
+Console.WriteLine($"Hand result: {reply7}");
+
+var reply8 = await handClient.DeleteHandAsync(new IdRequest { Id = 14 });
+
+Console.WriteLine($"Delete hand with id: {reply8}");
 
 Console.WriteLine("Press any key to continue...");
 Console.ReadKey();
