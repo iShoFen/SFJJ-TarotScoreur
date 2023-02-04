@@ -26,14 +26,16 @@ catch (RpcException e)
     Console.WriteLine($"Error: {e.Status.Detail}");
 }
 
-// var groupReply = await groupClient.GetGroupsAsync(new Pagination
-// {
-//     Page = 1,
-//     PageSize = 10
-// });
-//
-// var groups = groupReply.Groups.ToList();
-// groups.ForEach(g => Console.WriteLine($"Group: {g}"));
+var groupClient = new Group.GroupClient(channel);
+
+var groupReply = await groupClient.GetGroupsAsync(new Pagination
+{
+    Page = 1,
+    PageSize = 10
+});
+
+var groups = groupReply.Groups.ToList();
+groups.ForEach(g => Console.WriteLine($"Group: {g}"));
 
 var gameClient = new Game.GameClient(channel);
 
@@ -107,7 +109,129 @@ Console.WriteLine($"Hand result: {reply7}");
 
 var reply8 = await handClient.DeleteHandAsync(new IdRequest { Id = 14 });
 
-Console.WriteLine($"Delete hand with id: {reply8}");
+Console.WriteLine($"Delete hand with id: {reply8.Result}");
+
+try
+{
+    var reply9 = await handClient.InsertHandAsync(new HandInsertRequest
+    {
+        GameId = 3,
+        Number = 4,
+        Rules = "FrenchTarotRules",
+        Date = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
+        Chelem = CHELEM.Success,
+        Petit = PETIT_RESULT.NotOwned,
+        TakerScore = 154,
+        Excuse = false,
+        TwentyOne = true,
+        Biddings =
+        {
+            new UserBiddingPoignee
+            {
+                PlayerId = 1,
+                Poignee = POIGNEE.None,
+                Bidding = BIDDING.Petite
+            },
+            new UserBiddingPoignee
+            {
+                PlayerId = 2,
+                Poignee = POIGNEE.Simple,
+                Bidding = BIDDING.King
+            },
+            new UserBiddingPoignee
+            {
+                PlayerId = 3,
+                Poignee = POIGNEE.Triple,
+                Bidding = BIDDING.GardeContreLeChien
+            }
+        }
+    });
+
+    Console.WriteLine($"Insert hand result: {reply9}");
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
+
+try
+{
+    var reply10 = await handClient.InsertHandAsync(new HandInsertRequest
+    {
+        GameId = 3,
+        Number = 4,
+        Rules = "FrenchTarotRules",
+        Date = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
+        Chelem = CHELEM.Success,
+        Petit = PETIT_RESULT.NotOwned,
+        TakerScore = 154,
+        Excuse = false,
+        TwentyOne = true,
+        Biddings =
+        {
+            new UserBiddingPoignee
+            {
+                PlayerId = 1,
+                Poignee = POIGNEE.None,
+                Bidding = BIDDING.Petite
+            },
+            new UserBiddingPoignee
+            {
+                PlayerId = 2,
+                Poignee = POIGNEE.Simple,
+                Bidding = BIDDING.King
+            },
+            new UserBiddingPoignee
+            {
+                PlayerId = 3,
+                Poignee = POIGNEE.Triple,
+                Bidding = BIDDING.GardeContreLeChien
+            }
+        }
+    });
+
+    Console.WriteLine($"Insert hand result: {reply10}");
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
+
+var reply11 = await handClient.UpdateHandAsync(new HandReply
+{
+    Id = 3,
+    Number = 4,
+    Rules = "FrenchTarotRules",
+    Date = Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)),
+    Chelem = CHELEM.Success,
+    Petit = PETIT_RESULT.Lost,
+    Excuse = false,
+    TwentyOne = true,
+    TakerScore = 190,
+    Biddings =
+    {
+        new UserBiddingPoignee
+        {
+            PlayerId = 1,
+            Poignee = POIGNEE.None,
+            Bidding = BIDDING.Petite
+        },
+        new UserBiddingPoignee
+        {
+            PlayerId = 2,
+            Poignee = POIGNEE.Simple,
+            Bidding = BIDDING.King
+        },
+        new UserBiddingPoignee
+        {
+            PlayerId = 3,
+            Poignee = POIGNEE.Triple,
+            Bidding = BIDDING.GardeContreLeChien
+        }
+    }
+});
+
+Console.WriteLine($"Update hand(3) result: {reply11}");
 
 Console.WriteLine("Press any key to continue...");
 Console.ReadKey();

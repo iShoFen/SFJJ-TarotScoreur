@@ -33,4 +33,16 @@ internal static class HandExtensions
 
     public static HandReply ToHandReply(this Model.Games.Hand hand)
         => Mapper.Map<HandReply>(hand);
+
+    public static Chelem ToModel(this CHELEM chelem)
+        => Mapper.Map<Chelem>(chelem);
+
+    public static PetitResults ToModel(this PETIT_RESULT petit)
+        => Mapper.Map<PetitResults>(petit);
+
+    public static Biddings ToModel(this BIDDING bidding)
+        => Mapper.Map<Biddings>(bidding);
+
+    public static Poignee ToModel(this POIGNEE poignee)
+        => Mapper.Map<Poignee>(poignee);
 }

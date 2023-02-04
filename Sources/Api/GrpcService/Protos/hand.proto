@@ -10,7 +10,7 @@ package tarot;
 service Hand {
   rpc GetHandById (IdRequest) returns (HandReply);
   rpc InsertHand (HandInsertRequest) returns (HandReply);
-  rpc UpdateHand (HandUpdateRequest) returns (HandReply);
+  rpc UpdateHand (HandReply) returns (HandReply);
   rpc DeleteHand (IdRequest) returns (BoolResponse);
 }
 
@@ -21,15 +21,21 @@ message HandReply {
   google.protobuf.Timestamp date = 4;
   int32 taker_score = 5;
   optional bool excuse = 6;
-  PETIT_RESULT petit = 7;
-  CHELEM chelem = 8;
-  repeated UserBiddingPoignee biddings = 9; 
+  optional bool twenty_one = 7;
+  PETIT_RESULT petit = 8;
+  CHELEM chelem = 9;
+  repeated UserBiddingPoignee biddings = 10;
 }
 
 message HandInsertRequest {
-  uint64 id = 1;
-}
-
-message HandUpdateRequest {
-  uint64 id = 1;
+  uint64 game_id = 1;
+  int32 number = 2;
+  string rules = 3;
+  google.protobuf.Timestamp date = 4;
+  int32 taker_score = 5;
+  optional bool excuse = 6;
+  optional bool twenty_one = 7;
+  PETIT_RESULT petit = 8;
+  CHELEM chelem = 9;
+  repeated UserBiddingPoignee biddings = 10;
 }

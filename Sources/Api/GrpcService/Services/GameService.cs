@@ -121,7 +121,7 @@ public class GameService : Game.GameBase
 
         _logger.Log(LogLevel.Warning, $"An error occurred while updating the game with request {request}");
         throw new RpcException(new Status(StatusCode.Aborted,
-            $"An error occurred while updating the game with {request.Id}"));
+            $"An error occurred while updating the game with id {request.Id}"));
     }
 
     public override async Task<BoolResponse> DeleteGame(IdRequest request, ServerCallContext context)
