@@ -13,7 +13,7 @@ internal static class GroupDTOExtensions
     {
         _mapperConfig = new MapperConfiguration(cfg =>
             cfg.CreateMap<Group, GroupDTO>()
-            .ForMember(dest => dest.Users, act => act.MapFrom(src => src.Players.Select(p => p.Id))).ReverseMap()
+            .ForMember(dest => dest.Users, act => act.MapFrom(src => src.Players.Select(p => p.Id)))
         ); 
         _mapper = new Mapper(_mapperConfig);
     }

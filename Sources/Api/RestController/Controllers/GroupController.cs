@@ -78,12 +78,13 @@ public class GroupController : ControllerBase
     }
 
 	[HttpPost]
-	public async Task<ActionResult> PostGroup(GroupDTO groupDTO)
+	public async Task<ActionResult> PostGroup(GroupDTOPostRequest groupDtoPostRequest)
 	{
-		var users = groupDTO.Users ;
-		if (users.Count == 0) return BadRequest();
+		var usersId = groupDtoPostRequest.Users ;
+		var players = usersId.Select(x =>  _manager.GetPlayerById(x).Result).ToList();
+		if (!players.Any()) return BadRequest();
 
-		var group = await _manager.InsertGroup(groupDTO.Name, (Player) users);
+		var group = await _manager.InsertGroup(groupDtoPostRequest.Name, players.ToArray());
 
 		return CreatedAtAction(
 			nameof(GetGroup),
@@ -101,9 +102,11 @@ public class GroupController : ControllerBase
 	[HttpPut("{id}")]
 	public async Task<IActionResult> PutGroup(ulong id, GroupDTO groupDTO)
 	{
-		if (id != (ulong)groupDTO.Id) return BadRequest();
-		var group = await _manager.UpdateGroup(groupDTO.ToGroup());
-		if (group == null) return NotFound();
+		if (id != groupDTO.Id) return BadRequest();
+		var users = groupDTO.Users.Select(x => _manager.GetPlayerById(x).Result).ToList();
+		if (!users.TrueForAll(player => player != null)) return BadRequest();
+		var group = new Group(groupDTO.Id, groupDTO.Name, users.ToArray());
+		if (await _manager.UpdateGroup(group) is null) return NotFound();
 		return NoContent();
 	}
 
