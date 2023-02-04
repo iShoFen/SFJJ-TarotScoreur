@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using AutoMapper;
 using Model.Enums;
 using Model.Players;
-using RestController.DTOs.Enums;
 
 namespace RestController.DTOs.Extensions
 {

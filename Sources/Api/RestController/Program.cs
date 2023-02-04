@@ -3,7 +3,6 @@ using Model;
 using Model.Data;
 using StubContext;
 using Tarot2B2Model;
-using TarotDB;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -29,11 +29,11 @@ namespace RestControllers
         /// Returns the hand of the player with the given id
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<HandDTO>> Get(ulong id)
+        public async Task<ActionResult<HandDTOGetRequest>> Get(ulong id)
         {
             var hand = await _manager.GetHandById(id);
             if (hand == null) return NotFound();
-            return Ok(hand.ToHandDTO());
+            return Ok(hand.ToHandDTOGetRequest());
         }
         
         /// <summary>

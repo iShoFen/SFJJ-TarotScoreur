@@ -1,12 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Model.Players;
-using Tarot2B2Model;
-using TarotDB;
-using Tarot2B2Model.ExtensionsAndMappers;
-using Model.Data;
 using Model;
-using System.Linq;
 using RestController.Filter;
 using RestController.DTOs.Extensions;
 using RestController.DTOs;

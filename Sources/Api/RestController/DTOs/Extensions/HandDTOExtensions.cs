@@ -19,6 +19,10 @@ namespace RestController.DTOs.Extensions
             {
                 cfg.CreateMap<Hand, HandDTO>()
                     .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResultsDTO()))
+                    .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelemDTO()))
+                    .ForMember(h => h.Biddings, opt => opt.MapFrom(h => h.Biddings.ToBiddingPoigneeDTO()));
+                cfg.CreateMap<Hand, HandDTOGetRequest>()
+                    .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResultsDTO()))
                     .ForMember(h => h.Chelem, opt => opt.MapFrom(h => h.Chelem.ToChelemDTO()));
                 cfg.CreateMap<HandDTO, Hand>()
                     .ForMember(h => h.Petit, opt => opt.MapFrom(h => h.Petit.ToPetitResults()))
@@ -33,6 +37,13 @@ namespace RestController.DTOs.Extensions
         /// <param name="hand">The hand to map</param>
         /// <returns>The mapped handDTO</returns>
         public static HandDTO ToHandDTO(this Hand hand) => _mapper.Map<Hand, HandDTO>(hand);
+        
+        /// <summary>
+        /// This method maps a Hand to a HandDTOGetRequest
+        /// </summary>
+        /// <param name="hand">The hand to map</param>
+        /// <returns>The mapped HandDTOGetRequest</returns>
+        public static HandDTOGetRequest ToHandDTOGetRequest(this Hand hand) => _mapper.Map<Hand, HandDTOGetRequest>(hand);
         
         /// <summary>
         /// Ths method maps a HandDTO to a Hand
