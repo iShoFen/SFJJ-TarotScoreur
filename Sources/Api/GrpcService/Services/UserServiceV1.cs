@@ -4,11 +4,11 @@ using Model;
 
 namespace GrpcService.Services;
 
-public class UserService : User.UserBase
+public class UserServiceV1 : User.UserBase
 {
     private readonly Manager _manager;
 
-    public UserService(Manager reader)
+    public UserServiceV1(Manager reader)
     {
         _manager = reader;
     }

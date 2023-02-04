@@ -22,8 +22,8 @@ builder.Services.AddTransient<Manager>();
 
 var app = builder.Build();
 
-app.MapGrpcService<UserService>();
-app.MapGrpcService<GroupService>();
+app.MapGrpcService<UserServiceV1>();
+app.MapGrpcService<GroupServiceV1>();
 
 app.MapGet("/",
     () =>

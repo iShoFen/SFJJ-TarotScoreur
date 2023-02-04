@@ -18,7 +18,7 @@ public class UT_UserService
     public void ConstructorTest()
     {
         var manager = new Manager(Loaders[1].Get(), Writers[0].Get());
-        var service = new UserService(manager);
+        var service = new UserServiceV1(manager);
         
         Assert.NotNull(service);
     }
@@ -30,7 +30,7 @@ public class UT_UserService
     public async Task TestAllUsers(int page, int pageSize, UsersReply expected)
     {
         var manager = new Manager(Loaders[1].Get(), Writers[0].Get());
-        var service = new UserService(manager);
+        var service = new UserServiceV1(manager);
         
         var actual = await service.GetUsers(new Pagination {Page = page, PageSize = pageSize}, CreateCallContext());
         
@@ -42,7 +42,7 @@ public class UT_UserService
     public async Task TestUserById(ulong id, UserReply? expected)
     {
         var manager = new Manager(Loaders[1].Get(), Writers[0].Get());
-        var service = new UserService(manager);
+        var service = new UserServiceV1(manager);
         
         if (expected is null)
         {
@@ -62,7 +62,7 @@ public class UT_UserService
     public async Task TestUsersByPattern(string pattern, int page, int pageSize, UsersReply expected)
     {
         var manager = new Manager(Loaders[1].Get(), Writers[0].Get());
-        var service = new UserService(manager);
+        var service = new UserServiceV1(manager);
         
         var actual = await service.GetUsersByPattern(
             new UserPatternRequest
@@ -80,7 +80,7 @@ public class UT_UserService
     public async Task TestUsersByNickname(string nickname, int page, int pageSize, UsersReply expected)
     {
         var manager = new Manager(Loaders[1].Get(), Writers[0].Get());
-        var service = new UserService(manager);
+        var service = new UserServiceV1(manager);
         
         var actual = await service.GetUsersByNickname(
             new UserPatternRequest
@@ -98,7 +98,7 @@ public class UT_UserService
     public async Task TestUsersByFirstNameAndLastName(string firstName, int page, int pageSize, UsersReply expected)
     {
         var manager = new Manager(Loaders[1].Get(), Writers[0].Get());
-        var service = new UserService(manager);
+        var service = new UserServiceV1(manager);
         
         var actual = await service.GetUsersByFirstNameAndLastName(
             new UserPatternRequest

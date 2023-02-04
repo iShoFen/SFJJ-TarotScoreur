@@ -4,7 +4,7 @@ import "Protos/utils.proto";
 
 option csharp_namespace = "GrpcService";
 
-package tarot;
+package tarot.v1;
 
 service User {
   rpc GetUsers (Pagination) returns (UsersReply);
