@@ -16,6 +16,16 @@ try {
     // Additional configuration is required to successfully run gRPC on macOS.
     // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
+// Only for macOs
+if (string.Equals(Environment.GetEnvironmentVariable("MACOS"), "true"))
+{
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        // Setup a HTTP/2 endpoint without TLS.
+        options.ListenLocalhost(5028, o => o.Protocols =
+            Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
+    });
+}
     // Add services to the container.
     builder.Services.AddGrpc();
 
@@ -32,8 +42,11 @@ try {
 
     var app = builder.Build();
 
+    // Setup Grpc Services
     app.MapGrpcService<UserServiceV1>();
     app.MapGrpcService<GroupServiceV1>();
+    app.MapGrpcService<GameServiceV1>();
+    app.MapGrpcService<HandServiceV1>();
 
     app.MapGet("/",
         () =>

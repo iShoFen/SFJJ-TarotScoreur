@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "Protos/utils.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GrpcService";
+
+package tarot.v1;
+
+service Game {
+  rpc GetGames (Pagination) returns (GamesReply);
+  rpc GetGame (IdRequest) returns (GameReply);
+  rpc GetGamesByName (GamePatternRequest) returns (GamesReply);
+  rpc GetGamesByPlayer (GamePlayerRequest) returns (GamesReply);
+  rpc GetGamesByDate (GameDateRequest) returns (GamesReply);
+  rpc InsertGame (GameInsertRequest) returns (GameReply);
+  rpc UpdateGame (GameReply) returns (GameReply);
+  rpc DeleteGame (IdRequest) returns (BoolResponse);
+}
+
+message GameInsertRequest {
+  string name = 1;
+  string rules = 2;
+  google.protobuf.Timestamp startDate = 3;
+  repeated uint64 players = 5;
+}
+
+message GamePatternRequest {
+  string pattern = 1;
+  Pagination pagination = 2;
+}
+
+message GamePlayerRequest {
+  uint64 player_id = 1;
+  Pagination pagination = 2;
+}
+
+message GameDateRequest {
+  google.protobuf.Timestamp startDate = 1;
+  google.protobuf.Timestamp endDate = 2;
+  Pagination pagination = 3;
+}
+
+message GamesReply {
+  repeated GameReply games = 1;
+}
+
+message GameReply {
+  uint64 id = 1;
+  string name = 2;
+  string rules = 3;
+  google.protobuf.Timestamp startDate = 4;
+  optional google.protobuf.Timestamp endDate = 5;
+  repeated uint64 players = 6;
+  repeated uint64 hands = 7;
+}
