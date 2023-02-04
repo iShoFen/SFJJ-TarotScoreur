@@ -171,8 +171,8 @@ public class UserServiceV1 : User.UserBase
 
         if (user == null)
         {
-            _logger.LogWarning("User {Id} not found", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, $"User {request.Id} not found"));
+            _logger.LogWarning("User {Id} not found, so it can't be updated", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, so it can't be updated"));
         }
         _logger.LogInformation("User with id {Id} updated", request.Id);
         
@@ -192,8 +192,8 @@ public class UserServiceV1 : User.UserBase
         
         if (!result)
         {
-            _logger.LogWarning("User {Id} not found", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, $"User {request.Id} not found"));
+            _logger.LogWarning("User with {Id} not found, so it can't be deleted", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, so it can't be deleted"));
         }
 
         _logger.LogInformation("User with id {Id} deleted", request.Id);

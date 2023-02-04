@@ -2,25 +2,19 @@ using GrpcService;
 
 namespace UT_GrpcService;
 
-public static class UserServiceData
+public static class UserServiceDataV1
 {
-    private static UsersReply UsersReplyFactory(IEnumerable<UserReply> users)
-    {
-        var usersReply = new UsersReply();
-        usersReply.Users.AddRange(users);
-
-        return usersReply;
-    }
-
     public static IEnumerable<object?[]> Data_TestAllUsers()
     {
         yield return new object?[]
         {
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -28,7 +22,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -36,7 +30,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 13UL,
                         FirstName = "Anne",
@@ -44,7 +38,7 @@ public static class UserServiceData
                         Nickname = "FRIPOUILLES",
                         Avatar = "avatar13"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -52,7 +46,7 @@ public static class UserServiceData
                         Nickname = "LOLO",
                         Avatar = "avatar14"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -60,7 +54,7 @@ public static class UserServiceData
                         Nickname = "THEGIANTE",
                         Avatar = "avatar15"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 16UL,
                         FirstName = "Alizee",
@@ -69,7 +63,7 @@ public static class UserServiceData
                         Avatar = "avatar16"
                     }
                 }
-            )
+            }
         };
 
         yield return new object?[]
@@ -81,9 +75,11 @@ public static class UserServiceData
         {
             1,
             4,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -91,7 +87,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -99,7 +95,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 13UL,
                         FirstName = "Anne",
@@ -107,7 +103,7 @@ public static class UserServiceData
                         Nickname = "FRIPOUILLES",
                         Avatar = "avatar13"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -116,7 +112,7 @@ public static class UserServiceData
                         Avatar = "avatar14"
                     }
                 }
-            )
+            }
         };
 
         yield return new object?[]
@@ -173,9 +169,11 @@ public static class UserServiceData
             "AN",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -183,7 +181,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -192,7 +190,7 @@ public static class UserServiceData
                         Avatar = "avatar15"
                     }
                 }
-            )
+            }
         };
 
         yield return new object[]
@@ -215,9 +213,11 @@ public static class UserServiceData
             "",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -225,7 +225,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -233,7 +233,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 13UL,
                         FirstName = "Anne",
@@ -241,7 +241,7 @@ public static class UserServiceData
                         Nickname = "FRIPOUILLES",
                         Avatar = "avatar13"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -249,7 +249,7 @@ public static class UserServiceData
                         Nickname = "LOLO",
                         Avatar = "avatar14"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -257,7 +257,7 @@ public static class UserServiceData
                         Nickname = "THEGIANTE",
                         Avatar = "avatar15"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 16UL,
                         FirstName = "Alizee",
@@ -266,7 +266,7 @@ public static class UserServiceData
                         Avatar = "avatar16"
                     }
                 }
-            )
+            }
         };
 
         yield return new object[]
@@ -274,9 +274,11 @@ public static class UserServiceData
             "M",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -284,7 +286,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -293,7 +295,7 @@ public static class UserServiceData
                         Avatar = "avatar14"
                     }
                 }
-            )
+            }
         };
 
         yield return new object[]
@@ -324,9 +326,11 @@ public static class UserServiceData
             "THEGIANT",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -335,7 +339,8 @@ public static class UserServiceData
                         Avatar = "avatar15"
                     }
                 }
-            )
+            }
+
         };
 
         yield return new object[]
@@ -363,9 +368,11 @@ public static class UserServiceData
             "",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users = 
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -373,7 +380,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -381,7 +388,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 13UL,
                         FirstName = "Anne",
@@ -389,7 +396,7 @@ public static class UserServiceData
                         Nickname = "FRIPOUILLES",
                         Avatar = "avatar13"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -397,7 +404,7 @@ public static class UserServiceData
                         Nickname = "LOLO",
                         Avatar = "avatar14"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -405,7 +412,7 @@ public static class UserServiceData
                         Nickname = "THEGIANTE",
                         Avatar = "avatar15"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 16UL,
                         FirstName = "Alizee",
@@ -414,7 +421,7 @@ public static class UserServiceData
                         Avatar = "avatar16"
                     }
                 }
-            )
+            }
         };
     }
 
@@ -425,9 +432,11 @@ public static class UserServiceData
             "J",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -435,7 +444,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -443,7 +452,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -452,7 +461,7 @@ public static class UserServiceData
                         Avatar = "avatar15"
                     }
                 }
-            )
+            }
         };
 
         yield return new object[]
@@ -465,9 +474,11 @@ public static class UserServiceData
             "M",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -476,7 +487,7 @@ public static class UserServiceData
                         Avatar = "avatar14"
                     }
                 }
-            )
+            }
         };
 
         yield return new object[]
@@ -499,9 +510,11 @@ public static class UserServiceData
             "",
             1,
             10,
-            UsersReplyFactory(new UserReply[]
+            new UsersReply
+            {
+                Users =
                 {
-                    new()
+                    new UserReply
                     {
                         Id = 11UL,
                         FirstName = "Jeanne",
@@ -509,7 +522,7 @@ public static class UserServiceData
                         Nickname = "JEMAA",
                         Avatar = "avatar11"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 12UL,
                         FirstName = "Jules",
@@ -517,7 +530,7 @@ public static class UserServiceData
                         Nickname = "KIKOU77",
                         Avatar = "avatar12"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 13UL,
                         FirstName = "Anne",
@@ -525,7 +538,7 @@ public static class UserServiceData
                         Nickname = "FRIPOUILLES",
                         Avatar = "avatar13"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 14UL,
                         FirstName = "Marine",
@@ -533,7 +546,7 @@ public static class UserServiceData
                         Nickname = "LOLO",
                         Avatar = "avatar14"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 15UL,
                         FirstName = "Eliaz",
@@ -541,7 +554,7 @@ public static class UserServiceData
                         Nickname = "THEGIANTE",
                         Avatar = "avatar15"
                     },
-                    new()
+                    new UserReply
                     {
                         Id = 16UL,
                         FirstName = "Alizee",
@@ -550,7 +563,122 @@ public static class UserServiceData
                         Avatar = "avatar16"
                     }
                 }
-            )
+            }
+        };
+    }
+    
+    public static IEnumerable<object[]> InsertUserData()
+    {
+        yield return new object[]
+        {
+            new UserInsertRequest
+            {
+                FirstName = "Pedro",
+                LastName = "Machin",
+                Nickname = "Pema",
+                Avatar = "avatar28",
+                Email = "email",
+                Password = "password"
+            },
+            new UserReply
+            {
+                Id = 17UL,
+                FirstName = "Pedro",
+                LastName = "Machin",
+                Nickname = "Pema",
+                Avatar = "avatar28"
+            }
+        };
+    }
+    
+    public static IEnumerable<object?[]> UpdateUserData()
+    {
+        yield return new object?[]
+        {
+            new UserUpdateRequest
+            {
+                Id = 14UL,
+                FirstName = "Pedro",
+                LastName = "Machin",
+                Nickname = "Pema",
+                Avatar = "avatar28",
+                Email = "email",
+                Password = "password"
+            },
+            new UserReply
+            {
+                Id = 14UL,
+                FirstName = "Pedro",
+                LastName = "Machin",
+                Nickname = "Pema",
+                Avatar = "avatar28"
+            }
+        };
+        yield return new object?[]
+        {
+            new UserUpdateRequest
+            {
+                Id = 6UL,
+                FirstName = "Pedro",
+                LastName = "Machin",
+                Nickname = "Pema",
+                Avatar = "avatar28",
+                Email = "email",
+                Password = "password"
+            },
+            null
+        };
+        yield return new object?[]
+        {
+            new UserUpdateRequest
+            {
+                Id = 50UL,
+                FirstName = "Anne",
+                LastName = "PETIT",
+                Nickname = "FRIPOUILLES",
+                Avatar = "avatar13",
+                Email = "email",
+                Password = "password"
+            },
+            null
+        };
+        yield return new object?[]
+        {
+            new UserUpdateRequest
+            {
+                Id = 0UL,
+                FirstName = "Anne",
+                LastName = "PETIT",
+                Nickname = "FRIPOUILLES",
+                Avatar = "avatar13",
+                Email = "email",
+                Password = "password"
+            },
+            null
+        };
+    }
+    
+    public static IEnumerable<object?[]> DeleteUserData()
+    {
+        yield return new object?[]
+        {
+            3UL,
+            false
+        };
+        yield return new object?[]
+        {
+            14UL,
+            true
+        };
+        yield return new object?[]
+        {
+            0UL,
+            false
+        };
+        yield return new object?[]
+        {
+            100UL,
+            false
         };
     }
 }

@@ -81,7 +81,7 @@ public static class GroupTestData
 						new Player(13UL, "Anne", "PETIT", "FRIPOUILLES", "avatar13"),
 						new Player(14UL, "Marine", "TABLETTE", "LOLO", "avatar14"),
 						new Player(15UL, "Eliaz", "DU JARDIN", "THEGIANTE", "avatar15"),
-						new Player(16UL, "Simon", "SEBAT", "SEBATA", "avatar16"))
+                        new Player(16UL, "Alizee", "SEBAT", "SEBAT", "avatar16"))
 				}
 			};
 
