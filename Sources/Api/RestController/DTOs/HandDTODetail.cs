@@ -8,7 +8,7 @@ namespace RestController.DTOs;
 /**
  * DTO for the Hand table
  */
-public class HandDTO
+public class HandDTODetail
 {
     /// <summary>
     /// The unique identifier for the Hand
@@ -54,6 +54,8 @@ public class HandDTO
     /// Indicates the state of the ChelemDB related to the taker
     /// </summary>
     public ChelemDTO Chelem { get; set; }
+    
+    public ICollection<BiddingPoigneeDTO> Biddings { get; set; } = new HashSet<BiddingPoigneeDTO>();
 
     /// <summary>
     /// The game to which the Hand belongs

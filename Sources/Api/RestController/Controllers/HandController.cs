@@ -29,26 +29,26 @@ namespace RestControllers
         /// Returns the hand of the player with the given id
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<HandDTOGetRequest>> Get(ulong id)
+        public async Task<ActionResult<HandDTODetail>> Get(ulong id)
         {
             var hand = await _manager.GetHandById(id);
             if (hand == null) return NotFound();
-            return Ok(hand.ToHandDTOGetRequest());
+            return Ok(hand.ToHandDTODetail());
         }
         
         /// <summary>
         /// Post a new hand to the database
         /// </summary>
         /// <param name="gameId">The id of the game the hand belongs to</param>
-        /// <param name="handDTO">The hand to be posted</param>
+        /// <param name="handDtoDetail">The hand to be posted</param>
         /// <returns>
         /// Return a BadRequest if the hand is invalid, 
         /// Return a NoContent if the hand is valid and posted
         /// </returns>
         [HttpPost]
-        public async Task<IActionResult> Post(ulong gameId, [FromBody] HandDTO handDTO)
+        public async Task<IActionResult> Post(ulong gameId, [FromBody] HandDTODetail handDtoDetail)
         {
-            Hand hand = HandDTOExtensions.ToHand(handDTO);
+            Hand hand = HandDTOExtensions.ToHand(handDtoDetail);
             if (hand is null) return BadRequest();
             var biddingsROD = hand.Biddings;
             var keyValuePairs = biddingsROD.AsEnumerable().ToArray();
@@ -61,17 +61,17 @@ namespace RestControllers
         /// Update a Hand in the database by its id.
         /// </summary>
         /// <param name="id">The id of the Hand to be updated.</param>
-        /// <param name="handDTO">The DTO containing the updated information for the Hand.</param>
+        /// <param name="handDtoDetail">The DTO containing the updated information for the Hand.</param>
         /// <returns>
         /// Returns a BadRequest result if the id in the request does not match the id in the DTO. 
         /// Returns a NotFound result if the hand is not found. 
         /// Returns a NoContent result if the update is successful.
         /// </returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(ulong id, [FromBody] HandDTO handDTO)
+        public async Task<IActionResult> Put(ulong id, [FromBody] HandDTODetail handDtoDetail)
         {
-            if(id != handDTO.Id) return BadRequest();
-            var hand = await _manager.UpdateHand(HandDTOExtensions.ToHand(handDTO));
+            if(id != handDtoDetail.Id) return BadRequest();
+            var hand = await _manager.UpdateHand(HandDTOExtensions.ToHand(handDtoDetail));
             if (hand is null) return NotFound();
             return NoContent();
         }
