@@ -78,6 +78,78 @@ public class UT_Reader
     }
 
     #endregion
+    
+    #region User
+
+    [Theory]
+    [MemberData(nameof(UserTestData.Data_TestAllUsers), MemberType = typeof(UserTestData))]
+    public async Task TestGetUsers(IReader reader, int start, int count, User[] users)
+    {
+        var usersFound = (await reader.GetUsers(start, count)).ToList();
+
+        Assert.Equal(usersFound.Count, users.Length);
+        Assert.Equal(usersFound, users, User.UserFullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UserTestData.Data_TestUserById), MemberType = typeof(UserTestData))]
+    public async Task TestGetUserById(IReader reader, ulong userId, User? expectedUser)
+    {
+        var user = await reader.GetUserById(userId);
+
+        if (expectedUser is null)
+        {
+            Assert.Null(user);
+        }
+        else
+        {
+            Assert.Equal(expectedUser, user, User.UserFullComparer!);
+        }
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UserTestData.Data_TestUsersByPattern), MemberType = typeof(UserTestData))]
+    public async Task TestGetUsersByPattern(IReader reader, string pattern, int start, int count,
+        User[] expectedUsers)
+    {
+        var foundUsers = (await reader.GetUsersByPattern(pattern, start, count)).ToList();
+        Assert.Equal(expectedUsers.Length, foundUsers.Count);
+        Assert.Equal(expectedUsers, foundUsers, User.UserFullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UserTestData.Data_TestUsersByNickname), MemberType = typeof(UserTestData))]
+    public async Task TestGetUsersByNickname(IReader reader, string nickname, int start, int count,
+        User[] expectedUsers)
+    {
+        var usersFound = (await reader.GetUsersByNickname(nickname, start, count)).ToList();
+
+        Assert.Equal(expectedUsers.Length, usersFound.Count);
+        Assert.Equal(expectedUsers, usersFound, User.UserFullComparer);
+
+        reader.Dispose();
+    }
+
+    [Theory]
+    [MemberData(nameof(UserTestData.Data_TestUsersByFirstNameAndLastName), MemberType = typeof(UserTestData))]
+    public async Task TestGetUserByFirstNameAndLastName(IReader reader, string pattern, int start, int count,
+        User[] expectedUsers)
+    {
+        var usersFound = (await reader.GetUsersByFirstNameAndLastName(pattern, start, count)).ToList();
+
+        Assert.Equal(expectedUsers.Length, usersFound.Count);
+        Assert.Equal(expectedUsers, usersFound, User.UserFullComparer);
+
+        reader.Dispose();
+    }
+
+    #endregion
 
     #region Group
 

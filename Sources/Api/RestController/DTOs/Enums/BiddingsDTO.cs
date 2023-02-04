@@ -1,6 +1,5 @@
 ﻿namespace RestController.DTOs.Enums;
 
-[Flags]
 public enum BiddingsDTO : byte
 {    
     /// <summary>

@@ -101,7 +101,7 @@ public class GroupController : ControllerBase
 	[HttpPut("{id}")]
 	public async Task<IActionResult> PutGroup(ulong id, GroupDTO groupDTO)
 	{
-		if (id != groupDTO.Id) return BadRequest();
+		if (id != (ulong)groupDTO.Id) return BadRequest();
 		var group = await _manager.UpdateGroup(groupDTO.ToGroup());
 		if (group == null) return NotFound();
 		return NoContent();

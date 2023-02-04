@@ -27,9 +27,9 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetUsers([FromQuery] PaginationFilter paginationFilter)
     {
-        var users = (await _manager.GetPlayers(paginationFilter.Page, paginationFilter.Count)).ToList();
+        var users = (await _manager.GetUsers(paginationFilter.Page, paginationFilter.Count)).ToList();
 
-        return Ok(users.Select(x => x.PlayerToDTO()).ToList());
+        return Ok(users.Select(x => x.UserToDTO()).ToList());
 
 
     }
@@ -38,29 +38,50 @@ public class UserController : ControllerBase
     [ActionName(nameof(GetUser))]
     public async Task<ActionResult<UserDTO>> GetUser(ulong id)
     {
-        var user = await _manager.GetPlayerById(id);
+        var user = await _manager.GetUserById(id);
         if (user is null) return NotFound();
-        return Ok(user.PlayerToDTO());
+        return Ok(user.UserToDTO());
     }
+
+    [HttpGet("{userId}/game")]
+    public async Task<ActionResult<GameDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter paginationFilter)
+    {
+        var user = await _manager.GetUserById(userId);
+        if (user is null) return NotFound();
+        var games = await _manager.GetGamesByPlayer(userId, paginationFilter.Page * paginationFilter.Count,
+            paginationFilter.Count);
+        return Ok(games.Select(x => x.ToGameDTO()).ToList());
+    }
+/*
+    [HttpGet("{userId}/game/{gameId}")]
+    public async Task<ActionResult<GameDTO>> GetGameById(ulong userId, ulong gameId)
+    {
+        var user = await _manager.GetUserById(userId);
+        if (user is null) return NotFound();
+        var game = await _manager.GetGamesByPlayer();
+    }
+    */
+
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutUser(ulong id, UserDTO userDTO)
     {
         if (id != userDTO.Id) return BadRequest();
-        var user = await _manager.UpdatePlayer(userDTO.DTOToPlayer());
+        var user = await _manager.UpdateUser(userDTO.DTOToUser());
         if (user is null) return NotFound();
         return NoContent();
     }
 
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDto)
+    public async Task<ActionResult<UserDTO>> PostUser(UserDTOPostRequest userDtoPostRequest)
     {
-        var user = await _manager.InsertPlayer(userDto.FirstName, userDto.LastName, userDto.Nickname, userDto.Avatar);
+        var user = await _manager.InsertUser(userDtoPostRequest.FirstName, userDtoPostRequest.LastName, userDtoPostRequest.Nickname, userDtoPostRequest.Avatar, userDtoPostRequest.Email, userDtoPostRequest.Password);
 
         return CreatedAtAction(
             nameof(GetUser),
             new { id = user.Id },
-            user.PlayerToDTO());
+            user.UserToDTO());
 
     }
 }
