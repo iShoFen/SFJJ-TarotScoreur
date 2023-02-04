@@ -1,6 +1,7 @@
 using Grpc.Core;
 using GrpcService.Extensions;
 using Model;
+using Model.Players;
 
 namespace GrpcService.Services;
 
@@ -69,32 +70,62 @@ public class GroupServiceV1 : Group.GroupBase
         return groups.ToGroupsReply();
     }
 
-    public override async Task<GroupReply> InsertGroup(GroupRequest request, ServerCallContext context)
+    public override async Task<GroupReply> InsertGroup(GroupInsertRequest request, ServerCallContext context)
     {
-        var group = await _manager.InsertGroup(request.Name, request.Players.ToUsers().ToArray());
-
-        if (group == null)
+        var players = new List<Player>();
+        foreach (var requestPlayer in request.Players)
         {
-            _logger.LogWarning("Group not created, at least one player not found");
-            throw new RpcException(new Status(StatusCode.Aborted, "Group not created, at least one player not found"));
+            await _manager.GetUserById(requestPlayer).ContinueWith(task =>
+            {
+                if (task.Result != null)
+                {
+                    players.Add(task.Result);
+                } 
+                else
+                {
+                    _logger.LogWarning("Player with id {Id} not found", requestPlayer);
+                    throw new RpcException(new Status(StatusCode.NotFound, "Player not found"));
+                }
+            });
         }
-        _logger.LogInformation("Group with id {Id} created", group.Id);
+        
+        var group = await _manager.InsertGroup(request.Name, players.ToArray());
+
+
+        _logger.LogInformation("Group with id {Id} created", group!.Id);
         
         return group.ToGroupReply();
     }
 
-    public override async Task<GroupReply> UpdateGroup(GroupReply request, ServerCallContext context)
+    public override async Task<GroupReply> UpdateGroup(GroupUpdateRequest request, ServerCallContext context)
     {
-        var group = await _manager.UpdateGroup(request.ToGroup());
+        var group = request.ToGroup();
+        foreach (var requestPlayer in request.Players)
+        {
+            await _manager.GetUserById(requestPlayer).ContinueWith(task =>
+            {
+                if (task.Result != null)
+                {
+                    group.AddPlayers(task.Result);
+                } 
+                else
+                {
+                    _logger.LogWarning("Player with id {Id} not found", requestPlayer);
+                    throw new RpcException(new Status(StatusCode.NotFound, "Player not found"));
+                }
+            });
+        }
+        
+        var updateGroup = await _manager.UpdateGroup(request.ToGroup());
 
-        if (group == null)
+        if (updateGroup == null)
         {
             _logger.LogWarning("Group not updated, at least one player not found");
             throw new RpcException(new Status(StatusCode.NotFound, "Group not found"));
         }
-        _logger.LogInformation("Group with id {Id} updated", group.Id);
+        _logger.LogInformation("Group with id {Id} updated", updateGroup.Id);
         
-        return group.ToGroupReply();
+        return updateGroup.ToGroupReply();
     }
 
     public override async Task<BoolResponse> DeleteGroup(IdRequest request, ServerCallContext context)

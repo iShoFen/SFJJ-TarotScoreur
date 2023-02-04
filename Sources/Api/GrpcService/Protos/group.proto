@@ -12,8 +12,8 @@ service Group {
   rpc GetGroup (IdRequest) returns (GroupReply);
   rpc GetGroupsByName (GroupPatternRequest) returns (GroupsReply);
   rpc GetGroupsByPlayer (GroupPlayerRequest) returns (GroupsReply);
-  rpc InsertGroup (GroupRequest) returns (GroupReply);
-  rpc UpdateGroup (GroupReply) returns (GroupReply);
+  rpc InsertGroup (GroupInsertRequest) returns (GroupReply);
+  rpc UpdateGroup (GroupUpdateRequest) returns (GroupReply);
   rpc DeleteGroup (IdRequest) returns (BoolResponse);
 }
 
@@ -27,9 +27,15 @@ message GroupPlayerRequest {
   Pagination pagination = 2;
 }
 
-message GroupRequest {
+message GroupInsertRequest {
   string name = 1;
-  repeated UserReply players = 2;
+  repeated uint64 players = 2;
+}
+
+message GroupUpdateRequest {
+  uint64 id = 1;
+  string name = 2;
+  repeated uint64 players = 3;
 }
 
 message GroupsReply {

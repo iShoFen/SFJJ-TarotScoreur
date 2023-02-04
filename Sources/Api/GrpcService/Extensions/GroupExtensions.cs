@@ -1,6 +1,4 @@
-using System.Collections.ObjectModel;
 using AutoMapper;
-using Google.Protobuf.Collections;
 using Model.Players;
 
 namespace GrpcService.Extensions;
@@ -15,6 +13,9 @@ public static class GroupExtensions
         cfg.CreateMap<GroupReply, Model.Players.Group>()
            .ForMember(dest => dest.Players, opt 
                           => opt.MapFrom(src => src.Players.ToUsers()));
+        cfg.CreateMap<GroupUpdateRequest, Model.Players.Group>()
+           .ForMember(dest => dest.Players, opt 
+                          => opt.MapFrom(src => Array.Empty<Player>()));
     });
 
     private static readonly Mapper Mapper = new (Config);
@@ -31,6 +32,10 @@ public static class GroupExtensions
     }
     
     public static Model.Players.Group ToGroup(this GroupReply groupRequest)
+        => Mapper.Map<Model.Players.Group>(groupRequest);
+    
+    
+    public static Model.Players.Group ToGroup(this GroupUpdateRequest groupRequest)
         => Mapper.Map<Model.Players.Group>(groupRequest);
     
 }
