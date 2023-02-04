@@ -62,6 +62,19 @@ steps:
       branch:
         - master
     depends_on: [build]
+    
+  - name: build-docker-grpc-service
+    image: plugins/docker
+    settings:
+      dockerfile: Sources/Api/GrpcService/Dockerfile
+      context: Sources/
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    depends_on: [build]
 
 volumes:
   - name: docs
