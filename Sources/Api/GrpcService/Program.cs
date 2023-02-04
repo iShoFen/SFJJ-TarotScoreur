@@ -13,12 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    // Setup a HTTP/2 endpoint without TLS.
-    options.ListenLocalhost(5028, o => o.Protocols =
-        Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
-});
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     // Setup a HTTP/2 endpoint without TLS.
+//     options.ListenLocalhost(5028, o => o.Protocols =
+//         Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
+// });
 
 builder.Services.AddDbContext<TarotDbContextStub>();
 builder.Services.AddTransient<DbContext, TarotDbContextStub>();
