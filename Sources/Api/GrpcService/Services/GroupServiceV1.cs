@@ -5,6 +5,9 @@ using Model.Players;
 
 namespace GrpcService.Services;
 
+// Cause online DB only have Users, not Players and the API only allow to add Users
+// Not test has been done to reject group with Players
+
 /// <summary>
 /// The group service for gRPC v1
 /// </summary>
@@ -64,7 +67,7 @@ public class GroupServiceV1 : Group.GroupBase
         if (group == null)
         {
             _logger.LogWarning("Group with id {Id} not found", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, "Group not found"));
+            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found"));
         }
         _logger.LogInformation("Group with id {Id} loaded", request.Id);
         
@@ -91,18 +94,18 @@ public class GroupServiceV1 : Group.GroupBase
     }
 
     /// <summary>
-    /// Get all groups by player id with pagination
+    /// Get all groups by user id with pagination
     /// </summary>
-    /// <param name="request">The player id and pagination</param>
+    /// <param name="request">The user id and pagination</param>
     /// <param name="context">The server call context</param>
     /// <returns>The GroupsReply with groups</returns>
-    public override async Task<GroupsReply> GetGroupsByPlayer(GroupPlayerRequest request, ServerCallContext context)
+    public override async Task<GroupsReply> GetGroupsByUser(GroupUserRequest request, ServerCallContext context)
     {
         var groups =
-            await _manager.GetGroupsByPlayer(request.PlayerId, request.Pagination.Page, request.Pagination.PageSize);
+            await _manager.GetGroupsByPlayer(request.UserId, request.Pagination.Page, request.Pagination.PageSize);
 
-        _logger.LogInformation("Groups with player id {PlayerId} from {Page} page with {PageSize} size loaded",
-                               request.PlayerId,
+        _logger.LogInformation("Groups with user id {UserId} from {Page} page with {PageSize} size loaded",
+                               request.UserId,
                                request.Pagination.Page,
                                request.Pagination.PageSize
         );
@@ -116,13 +119,13 @@ public class GroupServiceV1 : Group.GroupBase
     /// <param name="request">The GroupInsertRequest</param>
     /// <param name="context">The server call context</param>
     /// <returns>The GroupReply with the inserted group</returns>
-    /// <exception cref="RpcException">If one player not found</exception>
+    /// <exception cref="RpcException">If one user not found</exception>
     public override async Task<GroupReply> InsertGroup(GroupInsertRequest request, ServerCallContext context)
     {
         var players = new List<Player>();
-        foreach (var requestPlayer in request.Players)
+        foreach (var userId in request.Users)
         {
-            await _manager.GetUserById(requestPlayer).ContinueWith(task =>
+            await _manager.GetUserById(userId).ContinueWith(task =>
             {
                 if (task.Result != null)
                 {
@@ -130,8 +133,8 @@ public class GroupServiceV1 : Group.GroupBase
                 } 
                 else
                 {
-                    _logger.LogWarning("Player with id {Id} not found", requestPlayer);
-                    throw new RpcException(new Status(StatusCode.NotFound, "Player not found"));
+                    _logger.LogWarning("User with id {Id} not found", userId);
+                    throw new RpcException(new Status(StatusCode.NotFound, $"User with id {userId} not found"));
                 }
             });
         }
@@ -150,13 +153,13 @@ public class GroupServiceV1 : Group.GroupBase
     /// <param name="request">The GroupUpdateRequest</param>
     /// <param name="context">The server call context</param>
     /// <returns>The GroupReply with the updated group</returns>
-    /// <exception cref="RpcException">If group not found or one player not found</exception>
+    /// <exception cref="RpcException">If group not found or one user not found</exception>
     public override async Task<GroupReply> UpdateGroup(GroupUpdateRequest request, ServerCallContext context)
     {
         var group = request.ToGroup();
-        foreach (var requestPlayer in request.Players)
+        foreach (var userId in request.Users)
         {
-            await _manager.GetUserById(requestPlayer).ContinueWith(task =>
+            await _manager.GetUserById(userId).ContinueWith(task =>
             {
                 if (task.Result != null)
                 {
@@ -164,18 +167,18 @@ public class GroupServiceV1 : Group.GroupBase
                 } 
                 else
                 {
-                    _logger.LogWarning("Player with id {Id} not found", requestPlayer);
-                    throw new RpcException(new Status(StatusCode.NotFound, "Player not found"));
+                    _logger.LogWarning("User with id {Id} not found, so it can't be added to group", userId);
+                    throw new RpcException(new Status(StatusCode.NotFound, $"User with id {userId} not found, so it can't be added to group"));
                 }
             });
         }
         
-        var updateGroup = await _manager.UpdateGroup(request.ToGroup());
+        var updateGroup = await _manager.UpdateGroup(group);
 
         if (updateGroup == null)
         {
-            _logger.LogWarning("Group not updated, at least one player not found");
-            throw new RpcException(new Status(StatusCode.NotFound, "Group not found"));
+            _logger.LogWarning("Group with id {Id} not found, so it can't be updated", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, so it can't be updated"));
         }
         _logger.LogInformation("Group with id {Id} updated", updateGroup.Id);
         
@@ -195,8 +198,8 @@ public class GroupServiceV1 : Group.GroupBase
         
         if(!result)
         {
-            _logger.LogWarning("Group with id {Id} not found", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, "Group not found"));
+            _logger.LogWarning("Group with id {Id} not found, so it can't be deleted", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, so it can't be deleted"));
         }
         _logger.LogInformation("Group with id {Id} deleted", request.Id);
         

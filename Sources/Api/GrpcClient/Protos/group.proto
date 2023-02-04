@@ -3,7 +3,7 @@ syntax = "proto3";
 import "Protos/utils.proto";
 import "Protos/user.proto";
 
-option csharp_namespace = "GrpcService";
+option csharp_namespace = "GrpcClient";
 
 package tarot.v1;
 
@@ -11,7 +11,7 @@ service Group {
   rpc GetGroups (Pagination) returns (GroupsReply);
   rpc GetGroup (IdRequest) returns (GroupReply);
   rpc GetGroupsByName (GroupPatternRequest) returns (GroupsReply);
-  rpc GetGroupsByPlayer (GroupPlayerRequest) returns (GroupsReply);
+  rpc GetGroupsByUser (GroupUserRequest) returns (GroupsReply);
   rpc InsertGroup (GroupInsertRequest) returns (GroupReply);
   rpc UpdateGroup (GroupUpdateRequest) returns (GroupReply);
   rpc DeleteGroup (IdRequest) returns (BoolResponse);
@@ -22,7 +22,7 @@ message GroupPatternRequest {
   Pagination pagination = 2;
 }
 
-message GroupPlayerRequest {
+message GroupUserRequest {
   uint64 user_id = 1;
   Pagination pagination = 2;
 }

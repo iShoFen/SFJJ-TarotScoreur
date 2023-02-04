@@ -14,11 +14,11 @@ public static class GroupExtensions
     private static readonly MapperConfiguration Config = new (cfg =>
     {
         cfg.CreateMap<Model.Players.Group, GroupReply>()
-           .ForMember(dest => dest.Players, opt 
+           .ForMember(dest => dest.Users, opt 
                           => opt.MapFrom(src => src.Players.ToUsersReply().Users));
+
         cfg.CreateMap<GroupUpdateRequest, Model.Players.Group>()
-           .ForMember(dest => dest.Players, opt 
-                          => opt.MapFrom(src => Array.Empty<Player>()));
+           .ConstructUsing(src => new Model.Players.Group(src.Id, src.Name, Array.Empty<Player>()));
     });
 
     /// <summary>
@@ -54,5 +54,4 @@ public static class GroupExtensions
     /// <returns>The Group</returns>
     public static Model.Players.Group ToGroup(this GroupUpdateRequest groupRequest)
         => Mapper.Map<Model.Players.Group>(groupRequest);
-    
 }
