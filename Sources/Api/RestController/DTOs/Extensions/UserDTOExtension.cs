@@ -6,25 +6,20 @@ namespace RestController.DTOs.Extensions;
 
 internal static class UserDTOExtensions
 {
-    private static MapperConfiguration _mapperConfig;
-    private static Mapper _mapper;
-
-    static UserDTOExtensions()
-    {
-        _mapperConfig = new MapperConfiguration(cfg =>
+    private static readonly MapperConfiguration MapperConfig = 
+        new(cfg =>
         {
             cfg.CreateMap<User, UserDTO>().ReverseMap();
-            cfg.CreateMap<UserDTOPostRequest, User>();
+            cfg.CreateMap<UserDTOPostRequest, User>().ReverseMap();
         });
-        _mapper = new Mapper(_mapperConfig);
-    }
+    private static readonly Mapper Mapper = new (MapperConfig);
 
-    public static UserDTO UserToDTO(this User user) => _mapper.Map<User, UserDTO>(user);
+    public static UserDTO UserToDTO(this User user) => Mapper.Map<User, UserDTO>(user);
 
     public static User UserDTOPostRequestToUser(this UserDTOPostRequest userDtoPostRequest) =>
-        _mapper.Map<UserDTOPostRequest, User>(userDtoPostRequest);
+        Mapper.Map<UserDTOPostRequest, User>(userDtoPostRequest);
 
-    public static User DTOToUser(this UserDTO userDto) => _mapper.Map<UserDTO, User>(userDto);
+    public static User DTOToUser(this UserDTO userDto) => Mapper.Map<UserDTO, User>(userDto);
 
     public static UserDTO PlayerToDTO(this Player player) =>
         new()

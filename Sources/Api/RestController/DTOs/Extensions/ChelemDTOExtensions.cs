@@ -6,34 +6,25 @@ namespace RestController.DTOs.Extensions
 {
     public static class ChelemDTOExtensions
     {
-        private static MapperConfiguration _mapperConfig;
-        private static Mapper _mapper;
-        
-        /// <summary>
-        /// Constructor for the ChelemDTOExtensions class
-        /// </summary>
-        static ChelemDTOExtensions()
+        private static readonly MapperConfiguration MapperConfig = new(cfg =>
         {
-            _mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Chelem, ChelemDTO>();
-                cfg.CreateMap<ChelemDTO, Chelem>();
-            });
-            _mapper = new Mapper(_mapperConfig);
-        }
-        
+            cfg.CreateMap<Chelem, ChelemDTO>();
+            cfg.CreateMap<ChelemDTO, Chelem>();
+        });
+        private static readonly Mapper Mapper = new(MapperConfig);
+
         /// <summary>
         /// This method maps a Chelem to a ChelemDTO
         /// </summary>
         /// <param name="chelem">The Chelem to map</param>
         /// <returns>The mapped ChelemDTO</returns>
-        public static ChelemDTO ToChelemDTO(this Chelem chelem) => _mapper.Map<Chelem, ChelemDTO>(chelem);
+        public static ChelemDTO ToChelemDTO(this Chelem chelem) => Mapper.Map<Chelem, ChelemDTO>(chelem);
         
         /// <summary>
         /// Ths method maps a ChelemDTO to a Chelem
         /// </summary>
         /// <param name="chelemDTO">The ChelemDTO to map</param>
         /// <returns>The mapped Chelem</returns>
-        public static Chelem ToChelem(this ChelemDTO chelemDTO) => _mapper.Map<ChelemDTO, Chelem>(chelemDTO);
+        public static Chelem ToChelem(this ChelemDTO chelemDTO) => Mapper.Map<ChelemDTO, Chelem>(chelemDTO);
     }
 }

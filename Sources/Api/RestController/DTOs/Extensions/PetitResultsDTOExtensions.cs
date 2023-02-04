@@ -6,35 +6,26 @@ namespace RestController.DTOs.Extensions
 {
     public static class PetitResultsDTOExtensions
     {
-        private static MapperConfiguration _mapperConfig;
-        private static Mapper _mapper;
-       
-        /// <summary>
-        /// Constructor for the PetitResultsDTOExtensions class
-        /// </summary>
-        static PetitResultsDTOExtensions()
+        private static readonly MapperConfiguration MapperConfig = new (cfg =>
         {
-            _mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<PetitResults, PetitResultsDTO>();
-                cfg.CreateMap<PetitResultsDTO, PetitResults>();
-            });
-            _mapper = new Mapper(_mapperConfig);
-        }
+            cfg.CreateMap<PetitResults, PetitResultsDTO>();
+            cfg.CreateMap<PetitResultsDTO, PetitResults>();
+        });
+        private static readonly Mapper Mapper =new (MapperConfig);
 
         /// <summary>
         /// This method maps a PetitResults to a PetitResultsDTO
         /// </summary>
         /// <param name="petitResults">The PetitResults to map</param>
         /// <returns>The mapped PetitResultsDTO</returns>
-        public static PetitResultsDTO ToPetitResultsDTO(this PetitResults petitResults) => _mapper.Map<PetitResults, PetitResultsDTO>(petitResults);
+        public static PetitResultsDTO ToPetitResultsDTO(this PetitResults petitResults) => Mapper.Map<PetitResults, PetitResultsDTO>(petitResults);
         
         /// <summary>
         /// Ths method maps a PetitResultsDTO to a PetitResults
         /// </summary>
         /// <param name="petitResultsDTO">The PetitResultsDTO to map</param>
         /// <returns>The mapped PetitResults</returns>
-        public static PetitResults ToPetitResults(this PetitResultsDTO petitResultsDTO) => _mapper.Map<PetitResultsDTO, PetitResults>(petitResultsDTO);
+        public static PetitResults ToPetitResults(this PetitResultsDTO petitResultsDTO) => Mapper.Map<PetitResultsDTO, PetitResults>(petitResultsDTO);
 
     }
 }

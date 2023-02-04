@@ -7,22 +7,16 @@ namespace RestController.DTOs.Extensions
 {
 	internal static class EnumsExtensions
 	{
-		private static MapperConfiguration _mapperConfig;
-		private static Mapper _mapper;
-
-		static EnumsExtensions()
+		private static readonly MapperConfiguration MapperConfig = new (cfg =>
 		{
-			_mapperConfig = new MapperConfiguration(cfg =>
-			{
-				cfg.CreateMap<Biddings, BiddingsDTO>();
-				cfg.CreateMap<Poignee, PoigneeDTO>();
-			});
-			_mapper = new Mapper(_mapperConfig);
-		}
+			cfg.CreateMap<Biddings, BiddingsDTO>();
+			cfg.CreateMap<Poignee, PoigneeDTO>();
+		});
+		private static readonly Mapper Mapper = new (MapperConfig);
 
-		public static BiddingsDTO ToBiddingsDTO(this Biddings biddings) => _mapper.Map<Biddings, BiddingsDTO>(biddings);
+		public static BiddingsDTO ToBiddingsDTO(this Biddings biddings) => Mapper.Map<Biddings, BiddingsDTO>(biddings);
 
-		public static PoigneeDTO ToPoigneeDTO(this Poignee poignee) => _mapper.Map<Poignee, PoigneeDTO>(poignee);
+		public static PoigneeDTO ToPoigneeDTO(this Poignee poignee) => Mapper.Map<Poignee, PoigneeDTO>(poignee);
 	}
 }
 
