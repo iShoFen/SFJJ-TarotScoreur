@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Model;
+using Model.Data;
 using StubContext;
 using Tarot2B2Model;
 using TarotDB;
@@ -10,8 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-UnitOfWork unitOfWork = new(new TarotDbContextStub());
-builder.Services.AddSingleton<Manager>(new Manager(new DbReader(unitOfWork), new DbWriter(unitOfWork)));
+builder.Services.AddScoped<DbContext, TarotDbContextStub>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IReader, DbReader>();
+builder.Services.AddScoped<IWriter, DbWriter>();
+builder.Services.AddScoped<Manager, Manager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
