@@ -4,8 +4,8 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile(Path.Combine("Configuration", "configuration.json"), optional: false,
-    reloadOnChange: true);
+builder.Configuration
+    .AddJsonFile(Path.Combine("Configuration", "tarot.json"), optional: false, reloadOnChange: true);
 
 builder.Services.AddOcelot(builder.Configuration)
     .AddCacheManager(cache => cache.WithDictionaryHandle());

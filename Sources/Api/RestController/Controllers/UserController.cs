@@ -23,8 +23,6 @@ public class UserController : ControllerBase
         var users = (await _manager.GetUsers(paginationFilter.Page, paginationFilter.Count)).ToList();
 
         return Ok(users.Select(x => x.UserToDTO()).ToList());
-
-
     }
 
     [HttpGet("{id}")]
@@ -75,6 +73,14 @@ public class UserController : ControllerBase
             nameof(GetUser),
             new { id = user.Id },
             user.UserToDTO());
+    }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(ulong id)
+    {
+        var user = await _manager.GetUserById(id);
+        if (user is null) return NotFound();
+        await _manager.DeleteUser(user);
+        return NoContent();
     }
 }
