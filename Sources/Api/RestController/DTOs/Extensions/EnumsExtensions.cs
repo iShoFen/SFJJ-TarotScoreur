@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Model.Enums;
 using RestController.DTOs.Enums;
 

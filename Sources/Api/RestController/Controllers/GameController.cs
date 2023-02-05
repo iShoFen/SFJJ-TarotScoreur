@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Games;
 using Model.Players;
 using Model.Rules;
-using RestController.DTOs;
 using RestController.DTOs.Extensions;
+using RestController.DTOs.Games;
 using RestController.Filter;
 
 namespace RestController.Controllers;
@@ -59,7 +60,7 @@ public class GameController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostGame(GameDTOPostRequest request)
+    public async Task<ActionResult> PostGame(GameInsertRequest request)
     {
         if (request.Users.Count == 0) return BadRequest();
 
@@ -90,11 +91,26 @@ public class GameController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutGame(ulong id, GameDetailDTO gameDetailDto)
+    public async Task<IActionResult> PutGame(ulong id, GameUpdateRequest request)
     {
-        if (id != gameDetailDto.Id) return BadRequest();
-        var game = await _manager.UpdateGame(gameDetailDto.ToGameModel());
-        if (game is null) return NotFound();
+        if (id != request.Id) return BadRequest($"The url id {id} does not correspond to the body id {request.Id}");
+
+        var rules = RulesFactory.Create(request.Rules);
+        if (rules is null)
+        {
+            return BadRequest($"The rules {request.Rules} does not correspond to any rules");
+        }
+
+        var game = new Game(
+            request.Id,
+            request.Name,
+            rules,
+            request.StartDate,
+            request.EndDate
+        );
+
+        var gameUpdated = await _manager.UpdateGame(game);
+        if (gameUpdated is null) return NotFound();
         return NoContent();
     }
 

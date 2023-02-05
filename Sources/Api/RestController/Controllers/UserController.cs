@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Players;
-using RestController.Filter;
-using RestController.DTOs.Extensions;
 using RestController.DTOs;
+using RestController.DTOs.Extensions;
+using RestController.Filter;
+using RestController.DTOs.Games;
 
 namespace RestController.Controllers;
 

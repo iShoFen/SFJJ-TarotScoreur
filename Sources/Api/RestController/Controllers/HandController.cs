@@ -6,6 +6,7 @@ using Model.Players;
 using Model.Rules;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
+using RestController.DTOs.Games;
 
 namespace RestControllers
 {

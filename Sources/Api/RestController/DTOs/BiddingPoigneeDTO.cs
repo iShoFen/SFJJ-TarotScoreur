@@ -1,6 +1,4 @@
-﻿
-
-using RestController.DTOs.Enums;
+﻿using RestController.DTOs.Enums;
 
 namespace RestController.DTOs;
 

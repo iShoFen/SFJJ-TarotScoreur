@@ -1,4 +1,4 @@
-﻿namespace RestController.DTOs;
+﻿namespace RestController.DTOs.Games;
 
 public class GameDetailDTO
 {

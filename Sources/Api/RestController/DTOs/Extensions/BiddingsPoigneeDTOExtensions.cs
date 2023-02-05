@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Model.Enums;
 using Model.Players;
+using RestController.DTOs.Games;
 
 namespace RestController.DTOs.Extensions
 {

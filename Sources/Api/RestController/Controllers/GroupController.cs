@@ -4,6 +4,7 @@ using Model;
 using Model.Players;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
+using RestController.DTOs.Games;
 using RestController.Filter;
 
 namespace RestController.Controllers;
