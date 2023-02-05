@@ -1,5 +1,4 @@
 using Grpc.Core;
-using GrpcService.extensions;
 using GrpcService.Extensions;
 using Model;
 using Model.Players;
@@ -29,7 +28,7 @@ public class GameService : Game.GameBase
     {
         var game = await _manager.GetGameById(request.Id);
 
-        if (game == null)
+        if (game is null)
         {
             _logger.Log(LogLevel.Warning, $"Game with id {request.Id} was not found");
             throw new RpcException(new Status(StatusCode.NotFound, "Game not found"));
@@ -100,7 +99,8 @@ public class GameService : Game.GameBase
         }
         catch (Exception e)
         {
-            _logger.Log(LogLevel.Warning, $"An error occurred while inserting the new game with request {request}");
+            _logger.Log(LogLevel.Warning,
+                $"An error occurred while inserting the new game with request {request}\n{e.Message}");
             throw new RpcException(new Status(StatusCode.Internal, $"An error occurred while inserted the game"));
         }
     }
@@ -121,7 +121,7 @@ public class GameService : Game.GameBase
 
         _logger.Log(LogLevel.Warning, $"An error occurred while updating the game with request {request}");
         throw new RpcException(new Status(StatusCode.Aborted,
-            $"An error occurred while updating the game with {request.Id}"));
+            $"An error occurred while updating the game with id {request.Id}"));
     }
 
     public override async Task<BoolResponse> DeleteGame(IdRequest request, ServerCallContext context)

@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "Protos/utils.proto";
-import "Protos/user.proto";
 import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "GrpcService";
