@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using GrpcService.Services;
 using Microsoft.EntityFrameworkCore;
 using Model;
@@ -17,15 +18,19 @@ try {
     // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
 // Only for macOs
-if (string.Equals(Environment.GetEnvironmentVariable("MACOS"), "true"))
-{
-    builder.WebHost.ConfigureKestrel(options =>
+    
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
     {
-        // Setup a HTTP/2 endpoint without TLS.
-        options.ListenLocalhost(5028, o => o.Protocols =
-            Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
-    });
-}
+        builder.WebHost.ConfigureKestrel(options =>
+            {
+                // Setup a HTTP/2 endpoint without TLS.
+                options.ListenLocalhost(5028,
+                                        o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2
+                );
+            }
+        ); 
+    }
+    
     // Add services to the container.
     builder.Services.AddGrpc();
 
