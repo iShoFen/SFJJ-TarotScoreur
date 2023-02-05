@@ -15,6 +15,8 @@ internal static class GameDTOExtensions
                 act.MapFrom(src => src.Players.Select(p => p.Id)))
             .ForMember(dest => dest.Hands, act => 
                 act.MapFrom(src => src.Hands.Select(kvp => kvp.Value.Id)))
+            .ForMember(dest => dest.Rules, act =>
+                act.MapFrom(src => src.Rules.Name))
             .ReverseMap();
         });
     private static readonly Mapper Mapper =new(MapperConfiguration);

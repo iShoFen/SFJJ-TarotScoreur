@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Players;
 using RestController.Filter;
 using RestController.DTOs.Extensions;
 using RestController.DTOs;
@@ -11,16 +12,16 @@ namespace RestController.Controllers;
 public class UserController : ControllerBase
 {
     private readonly Manager _manager;
+
     public UserController(Manager manager)
     {
         _manager = manager;
-
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetUsers([FromQuery] PaginationFilter paginationFilter)
+    public async Task<ActionResult> GetUsers([FromQuery] PaginationFilter pagination)
     {
-        var users = (await _manager.GetUsers(paginationFilter.Page, paginationFilter.Count)).ToList();
+        var users = (await _manager.GetUsers(pagination.Page, pagination.Count)).ToList();
 
         return Ok(users.Select(x => x.UserToDTO()).ToList());
     }
@@ -35,39 +36,47 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{userId}/game")]
-    public async Task<ActionResult<GameDetailDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter paginationFilter)
+    public async Task<ActionResult<GameDetailDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter pagination)
     {
         var user = await _manager.GetUserById(userId);
         if (user is null) return NotFound();
-        var games = await _manager.GetGamesByPlayer(userId, paginationFilter.Page * paginationFilter.Count,
-            paginationFilter.Count);
+        var games = await _manager.GetGamesByPlayer(userId, pagination.Page,
+            pagination.Count);
         return Ok(games.Select(x => x.ToGameDetailDTO()).ToList());
     }
-/*
-    [HttpGet("{userId}/game/{gameId}")]
-    public async Task<ActionResult<GameDTO>> GetGameById(ulong userId, ulong gameId)
+
+    [HttpGet("{userId}/group")]
+    public async Task<ActionResult<GameDetailDTO>> GetGroups(ulong userId, [FromQuery] PaginationFilter pagination)
     {
         var user = await _manager.GetUserById(userId);
         if (user is null) return NotFound();
-        var game = await _manager.GetGamesByPlayer();
+        var groups = await _manager.GetGroupsByPlayer(userId, pagination.Page,
+            pagination.Count);
+        return Ok(groups.Select(x => x.ToGroupDTO()));
     }
-    */
-
-
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutUser(ulong id, UserDTO userDTO)
+    public async Task<IActionResult> PutUser(ulong id, UserUpdateRequest request)
     {
-        if (id != userDTO.Id) return BadRequest();
-        var user = await _manager.UpdateUser(userDTO.DTOToUser());
-        if (user is null) return NotFound();
-        return NoContent();
+        if (id != request.Id) return BadRequest();
+
+        var user = await _manager.UpdateUser(new User(request.Id,
+            request.FirstName,
+            request.LastName,
+            request.Nickname,
+            request.Avatar,
+            request.Email,
+            request.Password)
+        );
+
+        return user is null ? NotFound() : NoContent();
     }
 
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> PostUser(UserDTOPostRequest userDtoPostRequest)
+    public async Task<ActionResult<UserDTO>> PostUser(UserInsertRequest request)
     {
-        var user = await _manager.InsertUser(userDtoPostRequest.FirstName, userDtoPostRequest.LastName, userDtoPostRequest.Nickname, userDtoPostRequest.Avatar, userDtoPostRequest.Email, userDtoPostRequest.Password);
+        var user = await _manager.InsertUser(request.FirstName, request.LastName, request.Nickname, request.Avatar,
+            request.Email, request.Password);
 
         return CreatedAtAction(
             nameof(GetUser),
