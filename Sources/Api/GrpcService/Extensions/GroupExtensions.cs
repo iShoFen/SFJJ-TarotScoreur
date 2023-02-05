@@ -6,7 +6,7 @@ namespace GrpcService.Extensions;
 /// <summary>
 /// Group extensions for mapping
 /// </summary>
-public static class GroupExtensions
+internal static class GroupExtensions
 {
     /// <summary>
     /// Mapper configuration for automapper

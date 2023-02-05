@@ -1,6 +1,4 @@
 using AutoMapper;
-using Google.Protobuf.Collections;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Model.Players;
 
 namespace GrpcService.Extensions;

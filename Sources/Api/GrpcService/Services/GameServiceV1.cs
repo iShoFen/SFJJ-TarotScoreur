@@ -6,67 +6,149 @@ using Model.Rules;
 
 namespace GrpcService.Services;
 
+/// <summary>
+/// The game service for gRPC v1
+/// </summary>
 public class GameServiceV1 : Game.GameBase
 {
+    /// <summary>
+    /// The manager for the service
+    /// </summary>
     private readonly Manager _manager;
+    
+    /// <summary>
+    /// The logger for the service
+    /// </summary>
     private readonly ILogger<GameServiceV1> _logger;
 
+    /// <summary>
+    /// The constructor for the service
+    /// </summary>
+    /// <param name="manager">The manager for the service</param>
+    /// <param name="logger">The logger for the service</param>
     public GameServiceV1(Manager manager, ILogger<GameServiceV1> logger)
     {
         _manager = manager;
         _logger = logger;
+        _logger.LogInformation("GameServiceV1 created");
     }
 
+    /// <summary>
+    /// Get all games with pagination
+    /// </summary>
+    /// <param name="request">The pagination</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GamesReply with games</returns>
     public override async Task<GamesReply> GetGames(Pagination request, ServerCallContext context)
     {
-        var games = await _manager.GetGames(request.Page, request.PageSize);
-        _logger.Log(LogLevel.Information, $"{nameof(GetGames)}({request.Page}, {request.PageSize})");
+        var games = await _manager.GetGames(request.Page, request.PageSize); 
+        _logger.Log(LogLevel.Information,
+                    "All games from {Page} page with {PageSize} size retrieved",
+                    request.Page,
+                    request.PageSize
+        );
+        
         return games.ToGamesReply();
     }
 
+    /// <summary>
+    /// Get game by id
+    /// </summary>
+    /// <param name="request">The id</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GameReply with game</returns>
+    /// <exception cref="RpcException">If game not found</exception>
     public override async Task<GameReply> GetGame(IdRequest request, ServerCallContext context)
     {
         var game = await _manager.GetGameById(request.Id);
 
         if (game is null)
         {
-            _logger.Log(LogLevel.Warning, $"Game with id {request.Id} was not found");
-            throw new RpcException(new Status(StatusCode.NotFound, "Game not found"));
+            _logger.Log(LogLevel.Warning, "Game with id {Id} was not found", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found"));
         }
 
-        _logger.Log(LogLevel.Information, $"Game with id:{request.Id} was found");
+        _logger.Log(LogLevel.Information, "Game with id {Id} retrieved", request.Id);
         return game.ToGameReply();
     }
 
+    /// <summary>
+    /// Get games by name
+    /// </summary>
+    /// <param name="request">The name pattern</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GamesReply with games</returns>
     public override async Task<GamesReply> GetGamesByName(GamePatternRequest request, ServerCallContext context)
     {
-        var games =
-            (await _manager.GetGamesByName(request.Pattern, request.Pagination.Page, request.Pagination.PageSize))
-            .ToList();
-        _logger.Log(LogLevel.Information, $"{games.Count} games were retrieved with the pattern {request.Pattern}");
+        var games = (await _manager.GetGamesByName(request.Pattern,
+                                                   request.Pagination.Page,
+                                                   request.Pagination.PageSize
+        )).ToList();
+
+        _logger.Log(LogLevel.Information,
+                    "{GamesCount} games retrieved by name pattern {Pattern}",
+                    games.Count,
+                    request.Pattern
+        );
+
         return games.ToGamesReply();
     }
 
+    /// <summary>
+    /// Get games by player
+    /// </summary>
+    /// <param name="request">The player id and pagination</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GamesReply with games</returns>
     public override async Task<GamesReply> GetGamesByPlayer(GamePlayerRequest request, ServerCallContext context)
     {
-        var games = (await _manager.GetGamesByPlayer(request.PlayerId, request.Pagination.Page,
-                request.Pagination.PageSize))
+        var games = (await _manager.GetGamesByPlayer(request.PlayerId,
+                                                     request.Pagination.Page,
+                                                     request.Pagination.PageSize
+            ))
             .ToList();
-        _logger.Log(LogLevel.Information, $"{games.Count} games were retrieved with the player id {request.PlayerId}");
+
+        _logger.Log(LogLevel.Information,
+                    "{GamesCount} games retrieved for player with id {PlayerId}",
+                    games.Count,
+                    request.PlayerId
+        );
+
         return games.ToGamesReply();
     }
 
+    /// <summary>
+    /// Get games by date
+    /// </summary>
+    /// <param name="request">The start date, end date and pagination</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GamesReply with games</returns>
     public override async Task<GamesReply> GetGamesByDate(GameDateRequest request, ServerCallContext context)
     {
-        var games = (await _manager.GetGamesByDate(request.StartDate.ToDateTime(), request.EndDate.ToDateTime(),
-                request.Pagination.Page,
-                request.Pagination.PageSize))
+        var games = (await _manager.GetGamesByDate(request.StartDate.ToDateTime(),
+                                                   request.EndDate.ToDateTime(),
+                                                   request.Pagination.Page,
+                                                   request.Pagination.PageSize
+            ))
             .ToList();
+
         _logger.Log(LogLevel.Information,
-            $"{games.Count} games were retrieved with the start date ({request.StartDate}) and end date ({request.EndDate})");
+                    "{GamesCount} games retrieved from {StartDate} to {EndDate}",
+                    games.Count,
+                    request.StartDate,
+                    request.EndDate
+        );
+
         return games.ToGamesReply();
     }
 
+    /// <summary>
+    /// Insert a game
+    /// </summary>
+    /// <param name="request">The game to insert</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GameReply with the inserted game</returns>
+    /// <exception cref="RpcException">If the user does not exist</exception>
     public override async Task<GameReply> InsertGame(GameInsertRequest request, ServerCallContext context)
     {
         var players = new List<Player>();
@@ -75,67 +157,80 @@ public class GameServiceV1 : Game.GameBase
             var player = await _manager.GetPlayerById(playerId);
 
             if (player == null)
-                throw new RpcException(new Status(StatusCode.InvalidArgument,
-                    $"The user with id {playerId} does not exist"));
-
+            {
+                _logger.Log(LogLevel.Warning, "User with id {Id} not found, game cannot be inserted", playerId);
+                throw new RpcException(new Status(StatusCode.InvalidArgument, $"User with id {playerId} not found, game cannot be inserted"));
+            }
             players.Add(player);
         }
 
         var rules = RulesFactory.Create(request.Rules);
         if (rules is null)
         {
-            _logger.Log(LogLevel.Warning, $"Rules {request.Rules} does not correspond to any rules");
+            _logger.Log(LogLevel.Warning, "Rules {Rules} does not correspond to any rules, game cannot be inserted", request.Rules);
             throw new RpcException(new Status(StatusCode.InvalidArgument,
-                $"Rules {request.Rules} does not correspond to any rules"));
+                $"Rules {request.Rules} does not correspond to any rules, game cannot be inserted"));
         }
 
         try
         {
-            var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(),
-                players.ToArray()))!;
-
-            _logger.Log(LogLevel.Information, $"The game with id {game.Id} has been successfully inserted");
+            var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(), players.ToArray()))!;
+            _logger.Log(LogLevel.Information, "Game with id {Id} inserted", game.Id);
+            
             return game.ToGameReply();
         }
         catch (Exception e)
         {
             _logger.Log(LogLevel.Warning,
-                $"An error occurred while inserting the new game with request {request}\n{e.Message}");
-            throw new RpcException(new Status(StatusCode.Internal, $"An error occurred while inserted the game"));
+                "An error occurred while inserting the new game with request {Request}\n{Message}",
+                request,
+                e.Message
+            );
+            throw new RpcException(new Status(StatusCode.Internal, "An error occurred while inserted the game"));
         }
     }
 
+    /// <summary>
+    /// Update a game
+    /// </summary>
+    /// <param name="request">The game to update</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The GameReply with the updated game</returns>
+    /// <exception cref="RpcException">If the game does not exist</exception>
     public override async Task<GameReply> UpdateGame(GameReply request, ServerCallContext context)
     {
         var convertedGame = request.ToGame();
         if (convertedGame is null)
         {
-            _logger.Log(LogLevel.Warning, $"Converted game from request {request} is null");
-            throw new RpcException(new Status(StatusCode.InvalidArgument,
-                "The arguments passed cannot be used to update the game"));
+            _logger.Log(LogLevel.Warning, "Rules {Rules} does not correspond to any rules, game cannot be updated", request.Rules);
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"Rules {request.Rules} does not correspond to any rules, game cannot be updated"));
         }
 
         var game = await _manager.UpdateGame(convertedGame);
 
         if (game is not null) return game.ToGameReply();
 
-        _logger.Log(LogLevel.Warning, $"An error occurred while updating the game with request {request}");
-        throw new RpcException(new Status(StatusCode.Aborted,
-            $"An error occurred while updating the game with id {request.Id}"));
+        _logger.Log(LogLevel.Warning, "Game with id {Id} not found, it cannot be updated", request.Id);
+        throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be updated"));
     }
 
+    /// <summary>
+    /// Delete a game
+    /// </summary>
+    /// <param name="request">The game id</param>
+    /// <param name="context">The server call context</param>
+    /// <returns>The BoolResponse with the result</returns>
+    /// <exception cref="RpcException">If the game does not exist</exception>
     public override async Task<BoolResponse> DeleteGame(IdRequest request, ServerCallContext context)
     {
         var result = await _manager.DeleteGame(request.Id);
-        if (result)
+        if (!result)
         {
-            _logger.Log(LogLevel.Information, $"Game with id {request.Id} was successfully deleted");
+            _logger.Log(LogLevel.Warning, "Game with id {Id} not found, the game cannot be deleted", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be deleted"));
         }
-        else
-        {
-            _logger.Log(LogLevel.Warning, $"Game with id {request.Id} was not deleted");
-        }
-
+        _logger.Log(LogLevel.Information, "Game with id {Id} deleted", request.Id);
+        
         return new BoolResponse { Result = result };
     }
 }
