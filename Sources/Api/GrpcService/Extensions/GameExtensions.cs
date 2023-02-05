@@ -14,13 +14,17 @@ internal static class GameExtensions
     /// </summary>
     private static readonly MapperConfiguration Config = new(cfg =>
         {
-            cfg.CreateMap<Model.Games.Game, GameReply>()
-               .ForMember(dest => dest.StartDate,
-                          opt =>
-                              opt.MapFrom(
-                                  g => Timestamp.FromDateTime(DateTime.SpecifyKind(g.StartDate, DateTimeKind.Utc))
-                              )
-               )
+            cfg.CreateMap<IRules, string>()
+               .ConvertUsing(src => src.Name);
+
+            cfg.CreateMap<DateTime?, Timestamp?>()
+               .ConvertUsing(src => src.HasValue ? Timestamp.FromDateTime(DateTime.SpecifyKind(src.Value, DateTimeKind.Utc)) : null);
+
+            cfg.CreateMap<Timestamp?, DateTime?>()
+               .ConvertUsing(src => src != null ? src.ToDateTime() : null);
+            
+            cfg.CreateMap<Model.Games.Game, GameReply>();
+            cfg.CreateMap<Model.Games.Game, GameReplyDetails>()
                .ForMember(dest => dest.Players,
                           opt =>
                               opt.MapFrom(g => g.Players.Select(p => p.Id))
@@ -33,12 +37,6 @@ internal static class GameExtensions
                           opt =>
                               opt.MapFrom(src => src.Rules.Name)
                );
-
-            cfg.CreateMap<DateTime?, Timestamp?>()
-               .ConvertUsing(src => src.HasValue ? Timestamp.FromDateTime(src.Value) : null);
-
-            cfg.CreateMap<Timestamp?, DateTime?>()
-               .ConvertUsing(src => src != null ? src.ToDateTime() : null);
         }
     );
 
@@ -46,13 +44,14 @@ internal static class GameExtensions
     /// Mapper for automapper
     /// </summary>
     private static readonly Mapper Mapper = new(Config);
-
+    
     /// <summary>
-    /// Map Game to GameReply
+    /// Map Game to GameReplyDetails
     /// </summary>
     /// <param name="game">The game to map</param>
-    /// <returns>The GameReply</returns>
-    public static GameReply ToGameReply(this Model.Games.Game game) => Mapper.Map<GameReply>(game);
+    /// <returns>The GameReplyDetails</returns>
+    public static GameReplyDetails ToGameReplyDetails(this Model.Games.Game game) 
+        => Mapper.Map<GameReplyDetails>(game);
 
     /// <summary>
     /// Map Game to GameReply
@@ -62,16 +61,16 @@ internal static class GameExtensions
     public static GamesReply ToGamesReply(this IEnumerable<Model.Games.Game> games)
     {
         var reply = new GamesReply();
-        reply.Games.AddRange(games.Select(g => g.ToGameReply()));
+        reply.Games.AddRange(games.Select(g => Mapper.Map<GameReply>(g)));
         return reply;
     }
 
     /// <summary>
-    /// Map GameReply to Game
+    /// Map GameReplyDetails to Game
     /// </summary>
     /// <param name="reply">The GameReply to map</param>
     /// <returns>The Game</returns>
-    public static Model.Games.Game? ToGame(this GameReply reply)
+    public static Model.Games.Game? ToGame(this GameReplyDetails reply)
     {
         var rules = RulesFactory.Create(reply.Rules);
         if (rules is null) return null;

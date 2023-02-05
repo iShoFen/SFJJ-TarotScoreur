@@ -58,7 +58,7 @@ public class GameServiceV1 : Game.GameBase
     /// <param name="context">The server call context</param>
     /// <returns>The GameReply with game</returns>
     /// <exception cref="RpcException">If game not found</exception>
-    public override async Task<GameReply> GetGame(IdRequest request, ServerCallContext context)
+    public override async Task<GameReplyDetails> GetGame(IdRequest request, ServerCallContext context)
     {
         var game = await _manager.GetGameById(request.Id);
 
@@ -69,7 +69,7 @@ public class GameServiceV1 : Game.GameBase
         }
 
         _logger.Log(LogLevel.Information, "Game with id {Id} retrieved", request.Id);
-        return game.ToGameReply();
+        return game.ToGameReplyDetails();
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public class GameServiceV1 : Game.GameBase
     /// <param name="context">The server call context</param>
     /// <returns>The GameReply with the inserted game</returns>
     /// <exception cref="RpcException">If the user does not exist</exception>
-    public override async Task<GameReply> InsertGame(GameInsertRequest request, ServerCallContext context)
+    public override async Task<GameReplyDetails> InsertGame(GameInsertRequest request, ServerCallContext context)
     {
         var players = new List<Player>();
         foreach (var playerId in request.Players)
@@ -177,7 +177,7 @@ public class GameServiceV1 : Game.GameBase
             var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(), players.ToArray()))!;
             _logger.Log(LogLevel.Information, "Game with id {Id} inserted", game.Id);
             
-            return game.ToGameReply();
+            return game.ToGameReplyDetails();
         }
         catch (Exception e)
         {
@@ -197,7 +197,7 @@ public class GameServiceV1 : Game.GameBase
     /// <param name="context">The server call context</param>
     /// <returns>The GameReply with the updated game</returns>
     /// <exception cref="RpcException">If the game does not exist</exception>
-    public override async Task<GameReply> UpdateGame(GameReply request, ServerCallContext context)
+    public override async Task<GameReplyDetails> UpdateGame(GameReplyDetails request, ServerCallContext context)
     {
         var convertedGame = request.ToGame();
         if (convertedGame is null)
@@ -208,7 +208,7 @@ public class GameServiceV1 : Game.GameBase
 
         var game = await _manager.UpdateGame(convertedGame);
 
-        if (game is not null) return game.ToGameReply();
+        if (game is not null) return game.ToGameReplyDetails();
 
         _logger.Log(LogLevel.Warning, "Game with id {Id} not found, it cannot be updated", request.Id);
         throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be updated"));
