@@ -1,0 +1,1206 @@
+{
+	"info": {
+		"_postman_id": "cfb119be-9ad5-4a5c-813d-2e4c01828428",
+		"name": "TarotDb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25675289"
+	},
+	"item": [
+		{
+			"name": "Rest",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "GetUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user",
+									"host": [
+										"{{base_url}}user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUsers with pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user?page=2&count=2",
+									"host": [
+										"{{base_url}}user"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"description": "Index de la page"
+										},
+										{
+											"key": "count",
+											"value": "2",
+											"description": "Nombre d'éléments par page\n"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUser with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/13",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGames with user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/13/game",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13",
+										"game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGroups with user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/13/group",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13",
+										"group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"Florent\",\n  \"lastName\": \"Marques\",\n  \"nickname\": \"flomSStaar\",\n  \"avatar\": \"avatar1\",\n  \"email\": \"florent.marques@gmail.com\",\n  \"password\": \"supermotdepasse\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}user",
+									"host": [
+										"{{base_url}}user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 13,\n  \"firstName\": \"Florent\",\n  \"lastName\": \"Marques\",\n  \"nickname\": \"flomSStaar\",\n  \"avatar\": \"avatar\",\n  \"email\": \"monemail@gmail.com\",\n  \"password\": \"monsupermotdepasse\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}user/13",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/15",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"15"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Group",
+					"item": [
+						{
+							"name": "GetGroups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group",
+									"host": [
+										"{{base_url}}group"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGroups with pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group?page=2&count=2",
+									"host": [
+										"{{base_url}}group"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "count",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGroup with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/12",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetPlayers with group id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/6/user",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"6",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetPlayer with group id and user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/6/user/6",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"6",
+										"user",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Le nouveau groupe\",\n  \"users\": [\n    12,\n    14,\n    11\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}group",
+									"host": [
+										"{{base_url}}group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update group",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 3,\n  \"name\": \"Le groupe mis à jour\",\n  \"users\": [\n    11,\n    12,\n    14\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}group/3",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete group",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/5",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Game",
+					"item": [
+						{
+							"name": "GetGames",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game",
+									"host": [
+										"{{base_url}}game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGames with pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game?start=2&count=2",
+									"host": [
+										"{{base_url}}game"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "2"
+										},
+										{
+											"key": "count",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGame with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game/4",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUsers with game id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game/3/user",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"3",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUser with game id and user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game/3/user/4",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"3",
+										"user",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert game",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"rules\": \"FrenchTarotRules\",\n  \"name\": \"La nouvelle partie\",\n  \"startDate\": \"2023-02-05T14:39:17.682Z\",\n  \"endDate\": \"2023-02-05T14:39:17.682Z\",\n  \"users\": [\n    11,\n    12,\n    13\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}game",
+									"host": [
+										"{{base_url}}game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update game",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 5,\n    \"rules\": \"FrenchTarotRules\",\n    \"name\": \"Le nouveau nom de la partie\",\n    \"startDate\": \"2023-02-05T14:40:21.107Z\",\n    \"endDate\": \"2023-02-05T14:40:21.107Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}game/5",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hand",
+					"item": [
+						{
+							"name": "Get hand with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}hand/4",
+									"host": [
+										"{{base_url}}hand"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert hand",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"number\": 4,\n  \"rules\": \"FrenchTarotRules\",\n  \"date\": \"2023-02-05T14:02:52.526Z\",\n  \"takerScore\": 156,\n  \"twentyOne\": true,\n  \"excuse\": false,\n  \"petit\": 4,\n  \"chelem\": 2,\n  \"biddings\": [\n    {\n      \"biddings\": 5,\n      \"poignee\": 2,\n      \"userId\": 14\n    },\n    {\n      \"biddings\": 9,\n      \"poignee\": 0,\n      \"userId\": 15\n    },\n    {\n      \"biddings\": 16,\n      \"poignee\": 1,\n      \"userId\": 11\n    }\n  ],\n  \"gameId\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}hand",
+									"host": [
+										"{{base_url}}hand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete hand",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}hand/35",
+									"host": [
+										"{{base_url}}hand"
+									],
+									"path": [
+										"35"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update hand",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 4,\n  \"number\": 1,\n  \"rules\": \"FrenchTarotRules\",\n  \"date\": \"2023-02-05T14:26:51.109Z\",\n  \"takerScore\": 155,\n  \"twentyOne\": true,\n  \"excuse\": true,\n  \"petit\": 5,\n  \"chelem\": 2,\n  \"biddings\": [\n    {\n            \"biddings\": 7,\n            \"poignee\": 0,\n            \"userId\": 14\n        },\n        {\n            \"biddings\": 4,\n            \"poignee\": 1,\n            \"userId\": 13\n        },\n        {\n            \"biddings\": 32,\n            \"poignee\": 2,\n            \"userId\": 12\n        }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}hand/4",
+									"host": [
+										"{{base_url}}hand"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"base_url\", \"https://localhost:7246/\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "GetUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user",
+									"host": [
+										"{{base_url}}user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUsers with pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user?page=2&count=2",
+									"host": [
+										"{{base_url}}user"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"description": "Index de la page"
+										},
+										{
+											"key": "count",
+											"value": "2",
+											"description": "Nombre d'éléments par page\n"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUser with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/13",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGames with user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/13/game",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13",
+										"game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGroups with user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/13/group",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13",
+										"group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"Florent\",\n  \"lastName\": \"Marques\",\n  \"nickname\": \"flomSStaar\",\n  \"avatar\": \"avatar1\",\n  \"email\": \"florent.marques@gmail.com\",\n  \"password\": \"supermotdepasse\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}user",
+									"host": [
+										"{{base_url}}user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 13,\n  \"firstName\": \"Florent\",\n  \"lastName\": \"Marques\",\n  \"nickname\": \"flomSStaar\",\n  \"avatar\": \"avatar\",\n  \"email\": \"monemail@gmail.com\",\n  \"password\": \"monsupermotdepasse\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}user/13",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}user/15",
+									"host": [
+										"{{base_url}}user"
+									],
+									"path": [
+										"15"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Group",
+					"item": [
+						{
+							"name": "GetGroups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group",
+									"host": [
+										"{{base_url}}group"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGroups with pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group?page=2&count=2",
+									"host": [
+										"{{base_url}}group"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "count",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGroup with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/12",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetPlayers with group id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/6/user",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"6",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetPlayer with group id and user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/6/user/6",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"6",
+										"user",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Le nouveau groupe\",\n  \"users\": [\n    12,\n    14,\n    11\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}group",
+									"host": [
+										"{{base_url}}group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update group",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 3,\n  \"name\": \"Le groupe mis à jour\",\n  \"users\": [\n    11,\n    12,\n    14\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}group/3",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete group",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}group/5",
+									"host": [
+										"{{base_url}}group"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Game",
+					"item": [
+						{
+							"name": "GetGames",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game",
+									"host": [
+										"{{base_url}}game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGames with pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game?start=2&count=2",
+									"host": [
+										"{{base_url}}game"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "2"
+										},
+										{
+											"key": "count",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGame with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game/4",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUsers with game id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game/3/user",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"3",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUser with game id and user id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}game/3/user/4",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"3",
+										"user",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert game",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"rules\": \"FrenchTarotRules\",\n  \"name\": \"La nouvelle partie\",\n  \"startDate\": \"2023-02-05T14:39:17.682Z\",\n  \"endDate\": \"2023-02-05T14:39:17.682Z\",\n  \"users\": [\n    11,\n    12,\n    13\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}game",
+									"host": [
+										"{{base_url}}game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update game",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 5,\n    \"rules\": \"FrenchTarotRules\",\n    \"name\": \"Le nouveau nom de la partie\",\n    \"startDate\": \"2023-02-05T14:40:21.107Z\",\n    \"endDate\": \"2023-02-05T14:40:21.107Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}game/5",
+									"host": [
+										"{{base_url}}game"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Hand",
+					"item": [
+						{
+							"name": "Get hand with id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}hand/4",
+									"host": [
+										"{{base_url}}hand"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert hand",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"number\": 4,\n  \"rules\": \"FrenchTarotRules\",\n  \"date\": \"2023-02-05T14:02:52.526Z\",\n  \"takerScore\": 156,\n  \"twentyOne\": true,\n  \"excuse\": false,\n  \"petit\": 4,\n  \"chelem\": 2,\n  \"biddings\": [\n    {\n      \"biddings\": 5,\n      \"poignee\": 2,\n      \"userId\": 14\n    },\n    {\n      \"biddings\": 9,\n      \"poignee\": 0,\n      \"userId\": 15\n    },\n    {\n      \"biddings\": 16,\n      \"poignee\": 1,\n      \"userId\": 11\n    }\n  ],\n  \"gameId\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}hand",
+									"host": [
+										"{{base_url}}hand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete hand",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}hand/35",
+									"host": [
+										"{{base_url}}hand"
+									],
+									"path": [
+										"35"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update hand",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 4,\n  \"number\": 1,\n  \"rules\": \"FrenchTarotRules\",\n  \"date\": \"2023-02-05T14:26:51.109Z\",\n  \"takerScore\": 155,\n  \"twentyOne\": true,\n  \"excuse\": true,\n  \"petit\": 5,\n  \"chelem\": 2,\n  \"biddings\": [\n    {\n            \"biddings\": 7,\n            \"poignee\": 0,\n            \"userId\": 14\n        },\n        {\n            \"biddings\": 4,\n            \"poignee\": 1,\n            \"userId\": 13\n        },\n        {\n            \"biddings\": 32,\n            \"poignee\": 2,\n            \"userId\": 12\n        }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}hand/4",
+									"host": [
+										"{{base_url}}hand"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"base_url\", \"https://localhost:7261/gateway/\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Grpc",
+			"item": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": ""
+		}
+	]
+}
