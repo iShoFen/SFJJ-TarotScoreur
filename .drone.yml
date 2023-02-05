@@ -133,7 +133,7 @@ steps:
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
       IMAGENAME: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
-      CONTAINERNAME: tarot-gatewat-service
+      CONTAINERNAME: tarot-gateway-service
       COMMAND: create
       OVERWRITE: true
       ADMINS: florentmarques,samuelsirven,julientheme
