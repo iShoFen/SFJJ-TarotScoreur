@@ -1,13 +1,9 @@
-using Google.Protobuf.WellKnownTypes;
 using GrpcService;
 
 namespace UT_GrpcService;
 
 public static class HandServiceDataV1
 {
-    private static Timestamp ToTimestamp(this DateTime dateTime)
-        =>Timestamp.FromDateTime(DateTime.SpecifyKind(dateTime, DateTimeKind.Utc));
-    
     public static IEnumerable<object?[]> Data_TestGetHandById()
     {
         yield return new object?[]

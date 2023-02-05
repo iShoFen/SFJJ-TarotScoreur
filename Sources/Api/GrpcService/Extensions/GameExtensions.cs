@@ -19,9 +19,9 @@ internal static class GameExtensions
 
             cfg.CreateMap<DateTime?, Timestamp?>()
                .ConvertUsing(src => src.HasValue ? Timestamp.FromDateTime(DateTime.SpecifyKind(src.Value, DateTimeKind.Utc)) : null);
-
-            cfg.CreateMap<Timestamp?, DateTime?>()
-               .ConvertUsing(src => src != null ? src.ToDateTime() : null);
+            
+            cfg.CreateMap<DateTime, Timestamp>()
+               .ConvertUsing(src => Timestamp.FromDateTime(DateTime.SpecifyKind(src, DateTimeKind.Utc)));
             
             cfg.CreateMap<Model.Games.Game, GameReply>();
             cfg.CreateMap<Model.Games.Game, GameReplyDetails>()

@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using GrpcService.Services;
 using Microsoft.Extensions.Logging;
@@ -18,4 +19,7 @@ public static class GrpcUtils
     
     public static ILogger<T> CreateLogger<T>() 
         => new Mock<ILogger<T>>().Object;
+    
+    public static Timestamp ToTimestamp(this DateTime dateTime)
+        =>Timestamp.FromDateTime(DateTime.SpecifyKind(dateTime, DateTimeKind.Utc));
 }
