@@ -11,7 +11,11 @@ internal static class GameDTOExtensions
         {
             config.CreateMap<Game, GameDTO>().ReverseMap();
             config.CreateMap<Game, GameDetailDTO>()
-            .ForMember(dest => dest.Users, act => act.MapFrom(src => src.Players.Select(p => p.Id))).ReverseMap();
+            .ForMember(dest => dest.Users, act => 
+                act.MapFrom(src => src.Players.Select(p => p.Id)))
+            .ForMember(dest => dest.Hands, act => 
+                act.MapFrom(src => src.Hands.Select(kvp => kvp.Value.Id)))
+            .ReverseMap();
         });
     private static readonly Mapper Mapper =new(MapperConfiguration);
 
