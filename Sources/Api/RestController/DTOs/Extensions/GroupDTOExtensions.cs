@@ -1,6 +1,6 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Model.Players;
+using RestController.DTOs.Games;
 
 namespace RestController.DTOs.Extensions;
 

@@ -1,31 +1,32 @@
-using Model.Games;using System;
 using AutoMapper;
+using Model.Games;
+using RestController.DTOs.Games;
 
 namespace RestController.DTOs.Extensions
 {
     public static class HandDTOExtensions
     {
-        private static readonly MapperConfiguration MapperConfig = 
+        private static readonly MapperConfiguration MapperConfig =
             new(cfg =>
             {
                 cfg.CreateMap<Hand, HandDTODetail>()
-                    .ForMember(h => h.Petit, opt 
+                    .ForMember(h => h.Petit, opt
                         => opt.MapFrom(h => h.Petit.ToPetitResultsDTO()))
-                        
-                    .ForMember(h => h.Chelem, opt 
+                    .ForMember(h => h.Chelem, opt
                         => opt.MapFrom(h => h.Chelem.ToChelemDTO()))
-                        
-                    .ForMember(h => h.Biddings, opt 
-                        => opt.MapFrom(h => h.Biddings.Select(b 
-                            => b.ToBiddingPoigneeDTO())));
-                    
+                    .ForMember(h => h.Biddings, opt
+                        => opt.MapFrom(h => h.Biddings.Select(b
+                            => b.ToBiddingPoigneeDTO())))
+                    .ForMember(dest => dest.Rules, opt =>
+                        opt.MapFrom(src => src.Rules.Name));
+
                 cfg.CreateMap<HandDTODetail, Hand>()
-                    .ForMember(h => h.Petit, opt 
+                    .ForMember(h => h.Petit, opt
                         => opt.MapFrom(h => h.Petit.ToPetitResults()))
-                        
-                    .ForMember(h => h.Chelem, opt 
+                    .ForMember(h => h.Chelem, opt
                         => opt.MapFrom(h => h.Chelem.ToChelem()));
             });
+
         private static readonly Mapper Mapper = new(MapperConfig);
 
         /// <summary>
@@ -41,6 +42,5 @@ namespace RestController.DTOs.Extensions
         /// <param name="handDtoDetail">The handDTO to map</param>
         /// <returns>The mapped hand</returns>
         public static Hand ToHand(this HandDTODetail handDtoDetail) => Mapper.Map<HandDTODetail, Hand>(handDtoDetail);
-
     }
 }

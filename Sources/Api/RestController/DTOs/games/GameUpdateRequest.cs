@@ -1,7 +1,12 @@
-﻿namespace RestController.DTOs;
+﻿namespace RestController.DTOs.Games;
 
-public class GameDTOPostRequest
+public class GameUpdateRequest
 {
+    /// <summary>
+    /// The id of the Game
+    /// </summary>
+    public ulong Id { get; set; }
+    
     /// <summary>
     /// The name of the Rules used for the Game
     /// </summary>
@@ -21,10 +26,5 @@ public class GameDTOPostRequest
     /// The end date of the Game
     /// </summary>
     public DateTime? EndDate { get; set; }
-    
-    /// <summary>
-    /// The Users in the Game
-    /// </summary>
-    public ICollection<ulong> Users { get; set; } = new HashSet<ulong>();
     
 }

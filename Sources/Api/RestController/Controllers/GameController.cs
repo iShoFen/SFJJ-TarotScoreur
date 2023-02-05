@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Games;
+using Model.Players;
 using Model.Rules;
-using RestController.DTOs;
 using RestController.DTOs.Extensions;
+using RestController.DTOs.Games;
 using RestController.Filter;
 
 namespace RestController.Controllers;
@@ -11,14 +13,13 @@ namespace RestController.Controllers;
 [ApiController]
 public class GameController : ControllerBase
 {
-    
     private readonly Manager _manager;
 
     public GameController(Manager manager)
     {
         _manager = manager;
     }
-    
+
     // GAMES
 
     [HttpGet]
@@ -36,7 +37,7 @@ public class GameController : ControllerBase
         if (game == null) return NotFound();
         return Ok(game.ToGameDetailDTO());
     }
-    
+
     // USER
 
     [HttpGet("{id}/user/")]
@@ -59,12 +60,29 @@ public class GameController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> PostGame(GameDTOPostRequest gameDtoPostRequest)
+    public async Task<ActionResult> PostGame(GameInsertRequest request)
     {
-        if (gameDtoPostRequest.Users.Count == 0) return BadRequest();
-        var players = gameDtoPostRequest.Users.Select(x => _manager.GetPlayerById(x).Result).ToList();
-        if (!players.TrueForAll(player => player != null)) return BadRequest();
-        var game = await _manager.InsertGame(gameDtoPostRequest.Name, RulesFactory.Create(gameDtoPostRequest.Rules), gameDtoPostRequest.StartDate, players.ToArray()) ;
+        if (request.Users.Count == 0) return BadRequest();
+
+        var users = new List<Player>();
+        foreach (var userId in request.Users)
+        {
+            var user = await _manager.GetUserById(userId);
+            if (user is null)
+            {
+                return BadRequest($"The user with id {userId} does not exist");
+            }
+
+            users.Add(user);
+        }
+
+        var rules = RulesFactory.Create(request.Rules);
+        if (rules is null)
+        {
+            return BadRequest($"The rules {request.Rules} does not correspond to any rules");
+        }
+
+        var game = (await _manager.InsertGame(request.Name, rules, request.StartDate, users.ToArray()))!;
 
         return CreatedAtAction(
             nameof(GetGame),
@@ -73,11 +91,26 @@ public class GameController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutGame(ulong id, GameDetailDTO gameDetailDto)
+    public async Task<IActionResult> PutGame(ulong id, GameUpdateRequest request)
     {
-        if (id != gameDetailDto.Id) return BadRequest();
-        var game = await _manager.UpdateGame(gameDetailDto.ToGameModel());
-        if (game is null) return NotFound();
+        if (id != request.Id) return BadRequest($"The url id {id} does not correspond to the body id {request.Id}");
+
+        var rules = RulesFactory.Create(request.Rules);
+        if (rules is null)
+        {
+            return BadRequest($"The rules {request.Rules} does not correspond to any rules");
+        }
+
+        var game = new Game(
+            request.Id,
+            request.Name,
+            rules,
+            request.StartDate,
+            request.EndDate
+        );
+
+        var gameUpdated = await _manager.UpdateGame(game);
+        if (gameUpdated is null) return NotFound();
         return NoContent();
     }
 
@@ -90,5 +123,4 @@ public class GameController : ControllerBase
 
         return NoContent();
     }
-
 }

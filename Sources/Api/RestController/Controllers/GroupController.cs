@@ -4,6 +4,7 @@ using Model;
 using Model.Players;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
+using RestController.DTOs.Games;
 using RestController.Filter;
 
 namespace RestController.Controllers;
@@ -78,13 +79,20 @@ public class GroupController : ControllerBase
     }
 
 	[HttpPost]
-	public async Task<ActionResult> PostGroup(GroupDTOPostRequest groupDtoPostRequest)
+	public async Task<ActionResult> PostGroup(GroupDTOPostRequest request)
 	{
-		var usersId = groupDtoPostRequest.Users ;
-		var players = usersId.Select(x =>  _manager.GetPlayerById(x).Result).ToList();
-		if (!players.Any()) return BadRequest();
+		var users = new List<Player>();
+		foreach (var userId in request.Users)
+		{
+			var user = await _manager.GetUserById(userId);
+			if (user is null)
+			{
+				return BadRequest($"The user with id {userId} does not exist");
+			}
+			users.Add(user);
+		}
 
-		var group = await _manager.InsertGroup(groupDtoPostRequest.Name, players.ToArray());
+		var group = (await _manager.InsertGroup(request.Name, users.ToArray()))!;
 
 		return CreatedAtAction(
 			nameof(GetGroup),
@@ -103,8 +111,18 @@ public class GroupController : ControllerBase
 	public async Task<IActionResult> PutGroup(ulong id, GroupDTO groupDTO)
 	{
 		if (id != groupDTO.Id) return BadRequest();
-		var users = groupDTO.Users.Select(x => _manager.GetPlayerById(x).Result).ToList();
-		if (!users.TrueForAll(player => player != null)) return BadRequest();
+		
+		var users = new List<Player>();
+		foreach (var userId in groupDTO.Users)
+		{
+			var user = await _manager.GetUserById(userId);
+			if (user is null)
+			{
+				return BadRequest($"The user with id {userId} does not exist");
+			}
+			users.Add(user);
+		}
+		
 		var group = new Group(groupDTO.Id, groupDTO.Name, users.ToArray());
 		if (await _manager.UpdateGroup(group) is null) return NotFound();
 		return NoContent();
