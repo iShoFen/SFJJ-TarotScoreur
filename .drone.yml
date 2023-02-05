@@ -114,6 +114,30 @@ steps:
       OVERWRITE: true
       ADMINS: florentmarques,samuelsirven,julientheme
     depends_on: [ build-docker-rest-service ]
+  
+  # Gateway Service
+  - name: build-docker-gateway-service
+    image: plugins/docker
+    settings:
+      dockerfile: Sources/Api/Gateway/Dockerfile
+      context: Sources/
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    depends_on: [ build ]
+
+  - name: deploy-gateway-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      CONTAINERNAME: tarot-gatewat-service
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: florentmarques,samuelsirven,julientheme
+    depends_on: [ build-docker-gateway-service ]
 
 volumes:
   - name: docs
