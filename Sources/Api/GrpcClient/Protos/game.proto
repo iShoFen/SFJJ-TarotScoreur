@@ -5,16 +5,16 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "GrpcClient";
 
-package tarot;
+package tarot.v1;
 
 service Game {
   rpc GetGames (Pagination) returns (GamesReply);
-  rpc GetGame (IdRequest) returns (GameReply);
+  rpc GetGame (IdRequest) returns (GameReplyDetails);
   rpc GetGamesByName (GamePatternRequest) returns (GamesReply);
   rpc GetGamesByPlayer (GamePlayerRequest) returns (GamesReply);
   rpc GetGamesByDate (GameDateRequest) returns (GamesReply);
-  rpc InsertGame (GameInsertRequest) returns (GameReply);
-  rpc UpdateGame (GameReply) returns (GameReply);
+  rpc InsertGame (GameInsertRequest) returns (GameReplyDetails);
+  rpc UpdateGame (GameReplyDetails) returns (GameReplyDetails);
   rpc DeleteGame (IdRequest) returns (BoolResponse);
 }
 
@@ -46,6 +46,14 @@ message GamesReply {
 }
 
 message GameReply {
+  uint64 id = 1;
+  string name = 2;
+  string rules = 3;
+  google.protobuf.Timestamp startDate = 4;
+  optional google.protobuf.Timestamp endDate = 5;
+}
+
+message GameReplyDetails {
   uint64 id = 1;
   string name = 2;
   string rules = 3;
