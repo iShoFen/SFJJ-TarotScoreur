@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "GrpcClient";
 
-package tarot;
+package tarot.v1;
 
 service Hand {
   rpc GetHandById (IdRequest) returns (HandReply);

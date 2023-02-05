@@ -6,12 +6,12 @@ using Model.Rules;
 
 namespace GrpcService.Services;
 
-public class GameService : Game.GameBase
+public class GameServiceV1 : Game.GameBase
 {
     private readonly Manager _manager;
-    private readonly ILogger<GameService> _logger;
+    private readonly ILogger<GameServiceV1> _logger;
 
-    public GameService(Manager manager, ILogger<GameService> logger)
+    public GameServiceV1(Manager manager, ILogger<GameServiceV1> logger)
     {
         _manager = manager;
         _logger = logger;

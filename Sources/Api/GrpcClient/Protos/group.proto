@@ -5,15 +5,15 @@ import "Protos/user.proto";
 
 option csharp_namespace = "GrpcClient";
 
-package tarot;
+package tarot.v1;
 
 service Group {
   rpc GetGroups (Pagination) returns (GroupsReply);
   rpc GetGroup (IdRequest) returns (GroupReply);
   rpc GetGroupsByName (GroupPatternRequest) returns (GroupsReply);
-  rpc GetGroupsByPlayer (GroupPlayerRequest) returns (GroupsReply);
-  rpc InsertGroup (GroupRequest) returns (GroupReply);
-  rpc UpdateGroup (GroupReply) returns (GroupReply);
+  rpc GetGroupsByUser (GroupUserRequest) returns (GroupsReply);
+  rpc InsertGroup (GroupInsertRequest) returns (GroupReply);
+  rpc UpdateGroup (GroupUpdateRequest) returns (GroupReply);
   rpc DeleteGroup (IdRequest) returns (BoolResponse);
 }
 
@@ -22,14 +22,20 @@ message GroupPatternRequest {
   Pagination pagination = 2;
 }
 
-message GroupPlayerRequest {
-  uint64 player_id = 1;
+message GroupUserRequest {
+  uint64 user_id = 1;
   Pagination pagination = 2;
 }
 
-message GroupRequest {
+message GroupInsertRequest {
   string name = 1;
-  repeated UserReply players = 2;
+  repeated uint64 users = 2;
+}
+
+message GroupUpdateRequest {
+  uint64 id = 1;
+  string name = 2;
+  repeated uint64 users = 3;
 }
 
 message GroupsReply {
@@ -39,5 +45,5 @@ message GroupsReply {
 message GroupReply {
   uint64 id = 1;
   string name = 2;
-  repeated UserReply players = 3;
+  repeated UserReply users = 3;
 }

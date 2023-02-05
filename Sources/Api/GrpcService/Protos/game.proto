@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "GrpcService";
 
-package tarot;
+package tarot.v1;
 
 service Game {
   rpc GetGames (Pagination) returns (GamesReply);

@@ -1,9 +1,10 @@
-﻿using Google.Protobuf.WellKnownTypes;
+﻿using System.Runtime.InteropServices;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClient;
 
-using var channel = GrpcChannel.ForAddress("http://localhost:5028");
+using var channel = GrpcChannel.ForAddress(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "http://localhost:5028" : "https://localhost:7268");
 
 var userClient = new User.UserClient(channel);
 

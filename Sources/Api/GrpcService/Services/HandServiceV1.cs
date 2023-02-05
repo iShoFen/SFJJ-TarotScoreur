@@ -7,12 +7,12 @@ using Model.Rules;
 
 namespace GrpcService.Services;
 
-public class HandService : Hand.HandBase
+public class HandServiceV1 : Hand.HandBase
 {
     private readonly Manager _manager;
-    private readonly ILogger<HandService> _logger;
+    private readonly ILogger<HandServiceV1> _logger;
 
-    public HandService(Manager manager, ILogger<HandService> logger)
+    public HandServiceV1(Manager manager, ILogger<HandServiceV1> logger)
     {
         _manager = manager;
         _logger = logger;
