@@ -407,4 +407,234 @@ public static class HandServiceDataV1
             3
         };
     }
+    
+    public static IEnumerable<object?[]> UpdateHandData()
+    {
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                Id = 0UL,
+                Number = 1,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2023, 01, 19).ToTimestamp(),
+                TakerScore = 156,
+                TwentyOne = false,
+                Excuse = false,
+                Petit = PETIT_RESULT.AuBout,
+                Chelem = CHELEM.AnnouncedFail
+            },
+            null,
+            3
+        };
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                
+                Id = 100UL,
+                Number = 1,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2023, 01, 19).ToTimestamp(),
+                TakerScore = 156,
+                TwentyOne = false,
+                Excuse = false,
+                Petit = PETIT_RESULT.AuBout,
+                Chelem = CHELEM.AnnouncedFail
+            },
+            null,
+            3
+        };
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                Id = 3UL,
+                Number = 6,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2023, 01, 19).ToTimestamp(),
+                TakerScore = 60,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.AuBout,
+                Chelem = CHELEM.Announced
+            },
+            new HandReply
+            {
+                Id = 3UL,
+                Number = 6,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2023, 01, 19).ToTimestamp(),
+                TakerScore = 60,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.AuBout,
+                Chelem = CHELEM.Announced
+            },
+            -1
+        };
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                Id = 6UL,
+                Number = 3,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2022, 09, 21).ToTimestamp(),
+                TakerScore = 151,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.Owned,
+                Chelem = CHELEM.Success,
+                Biddings =
+                {
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 11UL,
+                        Bidding = BIDDING.Opponent,
+                        Poignee = POIGNEE.Triple
+                    },
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 12UL,
+                        Bidding = BIDDING.King,
+                        Poignee = POIGNEE.Triple,
+                    },
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 13UL,
+                        Bidding = BIDDING.Opponent,
+                        Poignee = POIGNEE.Triple
+                    }
+                }
+            },
+            new HandReply
+            {
+                Id = 6UL,
+                Number = 3,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2022, 09, 21).ToTimestamp(),
+                TakerScore = 151,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.Owned,
+                Chelem = CHELEM.Success,
+                Biddings =
+                {
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 11UL,
+                        Bidding = BIDDING.Opponent,
+                        Poignee = POIGNEE.Triple
+                    },
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 12UL,
+                        Bidding = BIDDING.King,
+                        Poignee = POIGNEE.Triple,
+                    },
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 13UL,
+                        Bidding = BIDDING.Opponent,
+                        Poignee = POIGNEE.Triple
+                    }
+                }
+            },
+            -1
+        };
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                Id = 3UL,
+                Number = 6,
+                Rules = "MyRules",
+                Date = new DateTime(2023, 01, 19).ToTimestamp(),
+                TakerScore = 60,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.AuBout,
+                Chelem = CHELEM.Announced
+            },
+            null,
+            2
+        };
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                Id = 6UL,
+                Number = 3,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2022, 09, 21).ToTimestamp(),
+                TakerScore = 151,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.Owned,
+                Chelem = CHELEM.Success,
+                Biddings =
+                {
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 4UL,
+                        Bidding = BIDDING.Opponent,
+                        Poignee = POIGNEE.Triple
+                    }
+                }
+            },
+            null,
+            1
+        };
+        yield return new object?[]
+        {
+            new HandReply
+            {
+                Id = 6UL,
+                Number = 3,
+                Rules = "FrenchTarotRules",
+                Date = new DateTime(2022, 09, 21).ToTimestamp(),
+                TakerScore = 151,
+                TwentyOne = true,
+                Excuse = false,
+                Petit = PETIT_RESULT.Owned,
+                Chelem = CHELEM.Success,
+                Biddings =
+                {
+                    new UserBiddingPoignee
+                    {
+                        PlayerId = 100UL,
+                        Bidding = BIDDING.Opponent,
+                        Poignee = POIGNEE.Triple
+                    }
+                }
+            },
+            null,
+            1
+        };
+    }
+
+    public static IEnumerable<object?[]> DeleteHandData()
+    {
+        yield return new object?[]
+        {
+            23UL,
+            true
+        };
+        yield return new object?[]
+        {
+            32UL,
+            true
+        };
+        yield return new object?[]
+        {
+            0UL,
+            false
+        };
+        yield return new object?[]
+        {
+            50UL,
+            false
+        };
+    }
 }
