@@ -1,4 +1,6 @@
+using System.Net;
 using GrpcService.Services;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.Data;
@@ -13,16 +15,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
-// Only for macOs
-if (string.Equals(Environment.GetEnvironmentVariable("MACOS"), "true"))
+builder.WebHost.ConfigureKestrel(options =>
 {
-    builder.WebHost.ConfigureKestrel(options =>
+    if (string.Equals(Environment.GetEnvironmentVariable("MACOS"), "true"))
     {
+        // Only for macOs
         // Setup a HTTP/2 endpoint without TLS.
         options.ListenLocalhost(5028, o => o.Protocols =
-            Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
-    });
-}
+            HttpProtocols.Http2);
+    }
+    else if (builder.Environment.IsProduction())
+    {
+        options.Listen(IPAddress.Any, 80);
+    }
+});
 
 builder.Services.AddDbContext<TarotDbContextStub>();
 builder.Services.AddTransient<DbContext, TarotDbContextStub>();
