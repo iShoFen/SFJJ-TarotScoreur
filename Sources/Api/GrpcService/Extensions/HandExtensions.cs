@@ -16,22 +16,36 @@ internal static class HandExtensions
     private static readonly MapperConfiguration Config = new(cfg =>
     {
         cfg.CreateMap<Model.Games.Hand, HandReply>()
-            .ForMember(dest => dest.Rules, opt =>
-                opt.MapFrom(src => src.Rules.Name))
-            .ForMember(dest => dest.Petit, opt =>
-                opt.MapFrom(src => src.Petit))
-            .ForMember(dest => dest.Chelem, opt =>
-                opt.MapFrom(src => src.Chelem))
-            .ForMember(dest => dest.Date, opt =>
-                opt.MapFrom(g => Timestamp.FromDateTime(DateTime.SpecifyKind(g.Date, DateTimeKind.Utc))))
-            .ReverseMap();
+           .ForMember(dest => dest.Rules,
+                      opt =>
+                          opt.MapFrom(src => src.Rules.Name)
+           )
+           .ForMember(dest => dest.Petit,
+                      opt =>
+                          opt.MapFrom(src => src.Petit)
+           )
+           .ForMember(dest => dest.Chelem,
+                      opt =>
+                          opt.MapFrom(src => src.Chelem)
+           )
+           .ForMember(dest => dest.Date,
+                      opt =>
+                          opt.MapFrom(g => Timestamp.FromDateTime(DateTime.SpecifyKind(g.Date, DateTimeKind.Utc)))
+           );
+
         cfg.CreateMap<KeyValuePair<Player, (Biddings, Poignee)>, UserBiddingPoignee>()
-            .ForMember(dest => dest.PlayerId, opt =>
-                opt.MapFrom(src => src.Key.Id))
-            .ForMember(dest => dest.Bidding, opt =>
-                opt.MapFrom(kvp => kvp.Value.Item1))
-            .ForMember(dest => dest.Poignee, opt =>
-                opt.MapFrom(kvp => kvp.Value.Item2));
+           .ForMember(dest => dest.PlayerId,
+                      opt =>
+                          opt.MapFrom(src => src.Key.Id)
+           )
+           .ForMember(dest => dest.Bidding,
+                      opt =>
+                          opt.MapFrom(kvp => kvp.Value.Item1)
+           )
+           .ForMember(dest => dest.Poignee,
+                      opt =>
+                          opt.MapFrom(kvp => kvp.Value.Item2)
+           );
     });
 
     /// <summary>

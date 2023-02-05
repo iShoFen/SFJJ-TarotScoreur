@@ -86,30 +86,28 @@ public class HandServiceV1 : Hand.HandBase
             throw new RpcException(new Status(StatusCode.InvalidArgument,
                 $"Rules {request.Rules} does not correspond to any rules, hand cannot be inserted"));
         }
+        
+        var hand = await _manager.InsertHand(
+            request.GameId,
+            request.Number,
+            rules,
+            request.Date.ToDateTime(),
+            request.TakerScore,
+            request.TwentyOne,
+            request.Excuse,
+            request.Petit.ToModel(),
+            request.Chelem.ToModel(),
+            biddings.ToArray()
+        );
 
-        try
+        if (hand is null)
         {
-            var hand = (await _manager.InsertHand(
-                request.GameId,
-                request.Number,
-                rules,
-                request.Date.ToDateTime(),
-                request.TakerScore,
-                request.TwentyOne,
-                request.Excuse,
-                request.Petit.ToModel(),
-                request.Chelem.ToModel(),
-                biddings.ToArray()
-            ))!;
+            _logger.Log(LogLevel.Warning, "Game with id {Id} not found, hand cannot be inserted", request.GameId);
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"Game with id {request.GameId} not found, hand cannot be inserted"));
+        }
 
-            _logger.Log(LogLevel.Information, "Hand with id {Id} inserted", hand.Id);
-            return hand.ToHandReply();
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Warning, "An error occurred while inserting the new hand with request {Request}\n{Message}", request, e.Message);
-            throw new RpcException(new Status(StatusCode.Internal, "An error occurred while inserted the hand"));
-        }
+        _logger.Log(LogLevel.Information, "Hand with id {Id} inserted", hand.Id);
+        return hand.ToHandReply();
     }
 
     /// <summary>
