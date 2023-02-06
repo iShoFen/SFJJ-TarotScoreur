@@ -630,17 +630,11 @@ public class GameServiceDataV1
                 EndDate = null,
                 Players =
                 {
-                    new[]
-                    {
-                        1UL, 2UL, 3UL
-                    }
+                    1UL, 2UL, 3UL
                 },
                 Hands =
                 {
-                    new[]
-                    {
-                        1UL, 2UL, 3UL
-                    }
+                    1UL, 2UL, 3UL
                 }
             }
         };
@@ -657,17 +651,11 @@ public class GameServiceDataV1
                 EndDate = new DateTime(2022, 09, 30).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        8UL, 9UL, 10UL, 11UL, 12UL
-                    }
+                    8UL, 9UL, 10UL, 11UL, 12UL
                 },
                 Hands =
                 {
-                    new []
-                    {
-                        23UL
-                    }
+                    23UL
                 }
             }
         };
@@ -712,10 +700,7 @@ public class GameServiceDataV1
                 StartDate = new DateTime(2022, 09, 19).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        2UL, 3UL, 4UL
-                    }
+                    2UL, 3UL, 4UL
                 }
             },
             new GameReplyDetails
@@ -727,10 +712,7 @@ public class GameServiceDataV1
                 EndDate = null,
                 Players =
                 {
-                    new []
-                    {
-                        2UL, 3UL, 4UL
-                    }
+                    2UL, 3UL, 4UL
                 }
             },
             -1
@@ -744,10 +726,7 @@ public class GameServiceDataV1
                 StartDate = new DateTime(2022, 09, 21).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        8UL, 9UL, 10UL, 11UL, 12UL
-                    }
+                    8UL, 9UL, 10UL, 11UL, 12UL
                 }
             },
             new GameReplyDetails
@@ -759,10 +738,7 @@ public class GameServiceDataV1
                 EndDate = null,
                 Players =
                 {
-                    new []
-                    {
-                        8UL, 9UL, 10UL, 11UL, 12UL
-                    }
+                    8UL, 9UL, 10UL, 11UL, 12UL
                 }
             },
             -1
@@ -776,10 +752,7 @@ public class GameServiceDataV1
                 StartDate = new DateTime(2022, 09, 21).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        8UL, 9UL, 10UL, 11UL, 12UL
-                    }
+                    8UL, 9UL, 10UL, 11UL, 12UL
                 }
             },
             new GameReplyDetails
@@ -791,10 +764,7 @@ public class GameServiceDataV1
                 EndDate = null,
                 Players =
                 {
-                    new []
-                    {
-                        8UL, 9UL, 10UL, 11UL, 12UL
-                    }
+                    8UL, 9UL, 10UL, 11UL, 12UL
                 }
             },
             -1
@@ -808,10 +778,7 @@ public class GameServiceDataV1
                 StartDate = new DateTime(2022, 09, 21).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        25UL, 9UL, 10UL, 11UL, 12UL
-                    }
+                    25UL, 9UL, 10UL, 11UL, 12UL
                 }
             },
             null,
@@ -843,17 +810,11 @@ public class GameServiceDataV1
                 EndDate = new DateTime(2023, 01, 15).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        4UL, 5UL, 6UL
-                    }
+                    4UL, 5UL, 6UL
                 },
                 Hands =
                 {
-                    new []
-                    {
-                        1UL, 2UL
-                    }
+                    1UL, 2UL
                 }
             },
             new GameReplyDetails
@@ -865,17 +826,11 @@ public class GameServiceDataV1
                 EndDate = new DateTime(2023, 01, 15).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        1UL, 2UL, 3UL
-                    }
+                    1UL, 2UL, 3UL
                 },
                 Hands =
                 {
-                    new []
-                    {
-                        1UL, 2UL, 3UL
-                    }
+                    1UL, 2UL, 3UL
                 }
             },
             -1
@@ -899,17 +854,11 @@ public class GameServiceDataV1
                 EndDate = null,
                 Players =
                 {
-                    new []
-                    {
-                        1UL, 2UL, 3UL
-                    }
+                    1UL, 2UL, 3UL
                 },
                 Hands =
                 {
-                    new []
-                    {
-                        1UL, 2UL, 3UL
-                    }
+                    1UL, 2UL, 3UL
                 }
             },
             -1
@@ -925,17 +874,11 @@ public class GameServiceDataV1
                 EndDate = new DateTime(2023, 01, 15).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        4UL, 5UL, 6UL
-                    }
+                    4UL, 5UL, 6UL
                 },
                 Hands =
                 {
-                    new []
-                    {
-                        1UL, 2UL
-                    }
+                    1UL, 2UL
                 }
            },
            null,
@@ -952,17 +895,11 @@ public class GameServiceDataV1
                 EndDate = new DateTime(2023, 01, 15).ToTimestamp(),
                 Players =
                 {
-                    new []
-                    {
-                        4UL, 5UL, 6UL
-                    }
+                    4UL, 5UL, 6UL
                 },
                 Hands =
                 {
-                    new []
-                    {
-                        1UL, 2UL
-                    }
+                    1UL, 2UL
                 }
             },
             null,

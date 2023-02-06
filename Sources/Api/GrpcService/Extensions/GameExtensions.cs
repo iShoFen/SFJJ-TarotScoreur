@@ -1,4 +1,5 @@
 using AutoMapper;
+using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Model.Rules;
 
@@ -22,7 +23,7 @@ internal static class GameExtensions
             
             cfg.CreateMap<DateTime, Timestamp>()
                .ConvertUsing(src => Timestamp.FromDateTime(DateTime.SpecifyKind(src, DateTimeKind.Utc)));
-            
+
             cfg.CreateMap<Model.Games.Game, GameReply>();
             cfg.CreateMap<Model.Games.Game, GameReplyDetails>()
                .ForMember(dest => dest.Players,
@@ -45,6 +46,14 @@ internal static class GameExtensions
     /// </summary>
     private static readonly Mapper Mapper = new(Config);
     
+    /// <summary>
+    /// Map Game to Id
+    /// </summary>
+    /// <param name="games">The List of games to map</param>
+    /// <returns>The List of Ids</returns>
+    public static IEnumerable<ulong> ToIds(this IEnumerable<Model.Games.Game> games)
+        => games.Select(p => p.Id);
+
     /// <summary>
     /// Map Game to GameReplyDetails
     /// </summary>

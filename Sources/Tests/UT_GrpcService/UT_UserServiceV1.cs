@@ -32,7 +32,7 @@ public class UT_UserServiceV1
     
     [Theory]
     [MemberData(nameof(UserServiceDataV1.Data_TestUserById), MemberType = typeof(UserServiceDataV1))]
-    public async Task TestUserById(ulong id, UserReply? expected)
+    public async Task TestUserById(ulong id, UserReplyDetails? expected)
     {
         var service = new UserServiceV1(CreateManager(), CreateLogger<UserServiceV1>());
         
@@ -117,7 +117,7 @@ public class UT_UserServiceV1
     
     [Theory]
     [MemberData(nameof(UserServiceDataV1.UpdateUserData), MemberType = typeof(UserServiceDataV1))]
-    public async Task TestUpdateUser(UserUpdateRequest request, UserReply? expected)
+    public async Task TestUpdateUser(UserUpdateRequest request, UserReplyDetails? expected)
     {
         var service = new UserServiceV1(CreateManager(), CreateLogger<UserServiceV1>());
         

@@ -136,13 +136,21 @@ public static class UserServiceDataV1
         yield return new object?[]
         {
             11UL,
-            new UserReply
+            new UserReplyDetails
             {
                 Id = 11UL,
                 FirstName = "Jeanne",
                 LastName = "LERICHE",
                 Nickname = "JEMAA",
-                Avatar = "avatar11"
+                Avatar = "avatar11",
+                Groups =
+                {
+                    7UL, 8UL, 9UL, 10UL, 11UL
+                },
+                Games =
+                {
+                    7UL, 8UL, 9UL, 10UL
+                }
             }
         };
 
@@ -605,13 +613,17 @@ public static class UserServiceDataV1
                 Email = "email",
                 Password = "password"
             },
-            new UserReply
+            new UserReplyDetails
             {
                 Id = 14UL,
                 FirstName = "Pedro",
                 LastName = "Machin",
                 Nickname = "Pema",
-                Avatar = "avatar28"
+                Avatar = "avatar28",
+                Groups =
+                {
+                    10UL, 11UL, 12UL
+                }
             }
         };
         yield return new object?[]
