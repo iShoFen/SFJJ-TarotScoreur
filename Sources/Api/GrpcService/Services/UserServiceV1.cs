@@ -40,8 +40,9 @@ public class UserServiceV1 : User.UserBase
     /// <returns>The UsersReply with users</returns>
     public override async Task<UsersReply> GetUsers(Pagination request, ServerCallContext context)
     {
-        var users = await _manager.GetUsers(request.Page, request.PageSize);
-        _logger.LogInformation("All users from page {Page} and page size {PageSize} loaded",
+        var users = (await _manager.GetUsers(request.Page, request.PageSize)).ToList();
+        _logger.LogInformation("{UsersCount} users from page {Page} and page size {PageSize} retrieved",
+                               users.Count,
                                request.Page,
                                request.PageSize
         );
@@ -54,9 +55,9 @@ public class UserServiceV1 : User.UserBase
     /// </summary>
     /// <param name="request">The id</param>
     /// <param name="context">The server call context</param>
-    /// <returns>The UserReply with user</returns>
+    /// <returns>The UserReplyDetails with user, groups ids and games ids</returns>
     /// <exception cref="RpcException">If user not found</exception>
-    public override async Task<UserReply> GetUser(IdRequest request, ServerCallContext context)
+    public override async Task<UserReplyDetails> GetUser(IdRequest request, ServerCallContext context)
     {
         var user = await _manager.GetUserById(request.Id);
 
@@ -66,8 +67,15 @@ public class UserServiceV1 : User.UserBase
             throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found"));
         }
 
-        _logger.LogInformation("User with id {Id} loaded", request.Id);
-        return user.ToUserReply();
+        _logger.LogInformation("User with id {Id} retrieved", request.Id);
+
+        var groups = (await _manager.GetGroupsByPlayer(request.Id, 1, int.MaxValue)).ToIds().ToList();
+        _logger.LogInformation("{GroupsCount} groups for user with id {Id} retrieved", groups.Count, request.Id);
+        
+        var games = (await _manager.GetGamesByPlayer(request.Id, 1, int.MaxValue)).ToIds().ToList();
+        _logger.LogInformation("{GamesCount} games for user with id {Id} retrieved", games.Count, request.Id);
+
+        return user.ToUserReplyDetails(groups, games);
     }
 
     /// <summary>
@@ -78,12 +86,13 @@ public class UserServiceV1 : User.UserBase
     /// <returns>The UsersReply with users</returns>
     public override async Task<UsersReply> GetUsersByPattern(UserPatternRequest request, ServerCallContext context)
     {
-        var users = await _manager.GetUsersByPattern(request.Pattern,
-                                                     request.Pagination.Page,
-                                                     request.Pagination.PageSize
-        );
+        var users = (await _manager.GetUsersByPattern(request.Pattern,
+                                                      request.Pagination.Page,
+                                                      request.Pagination.PageSize
+        )).ToList();
 
-        _logger.LogInformation("All users with pattern {Pattern} from page {Page} and page size {PageSize} loaded",
+        _logger.LogInformation("{UsersCount} users with pattern {Pattern} from page {Page} and page size {PageSize} retrieved",
+                               users.Count,
                                request.Pattern,
                                request.Pagination.Page,
                                request.Pagination.PageSize
@@ -100,11 +109,12 @@ public class UserServiceV1 : User.UserBase
     /// <returns>The UsersReply with users</returns>
     public override async Task<UsersReply> GetUsersByNickname(UserPatternRequest request, ServerCallContext context)
     {
-        var users = await _manager.GetUsersByNickname(request.Pattern,
-                                                      request.Pagination.Page,
-                                                      request.Pagination.PageSize
-        );
-        _logger.LogInformation("All users with nickname {Pattern} from page {Page} and page size {PageSize} loaded",
+        var users = (await _manager.GetUsersByNickname(request.Pattern,
+                                                       request.Pagination.Page,
+                                                       request.Pagination.PageSize
+        )).ToList();
+        _logger.LogInformation("{UsersCount} users with nickname {Pattern} from page {Page} and page size {PageSize} retrieved",
+                               users.Count,
                                request.Pattern,
                                request.Pagination.Page,
                                request.Pagination.PageSize
@@ -124,12 +134,13 @@ public class UserServiceV1 : User.UserBase
         ServerCallContext context
     )
     {
-        var users = await _manager.GetUsersByFirstNameAndLastName(request.Pattern,
-                                                                  request.Pagination.Page,
-                                                                  request.Pagination.PageSize
-        );
+        var users = (await _manager.GetUsersByFirstNameAndLastName(request.Pattern,
+                                                                   request.Pagination.Page,
+                                                                   request.Pagination.PageSize
+        )).ToList();
         _logger.LogInformation(
-            "All users with first name and last name {Pattern} from page {Page} and page size {PageSize} loaded",
+            "{UsersCount} users with first name and last name {Pattern} from page {Page} and page size {PageSize} retrieved",
+            users.Count,
             request.Pattern,
             request.Pagination.Page,
             request.Pagination.PageSize
@@ -163,20 +174,26 @@ public class UserServiceV1 : User.UserBase
     /// </summary>
     /// <param name="request">The user to update</param>
     /// <param name="context">The server call context</param>
-    /// <returns>The UserReply with user</returns>
+    /// <returns>The UserReplyDetails with user, groups ids and games ids</returns>
     /// <exception cref="RpcException">If user not found</exception>
-    public override async Task<UserReply> UpdateUser(UserUpdateRequest request, ServerCallContext context)
+    public override async Task<UserReplyDetails> UpdateUser(UserUpdateRequest request, ServerCallContext context)
     {
         var user = await _manager.UpdateUser(request.ToUser());
 
         if (user == null)
         {
-            _logger.LogWarning("User {Id} not found, so it can't be updated", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, so it can't be updated"));
+            _logger.LogWarning("User {Id} not found, it cannot be updated", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, it cannot be updated"));
         }
         _logger.LogInformation("User with id {Id} updated", request.Id);
         
-        return user.ToUserReply();
+        var groups = (await _manager.GetGroupsByPlayer(request.Id, 1, int.MaxValue)).ToIds().ToList();
+        _logger.LogInformation("{GroupsCount} groups for user with id {Id} retrieved", groups.Count, request.Id);
+        
+        var games = (await _manager.GetGamesByPlayer(request.Id, 1, int.MaxValue)).ToIds().ToList();
+        _logger.LogInformation("{GamesCount} games for user with id {Id} retrieved", games.Count, request.Id);
+        
+        return user.ToUserReplyDetails(groups, games);
     }
 
     /// <summary>
@@ -192,8 +209,8 @@ public class UserServiceV1 : User.UserBase
         
         if (!result)
         {
-            _logger.LogWarning("User with {Id} not found, so it can't be deleted", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, so it can't be deleted"));
+            _logger.LogWarning("User with {Id} not found, it cannot be deleted", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, it cannot be deleted"));
         }
 
         _logger.LogInformation("User with id {Id} deleted", request.Id);

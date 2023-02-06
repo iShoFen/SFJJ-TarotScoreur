@@ -22,6 +22,25 @@ internal static class UserExtensions
     /// Mapper for automapper
     /// </summary>
     private static readonly Mapper Mapper = new(Config);
+    
+    /// <summary>
+    /// Map User to UserReplyDetails
+    /// </summary>
+    /// <param name="user">The user to map</param>
+    /// <param name="groups">The groups of the user</param>
+    /// <param name="games">The games of the user</param>
+    /// <returns>The UserReplyDetails</returns>
+    public static UserReplyDetails ToUserReplyDetails(this Model.Players.User user, IEnumerable<ulong> groups, IEnumerable<ulong> games)
+        => new()
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Nickname = user.NickName,
+            Avatar = user.Avatar,
+            Groups = {groups},
+            Games = {games}
+        };
 
     /// <summary>
     /// Map User to UserReply
@@ -36,12 +55,14 @@ internal static class UserExtensions
     /// <param name="users">The List of users to map</param>
     /// <returns>The UsersReply</returns>
     public static UsersReply ToUsersReply(this IEnumerable<Player> users)
-    {
-        var usersReply = new UsersReply();
-        usersReply.Users.AddRange(users.Select(ToUserReply));
-
-        return usersReply;
-    }
+        => new()
+        {
+            Users =
+            {
+                users.Select(ToUserReply)
+            }
+        };
+    
 
     /// <summary>
     /// Map UserUpdateRequest to User

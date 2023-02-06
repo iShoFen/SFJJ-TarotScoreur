@@ -41,9 +41,10 @@ public class GameServiceV1 : Game.GameBase
     /// <returns>The GamesReply with games</returns>
     public override async Task<GamesReply> GetGames(Pagination request, ServerCallContext context)
     {
-        var games = await _manager.GetGames(request.Page, request.PageSize); 
+        var games = (await _manager.GetGames(request.Page, request.PageSize)).ToList(); 
         _logger.Log(LogLevel.Information,
-                    "All games from {Page} page with {PageSize} size retrieved",
+                    "{GamesCount} games from {Page} page with {PageSize} size retrieved",
+                    games.Count,
                     request.Page,
                     request.PageSize
         );
@@ -126,7 +127,7 @@ public class GameServiceV1 : Game.GameBase
     public override async Task<GamesReply> GetGamesByDate(GameDateRequest request, ServerCallContext context)
     {
         var games = (await _manager.GetGamesByDate(request.StartDate.ToDateTime(),
-                                                   request.EndDate.ToDateTime(),
+                                                   request.EndDate?.ToDateTime(),
                                                    request.Pagination.Page,
                                                    request.Pagination.PageSize
             ))
@@ -171,23 +172,11 @@ public class GameServiceV1 : Game.GameBase
             throw new RpcException(new Status(StatusCode.InvalidArgument,
                 $"Rules {request.Rules} does not correspond to any rules, game cannot be inserted"));
         }
-
-        try
-        {
-            var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(), players.ToArray()))!;
-            _logger.Log(LogLevel.Information, "Game with id {Id} inserted", game.Id);
-            
-            return game.ToGameReplyDetails();
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Warning,
-                "An error occurred while inserting the new game with request {Request}\n{Message}",
-                request,
-                e.Message
-            );
-            throw new RpcException(new Status(StatusCode.Internal, "An error occurred while inserted the game"));
-        }
+        
+        var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(), players.ToArray()))!;
+        _logger.Log(LogLevel.Information, "Game with id {Id} inserted", game.Id);
+        
+        return game.ToGameReplyDetails();
     }
 
     /// <summary>
@@ -208,10 +197,14 @@ public class GameServiceV1 : Game.GameBase
 
         var game = await _manager.UpdateGame(convertedGame);
 
-        if (game is not null) return game.ToGameReplyDetails();
-
-        _logger.Log(LogLevel.Warning, "Game with id {Id} not found, it cannot be updated", request.Id);
-        throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be updated"));
+        if (game is null)
+        {
+            _logger.Log(LogLevel.Warning, "Game with id {Id} not found, it cannot be updated", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be updated"));
+        }
+        _logger.Log(LogLevel.Information, "Game with id {Id} updated", game.Id);
+        
+        return game.ToGameReplyDetails();
     }
 
     /// <summary>
@@ -232,5 +225,6 @@ public class GameServiceV1 : Game.GameBase
         _logger.Log(LogLevel.Information, "Game with id {Id} deleted", request.Id);
         
         return new BoolResponse { Result = result };
+        
     }
 }

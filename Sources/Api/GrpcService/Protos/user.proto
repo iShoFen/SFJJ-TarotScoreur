@@ -8,12 +8,12 @@ package tarot.v1;
 
 service User {
   rpc GetUsers (Pagination) returns (UsersReply);
-  rpc GetUser (IdRequest) returns (UserReply);
+  rpc GetUser (IdRequest) returns (UserReplyDetails);
   rpc GetUsersByPattern (UserPatternRequest) returns (UsersReply);
   rpc GetUsersByNickname (UserPatternRequest) returns (UsersReply);
   rpc GetUsersByFirstNameAndLastName (UserPatternRequest) returns (UsersReply);
   rpc InsertUser (UserInsertRequest) returns (UserReply);
-  rpc UpdateUser (UserUpdateRequest) returns (UserReply);
+  rpc UpdateUser (UserUpdateRequest) returns (UserReplyDetails);
   rpc DeleteUser (IdRequest) returns (BoolResponse);
 }
 
@@ -51,4 +51,14 @@ message UserReply {
   string lastName = 3;
   string nickname = 4;
   string avatar = 5;
+}
+
+message UserReplyDetails {
+  uint64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string nickname = 4;
+  string avatar = 5;
+  repeated uint64 groups = 6;
+  repeated uint64 games = 7;
 }

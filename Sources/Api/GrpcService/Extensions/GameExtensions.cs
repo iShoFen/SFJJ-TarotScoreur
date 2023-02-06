@@ -1,4 +1,5 @@
 using AutoMapper;
+using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Model.Rules;
 
@@ -19,10 +20,10 @@ internal static class GameExtensions
 
             cfg.CreateMap<DateTime?, Timestamp?>()
                .ConvertUsing(src => src.HasValue ? Timestamp.FromDateTime(DateTime.SpecifyKind(src.Value, DateTimeKind.Utc)) : null);
-
-            cfg.CreateMap<Timestamp?, DateTime?>()
-               .ConvertUsing(src => src != null ? src.ToDateTime() : null);
             
+            cfg.CreateMap<DateTime, Timestamp>()
+               .ConvertUsing(src => Timestamp.FromDateTime(DateTime.SpecifyKind(src, DateTimeKind.Utc)));
+
             cfg.CreateMap<Model.Games.Game, GameReply>();
             cfg.CreateMap<Model.Games.Game, GameReplyDetails>()
                .ForMember(dest => dest.Players,
@@ -46,6 +47,14 @@ internal static class GameExtensions
     private static readonly Mapper Mapper = new(Config);
     
     /// <summary>
+    /// Map Game to Id
+    /// </summary>
+    /// <param name="games">The List of games to map</param>
+    /// <returns>The List of Ids</returns>
+    public static IEnumerable<ulong> ToIds(this IEnumerable<Model.Games.Game> games)
+        => games.Select(p => p.Id);
+
+    /// <summary>
     /// Map Game to GameReplyDetails
     /// </summary>
     /// <param name="game">The game to map</param>
@@ -59,11 +68,13 @@ internal static class GameExtensions
     /// <param name="games">The List of games to map</param>
     /// <returns>The GamesReply</returns>
     public static GamesReply ToGamesReply(this IEnumerable<Model.Games.Game> games)
-    {
-        var reply = new GamesReply();
-        reply.Games.AddRange(games.Select(g => Mapper.Map<GameReply>(g)));
-        return reply;
-    }
+        => new()
+        {
+            Games =
+            {
+                games.Select(Mapper.Map<GameReply>)
+            }
+        };
 
     /// <summary>
     /// Map GameReplyDetails to Game

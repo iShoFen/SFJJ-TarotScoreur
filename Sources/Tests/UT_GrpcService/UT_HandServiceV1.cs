@@ -71,5 +71,56 @@ public class UT_HandServiceV1
         Assert.Equal(expected, actual);
     }
     
+    [Theory]
+    [MemberData(nameof(HandServiceDataV1.UpdateHandData), MemberType = typeof(HandServiceDataV1))]
+    public async Task TestUpdateHand(HandReply request, HandReply? expected, int failReason)
+    {
+        var service = new HandServiceV1(CreateManager(), CreateLogger<HandServiceV1>());
+
+        if (expected is null)
+        {
+            var error = await Assert.ThrowsAsync<RpcException>(() => service.UpdateHand(request, CreateCallContext()));
+            
+            switch (failReason)
+            {
+                case 1:
+                    Assert.Equal(StatusCode.InvalidArgument, error.StatusCode);
+                    Assert.Equal($"User with id {request.Biddings[0].PlayerId} not found, hand cannot be updated", error.Status.Detail);
+                    break;
+                case 2:
+                    Assert.Equal(StatusCode.InvalidArgument, error.StatusCode);
+                    Assert.Equal($"Rules {request.Rules} does not correspond to any rules, hand cannot be updated", error.Status.Detail);
+                    break;
+                case 3:
+                    Assert.Equal(StatusCode.NotFound, error.StatusCode);
+                    Assert.Equal($"Hand with id {request.Id} not found, it cannot be updated", error.Status.Detail);
+                    break;
+            }
+            return;
+        }
+
+        var actual = await service.UpdateHand(request, CreateCallContext());
+        Assert.Equal(expected, actual);
+    }
+    
+    [Theory]
+    [MemberData(nameof(HandServiceDataV1.DeleteHandData), MemberType = typeof(HandServiceDataV1))]
+    public async Task TestDeleteHand(ulong id, bool expected)
+    {
+        var service = new HandServiceV1(CreateManager(), CreateLogger<HandServiceV1>());
+
+        if (expected is false)
+        {
+            var error = await Assert.ThrowsAsync<RpcException>(() => service.DeleteHand(new IdRequest {Id = id}, CreateCallContext()));
+            Assert.Equal(StatusCode.NotFound, error.StatusCode);
+            Assert.Equal($"Hand with id {id} not found, it cannot be deleted", error.Status.Detail);
+            
+            return;
+        }
+
+        var actual = await service.DeleteHand(new IdRequest {Id = id}, CreateCallContext());
+        Assert.Equal(expected, actual.Result);
+    }
+
     #endregion
 }

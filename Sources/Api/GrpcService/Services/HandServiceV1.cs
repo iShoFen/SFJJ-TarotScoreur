@@ -122,7 +122,7 @@ public class HandServiceV1 : Hand.HandBase
         var biddings = new List<KeyValuePair<Player, (Biddings, Poignee)>>();
         foreach (var userBiddingPoignee in request.Biddings)
         {
-            var player = await _manager.GetPlayerById(userBiddingPoignee.PlayerId);
+            var player = await _manager.GetUserById(userBiddingPoignee.PlayerId);
 
             if (player == null)
             {

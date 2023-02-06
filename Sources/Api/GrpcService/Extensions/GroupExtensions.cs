@@ -27,6 +27,14 @@ internal static class GroupExtensions
     private static readonly Mapper Mapper = new (Config);
     
     /// <summary>
+    /// Map Group to Id
+    /// </summary>
+    /// <param name="groups">The List of groups to map</param>
+    /// <returns>The List of Ids</returns>
+    public static IEnumerable<ulong> ToIds(this IEnumerable<Model.Players.Group> groups)
+        => groups.Select(group => group.Id);
+
+    /// <summary>
     /// Map Group to GroupReply
     /// </summary>
     /// <param name="group">The group to map</param>
@@ -40,12 +48,13 @@ internal static class GroupExtensions
     /// <param name="groups">The List of groups to map</param>
     /// <returns>The GroupsReply</returns>
     public static GroupsReply ToGroupsReply(this IEnumerable<Model.Players.Group> groups)
-    {
-        var groupsReply = new GroupsReply();
-        groupsReply.Groups.AddRange(groups.Select(ToGroupReply));
-        
-        return groupsReply;
-    }
+          => new()
+            {
+                Groups =
+                {
+                    groups.Select(ToGroupReply)
+                }
+            };
     
     /// <summary>
     /// Map GroupUpdateRequest to Group
