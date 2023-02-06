@@ -44,8 +44,9 @@ public class GroupServiceV1 : Group.GroupBase
     /// <returns>The GroupsReply with groups</returns>
     public override async Task<GroupsReply> GetGroups(Pagination request, ServerCallContext context)
     {
-        var groups = await _manager.GetGroups(request.Page, request.PageSize);
-        _logger.LogInformation("All groups from {Page} page with {PageSize} size loaded",
+        var groups = (await _manager.GetGroups(request.Page, request.PageSize)).ToList();
+        _logger.LogInformation("{GroupsCount} groups from {Page} page with {PageSize} size loaded",
+                               groups.Count,
                                request.Page,
                                request.PageSize
         );
@@ -69,7 +70,7 @@ public class GroupServiceV1 : Group.GroupBase
             _logger.LogWarning("Group with id {Id} not found", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found"));
         }
-        _logger.LogInformation("Group with id {Id} loaded", request.Id);
+        _logger.LogInformation("Group with id {Id} retrieved", request.Id);
         
         return group.ToGroupReply();
     }
@@ -83,8 +84,11 @@ public class GroupServiceV1 : Group.GroupBase
     public override async Task<GroupsReply> GetGroupsByName(GroupPatternRequest request, ServerCallContext context)
     {
         var groups =
-            await _manager.GetGroupsByName(request.Pattern, request.Pagination.Page, request.Pagination.PageSize);
-        _logger.LogInformation("Groups with pattern {Pattern} from {Page} page with {PageSize} size loaded",
+            (await _manager.GetGroupsByName(request.Pattern, request.Pagination.Page, request.Pagination.PageSize))
+            .ToList();
+        
+        _logger.LogInformation("{GroupsCount} groups with pattern {Pattern} from {Page} page with {PageSize} size retrieved",
+                               groups.Count,
                                request.Pattern,
                                request.Pagination.Page,
                                request.Pagination.PageSize
@@ -102,9 +106,11 @@ public class GroupServiceV1 : Group.GroupBase
     public override async Task<GroupsReply> GetGroupsByUser(GroupUserRequest request, ServerCallContext context)
     {
         var groups =
-            await _manager.GetGroupsByPlayer(request.UserId, request.Pagination.Page, request.Pagination.PageSize);
+            (await _manager.GetGroupsByPlayer(request.UserId, request.Pagination.Page, request.Pagination.PageSize))
+            .ToList();
 
-        _logger.LogInformation("Groups with user id {UserId} from {Page} page with {PageSize} size loaded",
+        _logger.LogInformation("{GroupsCount} groups with user id {UserId} from {Page} page with {PageSize} size retrieved",
+                               groups.Count,
                                request.UserId,
                                request.Pagination.Page,
                                request.Pagination.PageSize
@@ -133,7 +139,7 @@ public class GroupServiceV1 : Group.GroupBase
                 } 
                 else
                 {
-                    _logger.LogWarning("User with id {Id} not found", userId);
+                    _logger.LogWarning("User with id {Id} not found, group not created", userId);
                     throw new RpcException(new Status(StatusCode.NotFound, $"User with id {userId} not found"));
                 }
             });
@@ -167,7 +173,7 @@ public class GroupServiceV1 : Group.GroupBase
                 } 
                 else
                 {
-                    _logger.LogWarning("User with id {Id} not found, so it can't be added to group", userId);
+                    _logger.LogWarning("User with id {Id} not found, it can't be added to group", userId);
                     throw new RpcException(new Status(StatusCode.NotFound, $"User with id {userId} not found, so it can't be added to group"));
                 }
             });
@@ -177,7 +183,7 @@ public class GroupServiceV1 : Group.GroupBase
 
         if (updateGroup == null)
         {
-            _logger.LogWarning("Group with id {Id} not found, so it can't be updated", request.Id);
+            _logger.LogWarning("Group with id {Id} not found, it can't be updated", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, so it can't be updated"));
         }
         _logger.LogInformation("Group with id {Id} updated", updateGroup.Id);
@@ -198,7 +204,7 @@ public class GroupServiceV1 : Group.GroupBase
         
         if(!result)
         {
-            _logger.LogWarning("Group with id {Id} not found, so it can't be deleted", request.Id);
+            _logger.LogWarning("Group with id {Id} not found, it can't be deleted", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, so it can't be deleted"));
         }
         _logger.LogInformation("Group with id {Id} deleted", request.Id);

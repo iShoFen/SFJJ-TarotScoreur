@@ -41,9 +41,10 @@ public class GameServiceV1 : Game.GameBase
     /// <returns>The GamesReply with games</returns>
     public override async Task<GamesReply> GetGames(Pagination request, ServerCallContext context)
     {
-        var games = await _manager.GetGames(request.Page, request.PageSize); 
+        var games = (await _manager.GetGames(request.Page, request.PageSize)).ToList(); 
         _logger.Log(LogLevel.Information,
-                    "All games from {Page} page with {PageSize} size retrieved",
+                    "{GamesCount} games from {Page} page with {PageSize} size retrieved",
+                    games.Count,
                     request.Page,
                     request.PageSize
         );

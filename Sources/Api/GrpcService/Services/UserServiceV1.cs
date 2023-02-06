@@ -40,8 +40,9 @@ public class UserServiceV1 : User.UserBase
     /// <returns>The UsersReply with users</returns>
     public override async Task<UsersReply> GetUsers(Pagination request, ServerCallContext context)
     {
-        var users = await _manager.GetUsers(request.Page, request.PageSize);
-        _logger.LogInformation("All users from page {Page} and page size {PageSize} loaded",
+        var users = (await _manager.GetUsers(request.Page, request.PageSize)).ToList();
+        _logger.LogInformation("{UsersCount} users from page {Page} and page size {PageSize} retrieved",
+                               users.Count,
                                request.Page,
                                request.PageSize
         );
@@ -66,7 +67,7 @@ public class UserServiceV1 : User.UserBase
             throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found"));
         }
 
-        _logger.LogInformation("User with id {Id} loaded", request.Id);
+        _logger.LogInformation("User with id {Id} retrieved", request.Id);
         return user.ToUserReply();
     }
 
@@ -78,12 +79,13 @@ public class UserServiceV1 : User.UserBase
     /// <returns>The UsersReply with users</returns>
     public override async Task<UsersReply> GetUsersByPattern(UserPatternRequest request, ServerCallContext context)
     {
-        var users = await _manager.GetUsersByPattern(request.Pattern,
-                                                     request.Pagination.Page,
-                                                     request.Pagination.PageSize
-        );
+        var users = (await _manager.GetUsersByPattern(request.Pattern,
+                                                      request.Pagination.Page,
+                                                      request.Pagination.PageSize
+        )).ToList();
 
-        _logger.LogInformation("All users with pattern {Pattern} from page {Page} and page size {PageSize} loaded",
+        _logger.LogInformation("{UsersCount} users with pattern {Pattern} from page {Page} and page size {PageSize} retrieved",
+                               users.Count,
                                request.Pattern,
                                request.Pagination.Page,
                                request.Pagination.PageSize
@@ -100,11 +102,12 @@ public class UserServiceV1 : User.UserBase
     /// <returns>The UsersReply with users</returns>
     public override async Task<UsersReply> GetUsersByNickname(UserPatternRequest request, ServerCallContext context)
     {
-        var users = await _manager.GetUsersByNickname(request.Pattern,
-                                                      request.Pagination.Page,
-                                                      request.Pagination.PageSize
-        );
-        _logger.LogInformation("All users with nickname {Pattern} from page {Page} and page size {PageSize} loaded",
+        var users = (await _manager.GetUsersByNickname(request.Pattern,
+                                                       request.Pagination.Page,
+                                                       request.Pagination.PageSize
+        )).ToList();
+        _logger.LogInformation("{UsersCount} users with nickname {Pattern} from page {Page} and page size {PageSize} retrieved",
+                               users.Count,
                                request.Pattern,
                                request.Pagination.Page,
                                request.Pagination.PageSize
@@ -124,12 +127,13 @@ public class UserServiceV1 : User.UserBase
         ServerCallContext context
     )
     {
-        var users = await _manager.GetUsersByFirstNameAndLastName(request.Pattern,
-                                                                  request.Pagination.Page,
-                                                                  request.Pagination.PageSize
-        );
+        var users = (await _manager.GetUsersByFirstNameAndLastName(request.Pattern,
+                                                                   request.Pagination.Page,
+                                                                   request.Pagination.PageSize
+        )).ToList();
         _logger.LogInformation(
-            "All users with first name and last name {Pattern} from page {Page} and page size {PageSize} loaded",
+            "{UsersCount} users with first name and last name {Pattern} from page {Page} and page size {PageSize} retrieved",
+            users.Count,
             request.Pattern,
             request.Pagination.Page,
             request.Pagination.PageSize
@@ -171,7 +175,7 @@ public class UserServiceV1 : User.UserBase
 
         if (user == null)
         {
-            _logger.LogWarning("User {Id} not found, so it can't be updated", request.Id);
+            _logger.LogWarning("User {Id} not found, it can't be updated", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, so it can't be updated"));
         }
         _logger.LogInformation("User with id {Id} updated", request.Id);
@@ -192,7 +196,7 @@ public class UserServiceV1 : User.UserBase
         
         if (!result)
         {
-            _logger.LogWarning("User with {Id} not found, so it can't be deleted", request.Id);
+            _logger.LogWarning("User with {Id} not found, it can't be deleted", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"User with id {request.Id} not found, so it can't be deleted"));
         }
 
