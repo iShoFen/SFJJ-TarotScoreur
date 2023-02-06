@@ -59,11 +59,13 @@ internal static class GameExtensions
     /// <param name="games">The List of games to map</param>
     /// <returns>The GamesReply</returns>
     public static GamesReply ToGamesReply(this IEnumerable<Model.Games.Game> games)
-    {
-        var reply = new GamesReply();
-        reply.Games.AddRange(games.Select(g => Mapper.Map<GameReply>(g)));
-        return reply;
-    }
+        => new()
+        {
+            Games =
+            {
+                games.Select(Mapper.Map<GameReply>)
+            }
+        };
 
     /// <summary>
     /// Map GameReplyDetails to Game

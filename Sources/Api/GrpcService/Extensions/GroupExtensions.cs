@@ -40,12 +40,13 @@ internal static class GroupExtensions
     /// <param name="groups">The List of groups to map</param>
     /// <returns>The GroupsReply</returns>
     public static GroupsReply ToGroupsReply(this IEnumerable<Model.Players.Group> groups)
-    {
-        var groupsReply = new GroupsReply();
-        groupsReply.Groups.AddRange(groups.Select(ToGroupReply));
-        
-        return groupsReply;
-    }
+          => new()
+            {
+                Groups =
+                {
+                    groups.Select(ToGroupReply)
+                }
+            };
     
     /// <summary>
     /// Map GroupUpdateRequest to Group

@@ -36,12 +36,14 @@ internal static class UserExtensions
     /// <param name="users">The List of users to map</param>
     /// <returns>The UsersReply</returns>
     public static UsersReply ToUsersReply(this IEnumerable<Player> users)
-    {
-        var usersReply = new UsersReply();
-        usersReply.Users.AddRange(users.Select(ToUserReply));
-
-        return usersReply;
-    }
+        => new()
+        {
+            Users =
+            {
+                users.Select(ToUserReply)
+            }
+        };
+    
 
     /// <summary>
     /// Map UserUpdateRequest to User
