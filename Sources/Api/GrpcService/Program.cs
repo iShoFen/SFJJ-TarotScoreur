@@ -1,5 +1,7 @@
+using System.Net;
 using System.Runtime.InteropServices;
 using GrpcService.Services;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.Data;
@@ -11,21 +13,10 @@ using Tarot2B2Model;
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
-try {
+try
+{
     var builder = WebApplication.CreateBuilder(args);
-    
-    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-    {
-        builder.WebHost.ConfigureKestrel(options =>
-            {
-                // Setup a HTTP/2 endpoint without TLS.
-                options.ListenLocalhost(5028,
-                                        o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2
-                );
-            }
-        ); 
-    }
-    
+
     // Add services to the container.
     builder.Services.AddGrpc();
 
@@ -40,6 +31,19 @@ try {
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            // Setup a HTTP/2 endpoint without TLS.
+            options.ListenLocalhost(5028, o => o.Protocols = HttpProtocols.Http2);
+        }
+        else if (builder.Environment.IsProduction())
+        {
+            options.Listen(IPAddress.Any, 80);
+        }
+    });
+
     var app = builder.Build();
 
     // Setup Grpc Services
@@ -53,10 +57,14 @@ try {
             "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
     app.Run();
-} catch (Exception ex) {
+}
+catch (Exception ex)
+{
     logger.Error(ex, "Stopped program because of exception");
     throw;
-} finally {
+}
+finally
+{
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
     LogManager.Shutdown();
 }

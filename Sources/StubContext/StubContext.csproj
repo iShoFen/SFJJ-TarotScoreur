@@ -16,5 +16,6 @@
         <InternalsVisibleTo Include="TestUtils" />
         <InternalsVisibleTo Include="UT_Model" />
         <InternalsVisibleTo Include="GrpcService" />
+        <InternalsVisibleTo Include="RestController" />
     </ItemGroup>
 </Project>
