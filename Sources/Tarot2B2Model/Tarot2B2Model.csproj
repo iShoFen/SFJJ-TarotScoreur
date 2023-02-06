@@ -14,6 +14,7 @@
         <InternalsVisibleTo Include="UT_Tarot2B2Model" />
         <InternalsVisibleTo Include="UT_Writer" />
         <InternalsVisibleTo Include="UT_Model" />
+        <InternalsVisibleTo Include="RestController" />
     </ItemGroup>
 
 </Project>

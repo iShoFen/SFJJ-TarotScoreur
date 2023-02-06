@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "Protos/utils.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GrpcService";
+
+package tarot.v1;
+
+service Hand {
+  rpc GetHandById (IdRequest) returns (HandReply);
+  rpc InsertHand (HandInsertRequest) returns (HandReply);
+  rpc UpdateHand (HandReply) returns (HandReply);
+  rpc DeleteHand (IdRequest) returns (BoolResponse);
+}
+
+message HandReply {
+  uint64 id = 1;
+  int32 number = 2;
+  string rules = 3;
+  google.protobuf.Timestamp date = 4;
+  int32 taker_score = 5;
+  optional bool excuse = 6;
+  optional bool twenty_one = 7;
+  PETIT_RESULT petit = 8;
+  CHELEM chelem = 9;
+  repeated UserBiddingPoignee biddings = 10;
+}
+
+message HandInsertRequest {
+  uint64 game_id = 1;
+  int32 number = 2;
+  string rules = 3;
+  google.protobuf.Timestamp date = 4;
+  int32 taker_score = 5;
+  optional bool excuse = 6;
+  optional bool twenty_one = 7;
+  PETIT_RESULT petit = 8;
+  CHELEM chelem = 9;
+  repeated UserBiddingPoignee biddings = 10;
+}

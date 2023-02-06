@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcClient";
+
+package tarot.v1;
+
+message Pagination {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message BoolResponse {
+  bool result = 1;
+}
+
+message IdRequest {
+  uint64 id = 1;
+}
+
+message UserBiddingPoignee {
+  uint64 player_id = 1;
+  BIDDING bidding = 2;
+  POIGNEE poignee = 3;
+}
+
+enum BIDDING {
+  Unknown = 0;
+  Prise = 1;
+  Petite = 3;
+  Garde = 5;
+  GardeSansLeChien = 7;
+  GardeContreLeChien = 9;
+  Opponent = 16;
+  King = 32;
+}
+
+enum POIGNEE {
+  None = 0;
+  Simple = 1;
+  Double = 2;
+  Triple = 3;
+}
+
+enum PETIT_RESULT {
+  PetitUnknown = 0;
+  Owned = 1;
+  NotOwned = 2;
+  Lost = 4;
+  AuBout = 8;
+  AuBoutOwned = 9;
+  LostAuBout = 12;
+}
+
+enum CHELEM {
+  ChelemUnknown = 0;
+  Announced = 1;
+  Success = 2;
+  Fail = 4;
+  AnnouncedSuccess = 3;
+  AnnouncedFail = 5;
+}

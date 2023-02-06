@@ -7,7 +7,7 @@ namespace StubContext;
 /// <summary>
 /// Stub context for testing
 /// </summary>
-internal class TarotDbContextStub : TarotDbContext
+public class TarotDbContextStub : TarotDbContext
 {
     /// <summary>
     /// Default constructor
