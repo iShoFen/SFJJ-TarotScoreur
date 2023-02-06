@@ -139,8 +139,8 @@ public class GroupServiceV1 : Group.GroupBase
                 } 
                 else
                 {
-                    _logger.LogWarning("User with id {Id} not found, group not created", userId);
-                    throw new RpcException(new Status(StatusCode.NotFound, $"User with id {userId} not found"));
+                    _logger.LogWarning("User with id {Id} not found, group cannot be inserted", userId);
+                    throw new RpcException(new Status(StatusCode.InvalidArgument, $"User with id {userId} not found, group cannot be inserted"));
                 }
             });
         }
@@ -148,7 +148,7 @@ public class GroupServiceV1 : Group.GroupBase
         var group = await _manager.InsertGroup(request.Name, players.ToArray());
 
 
-        _logger.LogInformation("Group with id {Id} created", group!.Id);
+        _logger.LogInformation("Group with id {Id} inserted", group!.Id);
         
         return group.ToGroupReply();
     }
@@ -173,8 +173,8 @@ public class GroupServiceV1 : Group.GroupBase
                 } 
                 else
                 {
-                    _logger.LogWarning("User with id {Id} not found, it can't be added to group", userId);
-                    throw new RpcException(new Status(StatusCode.NotFound, $"User with id {userId} not found, so it can't be added to group"));
+                    _logger.LogWarning("User with id {Id} not found, group cannot be updated", userId);
+                    throw new RpcException(new Status(StatusCode.InvalidArgument, $"User with id {userId} not found, group cannot be updated"));
                 }
             });
         }
@@ -183,8 +183,8 @@ public class GroupServiceV1 : Group.GroupBase
 
         if (updateGroup == null)
         {
-            _logger.LogWarning("Group with id {Id} not found, it can't be updated", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, so it can't be updated"));
+            _logger.LogWarning("Group with id {Id} not found, it cannot be updated", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, it cannot be updated"));
         }
         _logger.LogInformation("Group with id {Id} updated", updateGroup.Id);
         
@@ -204,8 +204,8 @@ public class GroupServiceV1 : Group.GroupBase
         
         if(!result)
         {
-            _logger.LogWarning("Group with id {Id} not found, it can't be deleted", request.Id);
-            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, so it can't be deleted"));
+            _logger.LogWarning("Group with id {Id} not found, it cannot be deleted", request.Id);
+            throw new RpcException(new Status(StatusCode.NotFound, $"Group with id {request.Id} not found, it cannot be deleted"));
         }
         _logger.LogInformation("Group with id {Id} deleted", request.Id);
         

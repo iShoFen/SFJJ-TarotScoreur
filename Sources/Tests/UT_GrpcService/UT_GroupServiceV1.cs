@@ -109,8 +109,8 @@ public class UT_GroupServiceV1
         if (expected is null)
         {
             var error = await Assert.ThrowsAsync<RpcException>(() => service.InsertGroup(request, CreateCallContext()));
-            Assert.Equal(StatusCode.NotFound, error.StatusCode);
-            Assert.Equal($"User with id {request.Users[failIndex]} not found", error.Status.Detail);
+            Assert.Equal(StatusCode.InvalidArgument, error.StatusCode);
+            Assert.Equal($"User with id {request.Users[failIndex]} not found, group cannot be inserted", error.Status.Detail);
             
             return;
         }
@@ -128,12 +128,12 @@ public class UT_GroupServiceV1
         if (expected is null)
         {
             var error = await Assert.ThrowsAsync<RpcException>(() => service.UpdateGroup(request, CreateCallContext()));
-            Assert.Equal(StatusCode.NotFound, error.StatusCode);
+            Assert.Equal(failIndex == -1 ? StatusCode.NotFound : StatusCode.InvalidArgument, error.StatusCode);
 
             Assert.Equal(
                 failIndex == -1
-                    ? $"Group with id {request.Id} not found, so it can't be updated"
-                    : $"User with id {request.Users[failIndex]} not found, so it can't be added to group",
+                    ? $"Group with id {request.Id} not found, it cannot be updated"
+                    : $"User with id {request.Users[failIndex]} not found, group cannot be updated",
                 error.Status.Detail
             );
 
@@ -154,7 +154,7 @@ public class UT_GroupServiceV1
         {
             var error = await Assert.ThrowsAsync<RpcException>(() => service.DeleteGroup(new IdRequest {Id = id}, CreateCallContext()));
             Assert.Equal(StatusCode.NotFound, error.StatusCode);
-            Assert.Equal($"Group with id {id} not found, so it can't be deleted", error.Status.Detail);
+            Assert.Equal($"Group with id {id} not found, it cannot be deleted", error.Status.Detail);
             
             return;
         }
