@@ -125,7 +125,7 @@ public class UT_UserServiceV1
         {
             var error = Assert.ThrowsAsync<RpcException>(async () => await service.UpdateUser(request, CreateCallContext()));
             Assert.Equal(StatusCode.NotFound, error.Result.StatusCode);
-            Assert.Equal($"User with id {request.Id} not found, so it can't be updated", error.Result.Status.Detail);
+            Assert.Equal($"User with id {request.Id} not found, it cannot be updated", error.Result.Status.Detail);
             
             return;
         }
@@ -144,7 +144,7 @@ public class UT_UserServiceV1
         {
             var error = Assert.ThrowsAsync<RpcException>(async () => await service.DeleteUser(new IdRequest {Id = id}, CreateCallContext()));
             Assert.Equal(StatusCode.NotFound, error.Result.StatusCode);
-            Assert.Equal($"User with id {id} not found, so it can't be deleted", error.Result.Status.Detail);
+            Assert.Equal($"User with id {id} not found, it cannot be deleted", error.Result.Status.Detail);
             
             return;
         }
