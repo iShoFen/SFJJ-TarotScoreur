@@ -43,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestController", "Api\RestC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcService", "Api\GrpcService\GrpcService.csproj", "{1A12BECA-F827-4AED-A208-221F0E56EF07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT_GrpcService", "Api\FT_GrpcService\FT_GrpcService.csproj", "{5879602B-C8DB-47A8-97D4-97F01D23DFD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT_GrpcService", "Tests\FT_GrpcService\FT_GrpcService.csproj", "{5879602B-C8DB-47A8-97D4-97F01D23DFD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_GrpcService", "Tests\UT_GrpcService\UT_GrpcService.csproj", "{404E0CB8-8299-467C-8FB8-5A617F6EF801}"
 EndProject
