@@ -10,13 +10,14 @@ using RestController.Filter;
 namespace RestController.Controllers;
 
 [ApiVersion("1.0")]
+[ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class GameController : ControllerBase
+public class GamesController : ControllerBase
 {
     private readonly Manager _manager;
 
-    public GameController(Manager manager)
+    public GamesController(Manager manager)
     {
         _manager = manager;
     }
@@ -41,7 +42,7 @@ public class GameController : ControllerBase
 
     // USER
 
-    [HttpGet("{id}/user/")]
+    [HttpGet("{id}/users")]
     public async Task<ActionResult> GetUsersByGameId(ulong id)
     {
         var game = await _manager.GetGameById(id);
@@ -50,7 +51,7 @@ public class GameController : ControllerBase
         return Ok(users.Select(x => x.PlayerToDTO()).ToList());
     }
 
-    [HttpGet("{gameId}/user/{userId}")]
+    [HttpGet("{gameId}/users/{userId}")]
     public async Task<ActionResult> GetUserByGameId(ulong gameId, ulong userId)
     {
         var game = await _manager.GetGameById(gameId);

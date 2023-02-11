@@ -13,7 +13,7 @@ namespace RestController.Controllers
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class HandController : ControllerBase
+    public class HandsController : ControllerBase
     {
         private readonly Manager _manager;
 
@@ -21,7 +21,7 @@ namespace RestController.Controllers
         /// Constructor for the HandController
         /// </summary>
         /// <param name="manager">The manger to use</param>
-        public HandController(Manager manager)
+        public HandsController(Manager manager)
         {
             _manager = manager;
         }

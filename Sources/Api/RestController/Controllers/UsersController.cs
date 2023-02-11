@@ -9,13 +9,14 @@ using RestController.DTOs.Games;
 namespace RestController.Controllers;
 
 [ApiVersion("1.0")]
+[ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class UserController : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly Manager _manager;
 
-    public UserController(Manager manager)
+    public UsersController(Manager manager)
     {
         _manager = manager;
     }
@@ -37,7 +38,7 @@ public class UserController : ControllerBase
         return Ok(user.UserToDTO());
     }
 
-    [HttpGet("{userId}/game")]
+    [HttpGet("{userId}/games")]
     public async Task<ActionResult<GameDetailDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter pagination)
     {
         var user = await _manager.GetUserById(userId);
@@ -47,7 +48,7 @@ public class UserController : ControllerBase
         return Ok(games.Select(x => x.ToGameDetailDTO()).ToList());
     }
 
-    [HttpGet("{userId}/group")]
+    [HttpGet("{userId}/groups")]
     public async Task<ActionResult<GameDetailDTO>> GetGroups(ulong userId, [FromQuery] PaginationFilter pagination)
     {
         var user = await _manager.GetUserById(userId);

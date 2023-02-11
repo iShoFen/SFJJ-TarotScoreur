@@ -8,13 +8,14 @@ using RestController.Filter;
 namespace RestController.Controllers;
 
 [ApiVersion("1.0")]
+[ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class GroupController : ControllerBase
+public class GroupsController : ControllerBase
 {
 	private readonly Manager _manager;
 
-	public GroupController(Manager manager)
+	public GroupsController(Manager manager)
 	{
 		_manager = manager;
 	}
@@ -50,7 +51,7 @@ public class GroupController : ControllerBase
 	/// </summary>
 	/// <param name="id">Id of the group</param>
 	/// <returns></returns>
-	[Route("/group/{id}/user/")]
+	[Route("{id}/users")]
 	[HttpGet]
 	public async Task<ActionResult> GetPlayersByGroupId(ulong id)
 	{
@@ -66,7 +67,7 @@ public class GroupController : ControllerBase
 	/// <param name="groupId">Id of the group</param>
 	/// <param name="userId">Id of the user</param>
 	/// <returns></returns>
-	[Route("/group/{groupId}/user/{userId}")]
+	[Route("{groupId}/users/{userId}")]
 	[HttpGet]
 	public async Task<ActionResult> GetPlayerByGroupId(ulong groupId, ulong userId)
 	{
