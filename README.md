@@ -124,13 +124,8 @@ To learn how to use our application you can read the [user manual](https://codef
 For questions and support ask [here](#).
 
 ## Contributors
-
-| Name            | Role                                                                            |
-|-----------------|---------------------------------------------------------------------------------|
-| Samuel Sirven   | Best manager of all times                                                       |
-| Florent Marques | Developer who develop the player, user and ranking features (like the football) |
-| Julien Themes   | Developer who develop the management of the games                               |
-| Jordan Artzet   | Best developer of all times                                                     |
-
-
+<a href='https://github.com/iShoFen'>Samuel Sirven</a>  
+<a href='https://github.com/flomSStaar'>Florent Marques</a>  
+<a href='https://github.com/ZIRTR0X'>Julien THÊME</a>   
+<a href='https://github.com/Firologia'>Jordan Artzet</a>
 
