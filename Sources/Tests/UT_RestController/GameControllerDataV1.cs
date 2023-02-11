@@ -717,5 +717,49 @@ public class GameControllerDataV1
             }
         };
     }
+    
+    public static IEnumerable<object[]> Data_TestPutGame()
+    {
+        yield return new object[]
+        {
+            1,
+            new GameUpdateRequest()
+            {
+                Id = 1UL,
+                Name = "Game Updated for test",
+                Rules = "FrenchTarotRules",
+                StartDate = new DateTime(2023, 02, 11),
+                EndDate = null,
+            },
+            new GameDetailDTO()
+            {
+                Id = 1UL,
+                Name = "Game Updated for test",
+                Rules = "FrenchTarotRules",
+                StartDate = new DateTime(2023, 02, 11),
+                EndDate = null,
+                Users = {1, 2, 3},
+                Hands = {1, 2, 3}
+            }
+        };
+    }
+    
+    public static IEnumerable<object[]> Data_TestDeleteGame()
+    {
+        yield return new object[]
+        {
+            1,
+            new GameDetailDTO()
+            {
+                Id = 1UL,
+                Name = "Game 1",
+                Rules = "FrenchTarotRules",
+                StartDate = new DateTime(2022, 09, 21),
+                EndDate = null,
+                Users = {1, 2, 3},
+                Hands = {1, 2, 3}
+            }
+        };
+    }
 
 }

@@ -79,6 +79,35 @@ public class UT_GameControllerV1
         
         Assert.Equal(expected, response);
     }
+    
+    [Theory]
+    [MemberData(nameof(GameControllerDataV1.Data_TestPutGame), MemberType = typeof(GameControllerDataV1))]
+    public async Task TestPutGame(ulong id, GameUpdateRequest game, GameDetailDTO expected)
+    {
+        var controller = new GamesController(RestUtils.CreateManager());
+        var old = (await controller.GetGame(id) as ObjectResult)!.Value as GameDetailDTO;
+        var actual = (await controller.PutGame(id, game) as ObjectResult)!.Value as GameDetailDTO;
+
+
+        Assert.NotEqual(expected, old);
+        Assert.Equal(expected, actual);
+    }
+
+    /*[Theory]
+    [MemberData(nameof(GameControllerDataV1.Data_TestDeleteGame), MemberType = typeof(GameControllerDataV1))]
+    public async Task TestDeleteGame(ulong id, GameDetailDTO expected)
+    {
+        var controller = new GamesController(RestUtils.CreateManager());
+        var old = (await controller.GetGame(id) as ObjectResult)!.Value as GameDetailDTO;
+
+        await controller.DeleteGame(id);
+
+        await controller.TryUpdateModelAsync(old);
+        
+        var actual = await controller.GetGame(id);
+        
+        Assert.True(actual == null);
+    }*/
 
     #endregion
 }

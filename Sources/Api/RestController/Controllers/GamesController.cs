@@ -113,7 +113,8 @@ public class GamesController : ControllerBase
 
         var gameUpdated = await _manager.UpdateGame(game);
         if (gameUpdated is null) return NotFound();
-        return NoContent();
+        //return the updated game
+        return Ok(gameUpdated.ToGameDetailDTO());
     }
 
     [HttpDelete("{id}")]

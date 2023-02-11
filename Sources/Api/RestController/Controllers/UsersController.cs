@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
 
     [HttpGet("{id}")]
     [ActionName(nameof(GetUser))]
-    public async Task<ActionResult<UserDetailDTO>> GetUser(ulong id)
+    public async Task<ActionResult> GetUser(ulong id)
     {
         var user = await _manager.GetUserById(id);
         if (user is null) return NotFound();

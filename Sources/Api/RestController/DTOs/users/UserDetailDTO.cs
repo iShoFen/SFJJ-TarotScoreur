@@ -1,6 +1,6 @@
 ﻿namespace RestController.DTOs;
 
-public class UserDetailDTO
+public class UserDetailDTO : IEquatable<UserDetailDTO>
 {
     /// <summary>
     /// Id of the User
@@ -40,4 +40,24 @@ public class UserDetailDTO
     /// Groups of the user
     /// </summary>
     public ICollection<ulong> Groups { get; set; } = new List<ulong>();
+
+    public bool Equals(UserDetailDTO? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Id == other.Id && FirstName == other.FirstName && LastName == other.LastName && Nickname == other.Nickname && Avatar == other.Avatar && Email == other.Email && Games.SequenceEqual(other.Games) && Groups.SequenceEqual(other.Groups);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((UserDetailDTO)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, FirstName, LastName, Nickname, Avatar, Email, Games, Groups);
+    }
 }
