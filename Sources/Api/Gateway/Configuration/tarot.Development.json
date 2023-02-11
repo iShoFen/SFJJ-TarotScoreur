@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/user",
+      "DownstreamPathTemplate": "/api/v{version}/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -9,14 +9,14 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user",
+      "UpstreamPathTemplate": "/gateway/v{version}/users",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/user/{id}",
+      "DownstreamPathTemplate": "/api/v{version}/users/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -24,7 +24,7 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
@@ -32,7 +32,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/user/{id}/game",
+      "DownstreamPathTemplate": "/api/v{version}/users/{id}/games",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -40,13 +40,13 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user/{id}/game",
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}/games",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/user/{id}/group",
+      "DownstreamPathTemplate": "/api/v{version}/users/{id}/groups",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -54,13 +54,13 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user/{id}/group",
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}/groups",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/group",
+      "DownstreamPathTemplate": "/api/v{version}/groups",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -68,14 +68,14 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/group/{id}",
+      "DownstreamPathTemplate": "/api/v{version}/groups/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -83,7 +83,7 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/group/{id}/user",
+      "DownstreamPathTemplate": "/api/v{version}/groups/{id}/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -99,13 +99,13 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group/{id}/user",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{id}/users",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/group/{groupId}/user/{userId}",
+      "DownstreamPathTemplate": "/api/v{version}/groups/{groupId}/users/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -113,13 +113,13 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group/{groupId}/user/{userId}",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{groupId}/users/{userId}",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/game",
+      "DownstreamPathTemplate": "/api/v{version}/games",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -127,14 +127,14 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game",
+      "UpstreamPathTemplate": "/gateway/v{version}/games",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/game/{id}",
+      "DownstreamPathTemplate": "/api/v{version}/games/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -142,7 +142,7 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
@@ -150,7 +150,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/game/{id}/user",
+      "DownstreamPathTemplate": "/api/v{version}/games/{id}/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -158,13 +158,13 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game/{id}/user",
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{id}/users",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/game/{gameId}/user/{userId}",
+      "DownstreamPathTemplate": "/api/v{version}/games/{gameId}/users/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -172,13 +172,13 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game/{gameId}/user/{userId}",
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{gameId}/users/{userId}",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/hand",
+      "DownstreamPathTemplate": "/api/v{version}/hands",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -186,14 +186,14 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/hand",
+      "UpstreamPathTemplate": "/gateway/v{version}/hands",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/hand/{id}",
+      "DownstreamPathTemplate": "/api/v{version}/hands/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -201,7 +201,7 @@
           "Port": 7246
         }
       ],
-      "UpstreamPathTemplate": "/gateway/hand/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/hands/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
