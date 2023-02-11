@@ -1,15 +1,14 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Players;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
-using RestController.DTOs.Games;
 using RestController.Filter;
 
 namespace RestController.Controllers;
 
-[Route("group/")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class GroupController : ControllerBase
 {

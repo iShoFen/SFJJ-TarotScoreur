@@ -8,7 +8,8 @@ using RestController.DTOs.Games;
 
 namespace RestController.Controllers;
 
-[Route("user/")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {

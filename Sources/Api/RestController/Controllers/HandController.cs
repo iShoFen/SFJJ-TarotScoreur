@@ -6,11 +6,13 @@ using Model.Players;
 using Model.Rules;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
-using RestController.DTOs.Games;
 
-namespace RestControllers
+namespace RestController.Controllers
 {
-    [Route("hand/")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
     public class HandController : ControllerBase
     {
         private readonly Manager _manager;
@@ -113,6 +115,7 @@ namespace RestControllers
         /// Returns a NoContent result if the update is successful.
         /// </returns>
         [HttpPut("{id}")]
+        [MapToApiVersion("2.0")]
         public async Task<IActionResult> Put(ulong id, [FromBody] HandUpdateRequest request)
         {
             if (id != request.Id) return BadRequest();

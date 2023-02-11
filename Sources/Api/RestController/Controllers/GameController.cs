@@ -9,7 +9,8 @@ using RestController.Filter;
 
 namespace RestController.Controllers;
 
-[Route("game/")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class GameController : ControllerBase
 {
