@@ -1,11 +1,11 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/user",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -16,11 +16,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/user/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -32,11 +32,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/user/{id}/game",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user/{id}/game",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -46,11 +46,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/user/{id}/group",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user/{id}/group",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -60,11 +60,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/group",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -75,11 +75,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/group/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -91,11 +91,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/group/{id}/user",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group/{id}/user",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -105,11 +105,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/group/{groupId}/user/{userId}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group/{groupId}/user/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -119,11 +119,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/game",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -134,11 +134,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/game/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -150,11 +150,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/game/{id}/user",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game/{id}/user",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -164,11 +164,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/game/{gameId}/user/{userId}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game/{gameId}/user/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -178,11 +178,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/hand",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/hand",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
@@ -193,11 +193,11 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/hand/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/hand/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service",
+          "Host": "codefirst.iut.uca.fr",
           "Port": 443
         }
       ],
