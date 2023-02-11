@@ -1,4 +1,5 @@
 ﻿using RestController.DTOs;
+using RestController.DTOs.Games;
 
 namespace UT_RestController;
 
@@ -91,4 +92,90 @@ public class UsersControllerDataV1
             }
         };
     }
+
+    public static IEnumerable<object[]> Data_TestGetGamesByUserId()
+    {
+        yield return new object[]
+        {
+            11UL,
+            new List<GameDTO>()
+            {
+                new()
+                {
+                    Id = 7UL,
+                    Name = "Game 7",
+                    Rules = "FrenchTarotRules",
+                    StartDate = new DateTime(2022, 09, 21),
+                    EndDate = new DateTime(2022, 09, 29)
+                },
+                new()
+                {
+                    Id = 8UL,
+                    Name = "Game 8",
+                    Rules = "FrenchTarotRules",
+                    StartDate = new DateTime(2022, 09, 21),
+                    EndDate = new DateTime(2022, 09, 30)
+                },
+                new()
+                {
+                    Id = 9UL,
+                    Name = "Game 9",
+                    Rules = "FrenchTarotRules",
+                    StartDate = new DateTime(2022, 09, 21),
+                    EndDate = new DateTime(2022, 09, 30)
+                },
+                new()
+                {
+                    Id = 10UL,
+                    Name = "Game 10",
+                    Rules = "FrenchTarotRules",
+                    StartDate = new DateTime(2022, 09, 18),
+                    EndDate = new DateTime(2022, 09, 23)
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> Data_TestGetGroupsByUserId()
+    {
+        yield return new object[]
+        {
+            11UL,
+            new List<GroupDTO>()
+            {
+                new()
+                {
+                    Id = 7UL,
+                    Name = "Group 7",
+                    Users = { 7, 8, 9, 10, 11 }
+                },
+                new()
+                {
+                    Id = 8UL,
+                    Name = "Group 8",
+                    Users = { 8, 9, 10, 11, 12 }
+                },
+                new()
+                {
+                    Id = 9UL,
+                    Name = "Group 9",
+                    Users = { 9, 10, 11, 12, 13 }
+                },
+                new()
+                {
+                    Id = 10UL,
+                    Name = "Group 10",
+                    Users = { 10, 11, 12, 13, 14 }
+                },
+                new()
+                {
+                    Id = 11UL,
+                    Name = "Group 11",
+                    Users = { 11, 12, 13, 14, 15 }
+                }
+            }
+        };
+    }
+
+    
 }

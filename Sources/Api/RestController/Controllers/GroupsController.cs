@@ -57,8 +57,8 @@ public class GroupsController : ControllerBase
 	{
 		var group  = await _manager.GetGroupById(id);
 		if (group == null) return NotFound();
-		var users = group.Players;
-		return Ok(users.Select(x => x.PlayerToDTO()));
+		var users = group.Players.Select(x => _manager.GetUserById(x.Id).Result).ToList();
+		return Ok(users.Select(x => x?.UserToDTO()).ToList());
 	}
 
 	/// <summary>
@@ -73,9 +73,13 @@ public class GroupsController : ControllerBase
 	{
         var group = await _manager.GetGroupById(groupId);
         if (group == null) return NotFound();
-		var user = group.Players.SingleOrDefault(x => x.Id == userId);
-		if (user == null) return NotFound();
-		return Ok(user.PlayerToDTO());
+        if (!group.Players.Contains(_manager.GetPlayerById(userId).Result)) return NotFound();
+        var user = await _manager.GetUserById(userId);
+        if (user == null) return NotFound();
+        var userDTO = user.UserToUserDetailDTO();
+        userDTO.Games = (await _manager.GetGamesByPlayer(userId, 1, 10)).Select(x => x.Id).ToList();
+        userDTO.Groups = (await _manager.GetGroupsByPlayer(userId, 1, 10)).Select(x => x.Id).ToList();
+		return Ok(userDTO);
     }
 
 	[HttpPost]

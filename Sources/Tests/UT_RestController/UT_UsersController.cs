@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestController.Controllers;
 using RestController.DTOs;
+using RestController.DTOs.Games;
 using RestController.Filter;
 using Xunit;
 
@@ -48,5 +49,37 @@ public class UT_UsersController
         Assert.Equal(expected,response);
     }
     
+    [Theory]
+    [MemberData(nameof(UsersControllerDataV1.Data_TestGetGamesByUserId), MemberType = typeof(UsersControllerDataV1))]
+    public async Task TestGetGamesByUserId(ulong id, List<GameDTO> expected)
+    {
+        var controller = new UsersController(RestUtils.CreateManager());
+
+        var actual = await controller.GetGames(id, new PaginationFilter());
+        
+        var response = (actual as OkObjectResult)!.Value as List<GameDTO>;
+        
+        Assert.Equal(expected, response);
+    }
+    
+    [Theory]
+    [MemberData(nameof(UsersControllerDataV1.Data_TestGetGroupsByUserId), MemberType = typeof(UsersControllerDataV1))]
+    public async Task TestGetGroupsByUserId(ulong id, List<GroupDTO> expected)
+    {
+        var controller = new UsersController(RestUtils.CreateManager());
+
+        var actual = await controller.GetGroups(id, new PaginationFilter());
+        
+        var response = (actual as ObjectResult)!.Value as List<GroupDTO>;
+        
+        Assert.Equal(expected, response);
+    }
+
+    #region Writer
+
+    
+    
+
+    #endregion
     
 }

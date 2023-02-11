@@ -42,23 +42,23 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{userId}/games")]
-    public async Task<ActionResult<GameDetailDTO>> GetGames(ulong userId, [FromQuery] PaginationFilter pagination)
+    public async Task<ActionResult> GetGames(ulong userId, [FromQuery] PaginationFilter pagination)
     {
         var user = await _manager.GetUserById(userId);
         if (user is null) return NotFound();
         var games = await _manager.GetGamesByPlayer(userId, pagination.Page,
             pagination.Count);
-        return Ok(games.Select(x => x.ToGameDetailDTO()).ToList());
+        return Ok(games.Select(x => x.ToGameDTO()).ToList());
     }
 
     [HttpGet("{userId}/groups")]
-    public async Task<ActionResult<GameDetailDTO>> GetGroups(ulong userId, [FromQuery] PaginationFilter pagination)
+    public async Task<ActionResult> GetGroups(ulong userId, [FromQuery] PaginationFilter pagination)
     {
         var user = await _manager.GetUserById(userId);
         if (user is null) return NotFound();
         var groups = await _manager.GetGroupsByPlayer(userId, pagination.Page,
             pagination.Count);
-        return Ok(groups.Select(x => x.ToGroupDTO()));
+        return Ok(groups.Select(x => x.ToGroupDTO()).ToList());
     }
 
     [HttpPut("{id}")]
