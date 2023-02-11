@@ -26,4 +26,22 @@ public class GameDTO
     /// The end date of the Game
     /// </summary>
     public DateTime? EndDate { get; set; }
+
+    protected bool Equals(GameDTO other)
+    {
+        return Id == other.Id && Rules == other.Rules && Name == other.Name && StartDate.Equals(other.StartDate) && Nullable.Equals(EndDate, other.EndDate);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((GameDTO)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, Rules, Name, StartDate, EndDate);
+    }
 }

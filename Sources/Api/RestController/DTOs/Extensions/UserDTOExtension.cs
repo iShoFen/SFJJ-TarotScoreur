@@ -11,6 +11,7 @@ internal static class UserDTOExtensions
         {
             cfg.CreateMap<User, UserDTO>().ReverseMap();
             cfg.CreateMap<UserInsertRequest, User>().ReverseMap();
+            cfg.CreateMap<User, UserDetailDTO>().ReverseMap();
         });
 
     private static readonly Mapper Mapper = new(MapperConfig);
@@ -25,4 +26,6 @@ internal static class UserDTOExtensions
         Nickname = player.NickName,
         Avatar = player.Avatar
     };
+    
+    public static UserDetailDTO UserToUserDetailDTO(this User user) => Mapper.Map<User, UserDetailDTO>(user);
 }

@@ -31,11 +31,14 @@ public class UsersController : ControllerBase
 
     [HttpGet("{id}")]
     [ActionName(nameof(GetUser))]
-    public async Task<ActionResult<UserDTO>> GetUser(ulong id)
+    public async Task<ActionResult<UserDetailDTO>> GetUser(ulong id)
     {
         var user = await _manager.GetUserById(id);
         if (user is null) return NotFound();
-        return Ok(user.UserToDTO());
+        var userDTO = user.UserToUserDetailDTO();
+        userDTO.Games = (await _manager.GetGamesByPlayer(id, 1, 10)).Select(x => x.Id).ToList();
+        userDTO.Groups = (await _manager.GetGroupsByPlayer(id, 1, 10)).Select(x => x.Id).ToList();
+        return Ok(userDTO);
     }
 
     [HttpGet("{userId}/games")]

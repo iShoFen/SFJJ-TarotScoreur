@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_GrpcService", "Tests\UT_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Api\Gateway\Gateway.csproj", "{1041BE41-CE56-4D35-AA0C-7804CDA2062E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_RestController", "Tests\UT_RestController\UT_RestController.csproj", "{67307D86-108A-4671-BBE5-D0CCB7CFF738}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{1041BE41-CE56-4D35-AA0C-7804CDA2062E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1041BE41-CE56-4D35-AA0C-7804CDA2062E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1041BE41-CE56-4D35-AA0C-7804CDA2062E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67307D86-108A-4671-BBE5-D0CCB7CFF738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67307D86-108A-4671-BBE5-D0CCB7CFF738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67307D86-108A-4671-BBE5-D0CCB7CFF738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67307D86-108A-4671-BBE5-D0CCB7CFF738}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +165,7 @@ Global
 		{404E0CB8-8299-467C-8FB8-5A617F6EF801} = {2D490478-8053-4659-B0AD-E4BC5F377E2B}
 		{1041BE41-CE56-4D35-AA0C-7804CDA2062E} = {AE717D6C-1A01-4BAB-993A-6DCED230A63E}
 		{5879602B-C8DB-47A8-97D4-97F01D23DFD2} = {2D490478-8053-4659-B0AD-E4BC5F377E2B}
+		{67307D86-108A-4671-BBE5-D0CCB7CFF738} = {2D490478-8053-4659-B0AD-E4BC5F377E2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FBF96409-FA98-48FC-BC01-79FCB13501AB}

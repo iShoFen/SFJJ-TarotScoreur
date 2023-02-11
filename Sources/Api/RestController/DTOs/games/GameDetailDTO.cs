@@ -36,4 +36,22 @@ public class GameDetailDTO
     /// The Hands in the Game
     /// </summary>
     public ICollection<ulong> Hands { get; set; } = new HashSet<ulong>();
+
+    public bool Equals(GameDetailDTO other)
+    {
+        return Id == other.Id && Rules == other.Rules && Name == other.Name && StartDate.Equals(other.StartDate) && Nullable.Equals(EndDate, other.EndDate) && Users.SequenceEqual(other.Users) && Hands.SequenceEqual(other.Hands);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((GameDetailDTO)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, Rules, Name, StartDate, EndDate, Users, Hands);
+    }
 }

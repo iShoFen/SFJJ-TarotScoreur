@@ -31,17 +31,25 @@ public class UserDTO
     public string Avatar { get; set; } = null!;
 
     /// <summary>
-    /// All the Games the User has played
-    /// </summary>
-    public ICollection<ulong> Games { get; set; } = new HashSet<ulong>();
-
-    /// <summary>
-    /// All the Groups of the User
-    /// </summary>
-    public ICollection<ulong> Groups { get; set; } = new HashSet<ulong>();
-    
-    /// <summary>
     /// Email of the User
     /// </summary>
     public string Email { get; set; } = null!;
+
+    protected bool Equals(UserDTO other)
+    {
+        return Id == other.Id && FirstName == other.FirstName && LastName == other.LastName && Nickname == other.Nickname && Avatar == other.Avatar && Email == other.Email;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((UserDTO)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, FirstName, LastName, Nickname, Avatar, Email);
+    }
 }

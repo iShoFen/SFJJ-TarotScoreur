@@ -27,7 +27,7 @@ public class GamesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetGames([FromQuery] PaginationFilter paginationFilter)
     {
-        var games = await _manager.GetGames(paginationFilter.Page, paginationFilter.Count);
+        var games = (await _manager.GetGames(paginationFilter.Page, paginationFilter.Count)).ToList();
         return Ok(games.Select(x => x.ToGameDTO()).ToList());
     }
 
