@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+import "Protos/utils.proto";
+
+option csharp_namespace = "GrpcClient";
+
+package tarot.v1;
+
+service User {
+  rpc GetUsers (Pagination) returns (UsersReply);
+  rpc GetUser (IdRequest) returns (UserReplyDetails);
+  rpc GetUsersByPattern (UserPatternRequest) returns (UsersReply);
+  rpc GetUsersByNickname (UserPatternRequest) returns (UsersReply);
+  rpc GetUsersByFirstNameAndLastName (UserPatternRequest) returns (UsersReply);
+  rpc InsertUser (UserInsertRequest) returns (UserReply);
+  rpc UpdateUser (UserUpdateRequest) returns (UserReplyDetails);
+  rpc DeleteUser (IdRequest) returns (BoolResponse);
+}
+
+message UserPatternRequest {
+  Pagination pagination = 1;
+  string pattern = 2;
+}
+
+message UserInsertRequest {
+  string firstName = 1;
+  string lastName = 2;
+  string nickname = 3;
+  string avatar = 4;
+  string email = 5;
+  string password = 6;
+}
+
+message UserUpdateRequest {
+  uint64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string nickname = 4;
+  string avatar = 5;
+  string email = 6;
+  string password = 7;
+}
+
+message UsersReply {
+  repeated UserReply users = 1;
+}
+
+message UserReply {
+  uint64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string nickname = 4;
+  string avatar = 5;
+}
+
+message UserReplyDetails {
+  uint64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string nickname = 4;
+  string avatar = 5;
+  repeated uint64 groups = 6;
+  repeated uint64 games = 7;
+}

@@ -1,0 +1,213 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/users",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users/{id}/games",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}/games",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users/{id}/groups",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}/groups",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/groups",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{id}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups/{id}/users",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{id}/users",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups/{groupId}/users/{userId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{groupId}/users/{userId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/games",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{id}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games/{id}/users",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{id}/users",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games/{gameId}/users/{userId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{gameId}/users/{userId}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/hands",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/hands",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/hands/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "codefirst.iut.uca.fr",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{version}/hands/{id}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Put",
+        "Delete"
+      ]
+    }
+  ],
+  "GlobalConfiguration": {}
+}

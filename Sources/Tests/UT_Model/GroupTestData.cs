@@ -571,10 +571,6 @@ internal static class GroupTestData
 
     internal class GroupTest : Group
     {
-        public GroupTest(string name, params Player[] players) : base(name, players)
-        {
-        }
-
         public GroupTest(ulong id, string name, params Player[] players) : base(id, name, players)
         {
         }

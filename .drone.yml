@@ -1,12 +1,13 @@
 kind: pipeline
 type: docker
 name: default
- 
+
 trigger:
   event:
     - push
 
 steps:
+  # Build solution
   - name: build
     image: mcr.microsoft.com/dotnet/sdk:6.0
     volumes:
@@ -18,20 +19,26 @@ steps:
       - dotnet build TarotScoreur.sln -c Release --no-restore
       - dotnet publish TarotScoreur.sln -c Release --no-restore -o CI_PROJECT_DIR/build/release
 
+  # Tests solutions
   - name: tests
     image: mcr.microsoft.com/dotnet/sdk:6.0
     commands:
       - cd Sources/
       - dotnet restore TarotScoreur.sln
       - dotnet test TarotScoreur.sln --no-restore
-    depends_on: [build]
+    depends_on: [ build ]
 
+  # Code analysis
   - name: code-analysis
-    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dronesonarplugin-dotnet6
+    image: mcr.microsoft.com/dotnet/sdk:6.0
     commands:
+      - export PATH="$PATH:/root/.dotnet/tools"
+      - dotnet tool install --global dotnet-sonarscanner
+      - dotnet tool install --global dotnet-reportgenerator-globaltool
+      - apt-get update && apt-get install -y openjdk-17-jre
       - cd Sources/
       - dotnet restore TarotScoreur.sln
-      - dotnet sonarscanner begin /k:SFJJ-TarotScoreur /d:sonar.host.url=$${PLUGIN_SONAR_HOST} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions="Tests/**" /d:sonar.login=$${PLUGIN_SONAR_TOKEN}
+      - dotnet sonarscanner begin /k:SFJJ-TarotScoreur /d:sonar.host.url=$${PLUGIN_SONAR_HOST} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions="Tests/**,Api/RestController/Program.cs,Api/Gateway/Program.cs,Api/GrpcService/Program.cs" /d:sonar.login=$${PLUGIN_SONAR_TOKEN}
       - dotnet build TarotScoreur.sln -c Release --no-restore
       - dotnet test TarotScoreur.sln --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
       - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
@@ -44,8 +51,13 @@ steps:
       # accessible en ligne de commande par ${PLUGIN_SONAR_TOKEN}
       sonar_token:
         from_secret: SECRET_SONAR_LOGIN
-    depends_on: [tests]
+    when:
+      branch:
+        - master
+        - develop
+    depends_on: [ tests ]
 
+  # Documentation
   - name: generate-and-deploy-docs
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-docdeployer
     failure: ignore
@@ -57,8 +69,80 @@ steps:
     when:
       branch:
         - master
-    depends_on: [build]
+    depends_on: [ build ]
+  
+  # Grpc Service
+  - name: build-docker-grpc-service
+    image: plugins/docker
+    settings:
+      dockerfile: Sources/Api/GrpcService/Dockerfile
+      context: Sources/
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    depends_on: [ tests ]
+
+  - name: deploy-grpc-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      CONTAINERNAME: tarot-grpc-service
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: florentmarques,samuelsirven,julientheme
+    depends_on: [ build-docker-grpc-service ]
+  
+  # Rest Service
+  - name: build-docker-rest-service
+    image: plugins/docker
+    settings:
+      dockerfile: Sources/Api/RestController/Dockerfile
+      context: Sources/
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    depends_on: [ tests ]
+
+  - name: deploy-rest-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      CONTAINERNAME: tarot-rest-service
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: florentmarques,samuelsirven,julientheme
+    depends_on: [ build-docker-rest-service ]
+  
+  # Gateway Service
+  - name: build-docker-gateway-service
+    image: plugins/docker
+    settings:
+      dockerfile: Sources/Api/Gateway/Dockerfile
+      context: Sources/
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    depends_on: [ tests ]
+
+  - name: deploy-gateway-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/jordan.artzet/sfjj-tarotscoreur
+      CONTAINERNAME: tarot-gateway-service
+      COMMAND: create
+      OVERWRITE: true
+      ADMINS: florentmarques,samuelsirven,julientheme
+    depends_on: [ build-docker-gateway-service ]
 
 volumes:
   - name: docs
-    temp: {}
+    temp: { }

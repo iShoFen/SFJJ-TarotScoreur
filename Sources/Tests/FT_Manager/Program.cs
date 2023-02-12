@@ -1,69 +1,60 @@
-﻿using Model.Players;
-using Model.Rules;
+﻿using Model;
 using Tarot2B2Model;
+using TarotDB;
 
 // Création du manager
 Console.WriteLine("Création du manager");
-var manager = new Manager(new DbLoader(), new DbSaver());
+var unitOfWork = new UnitOfWork(new TarotDbContext());
+var manager = new Manager(new DbReader(unitOfWork), new DbWriter(unitOfWork));
 
 // Ajout de joueurs
 Console.WriteLine("\nAjout de joueurs");
-await manager.SavePlayer(new Player("Florent", "Marques", "Flo", "avatar"));
-await manager.SavePlayer(new Player("Samuel", "Sirven", "Sam", "avatar"));
-await manager.SavePlayer(new Player("Jordan", "Artzet", "Jo", "avatar"));
-await manager.SavePlayer(new Player("Julien", "Theme", "Ju", "avatar"));
+await manager.InsertPlayer("Florent", "Marques", "Flo", "avatar");
+await manager.InsertPlayer("Samuel", "Sirven", "Sam", "avatar");
+await manager.InsertPlayer("Jordan", "Artzet", "Jo", "avatar");
+await manager.InsertPlayer("Julien", "Theme", "Ju", "avatar");
 
-await manager.SavePlayer(new Player("Marveille", "Champagne", "Marv", "avatar"));
-await manager.SavePlayer(new Player("Fanchon", "Tétrault", "Fan", "avatar"));
-await manager.SavePlayer(new Player("Jeanne", "Fecteau", "Jean", "avatar"));
-await manager.SavePlayer(new Player("Auda", "Faucher", "Auda", "avatar"));
+await manager.InsertPlayer("Marveille", "Champagne", "Marv", "avatar");
+await manager.InsertPlayer("Fanchon", "Tétrault", "Fan", "avatar");
+await manager.InsertPlayer("Jeanne", "Fecteau", "Jean", "avatar");
+await manager.InsertPlayer("Auda", "Faucher", "Auda", "avatar");
 
-await manager.SavePlayer(new Player("Lundy", "Marquis", "Lun", "avatar"));
-await manager.SavePlayer(new Player("Royce", "Lapresse", "Roy", "avatar"));
-await manager.SavePlayer(new Player("Karel", "Lagrange", "Kar", "avatar"));
-await manager.SavePlayer(new Player("Pierpont", "Carignan", "Pier", "avatar"));
+await manager.InsertPlayer("Lundy", "Marquis", "Lun", "avatar");
+await manager.InsertPlayer("Royce", "Lapresse", "Roy", "avatar");
+await manager.InsertPlayer("Karel", "Lagrange", "Kar", "avatar");
+await manager.InsertPlayer("Pierpont", "Carignan", "Pier", "avatar");
 
 // Recherche des 100 joueurs de la page 1
 Console.WriteLine("\nRecherche des 100 joueurs de la page 1");
-var players = (await manager.LoadAllPlayer(1, 100))?.ToArray();
+var players = (await manager.GetPlayers(1, 100)).ToArray();
 // Affichage des joueurs
 Console.WriteLine("\nAffichage des joueurs trouvés");
-if (players != null)
+foreach (var player in players)
 {
-    foreach (var player in players)
-    {
-        Console.WriteLine(player);
-    }
-
-    Console.WriteLine("\nRecherche des 12 joueurs de la page 1");
+    Console.WriteLine(player);
 }
 
-players = (await manager.LoadAllPlayer(1, 12))?.ToArray();
-if (players != null)
+Console.WriteLine("\nRecherche des 12 joueurs de la page 1");
+
+players = (await manager.GetPlayers(1, 12)).ToArray();
+for (var i = 0; i < 3; i++)
 {
-    for (var i = 0; i < 3; i++)
-    {
-        var group = new Group($"Un super groupe {i}", players[4 * i], players[4 * i + 1], players[4 * i + 2],
-            players[4 * i + 3]);
-        Console.WriteLine("Ajout d'un groupe");
-        await manager.SaveGroup(group);
-    }
+    Console.WriteLine("Ajout d'un groupe");
+    await manager.InsertGroup($"Un super groupe {i}",
+                              players[4 * i],
+                              players[4 * i + 1],
+                              players[4 * i + 2],
+                              players[4 * i + 3]
+    );
 }
 
 Console.WriteLine("\nRecherche des 20 groupes de la page 1");
-var groups = await manager.LoadAllGroups(1, 20);
-if (groups != null)
+var groups = await manager.GetGroups(1, 20);
+foreach (var group in groups)
 {
-    foreach (var group in groups)
+    Console.WriteLine($"{group.Name} ({group.Id})");
+    foreach (var player in group.Players)
     {
-        Console.WriteLine($"{group.Name} ({group.Id})");
-        var groupPlayers = await manager.LoadPlayersByGroup(group, 1, 100);
-        if (groupPlayers != null)
-        {
-            foreach (var groupPlayer in groupPlayers)
-            {
-                Console.WriteLine($"\t{groupPlayer}");
-            }
-        }
+        Console.WriteLine($"\t{player}");
     }
 }
