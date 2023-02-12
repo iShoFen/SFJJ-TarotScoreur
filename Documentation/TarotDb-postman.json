@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "615e0de7-65a0-4d4a-8d33-c62d6b7c7ae0",
+		"_postman_id": "cfb119be-9ad5-4a5c-813d-2e4c01828428",
 		"name": "TarotDb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25685458"
+		"_exporter_id": "25675289"
 	},
 	"item": [
 		{
@@ -18,9 +18,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user",
+									"raw": "{{base_url}}users",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									]
 								}
 							},
@@ -32,9 +32,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user?page=2&count=2",
+									"raw": "{{base_url}}users?page=2&count=2",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"query": [
 										{
@@ -58,9 +58,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/13",
+									"raw": "{{base_url}}users/13",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13"
@@ -75,13 +75,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/13/game",
+									"raw": "{{base_url}}users/13/games",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13",
-										"game"
+										"games"
 									]
 								}
 							},
@@ -93,13 +93,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/13/group",
+									"raw": "{{base_url}}users/13/groups",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13",
-										"group"
+										"groups"
 									]
 								}
 							},
@@ -120,9 +120,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}user",
+									"raw": "{{base_url}}users",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									]
 								}
 							},
@@ -143,9 +143,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}user/13",
+									"raw": "{{base_url}}users/13",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13"
@@ -160,9 +160,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/15",
+									"raw": "{{base_url}}users/15",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"15"
@@ -182,14 +182,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group",
+									"raw": "{{base_url}}groups",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"query": [
 										{
 											"key": "",
-											"value": "",
+											"value": null,
 											"disabled": true
 										}
 									]
@@ -203,9 +203,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group?page=2&count=2",
+									"raw": "{{base_url}}groups?page=2&count=2",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"query": [
 										{
@@ -227,9 +227,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/12",
+									"raw": "{{base_url}}groups/12",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"12"
@@ -244,13 +244,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/6/user",
+									"raw": "{{base_url}}groups/6/users",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"6",
-										"user"
+										"users"
 									]
 								}
 							},
@@ -262,13 +262,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/6/user/6",
+									"raw": "{{base_url}}groups/6/users/6",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"6",
-										"user",
+										"users",
 										"6"
 									]
 								}
@@ -290,9 +290,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}group",
+									"raw": "{{base_url}}groups",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									]
 								}
 							},
@@ -313,9 +313,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}group/3",
+									"raw": "{{base_url}}groups/3",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"3"
@@ -330,9 +330,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/5",
+									"raw": "{{base_url}}groups/5",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"5"
@@ -352,9 +352,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game",
+									"raw": "{{base_url}}games",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									]
 								}
 							},
@@ -366,9 +366,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game?start=2&count=2",
+									"raw": "{{base_url}}games?start=2&count=2",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"query": [
 										{
@@ -390,9 +390,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game/4",
+									"raw": "{{base_url}}games/4",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"4"
@@ -407,13 +407,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game/3/user",
+									"raw": "{{base_url}}games/3/users",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"3",
-										"user"
+										"users"
 									]
 								}
 							},
@@ -425,13 +425,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game/3/user/4",
+									"raw": "{{base_url}}games/3/users/4",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"3",
-										"user",
+										"users",
 										"4"
 									]
 								}
@@ -453,9 +453,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}game",
+									"raw": "{{base_url}}games",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									]
 								}
 							},
@@ -476,9 +476,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}game/5",
+									"raw": "{{base_url}}games/5",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"5"
@@ -498,9 +498,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}hand/4",
+									"raw": "{{base_url}}hands/4",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									],
 									"path": [
 										"4"
@@ -516,7 +516,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"number\": 4,\n  \"rules\": \"FrenchTarotRules\",\n  \"date\": \"2023-02-05T14:02:52.526Z\",\n  \"takerScore\": 156,\n  \"twentyOne\": true,\n  \"excuse\": false,\n  \"petit\": 4,\n  \"chelem\": 2,\n  \"biddings\": [\n    {\n      \"biddings\": 5,\n      \"poignee\": 2,\n      \"userId\": 14\n    },\n    {\n      \"biddings\": 9,\n      \"poignee\": 0,\n      \"userId\": 13\n    },\n    {\n      \"biddings\": 16,\n      \"poignee\": 1,\n      \"userId\": 11\n    }\n  ],\n  \"gameId\": 4\n}",
+									"raw": "{\n  \"number\": 4,\n  \"rules\": \"FrenchTarotRules\",\n  \"date\": \"2023-02-05T14:02:52.526Z\",\n  \"takerScore\": 156,\n  \"twentyOne\": true,\n  \"excuse\": false,\n  \"petit\": 4,\n  \"chelem\": 2,\n  \"biddings\": [\n    {\n      \"biddings\": 5,\n      \"poignee\": 2,\n      \"userId\": 14\n    },\n    {\n      \"biddings\": 9,\n      \"poignee\": 0,\n      \"userId\": 15\n    },\n    {\n      \"biddings\": 16,\n      \"poignee\": 1,\n      \"userId\": 11\n    }\n  ],\n  \"gameId\": 4\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -524,9 +524,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}hand",
+									"raw": "{{base_url}}hands",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									]
 								}
 							},
@@ -538,9 +538,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}hand/35",
+									"raw": "{{base_url}}hands/35",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									],
 									"path": [
 										"35"
@@ -564,9 +564,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}hand/4",
+									"raw": "{{base_url}}hands/4",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									],
 									"path": [
 										"4"
@@ -584,7 +584,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"pm.collectionVariables.set(\"base_url\", \"https://localhost:7246/\");"
+							"pm.collectionVariables.set(\"base_url\", \"https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service/api/v2/\");"
 						]
 					}
 				},
@@ -611,9 +611,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user",
+									"raw": "{{base_url}}users",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									]
 								}
 							},
@@ -625,9 +625,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user?page=2&count=2",
+									"raw": "{{base_url}}users?page=2&count=2",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"query": [
 										{
@@ -651,9 +651,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/13",
+									"raw": "{{base_url}}users/13",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13"
@@ -668,13 +668,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/13/game",
+									"raw": "{{base_url}}users/13/games",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13",
-										"game"
+										"games"
 									]
 								}
 							},
@@ -686,13 +686,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/13/group",
+									"raw": "{{base_url}}users/13/groups",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13",
-										"group"
+										"groups"
 									]
 								}
 							},
@@ -713,9 +713,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}user",
+									"raw": "{{base_url}}users",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									]
 								}
 							},
@@ -736,9 +736,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}user/13",
+									"raw": "{{base_url}}users/13",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"13"
@@ -753,9 +753,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}user/15",
+									"raw": "{{base_url}}users/15",
 									"host": [
-										"{{base_url}}user"
+										"{{base_url}}users"
 									],
 									"path": [
 										"15"
@@ -775,14 +775,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group",
+									"raw": "{{base_url}}groups",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"query": [
 										{
 											"key": "",
-											"value": "",
+											"value": null,
 											"disabled": true
 										}
 									]
@@ -796,9 +796,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group?page=2&count=2",
+									"raw": "{{base_url}}groups?page=2&count=2",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"query": [
 										{
@@ -820,9 +820,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/12",
+									"raw": "{{base_url}}groups/12",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"12"
@@ -837,13 +837,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/6/user",
+									"raw": "{{base_url}}groups/6/users",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"6",
-										"user"
+										"users"
 									]
 								}
 							},
@@ -855,13 +855,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/6/user/6",
+									"raw": "{{base_url}}groups/6/users/6",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"6",
-										"user",
+										"users",
 										"6"
 									]
 								}
@@ -883,9 +883,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}group",
+									"raw": "{{base_url}}groups",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									]
 								}
 							},
@@ -906,9 +906,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}group/3",
+									"raw": "{{base_url}}groups/3",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"3"
@@ -923,9 +923,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}group/5",
+									"raw": "{{base_url}}groups/5",
 									"host": [
-										"{{base_url}}group"
+										"{{base_url}}groups"
 									],
 									"path": [
 										"5"
@@ -945,9 +945,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game",
+									"raw": "{{base_url}}games",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									]
 								}
 							},
@@ -959,9 +959,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game?start=2&count=2",
+									"raw": "{{base_url}}games?start=2&count=2",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"query": [
 										{
@@ -983,9 +983,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game/4",
+									"raw": "{{base_url}}games/4",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"4"
@@ -1000,13 +1000,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game/3/user",
+									"raw": "{{base_url}}games/3/users",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"3",
-										"user"
+										"users"
 									]
 								}
 							},
@@ -1018,13 +1018,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}game/3/user/4",
+									"raw": "{{base_url}}games/3/users/4",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"3",
-										"user",
+										"users",
 										"4"
 									]
 								}
@@ -1046,9 +1046,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}game",
+									"raw": "{{base_url}}games",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									]
 								}
 							},
@@ -1069,9 +1069,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}game/5",
+									"raw": "{{base_url}}games/5",
 									"host": [
-										"{{base_url}}game"
+										"{{base_url}}games"
 									],
 									"path": [
 										"5"
@@ -1091,9 +1091,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}hand/4",
+									"raw": "{{base_url}}hands/4",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									],
 									"path": [
 										"4"
@@ -1117,9 +1117,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}hand",
+									"raw": "{{base_url}}hands",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									]
 								}
 							},
@@ -1131,9 +1131,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}hand/35",
+									"raw": "{{base_url}}hands/35",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									],
 									"path": [
 										"35"
@@ -1157,9 +1157,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}hand/4",
+									"raw": "{{base_url}}hands/4",
 									"host": [
-										"{{base_url}}hand"
+										"{{base_url}}hands"
 									],
 									"path": [
 										"4"
@@ -1177,7 +1177,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"pm.collectionVariables.set(\"base_url\", \"https://localhost:7261/gateway/\");"
+							"pm.collectionVariables.set(\"base_url\", \"https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-gateway-service/gateway/v2/\");"
 						]
 					}
 				},
