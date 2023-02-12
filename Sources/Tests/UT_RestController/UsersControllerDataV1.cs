@@ -177,5 +177,55 @@ public class UsersControllerDataV1
         };
     }
 
-    
+    public static IEnumerable<object[]> Data_TestPostUser()
+    {
+        yield return new object[]
+        {
+            new UserInsertRequest()
+            {
+                FirstName = "FirstNameTest",
+                LastName = "LastNameTest",
+                Nickname = "NicknameTest",
+                Avatar = "AvatarTest",
+                Email = "EmailTest"
+            },
+            new UserDTO()
+            {
+                Id = 17UL,
+                FirstName = "FirstNameTest",
+                LastName = "LastNameTest",
+                Nickname = "NicknameTest",
+                Avatar = "AvatarTest",
+                Email = "EmailTest",
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> Data_TestPutUser()
+    {
+        yield return new object[]
+        {
+            11UL,
+            new UserUpdateRequest()
+            {
+                Id = 11UL,
+                FirstName = "FirstNameTest",
+                LastName = "LastNameTest",
+                Nickname = "NicknameTest",
+                Avatar = "AvatarTest",
+                Email = "EmailTest"
+            },
+            new UserDTO()
+            {
+                Id = 11UL,
+                FirstName = "FirstNameTest",
+                LastName = "LastNameTest",
+                Nickname = "NicknameTest",
+                Avatar = "AvatarTest",
+                Email = "EmailTest",
+            }
+        };
+    }
+
+
 }

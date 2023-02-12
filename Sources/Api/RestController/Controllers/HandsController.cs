@@ -35,7 +35,7 @@ namespace RestController.Controllers
         /// Returns the hand of the player with the given id
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<HandDTODetail>> Get(ulong id)
+        public async Task<ActionResult> GetHand(ulong id)
         {
             var hand = await _manager.GetHandById(id);
             if (hand == null) return NotFound();
@@ -98,7 +98,7 @@ namespace RestController.Controllers
             var handReply = handInserted.ToHandDTODetail();
             handReply.GameId = request.GameId;
             return CreatedAtAction(
-                nameof(Get),
+                nameof(GetHand),
                 new { id = handInserted.Id },
                 handReply
             );

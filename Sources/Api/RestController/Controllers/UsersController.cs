@@ -62,7 +62,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutUser(ulong id, UserUpdateRequest request)
+    public async Task<ActionResult> PutUser(ulong id, UserUpdateRequest request)
     {
         if (id != request.Id) return BadRequest();
 
@@ -75,11 +75,11 @@ public class UsersController : ControllerBase
             request.Password)
         );
 
-        return user is null ? NotFound() : NoContent();
+        return user is null ? NotFound() : Ok(user.UserToDTO());
     }
 
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> PostUser(UserInsertRequest request)
+    public async Task<ActionResult> PostUser(UserInsertRequest request)
     {
         var user = await _manager.InsertUser(request.FirstName, request.LastName, request.Nickname, request.Avatar,
             request.Email, request.Password);

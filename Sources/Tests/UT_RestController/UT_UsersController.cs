@@ -76,9 +76,33 @@ public class UT_UsersController
     }
 
     #region Writer
+    
+    [Theory]
+    [MemberData(nameof(UsersControllerDataV1.Data_TestPostUser), MemberType = typeof(UsersControllerDataV1))]
+    public async Task TestPostUser(UserInsertRequest inserted, UserDTO expected)
+    {
+        var controller = new UsersController(RestUtils.CreateManager());
 
+        var actual = await controller.PostUser(inserted);
+        
+        var response = (actual as ObjectResult)!.Value as UserDTO;
+        
+        Assert.Equal(expected, response);
+    }
     
-    
+    [Theory]
+    [MemberData(nameof(UsersControllerDataV1.Data_TestPutUser), MemberType = typeof(UsersControllerDataV1))]
+    public async Task TestPutUser(ulong id, UserUpdateRequest updated, UserDTO expected)
+    {
+        var controller = new UsersController(RestUtils.CreateManager());
+
+        var actual = await controller.PutUser(id, updated);
+        
+        var response = (actual as ObjectResult)!.Value as UserDTO;
+        
+        Assert.Equal(expected, response);
+    }
+
 
     #endregion
     
