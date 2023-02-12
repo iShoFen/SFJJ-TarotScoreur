@@ -13,6 +13,7 @@
         <InternalsVisibleTo Include="UT_Reader" />
         <InternalsVisibleTo Include="UT_Writer" />
         <InternalsVisibleTo Include="UT_GrpcService" />
+        <InternalsVisibleTo Include="UT_RestController" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,21 +1,21 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Players;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
-using RestController.DTOs.Games;
 using RestController.Filter;
 
 namespace RestController.Controllers;
 
-[Route("group/")]
+[ApiVersion("1.0")]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class GroupController : ControllerBase
+public class GroupsController : ControllerBase
 {
 	private readonly Manager _manager;
 
-	public GroupController(Manager manager)
+	public GroupsController(Manager manager)
 	{
 		_manager = manager;
 	}
@@ -51,14 +51,14 @@ public class GroupController : ControllerBase
 	/// </summary>
 	/// <param name="id">Id of the group</param>
 	/// <returns></returns>
-	[Route("/group/{id}/user/")]
+	[Route("{id}/users")]
 	[HttpGet]
 	public async Task<ActionResult> GetPlayersByGroupId(ulong id)
 	{
 		var group  = await _manager.GetGroupById(id);
 		if (group == null) return NotFound();
-		var users = group.Players;
-		return Ok(users.Select(x => x.PlayerToDTO()));
+		var users = group.Players.Select(x => _manager.GetUserById(x.Id).Result).ToList();
+		return Ok(users.Select(x => x?.UserToDTO()).ToList());
 	}
 
 	/// <summary>
@@ -67,15 +67,19 @@ public class GroupController : ControllerBase
 	/// <param name="groupId">Id of the group</param>
 	/// <param name="userId">Id of the user</param>
 	/// <returns></returns>
-	[Route("/group/{groupId}/user/{userId}")]
+	[Route("{groupId}/users/{userId}")]
 	[HttpGet]
 	public async Task<ActionResult> GetPlayerByGroupId(ulong groupId, ulong userId)
 	{
         var group = await _manager.GetGroupById(groupId);
         if (group == null) return NotFound();
-		var user = group.Players.SingleOrDefault(x => x.Id == userId);
-		if (user == null) return NotFound();
-		return Ok(user.PlayerToDTO());
+        if (!group.Players.Contains(_manager.GetPlayerById(userId).Result)) return NotFound();
+        var user = await _manager.GetUserById(userId);
+        if (user == null) return NotFound();
+        var userDTO = user.UserToUserDetailDTO();
+        userDTO.Games = (await _manager.GetGamesByPlayer(userId, 1, 10)).Select(x => x.Id).ToList();
+        userDTO.Groups = (await _manager.GetGroupsByPlayer(userId, 1, 10)).Select(x => x.Id).ToList();
+		return Ok(userDTO);
     }
 
 	[HttpPost]
@@ -124,8 +128,9 @@ public class GroupController : ControllerBase
 		}
 		
 		var group = new Group(groupDTO.Id, groupDTO.Name, users.ToArray());
-		if (await _manager.UpdateGroup(group) is null) return NotFound();
-		return NoContent();
+		var groupUpdated = await _manager.UpdateGroup(group);
+		if (groupUpdated is null) return NotFound();
+		return Ok(groupUpdated.ToGroupDTO());
 	}
 
 	/// <summary>
@@ -138,8 +143,9 @@ public class GroupController : ControllerBase
 	{
 		var group = await _manager.GetGroupById(id);
 		if (group is null) return NotFound();
-		await _manager.DeleteGroup(group);
+		//Internal Error
+		if(!await _manager.DeleteGroup(group)) return StatusCode(500);
 
-		return NoContent();
+		return Ok(group.ToGroupDTO());
 	}
 }

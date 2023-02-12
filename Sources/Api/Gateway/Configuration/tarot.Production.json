@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -9,14 +9,14 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user",
+      "UpstreamPathTemplate": "/gateway/v{version}/users",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -24,7 +24,7 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
@@ -32,7 +32,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user/{id}/game",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users/{id}/games",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -40,13 +40,13 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user/{id}/game",
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}/games",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/user/{id}/group",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/users/{id}/groups",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -54,13 +54,13 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/user/{id}/group",
+      "UpstreamPathTemplate": "/gateway/v{version}/users/{id}/groups",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -68,14 +68,14 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -83,7 +83,7 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group/{id}/user",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups/{id}/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -99,13 +99,13 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group/{id}/user",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{id}/users",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/group/{groupId}/user/{userId}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/groups/{groupId}/users/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -113,13 +113,13 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/group/{groupId}/user/{userId}",
+      "UpstreamPathTemplate": "/gateway/v{version}/groups/{groupId}/users/{userId}",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -127,14 +127,14 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game",
+      "UpstreamPathTemplate": "/gateway/v{version}/games",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -142,7 +142,7 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",
@@ -150,7 +150,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game/{id}/user",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games/{id}/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -158,13 +158,13 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game/{id}/user",
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{id}/users",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/game/{gameId}/user/{userId}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/games/{gameId}/users/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -172,13 +172,13 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/game/{gameId}/user/{userId}",
+      "UpstreamPathTemplate": "/gateway/v{version}/games/{gameId}/users/{userId}",
       "UpstreamHttpMethod": [
         "Get"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/hand",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/hands",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -186,14 +186,14 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/hand",
+      "UpstreamPathTemplate": "/gateway/v{version}/hands",
       "UpstreamHttpMethod": [
         "Get",
         "Post"
       ]
     },
     {
-      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/hand/{id}",
+      "DownstreamPathTemplate": "/containers/jordanartzet-tarot-rest-service/api/v{version}/hands/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -201,7 +201,7 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/hand/{id}",
+      "UpstreamPathTemplate": "/gateway/v{version}/hands/{id}",
       "UpstreamHttpMethod": [
         "Get",
         "Put",

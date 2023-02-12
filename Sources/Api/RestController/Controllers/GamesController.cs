@@ -9,13 +9,15 @@ using RestController.Filter;
 
 namespace RestController.Controllers;
 
-[Route("game/")]
+[ApiVersion("1.0")]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class GameController : ControllerBase
+public class GamesController : ControllerBase
 {
     private readonly Manager _manager;
 
-    public GameController(Manager manager)
+    public GamesController(Manager manager)
     {
         _manager = manager;
     }
@@ -25,7 +27,7 @@ public class GameController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetGames([FromQuery] PaginationFilter paginationFilter)
     {
-        var games = await _manager.GetGames(paginationFilter.Page, paginationFilter.Count);
+        var games = (await _manager.GetGames(paginationFilter.Page, paginationFilter.Count)).ToList();
         return Ok(games.Select(x => x.ToGameDTO()).ToList());
     }
 
@@ -40,7 +42,7 @@ public class GameController : ControllerBase
 
     // USER
 
-    [HttpGet("{id}/user/")]
+    [HttpGet("{id}/users")]
     public async Task<ActionResult> GetUsersByGameId(ulong id)
     {
         var game = await _manager.GetGameById(id);
@@ -49,7 +51,7 @@ public class GameController : ControllerBase
         return Ok(users.Select(x => x.PlayerToDTO()).ToList());
     }
 
-    [HttpGet("{gameId}/user/{userId}")]
+    [HttpGet("{gameId}/users/{userId}")]
     public async Task<ActionResult> GetUserByGameId(ulong gameId, ulong userId)
     {
         var game = await _manager.GetGameById(gameId);
@@ -111,7 +113,8 @@ public class GameController : ControllerBase
 
         var gameUpdated = await _manager.UpdateGame(game);
         if (gameUpdated is null) return NotFound();
-        return NoContent();
+        //return the updated game
+        return Ok(gameUpdated.ToGameDetailDTO());
     }
 
     [HttpDelete("{id}")]

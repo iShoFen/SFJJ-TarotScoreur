@@ -510,3 +510,5 @@ Temporary Items
 .idea/
 
 *.lutconfig
+
+*.db

@@ -23,7 +23,7 @@ namespace RestController.Filter
 
 		}
 
-		private int _count = 30;
+		private int _count = 10;
 
 	}
 }

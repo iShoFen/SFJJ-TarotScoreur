@@ -6,12 +6,14 @@ using Model.Players;
 using Model.Rules;
 using RestController.DTOs;
 using RestController.DTOs.Extensions;
-using RestController.DTOs.Games;
 
-namespace RestControllers
+namespace RestController.Controllers
 {
-    [Route("hand/")]
-    public class HandController : ControllerBase
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    public class HandsController : ControllerBase
     {
         private readonly Manager _manager;
 
@@ -19,7 +21,7 @@ namespace RestControllers
         /// Constructor for the HandController
         /// </summary>
         /// <param name="manager">The manger to use</param>
-        public HandController(Manager manager)
+        public HandsController(Manager manager)
         {
             _manager = manager;
         }
@@ -33,7 +35,7 @@ namespace RestControllers
         /// Returns the hand of the player with the given id
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<HandDTODetail>> Get(ulong id)
+        public async Task<ActionResult> GetHand(ulong id)
         {
             var hand = await _manager.GetHandById(id);
             if (hand == null) return NotFound();
@@ -96,7 +98,7 @@ namespace RestControllers
             var handReply = handInserted.ToHandDTODetail();
             handReply.GameId = request.GameId;
             return CreatedAtAction(
-                nameof(Get),
+                nameof(GetHand),
                 new { id = handInserted.Id },
                 handReply
             );
@@ -113,6 +115,7 @@ namespace RestControllers
         /// Returns a NoContent result if the update is successful.
         /// </returns>
         [HttpPut("{id}")]
+        [MapToApiVersion("2.0")]
         public async Task<IActionResult> Put(ulong id, [FromBody] HandUpdateRequest request)
         {
             if (id != request.Id) return BadRequest();
