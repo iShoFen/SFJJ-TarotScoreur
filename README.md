@@ -18,9 +18,9 @@
 \
 The Tarot Scoreur application allows during your tarot games to automatically count the points of all the players in the game. With this application you can play online with your friend or play locally at your home !
 
-## Installation
+# Installation
 
-### Launch console app
+## Launch console app
 
 1. Move into `Sources/TarotDb`
 2. Create migration with the following command
@@ -40,7 +40,7 @@ The Tarot Scoreur application allows during your tarot games to automatically co
    dotnet run
    ```
 
-## **Postman client**
+# **Postman client**
 
 To configure a Postman client for the REST API and Gateway, follow these steps:
 
@@ -82,7 +82,7 @@ To configure a Postman client for the REST API and Gateway, follow these steps:
 
 9. You can now use Postman to make requests to the REST API and the Gateway. Note that you may need to add additional headers and options depending on the API documentation.
 
-## **Examples**
+# **Examples**
 
 <!-- Mettre des images de l'application par le future -->
 <img src="./Documentation/images/Accueil_Connecte.svg" height="400">
@@ -100,30 +100,35 @@ Here is some examples of what you can do with the application.
 
 For more examples, please refer to the [Wiki](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur)
 
+# Overall application architecture
+<img src="./Documentation/architecture_diagram.svg">
 
-## Features
+For more details, please refer to the [Wiki](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur)
+
+
+# Features
 
 <!-- Qu'est ce que l'on peut faire avec l'application
      Présentation de toutes les fontionnalités -->
 
-### Online mode
+## Online mode
 
 This mode allow you to play online and share your scores and achievements of all the game you play.
 
-### Local mode
+## Local mode
 
 This mode allow you to play at your home and add your friends on your phone. Enjoy playing your tarot games with your friends at home !
 
-## Usage
+# Usage
 
-To learn how to use our application you can read the [user manual](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur-en) on the wiki.
- 
+To learn how to use our application you can read the [user manual](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Api) on the wiki.
 
-## Questions
+
+# Questions
 
 For questions and support ask [here](#).
 
-## Contributors
+# Contributors
 <a href='https://github.com/iShoFen'>Samuel Sirven</a>  
 <a href='https://github.com/flomSStaar'>Florent Marques</a>  
 <a href='https://github.com/ZIRTR0X'>Julien THÊME</a>   
