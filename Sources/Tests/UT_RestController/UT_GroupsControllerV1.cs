@@ -75,7 +75,35 @@ public class UT_GroupsControllerV1
 
     #region Writer
 
+    [Theory]
+    [MemberData(nameof(GroupsControllerDataV1.Data_TestPostGroup), MemberType = typeof(GroupsControllerDataV1))]
+    public async Task TestPostGroup(ulong groupId, GroupDTOPostRequest inserted, GroupDTO expected)
+    {
+        var controller = new GroupsController(RestUtils.CreateManager());
+        var response = (await controller.PostGroup(inserted) as ObjectResult)?.Value as GroupDTO;
+
+        Assert.Equal(expected, response);
+    }
     
+    [Theory]
+    [MemberData(nameof(GroupsControllerDataV1.Data_TestPutGroup), MemberType = typeof(GroupsControllerDataV1))]
+    public async Task TestPutGroup(ulong groupId, GroupDTO inserted, GroupDTO expected)
+    {
+        var controller = new GroupsController(RestUtils.CreateManager());
+        var response = (await controller.PutGroup(groupId, inserted) as ObjectResult)?.Value as GroupDTO;
+
+        Assert.Equal(expected, response);
+    }
+    
+    [Theory]
+    [MemberData(nameof(GroupsControllerDataV1.Data_TestDeleteGroup), MemberType = typeof(GroupsControllerDataV1))]
+    public async Task TestDeleteGroup(ulong groupId, GroupDTO expected)
+    {
+        var controller = new GroupsController(RestUtils.CreateManager());
+        var response = (await controller.DeleteGroup(groupId) as ObjectResult)?.Value as GroupDTO;
+
+        Assert.Equal(expected, response);
+    }
 
     #endregion
 

@@ -165,4 +165,62 @@ public class GroupsControllerDataV1
             }
         };
     }
+
+    public static IEnumerable<object[]> Data_TestPostGroup()
+    {
+        yield return new object[]
+        {
+            13UL,
+            //Inserted
+            new GroupDTOPostRequest()
+            {
+                Name = "Group Test",
+                Users = { 11, 12, 13, 14, 15 }
+            },
+            //Expected
+            new GroupDTO()
+            {
+                Id = 13UL,
+                Name = "Group Test",
+                Users = { 11, 12, 13, 14, 15 }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> Data_TestPutGroup()
+    {
+        yield return new object[]
+        {
+            1UL,
+            //Updated
+            new GroupDTO()
+            {
+                Id = 1UL,
+                Name = "Group Put Test",
+                Users = { 11, 12, 13, 14, 15 }
+            },
+            //Expected
+            new GroupDTO()
+            {
+                Id = 1UL,
+                Name = "Group Put Test",
+                Users = { 11, 12, 13, 14, 15 }
+            }
+        };
+    }
+    
+    public static IEnumerable<object[]> Data_TestDeleteGroup()
+    {
+        yield return new object[]
+        {
+            1UL,
+            //Expected
+            new GroupDTO()
+            {
+                Id = 1UL,
+                Name = "Group 1",
+                Users = { 1, 2, 3, 4, 5 }
+            }
+        };
+    }
 }

@@ -128,8 +128,9 @@ public class GroupsController : ControllerBase
 		}
 		
 		var group = new Group(groupDTO.Id, groupDTO.Name, users.ToArray());
-		if (await _manager.UpdateGroup(group) is null) return NotFound();
-		return NoContent();
+		var groupUpdated = await _manager.UpdateGroup(group);
+		if (groupUpdated is null) return NotFound();
+		return Ok(groupUpdated.ToGroupDTO());
 	}
 
 	/// <summary>
@@ -142,8 +143,9 @@ public class GroupsController : ControllerBase
 	{
 		var group = await _manager.GetGroupById(id);
 		if (group is null) return NotFound();
-		await _manager.DeleteGroup(group);
+		//Internal Error
+		if(!await _manager.DeleteGroup(group)) return StatusCode(500);
 
-		return NoContent();
+		return Ok(group.ToGroupDTO());
 	}
 }
