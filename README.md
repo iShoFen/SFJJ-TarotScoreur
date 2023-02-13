@@ -18,9 +18,9 @@
 \
 The Tarot Scoreur application allows during your tarot games to automatically count the points of all the players in the game. With this application you can play online with your friend or play locally at your home !
 
-## Installation
+# Installation
 
-### Launch console app
+## Launch console app
 
 1. Move into `Sources/TarotDb`
 2. Create migration with the following command
@@ -40,7 +40,49 @@ The Tarot Scoreur application allows during your tarot games to automatically co
    dotnet run
    ```
 
-## **Examples**
+# **Postman client**
+
+To configure a Postman client for the REST API and Gateway, follow these steps:
+
+1. Install Postman by following the instructions on the official <a href="https://www.postman.com/downloads/" target="_blank">Postman</a> website.
+
+2. Open Postman and click on the "New" button on the top left to create a new request.
+
+3. Select the type of request you want to make (GET, POST, PUT, etc.).
+
+4. Enter the URL of the REST API or Gateway in the URL bar, for example :  
+   - REST API :
+      ```
+      https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service/api/v{version}/users
+      ```
+   - Gateway :
+      ```
+      https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-gateway-service/gateway/v{version}/users
+      ```
+
+5. Replace {version} or any other parameter with its value. In our case it will be 1.
+
+   - Create a variable in Postman by going to Environments. You can then use this variable to replace the parameters in the API addresses, as follows:
+
+   - REST API: 
+      ```
+      https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-rest-service/api/v{{version}}/users
+      ```
+   - Gateway API: 
+      ```
+      https://codefirst.iut.uca.fr/containers/jordanartzet-tarot-gateway-service/gateway/v{{version}}/users   
+      ```
+   - This will allow you to change the value of the "version" variable from within the environment without having to modify the requests individually.
+
+6. Click the "Send" button to send the request.
+
+7. The response will be displayed in the "Response" section below.
+
+8. You can save this request by clicking "Save" to use it later.
+
+9. You can now use Postman to make requests to the REST API and the Gateway. Note that you may need to add additional headers and options depending on the API documentation.
+
+# **Examples**
 
 <!-- Mettre des images de l'application par le future -->
 <img src="./Documentation/images/Accueil_Connecte.svg" height="400">
@@ -58,37 +100,37 @@ Here is some examples of what you can do with the application.
 
 For more examples, please refer to the [Wiki](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur)
 
+# Overall application architecture
+<img src="./Documentation/architecture_diagram.svg">
 
-## Features
+For more details, please refer to the [Wiki](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur)
+
+
+# Features
 
 <!-- Qu'est ce que l'on peut faire avec l'application
      Présentation de toutes les fontionnalités -->
 
-### Online mode
+## Online mode
 
 This mode allow you to play online and share your scores and achievements of all the game you play.
 
-### Local mode
+## Local mode
 
 This mode allow you to play at your home and add your friends on your phone. Enjoy playing your tarot games with your friends at home !
 
-## Usage
+# Usage
 
-To learn how to use our application you can read the [user manual](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Tarot-Scoreur-en) on the wiki.
- 
+To learn how to use our application you can read the [user manual](https://codefirst.iut.uca.fr/git/jordan.artzet/SFJJ-TarotScoreur/wiki/Api) on the wiki.
 
-## Questions
+
+# Questions
 
 For questions and support ask [here](#).
 
-## Contributors
-
-| Name            | Role                                                                            |
-|-----------------|---------------------------------------------------------------------------------|
-| Samuel Sirven   | Best manager of all times                                                       |
-| Florent Marques | Developer who develop the player, user and ranking features (like the football) |
-| Julien Themes   | Developer who develop the management of the games                               |
-| Jordan Artzet   | Best developer of all times                                                     |
-
-
+# Contributors
+<a href='https://github.com/iShoFen'>Samuel Sirven</a>  
+<a href='https://github.com/flomSStaar'>Florent Marques</a>  
+<a href='https://github.com/ZIRTR0X'>Julien THÊME</a>   
+<a href='https://github.com/Firologia'>Jordan Artzet</a>
 
