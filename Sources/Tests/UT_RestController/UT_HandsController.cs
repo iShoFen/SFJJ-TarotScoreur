@@ -10,7 +10,7 @@ public class UT_HandsController
     [Fact]
     public void TestConstructor()
     {
-        var controller = new HandsController(RestUtils.CreateManager());
+        var controller = new HandsController(RestUtils.CreateManager(), RestUtils.CreateLogger<HandsController>());
 
         Assert.NotNull(controller);
     }
