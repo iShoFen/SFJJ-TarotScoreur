@@ -13,7 +13,7 @@ public class UT_GameControllerV1
     [Fact]
     public void ConstructorTest()
     {
-        var controller = new GamesController(RestUtils.CreateManager());
+        var controller = new GamesController(RestUtils.CreateManager(), RestUtils.CreateLogger<GamesController>());
 
         Assert.NotNull(controller);
     }
@@ -25,7 +25,7 @@ public class UT_GameControllerV1
     [MemberData(nameof(GameControllerDataV1.Data_TestGetGames), MemberType = typeof(GameControllerDataV1))]
     public async Task TestGetGames(int page, int pageSize, List<GameDTO> expected)
     {
-        var controller = new GamesController(RestUtils.CreateManager());
+        var controller = new GamesController(RestUtils.CreateManager(), RestUtils.CreateLogger<GamesController>());
 
         var actual = await controller.GetGames(new PaginationFilter{ Page = page, Count = pageSize });
         
@@ -39,7 +39,7 @@ public class UT_GameControllerV1
     [MemberData(nameof(GameControllerDataV1.Data_TestGetGameById), MemberType = typeof(GameControllerDataV1))]
     public async Task TestGetGameById(ulong id, GameDetailDTO expected)
     {
-        var controller = new GamesController(RestUtils.CreateManager());
+        var controller = new GamesController(RestUtils.CreateManager(), RestUtils.CreateLogger<GamesController>());
 
         var actual = await controller.GetGame(id);
         
@@ -52,7 +52,7 @@ public class UT_GameControllerV1
     [MemberData(nameof(GameControllerDataV1.Data_TestGetUsersByGameId), MemberType = typeof(GameControllerDataV1))]
     public async Task TestGetUsersByGameId(ulong id, List<UserDTO> expected)
     {
-        var controller = new GamesController(RestUtils.CreateManager());
+        var controller = new GamesController(RestUtils.CreateManager(), RestUtils.CreateLogger<GamesController>());
 
         var actual = await controller.GetUsersByGameId(id);
         
@@ -70,7 +70,7 @@ public class UT_GameControllerV1
     [MemberData(nameof(GameControllerDataV1.Data_TestPostGame), MemberType = typeof(GameControllerDataV1))]
     public async Task TestPostGame(GameInsertRequest game, GameDetailDTO expected)
     {
-        var controller = new GamesController(RestUtils.CreateManager());
+        var controller = new GamesController(RestUtils.CreateManager(), RestUtils.CreateLogger<GamesController>());
 
         var actual = await controller.PostGame(game);
 
@@ -84,7 +84,7 @@ public class UT_GameControllerV1
     [MemberData(nameof(GameControllerDataV1.Data_TestPutGame), MemberType = typeof(GameControllerDataV1))]
     public async Task TestPutGame(ulong id, GameUpdateRequest game, GameDetailDTO expected)
     {
-        var controller = new GamesController(RestUtils.CreateManager());
+        var controller = new GamesController(RestUtils.CreateManager(), RestUtils.CreateLogger<GamesController>());
         var old = (await controller.GetGame(id) as ObjectResult)!.Value as GameDetailDTO;
         var actual = (await controller.PutGame(id, game) as ObjectResult)!.Value as GameDetailDTO;
 
