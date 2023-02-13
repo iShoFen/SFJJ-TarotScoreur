@@ -12,7 +12,7 @@ public class UT_GroupsControllerV1
     [Fact]
     public void TestConstructor()
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
 
         Assert.NotNull(controller);
     }
@@ -22,7 +22,7 @@ public class UT_GroupsControllerV1
     [MemberData(nameof(GroupsControllerDataV1.Data_TestGetGroups), MemberType = typeof(GroupsControllerDataV1))]
     public async Task TestGetGroups(int page, int pageSize, List<GroupDTO> expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
 
         var actual = await controller.GetGroups(new PaginationFilter { Page = page, Count = pageSize });
 
@@ -36,7 +36,7 @@ public class UT_GroupsControllerV1
     [MemberData(nameof(GroupsControllerDataV1.Data_TestGetGroupById), MemberType = typeof(GroupsControllerDataV1))]
     public async Task TestGetGroupById(ulong id, GroupDTO expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
 
         var actual = await controller.GetGroup(id);
 
@@ -50,7 +50,7 @@ public class UT_GroupsControllerV1
     [MemberData(nameof(GroupsControllerDataV1.Data_TestGetGroupUsers), MemberType = typeof(GroupsControllerDataV1))]
     public async Task TestGetGroupUsers(ulong id, List<UserDTO> expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
 
         var actual = await controller.GetPlayersByGroupId(id);
 
@@ -64,7 +64,7 @@ public class UT_GroupsControllerV1
     [MemberData(nameof(GroupsControllerDataV1.Data_TestGetGroupUserById), MemberType = typeof(GroupsControllerDataV1))]
     public async Task TestGetGroupUserById(ulong id, ulong userId, UserDetailDTO expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
 
         var actual = await controller.GetPlayerByGroupId(id, userId);
 
@@ -79,7 +79,7 @@ public class UT_GroupsControllerV1
     [MemberData(nameof(GroupsControllerDataV1.Data_TestPostGroup), MemberType = typeof(GroupsControllerDataV1))]
     public async Task TestPostGroup(ulong groupId, GroupDTOPostRequest inserted, GroupDTO expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
         var response = (await controller.PostGroup(inserted) as ObjectResult)?.Value as GroupDTO;
 
         Assert.Equal(expected, response);
@@ -89,7 +89,7 @@ public class UT_GroupsControllerV1
     [MemberData(nameof(GroupsControllerDataV1.Data_TestPutGroup), MemberType = typeof(GroupsControllerDataV1))]
     public async Task TestPutGroup(ulong groupId, GroupDTO inserted, GroupDTO expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
         var response = (await controller.PutGroup(groupId, inserted) as ObjectResult)?.Value as GroupDTO;
 
         Assert.Equal(expected, response);
@@ -97,10 +97,10 @@ public class UT_GroupsControllerV1
     
     [Theory]
     [MemberData(nameof(GroupsControllerDataV1.Data_TestDeleteGroup), MemberType = typeof(GroupsControllerDataV1))]
-    public async Task TestDeleteGroup(ulong groupId, GroupDTO expected)
+    public async Task TestDeleteGroup(ulong groupId, bool expected)
     {
-        var controller = new GroupsController(RestUtils.CreateManager());
-        var response = (await controller.DeleteGroup(groupId) as ObjectResult)?.Value as GroupDTO;
+        var controller = new GroupsController(RestUtils.CreateManager(), RestUtils.CreateLogger<GroupsController>());
+        var response = (await controller.DeleteGroup(groupId) as ObjectResult)?.Value as bool?;
 
         Assert.Equal(expected, response);
     }
