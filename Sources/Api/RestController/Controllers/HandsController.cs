@@ -9,21 +9,36 @@ using RestController.DTOs.Extensions;
 
 namespace RestController.Controllers
 {
+    /// <summary>
+    /// The hands controller for REST API
+    /// </summary>
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class HandsController : ControllerBase
     {
+        /// <summary>
+        /// The manager for the service
+        /// </summary>
         private readonly Manager _manager;
+        
+        /// <summary>
+        /// The logger for the service
+        /// </summary>
+        private readonly ILogger<HandsController> _logger;
 
         /// <summary>
         /// Constructor for the HandController
         /// </summary>
         /// <param name="manager">The manger to use</param>
-        public HandsController(Manager manager)
+        /// <param name="logger">The logger to use</param>
+        public HandsController(Manager manager, ILogger<HandsController> logger)
         {
             _manager = manager;
+            _logger = logger;
+            
+            _logger.LogInformation("HandsController created");
         }
 
         /// <summary>
@@ -38,17 +53,22 @@ namespace RestController.Controllers
         public async Task<ActionResult> GetHand(ulong id)
         {
             var hand = await _manager.GetHandById(id);
-            if (hand == null) return NotFound();
+            if (hand == null)
+            {
+                _logger.LogWarning("Hand with id {HandId} not found", id);
+                return NotFound();
+            }
+            _logger.LogInformation("Hand with id {HandId} retrieved", id);
+            
             return Ok(hand.ToHandDTODetail());
         }
 
         /// <summary>
         /// Post a new hand to the database
         /// </summary>
-        /// <param name="gameId">The id of the game the hand belongs to</param>
         /// <param name="request">The hand to be posted</param>
         /// <returns>
-        /// Return a BadRequest if the hand is invalid, 
+        /// Return a BadRequest if the hand is invalid,
         /// Return a NoContent if the hand is valid and posted
         /// </returns>
         [HttpPost]
@@ -57,12 +77,14 @@ namespace RestController.Controllers
             var game = await _manager.GetGameById(request.GameId);
             if (game is null)
             {
+                _logger.LogWarning("Game with id {GameId} not found", request.GameId);
                 return BadRequest($"The game with id {request.GameId} does not exist");
             }
 
             var rules = RulesFactory.Create(request.Rules);
             if (rules is null)
             {
+                _logger.LogWarning("Rules {Rules} not found", request.Rules);
                 return BadRequest($"The rules {request.Rules} does not correspond to any rules");
             }
 
@@ -72,6 +94,7 @@ namespace RestController.Controllers
                 var user = await _manager.GetUserById(bidding.UserId);
                 if (user is null)
                 {
+                    _logger.LogWarning("User with id {UserId} not found", bidding.UserId);
                     return BadRequest($"The user with id {bidding.UserId} does not exist");
                 }
 
@@ -93,10 +116,16 @@ namespace RestController.Controllers
                 biddings.ToArray()
             );
 
-            if (handInserted is null) return BadRequest("An error occured while inserted the hand");
+            if (handInserted is null)
+            {
+                _logger.LogWarning("Hand not inserted, an error occured");
+                return BadRequest("An error occured while inserted the hand");
+            }
 
             var handReply = handInserted.ToHandDTODetail();
             handReply.GameId = request.GameId;
+            _logger.LogInformation("Hand with id {HandId} inserted", handInserted.Id);
+
             return CreatedAtAction(
                 nameof(GetHand),
                 new { id = handInserted.Id },
@@ -108,7 +137,7 @@ namespace RestController.Controllers
         /// Update a Hand in the database by its id.
         /// </summary>
         /// <param name="id">The id of the Hand to be updated.</param>
-        /// <param name="handDtoDetail">The DTO containing the updated information for the Hand.</param>
+        /// <param name="request">The DTO containing the updated information for the Hand.</param>
         /// <returns>
         /// Returns a BadRequest result if the id in the request does not match the id in the DTO. 
         /// Returns a NotFound result if the hand is not found. 
@@ -118,11 +147,16 @@ namespace RestController.Controllers
         [MapToApiVersion("2.0")]
         public async Task<IActionResult> Put(ulong id, [FromBody] HandUpdateRequest request)
         {
-            if (id != request.Id) return BadRequest();
+            if (id != request.Id)
+            {
+                _logger.LogWarning("The url id {UrlId} does not correspond to the body id {BodyId}", id, request.Id);
+                return BadRequest();
+            }
 
             var rules = RulesFactory.Create(request.Rules);
             if (rules is null)
             {
+                _logger.LogWarning("Rules {Rules} not found", request.Rules);
                 return BadRequest($"The rules {request.Rules} does not correspond to any rules");
             }
 
@@ -132,6 +166,7 @@ namespace RestController.Controllers
                 var user = await _manager.GetUserById(bidding.UserId);
                 if (user is null)
                 {
+                    _logger.LogWarning("User with id {UserId} not found", bidding.UserId);
                     return BadRequest($"The user with id {bidding.UserId} does not exist");
                 }
 
@@ -154,7 +189,13 @@ namespace RestController.Controllers
             );
 
             var handUpdated = await _manager.UpdateHand(hand);
-            if (handUpdated is null) return NotFound();
+            if (handUpdated is null)
+            {
+                _logger.LogWarning("Hand with id {HandId} not found", id);
+                return NotFound();
+            }
+            _logger.LogInformation("Hand with id {HandId} updated", id);
+            
             return NoContent();
         }
 
@@ -170,8 +211,14 @@ namespace RestController.Controllers
         public async Task<IActionResult> Delete(ulong id)
         {
             var hand = await _manager.GetHandById(id);
-            if (hand is null) return NotFound();
+            if (hand is null)
+            {
+                _logger.LogWarning("Hand with id {HandId} not found", id);
+                return NotFound();
+            }
             await _manager.DeleteHand(hand);
+            _logger.LogInformation("Hand with id {HandId} deleted", id);
+            
             return NoContent();
         }
     }

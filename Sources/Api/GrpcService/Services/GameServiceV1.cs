@@ -42,11 +42,10 @@ public class GameServiceV1 : Game.GameBase
     public override async Task<GamesReply> GetGames(Pagination request, ServerCallContext context)
     {
         var games = (await _manager.GetGames(request.Page, request.PageSize)).ToList(); 
-        _logger.Log(LogLevel.Information,
-                    "{GamesCount} games from {Page} page with {PageSize} size retrieved",
-                    games.Count,
-                    request.Page,
-                    request.PageSize
+        _logger.LogInformation("{GamesCount} games from {Page} page with {PageSize} size retrieved", 
+                               games.Count,
+                               request.Page,
+                               request.PageSize
         );
         
         return games.ToGamesReply();
@@ -65,11 +64,11 @@ public class GameServiceV1 : Game.GameBase
 
         if (game is null)
         {
-            _logger.Log(LogLevel.Warning, "Game with id {Id} was not found", request.Id);
+            _logger.LogWarning("Game with id {Id} was not found", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found"));
         }
 
-        _logger.Log(LogLevel.Information, "Game with id {Id} retrieved", request.Id);
+        _logger.LogInformation("Game with id {Id} retrieved", request.Id);
         return game.ToGameReplyDetails();
     }
 
@@ -86,10 +85,9 @@ public class GameServiceV1 : Game.GameBase
                                                    request.Pagination.PageSize
         )).ToList();
 
-        _logger.Log(LogLevel.Information,
-                    "{GamesCount} games retrieved by name pattern {Pattern}",
-                    games.Count,
-                    request.Pattern
+        _logger.LogInformation("{GamesCount} games retrieved by name pattern {Pattern}",
+                               games.Count,
+                               request.Pattern
         );
 
         return games.ToGamesReply();
@@ -109,10 +107,9 @@ public class GameServiceV1 : Game.GameBase
             ))
             .ToList();
 
-        _logger.Log(LogLevel.Information,
-                    "{GamesCount} games retrieved for player with id {PlayerId}",
-                    games.Count,
-                    request.PlayerId
+        _logger.LogInformation("{GamesCount} games retrieved for player with id {PlayerId}",
+                               games.Count,
+                               request.PlayerId
         );
 
         return games.ToGamesReply();
@@ -133,11 +130,10 @@ public class GameServiceV1 : Game.GameBase
             ))
             .ToList();
 
-        _logger.Log(LogLevel.Information,
-                    "{GamesCount} games retrieved from {StartDate} to {EndDate}",
-                    games.Count,
-                    request.StartDate,
-                    request.EndDate
+        _logger.LogInformation("{GamesCount} games retrieved from {StartDate} to {EndDate}",
+                               games.Count,
+                               request.StartDate,
+                               request.EndDate
         );
 
         return games.ToGamesReply();
@@ -159,7 +155,7 @@ public class GameServiceV1 : Game.GameBase
 
             if (player == null)
             {
-                _logger.Log(LogLevel.Warning, "User with id {Id} not found, game cannot be inserted", playerId);
+                _logger.LogWarning("User with id {Id} not found, game cannot be inserted", playerId);
                 throw new RpcException(new Status(StatusCode.InvalidArgument, $"User with id {playerId} not found, game cannot be inserted"));
             }
             players.Add(player);
@@ -168,13 +164,13 @@ public class GameServiceV1 : Game.GameBase
         var rules = RulesFactory.Create(request.Rules);
         if (rules is null)
         {
-            _logger.Log(LogLevel.Warning, "Rules {Rules} does not correspond to any rules, game cannot be inserted", request.Rules);
+            _logger.LogWarning("Rules {Rules} does not correspond to any rules, game cannot be inserted", request.Rules);
             throw new RpcException(new Status(StatusCode.InvalidArgument,
                 $"Rules {request.Rules} does not correspond to any rules, game cannot be inserted"));
         }
         
         var game = (await _manager.InsertGame(request.Name, rules, request.StartDate.ToDateTime(), players.ToArray()))!;
-        _logger.Log(LogLevel.Information, "Game with id {Id} inserted", game.Id);
+        _logger.LogInformation("Game with id {Id} inserted", game.Id);
         
         return game.ToGameReplyDetails();
     }
@@ -191,7 +187,7 @@ public class GameServiceV1 : Game.GameBase
         var convertedGame = request.ToGame();
         if (convertedGame is null)
         {
-            _logger.Log(LogLevel.Warning, "Rules {Rules} does not correspond to any rules, game cannot be updated", request.Rules);
+            _logger.LogWarning("Rules {Rules} does not correspond to any rules, game cannot be updated", request.Rules);
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"Rules {request.Rules} does not correspond to any rules, game cannot be updated"));
         }
 
@@ -199,10 +195,10 @@ public class GameServiceV1 : Game.GameBase
 
         if (game is null)
         {
-            _logger.Log(LogLevel.Warning, "Game with id {Id} not found, it cannot be updated", request.Id);
+            _logger.LogWarning("Game with id {Id} not found, it cannot be updated", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be updated"));
         }
-        _logger.Log(LogLevel.Information, "Game with id {Id} updated", game.Id);
+        _logger.LogInformation("Game with id {Id} updated", game.Id);
         
         return game.ToGameReplyDetails();
     }
@@ -219,12 +215,11 @@ public class GameServiceV1 : Game.GameBase
         var result = await _manager.DeleteGame(request.Id);
         if (!result)
         {
-            _logger.Log(LogLevel.Warning, "Game with id {Id} not found, the game cannot be deleted", request.Id);
+            _logger.LogWarning("Game with id {Id} not found, the game cannot be deleted", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Game with id {request.Id} not found, it cannot be deleted"));
         }
-        _logger.Log(LogLevel.Information, "Game with id {Id} deleted", request.Id);
+        _logger.LogInformation("Game with id {Id} deleted", request.Id);
         
         return new BoolResponse { Result = result };
-        
     }
 }

@@ -47,11 +47,11 @@ public class HandServiceV1 : Hand.HandBase
 
         if (hand is null)
         {
-            _logger.Log(LogLevel.Warning, "Hand with id {Id} not found", request.Id);
+            _logger.LogWarning("Hand with id {Id} not found", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Hand with id {request.Id} not found"));
         }
 
-        _logger.Log(LogLevel.Information, "Hand with id {Id} retrieved", request.Id);
+        _logger.LogInformation("Hand with id {Id} retrieved", request.Id);
         return hand.ToHandReply();
     }
 
@@ -71,7 +71,7 @@ public class HandServiceV1 : Hand.HandBase
 
             if (player == null)
             {                
-                _logger.Log(LogLevel.Warning, "User with id {Id} not found, hand cannot be inserted", userBiddingPoignee.PlayerId);
+                _logger.LogWarning("User with id {Id} not found, hand cannot be inserted", userBiddingPoignee.PlayerId);
                 throw new RpcException(new Status(StatusCode.InvalidArgument, $"User with id {userBiddingPoignee.PlayerId} not found, hand cannot be inserted"));
             }
             
@@ -82,7 +82,7 @@ public class HandServiceV1 : Hand.HandBase
         var rules = RulesFactory.Create(request.Rules);
         if (rules is null)
         {
-            _logger.Log(LogLevel.Warning, "Rules {RequestRules} does not correspond to any rules, hand cannot be inserted", request.Rules);
+            _logger.LogWarning("Rules {RequestRules} does not correspond to any rules, hand cannot be inserted", request.Rules);
             throw new RpcException(new Status(StatusCode.InvalidArgument,
                 $"Rules {request.Rules} does not correspond to any rules, hand cannot be inserted"));
         }
@@ -102,11 +102,11 @@ public class HandServiceV1 : Hand.HandBase
 
         if (hand is null)
         {
-            _logger.Log(LogLevel.Warning, "Game with id {Id} not found, hand cannot be inserted", request.GameId);
+            _logger.LogWarning("Game with id {Id} not found, hand cannot be inserted", request.GameId);
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"Game with id {request.GameId} not found, hand cannot be inserted"));
         }
 
-        _logger.Log(LogLevel.Information, "Hand with id {Id} inserted", hand.Id);
+        _logger.LogInformation("Hand with id {Id} inserted", hand.Id);
         return hand.ToHandReply();
     }
 
@@ -126,7 +126,7 @@ public class HandServiceV1 : Hand.HandBase
 
             if (player == null)
             {
-                _logger.Log(LogLevel.Warning, "User with id {Id} not found, hand cannot be updated", userBiddingPoignee.PlayerId);
+                _logger.LogWarning("User with id {Id} not found, hand cannot be updated", userBiddingPoignee.PlayerId);
                 throw new RpcException(new Status(StatusCode.InvalidArgument, $"User with id {userBiddingPoignee.PlayerId} not found, hand cannot be updated"));
             }
             
@@ -137,7 +137,7 @@ public class HandServiceV1 : Hand.HandBase
         var rules = RulesFactory.Create(request.Rules);
         if (rules is null)
         {
-            _logger.Log(LogLevel.Warning, "Rules {Rules} does not correspond to any rules, hand cannot be updated", request.Rules);
+            _logger.LogWarning("Rules {Rules} does not correspond to any rules, hand cannot be updated", request.Rules);
             throw new RpcException(new Status(StatusCode.InvalidArgument, $"Rules {request.Rules} does not correspond to any rules, hand cannot be updated"));
         }
 
@@ -158,10 +158,10 @@ public class HandServiceV1 : Hand.HandBase
 
         if (handResult is null)
         {
-            _logger.Log(LogLevel.Warning, "Hand with id {Id} not found, it cannot be updated", request.Id);
+            _logger.LogWarning("Hand with id {Id} not found, it cannot be updated", request.Id);
             throw new RpcException(new Status(StatusCode.NotFound, $"Hand with id {request.Id} not found, it cannot be updated"));
         }
-        _logger.Log(LogLevel.Information, "Hand with id {Id} updated", request.Id);
+        _logger.LogInformation("Hand with id {Id} updated", request.Id);
         
         return handResult.ToHandReply();
     }
