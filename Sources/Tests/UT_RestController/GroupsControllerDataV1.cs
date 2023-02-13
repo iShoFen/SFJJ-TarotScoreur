@@ -215,12 +215,7 @@ public class GroupsControllerDataV1
         {
             1UL,
             //Expected
-            new GroupDTO()
-            {
-                Id = 1UL,
-                Name = "Group 1",
-                Users = { 1, 2, 3, 4, 5 }
-            }
+            true
         };
     }
 }
